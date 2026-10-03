@@ -94,16 +94,14 @@ class Model:
         log("n=%d L=%d perm windows %d pieces %d (%.1fs)" % (n, len(w), len(pos), len(ps), time.time() - t0))
         self.piece_start, self.piece_len = ps, pl
         # closed pieces and chains of open pieces -> trails
-        closed = np.zeros(len(ps), bool)
-        extra = np.zeros(len(ps), np.int64)   # piece written from a gap-(3-extra) opening: length R + h + extra
-        for k in range(len(ps)):
+        def closes(k, ex):
             s, l = int(ps[k]), int(pl[k])
-            for ex in (0, 1, 2):
-                R = l - h - ex
-                if R > 2 * n and (w[s + R:s + l] == w[s:s + h + ex]).all():
-                    closed[k] = True; extra[k] = ex; break
+            R = l - h - ex
+            return R > 2 * n and bool((w[s + R:s + l] == w[s:s + h + ex]).all())
+        closed = np.array([closes(k, 0) for k in range(len(ps))], bool)
+        extra = np.zeros(len(ps), np.int64)   # piece written from a gap-(3-extra) opening: length R + h + extra
         self.trail_of_piece = np.full(len(ps), -1, np.int64)
-        trails = []  # list of (list of (piece, len_contrib))
+        trails = []  # each trail is the list of its pieces
         for k in np.nonzero(closed)[0]:
             self.trail_of_piece[k] = len(trails)
             trails.append([int(k)])
@@ -113,6 +111,7 @@ class Model:
         for k in openp:
             head.setdefault(code(w[ps[k]:ps[k] + h]), []).append(k)
         used = set()
+        single = []   # open pieces that do not chain with others
         for k in openp:
             if k in used:
                 continue
@@ -125,12 +124,25 @@ class Model:
                     break
                 nx = [j for j in head.get(tw, []) if j not in used]
                 if not nx:
-                    raise RuntimeError("open piece %d cannot be chained into a closed trail" % k)
+                    break
                 chain.append(nx[0])
                 used.add(nx[0])
+            if tw != hw:
+                used.difference_update(chain[1:])
+                single.append(k)
+                continue
             for j in chain:
                 self.trail_of_piece[j] = len(trails)
             trails.append(chain)
+        # such a piece must be a whole trail written from a gap-2 or gap-1 opening
+        for k in single:
+            ex = next((e for e in (1, 2) if closes(k, e)), None)
+            if ex is None:
+                raise RuntimeError("open piece %d cannot be chained into a closed trail" % k)
+            closed[k] = True; extra[k] = ex
+            self.trail_of_piece[k] = len(trails)
+            trails.append([k])
+        openp = [k for k in openp if not closed[k]]
         self.trails_pieces = trails
         self.cyc = []
         for ch in trails:

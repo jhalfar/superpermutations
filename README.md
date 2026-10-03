@@ -3,18 +3,21 @@
 **Jakub Halfar, with Claude (Opus 5.5) in Claude Code.** I chose the problem and directed the work; Claude designed
 and ran the searches and wrote the code and this write-up.
 
-Two superpermutations that are shorter than the best known ones (as of 2026-10-03). Both re-join the component words
+Two superpermutations that are shorter than the best known ones (as of 2026-10-04). Both re-join the component words
 of Jay Pantone's [43/80 construction](https://github.com/jaypantone/superperm-upper-43-80): they use the same closed
 trails, opened at different places and joined in a different order. No new construction is involved.
 
 | n | length | previous best | word | verified |
 |---|---|---|---|---|
-| 11 | **43,930,649** | 43,930,668 (rumstd, PR #4 to Pantone's repo), 43,930,678 (Theo H., PR #2), 43,930,680 (Pantone) | [`words/superpermutation-11-43930649.txt.xz`](words/superpermutation-11-43930649.txt.xz) | all 39,916,800 permutations; no single letter can be deleted |
+| 11 | **43,930,644** | 43,930,668 (rumstd, PR #4 to Pantone's repo), 43,930,678 (Theo H., PR #2), 43,930,680 (Pantone) | [`words/superpermutation-11-43930644.txt.xz`](words/superpermutation-11-43930644.txt.xz) | all 39,916,800 permutations; no single letter can be deleted |
 | 13 | **6,747,918,058** | 6,747,918,066 (Pantone) | [`words/superpermutation-13-6747918058.txt.xz`](words/superpermutation-13-6747918058.txt.xz) | all 6,227,020,800 permutations |
 
 Words use the alphabet `0123456789A…`, one line plus LF, as in Pantone's repository. Both files are compressed with
-his `tools/compress_word.py` (XZ with a delta filter of distance n); plain `xz -d` restores them. SHA-256 values are
+Pantone's `tools/compress_word.py` (XZ with a delta filter of distance n); plain `xz -d` restores them. SHA-256 values are
 in [`SHA256SUMS`](SHA256SUMS).
+
+[`words/superpermutation-11-43930649.txt.xz`](words/superpermutation-11-43930649.txt.xz) is our first n=11 word
+(2026-10-03). It was found from Pantone's word alone; the 43,930,644 word was found from rumstd's 43,930,668.
 
 ## Verify
 
@@ -23,14 +26,14 @@ With Pantone's independent checker:
 ```sh
 git clone https://github.com/jaypantone/superperm-upper-43-80
 c++ -O3 -std=c++17 superperm-upper-43-80/tools/literal_check.cpp -o literal_check
-xz -dk words/superpermutation-11-43930649.txt.xz words/superpermutation-13-6747918058.txt.xz
-./literal_check 11 0123456789A   words/superpermutation-11-43930649.txt --deletions
+xz -dk words/superpermutation-11-43930644.txt.xz words/superpermutation-13-6747918058.txt.xz
+./literal_check 11 0123456789A   words/superpermutation-11-43930644.txt --deletions
 ./literal_check 13 0123456789ABC words/superpermutation-13-6747918058.txt
 ```
 
 The n=13 check needs about 13 GB of RAM and took about 10 minutes here (64-bit Linux). Our results:
 
-* n=11: `"length":43930649, "distinct_permutations":39916800, "missing_permutations":0, "extra_occurrences":18816, "coverage_preserving_deletions":[]`
+* n=11: `"length":43930644, "distinct_permutations":39916800, "missing_permutations":0, "extra_occurrences":18816, "coverage_preserving_deletions":[]`
 * n=13: `"length":6747918058, "distinct_permutations":6227020800, "missing_permutations":0, "extra_occurrences":1693436`
 
 A lighter check, `tools/verify_par.c`, uses one bit per permutation (778 MB at n=13) and OpenMP threads. It checks
@@ -74,7 +77,7 @@ pieces into *runs*. The length is
   59,233 letters in 2 hours (Gurobi 14.0 beta, 12 threads). The solver's lower bound was 58,998.
 * For n=11 (2,804 pieces, 373 runs) it dropped from 945 to 939, giving 43,930,674.
 
-**Step 2 (n=11 → 43,930,649): trail-level re-joining with gap-2 openings.** This idea comes from the n=10 word of
+**Step 2 (n=11 → 43,930,649, then 43,930,644): trail-level re-joining with gap-2 openings.** This idea comes from the n=10 word of
 length 4,034,873 that rumstd submitted as PR #3 to Pantone's repository. That word uses exactly the same trails as
 Pantone's 4,034,889, but it also opens some trails *between two 2-cycles of a row* (a gap-2 opening):
 * Such a piece is one letter longer and goes from an h-word u to u shifted by one letter.
@@ -97,8 +100,23 @@ python tools/connector_splice.py superpermutation-11-43930674.txt out.txt --time
 python tools/connector_splice.py superpermutation-11-43930674.txt out2.txt --start out.txt --time 3000 --seed 7 --kmax 14 --T0 0.5
 ```
 
-(The 43,930,674 starting word can be rebuilt from Pantone's 43,930,680 with step 1.) The same search found nothing
-on 45-million-letter chunks of the n=12 and n=13 words, so we have no improvement there yet.
+(The 43,930,674 starting word can be rebuilt from Pantone's 43,930,680 with step 1.)
+
+**43,930,644.** The same search, started from rumstd's 43,930,668 word (PR #4, itself based on Theo H.'s
+43,930,678), reached 43,930,644 in two hours:
+
+```sh
+python tools/connector_splice.py superpermutation-11-43930668.txt out.txt --time 7200 --seed 31 --kmax 12 --T0 0.3
+```
+
+Compared with Pantone's 43,930,680 word, the 36 letters come from the same three changes:
+
+* 354 runs instead of 373, and the join cost between runs is 868 instead of 945 (−77);
+* 72 trails have a gap-2 opening (+72);
+* 46 joins inside runs cost nothing, so the joins inside runs cost 2,400 instead of 2,431 (−31).
+
+Three other two-hour runs from the 43,930,668 and 43,930,678 words stopped at 654–659. The same search found
+nothing on 45-million-letter chunks of the n=12 and n=13 words, so we have no improvement there yet.
 
 ## Tools
 
