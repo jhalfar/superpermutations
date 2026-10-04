@@ -1,11 +1,11 @@
 Shorter superpermutations
 
-The superpermutations in words/ re-join the component words of the superpermutations on 11 and 13 symbols
-(43,930,680 and 6,747,918,066 letters) from https://github.com/jaypantone/superperm-upper-43-80 (Apache License 2.0),
+The superpermutations in words/ re-join the component words of the superpermutations on 11, 12 and 13 symbols
+(43,930,680, 522,745,581 and 6,747,918,066 letters) from https://github.com/jaypantone/superperm-upper-43-80 (Apache License 2.0),
 by Jay Pantone. The construction of those components is entirely Pantone's; this repository only changes where each
 component is opened and in what order the components are joined.
 
-The gap-2 opening used for the n=11 word was identified in rumstd's n=10 superpermutation of length 4,034,873
+The gap-2 opening used for the n=11 and n=12 words was identified in rumstd's n=10 superpermutation of length 4,034,873
 (pull request #3 to jaypantone/superperm-upper-43-80). The 43,930,644 word was found starting from rumstd's
 43,930,668 word (pull request #4), which builds on Theo H.'s 43,930,678 word (pull request #2).
 
