@@ -10,8 +10,8 @@
    Search: destroy/repair with simulated-annealing acceptance (remove a few trails, reinsert each at its best
    position with its best opening; small trails may also be inserted as two segments wrapped around a block).
 
-   Options are not stored as words: an option is (start offset in the cyclic word, gap, skip gap), 12 bytes, and
-   S / E are read from the trail when needed, so 12 symbols fit in a few GB.
+   Options are not stored as words: an option is (start offset in the cyclic word, gap, skip gap), 6 bytes, and
+   S / E are read from the trail when needed (about 1.1 GB for 12 symbols, about 11 GB for 13).
 
    build: gcc -O2 -fopenmp -o trailsearch trailsearch.c -lm
    usage: trailsearch WORD.txt OUT.txt [--time SEC] [--seed S] [--kmax K] [--T0 TEMP] [--noskip] [--nosplit]
@@ -56,7 +56,8 @@ static inline int dist(u64 e, u64 s) {            /* h - largest k with suffix_k
 }
 
 /* ---------- trails */
-typedef struct { unsigned char *c; i64 R; i64 olo, ohi; } Trail;   /* cyclic word, its length, option range */
+typedef struct { unsigned char *c; i64 R; i64 olo, ohi; int fixed; } Trail;   /* cyclic word, its length, option range */
+/* fixed: an open path of R + h letters that is not a closed trail in the word; its pieces are never moved */
 static Trail *TR; static i64 NT;
 static inline u64 hw_lin(const unsigned char *p) { u64 v = 0; for (int k = 0; k < h; k++) v = (v << 4) | p[k]; return v; }
 static inline u64 hw_cyc(const Trail *t, i64 pos) {   /* h-word at cyclic position pos */
@@ -66,6 +67,11 @@ static inline u64 hw_cyc(const Trail *t, i64 pos) {   /* h-word at cyclic positi
     return v;
 }
 static u64 fact[17];
+static inline u64 rank_lin(const unsigned char *p) {
+    u64 r = 0; int used = 0;
+    for (int k = 0; k < n; k++) { int c = p[k]; r += (u64)(c - __builtin_popcount(used & ((1 << c) - 1))) * fact[n - 1 - k]; used |= 1 << c; }
+    return r;
+}
 static inline u64 rank_cyc(const Trail *t, i64 pos) { /* rank of the permutation window at cyclic position pos */
     u64 r = 0; int used = 0; i64 R = t->R; pos %= R; if (pos < 0) pos += R;
     if (pos + n <= R) {
@@ -76,21 +82,17 @@ static inline u64 rank_cyc(const Trail *t, i64 pos) { /* rank of the permutation
 }
 
 /* ---------- options: 6 bytes each */
-typedef struct { u32 start; unsigned char g, g1; } Opt;   /* piece starts at `start`; total gap g; g1 > 0: skip option,
-                                                             the skipped window lies g1 after the previous window */
-static Opt *OP; static i64 NO, OCAP; static u32 *OT;      /* OT: trail of each option */
+typedef struct __attribute__((packed)) { u32 start; unsigned char g, g1; } Opt;
+/* the piece starts at `start`; total gap g; g1 > 0: skip option, the skipped window lies g1 after the previous window.
+   The options of a trail are contiguous (TR[t].olo .. ohi), so the trail of an option is found by binary search. */
+static Opt *OP; static i64 NO;
+static inline u32 otrail(i64 o) { i64 lo = 0, hi = NT - 1; while (lo < hi) { i64 m = (lo + hi + 1) >> 1; if (TR[m].olo <= o) lo = m; else hi = m - 1; } return (u32)lo; }
 static inline int oD(i64 o) { return 3 - (int)OP[o].g; }
-static inline u64 oS(i64 o) { return hw_cyc(&TR[OT[o]], OP[o].start); }
-static inline u64 oE(i64 o) { return hw_cyc(&TR[OT[o]], (i64)OP[o].start - OP[o].g + 3); }
-static inline i64 oSK(i64 o) { return OP[o].g1 ? (i64)rank_cyc(&TR[OT[o]], (i64)OP[o].start - OP[o].g + OP[o].g1) : -1; }
-static void add_option(u32 t, i64 start, i64 g, i64 g1) {
-    if (NO == OCAP) {
-        OCAP = OCAP ? OCAP + OCAP / 2 : 1 << 20;
-        OP = realloc(OP, (size_t)OCAP * sizeof(Opt)); OT = realloc(OT, (size_t)OCAP * sizeof(u32));
-        if (!OP || !OT) DIE("out of memory for %lld options", OCAP);
-    }
-    OP[NO].start = (u32)start; OP[NO].g = (unsigned char)g; OP[NO].g1 = (unsigned char)g1; OT[NO] = t; NO++;
-}
+static inline u64 oS_t(const Trail *T, i64 o) { return hw_cyc(T, OP[o].start); }
+static inline u64 oE_t(const Trail *T, i64 o) { return hw_cyc(T, (i64)OP[o].start - OP[o].g + 3); }
+static inline i64 oSK_t(const Trail *T, i64 o) { return OP[o].g1 ? (i64)rank_cyc(T, (i64)OP[o].start - OP[o].g + OP[o].g1) : -1; }
+static inline u64 oS(i64 o) { return oS_t(&TR[otrail(o)], o); }
+static inline u64 oE(i64 o) { return oE_t(&TR[otrail(o)], o); }
 
 /* ---------- events */
 enum { EV_PIECE, EV_OPT, EV_SEG };
@@ -104,7 +106,8 @@ static i64 seq_length(const Ev *ev, i64 N) {
     return len;
 }
 static Ev make_event(i64 o) {
-    Ev x; x.kind = EV_OPT; x.t = OT[o]; x.s = oS(o); x.e = oE(o); x.l = TR[OT[o]].R + h + oD(o); x.a = o; x.skip = oSK(o);
+    u32 t = otrail(o); const Trail *T = &TR[t];
+    Ev x; x.kind = EV_OPT; x.t = t; x.s = oS_t(T, o); x.e = oE_t(T, o); x.l = T->R + h + oD(o); x.a = o; x.skip = oSK_t(T, o);
     return x;
 }
 static Ev piece_event(i64 k, i64 trail) {
@@ -113,7 +116,7 @@ static Ev piece_event(i64 k, i64 trail) {
 }
 /* two events for a trail split at plain cuts c1 (start of segment 1) and c2 (end of segment 1) */
 static void seg_events(i64 c1, i64 c2, Ev *e1, Ev *e2) {
-    u32 t = OT[c1]; i64 R = TR[t].R;
+    u32 t = otrail(c1); i64 R = TR[t].R;
     i64 st1 = OP[c1].start, en1 = ((i64)OP[c2].start - OP[c2].g + R) % R, l1 = ((en1 - st1) % R + R) % R + n;
     i64 st2 = OP[c2].start, en2 = ((i64)OP[c1].start - OP[c1].g + R) % R, l2 = ((en2 - st2) % R + R) % R + n;
     e1->kind = EV_SEG; e1->t = t; e1->s = oS(c1); e1->e = oE(c2); e1->l = l1; e1->a = st1; e1->skip = -1;
@@ -229,8 +232,9 @@ static void ctx_load(Ctx *c, const Ev *ev, i64 N) {
     }
     c->nn = (int)N; c->N = N; c->first = 0; c->last = (int)N - 1;
     for (i64 i = 0; i < N; i++) { Node *q = &c->nd[i]; q->v = ev[i]; q->prev = (int)i - 1; q->next = i + 1 < N ? (int)i + 1 : -1; q->alive = 1; q->lab = (u64)(i + 1) << 32; }
-    h_reset(&c->H, 4 * ENT_PER * N + 65536);
-    { u64 bits = 1 << 16; while (bits < (u64)(4 * ENT_PER * N + 65536) * 16) bits <<= 1;
+    i64 ecap = (N > 100000 ? 2 : 4) * ENT_PER * N + 65536;      /* live entries plus head-room for dead ones */
+    h_reset(&c->H, ecap);
+    { u64 bits = 1 << 16; while (bits < (u64)ecap * 16) bits <<= 1;
       if (bits - 1 != c->bfmask || !c->bf) { free(c->bf); c->bf = malloc(bits / 8); c->bfmask = bits - 1; }
       memset(c->bf, 0, bits / 8); }
     for (i64 i = 0; i < N; i++) index_add(c, (int)i);
@@ -278,7 +282,7 @@ static Ins best_insertion(Ctx *c, u32 t, double noise) {
         int m = (int)(T->ohi - o0 < BATCH ? T->ohi - o0 : BATCH);
         u64 Sb[BATCH], Eb[BATCH], key[BATCH][NK], bit[BATCH][NK];
         for (int q = 0; q < m; q++) {
-            u64 S = oS(o0 + q), E = oE(o0 + q); Sb[q] = S; Eb[q] = E;
+            u64 S = oS_t(T, o0 + q), E = oE_t(T, o0 + q); Sb[q] = S; Eb[q] = E;
             for (int j = 0; j <= KLEV; j++) { key[q][2 * j] = HKEY(S >> (4 * j), j, 0); key[q][2 * j + 1] = HKEY(E & HMASK[h - j], j, 1); }
             for (int k = 0; k < NK; k++) { bit[q][k] = BFH(key[q][k]) & c->bfmask; __builtin_prefetch(&c->bf[bit[q][k] >> 6]); }
         }
@@ -291,7 +295,7 @@ static Ins best_insertion(Ctx *c, u32 t, double noise) {
                     if (!nd[x].alive) continue;
                     if (!(k & 1)) { a = x; b2 = nd[x].next; } else { b2 = x; a = nd[x].prev; }
                     if (a < 0 || b2 < 0) continue;
-                    if (!skchecked) { skchecked = 1; if (OP[o].g1 && c->nskp && skp_has(c, oSK(o))) { skbad = 1; break; } }
+                    if (!skchecked) { skchecked = 1; if (OP[o].g1 && c->nskp && skp_has(c, oSK_t(T, o))) { skbad = 1; break; } }
                     i64 d = dist(nd[a].v.e, S) + D + dist(E, nd[b2].v.s) - dist(nd[a].v.e, nd[b2].v.s);
                     double v = (double)d + (noise > 0 ? noise * rndu(c) : 0.0);
                     if (v < best.val) { best.val = v; best.delta = d; best.after = a; best.opt = o; }
@@ -301,7 +305,7 @@ static Ins best_insertion(Ctx *c, u32 t, double noise) {
     }
     if (best.after < 0) {                    /* nothing overlaps: append with the cheapest opening */
         i64 k = T->olo; for (i64 o = T->olo; o < T->ohi; o++) if (oD(o) < oD(k)) k = o;
-        best.delta = dist(nd[c->last].v.e, oS(k)) + oD(k); best.val = (double)best.delta; best.after = c->last; best.opt = k;
+        best.delta = dist(nd[c->last].v.e, oS_t(T, k)) + oD(k); best.val = (double)best.delta; best.after = c->last; best.opt = k;
     }
     return best;
 }
@@ -319,7 +323,7 @@ static Split best_split(Ctx *c, u32 t, int maxv) {
     if (nv > maxv) { for (int k = 0; k < maxv; k++) { int m = k + (int)rndn(c, nv - k); i64 x = c->vid[k]; c->vid[k] = c->vid[m]; c->vid[m] = x; } nv = maxv; }
     i64 np = 0;
     for (int a = 0; a < nv; a++) {
-        i64 c2 = c->vid[a]; u64 v = oS(c2);
+        i64 c2 = c->vid[a]; u64 v = oS_t(T, c2);
         int ni = 0, nj = 0;     /* I: inner nodes i with d(v, s_i) <= 1;  J: nodes jm (not the last) with d(e_jm, v) <= 1 */
         for (int lev = 0; lev <= 1; lev++)
             for (int q = h_get(H, HKEY(v & HMASK[h - lev], lev, 2)); q >= 0; q = H->next[q]) {
@@ -352,7 +356,7 @@ static Split best_split(Ctx *c, u32 t, int maxv) {
     for (i64 k = 0; k < np; k++) {
         u64 ep = nd[nd[c->pr[k].i].prev].v.e, sn = nd[nd[c->pr[k].jm].next].v.s;
         for (i64 o = T->olo; o < T->ohi; o++) {
-            i64 d = dist(ep, oS(o)) + oD(o) + dist(oE(o), sn) + c->pr[k].cst;
+            i64 d = dist(ep, oS_t(T, o)) + oD(o) + dist(oE_t(T, o), sn) + c->pr[k].cst;
             if (d < bd) { bd = d; bk = k; bc1 = o; }
         }
     }
@@ -401,7 +405,7 @@ static void search(Ctx *c, const Ev *init_ev, i64 initN, const char *outplan) {
         i64 ncand = 0; for (i64 i = 0; i + 1 < N; i++) { dj[i] = dist(EVT(i).e, EVT(i + 1).s); if (dj[i] >= 2) cand[ncand++] = (int)i; }
         int k = (int)rndint(c, 1, kmax); i64 nrem = 0;
         double mode = rndu(c);
-#define REMOVE(tt) do { u32 t_ = (tt); if (!c->rem[t_]) { c->rem[t_] = 1; c->pend[nrem++] = t_; } } while (0)
+#define REMOVE(tt) do { u32 t_ = (tt); if (!c->rem[t_] && !TR[t_].fixed) { c->rem[t_] = 1; c->pend[nrem++] = t_; } } while (0)
         if (mode < prel) {
             /* a run plus one or two runs whose end / start words are within one step of an opening of its trails */
             int nrun = 0; rid[0] = 0; for (i64 i = 1; i < N; i++) { if (dj[i - 1] >= 2) nrun++; rid[i] = nrun; } nrun++;
@@ -419,7 +423,7 @@ static void search(Ctx *c, const Ev *init_ev, i64 initN, const char *outplan) {
                 if (nopt <= 600000) {
                     h_reset(&c->RELT, nopt * 4 + 16);
                     for (int i = rs_[X]; i <= re_[X]; i++) for (i64 o = TR[EVT(i).t].olo; o < TR[EVT(i).t].ohi; o++) {
-                        u64 S = oS(o), E = oE(o);
+                        u64 S = oS_t(&TR[EVT(i).t], o), E = oE_t(&TR[EVT(i).t], o);
                         h_add(&c->RELT, HKEY(S, 0, 4), 0); h_add(&c->RELT, HKEY(S >> 4, 1, 4), 0); h_add(&c->RELT, HKEY(E, 0, 5), 0); h_add(&c->RELT, HKEY(E & HMASK[h - 1], 1, 5), 0);
                     }
                     for (int r = 0; r < nrun; r++) {
@@ -546,6 +550,15 @@ static int closes(i64 k, int ex) {
 /* window positions (in order) of a cyclic word; returns their number */
 static i64 trail_windows(const Trail *T, i64 *wp) {
     i64 R = T->R, m = 0; int cnt[16] = {0}, distinct = 0;
+    if (T->fixed) {                 /* open path: no wrap-around */
+        i64 len = R + h;
+        for (i64 i = 0; i < len; i++) {
+            if (cnt[T->c[i]]++ == 0) distinct++;
+            if (i >= n) { if (--cnt[T->c[i - n]] == 0) distinct--; }
+            if (i >= n - 1 && distinct == n) wp[m++] = i - n + 1;
+        }
+        return m;
+    }
     for (int k = 0; k < n - 1; k++) if (cnt[T->c[k % R]]++ == 0) distinct++;
     for (i64 p = 0; p < R; p++) {
         i64 q = p + n - 1; if (q >= R) q -= R;
@@ -554,6 +567,32 @@ static i64 trail_windows(const Trail *T, i64 *wp) {
         if (--cnt[T->c[p]] == 0) distinct--;
     }
     return m;
+}
+
+/* openings of trail t in window order; writes them to out (if not NULL) and returns their number */
+static i64 trail_options(i64 t, i64 *wp, const u64 *dupb, Opt *out, i64 *hist, i64 *shist) {
+    if (TR[t].fixed) return 0;
+    i64 R = TR[t].R, m = trail_windows(&TR[t], wp), k = 0;
+    for (i64 i = 0; i < m && m >= 2; i++) {
+        i64 i1 = i + 1 == m ? 0 : i + 1, i2 = i1 + 1 == m ? 0 : i1 + 1;
+        i64 g = (wp[i1] - wp[i] + R) % R;
+        if (g >= 2) {
+            if (g > 3) DIE("gap %lld inside a trail", g);
+            if (out) { out[k].start = (u32)wp[i1]; out[k].g = (unsigned char)g; out[k].g1 = 0; hist[3 - g + 3]++; }
+            k++;
+        }
+        if (use_skip && m >= 3) {
+            u64 r = rank_cyc(&TR[t], wp[i1]);
+            if ((dupb[r >> 6] >> (r & 63)) & 1) {
+                i64 g2 = g + (wp[i2] - wp[i1] + R) % R;
+                if (g2 >= 2) {
+                    if (out) { out[k].start = (u32)wp[i2]; out[k].g = (unsigned char)g2; out[k].g1 = (unsigned char)g; hist[3 - g2 + 3]++; shist[3 - g2 + 3]++; }
+                    k++;
+                }
+            }
+        }
+    }
+    return k;
 }
 
 int main(int argc, char **argv) {
@@ -606,10 +645,13 @@ int main(int argc, char **argv) {
     TR = calloc((size_t)NP + 1, sizeof(Trail)); NT = 0;
     i64 nclosed = 0, nopen = 0;
     for (i64 k = 0; k < NP; k++) if (closes(k, 0)) { closed[k] = 1; nclosed++; trail_of_piece[k] = NT; TR[NT].c = W + PS[k]; TR[NT].R = PL[k] - h; NT++; }
+    i64 nlinear = 0;
     { i64 no = 0; i64 *op = malloc((NP + 1) * 8); for (i64 k = 0; k < NP; k++) if (!closed[k]) op[no++] = k;
-      char *used = calloc((size_t)NP + 1, 1); i64 *chain = malloc((no + 1) * 8), *single = malloc((no + 1) * 8); i64 ns = 0;
-      for (i64 a = 0; a < no; a++) {
-          i64 k = op[a]; if (used[k]) continue;
+      char *used = calloc((size_t)NP + 1, 1), *haspred = calloc((size_t)NP + 1, 1); i64 *chain = malloc((no + 1) * 8);
+      for (i64 a = 0; a < no; a++) { u64 tw = hw_lin(W + PS[op[a]] + PL[op[a]] - h); for (i64 b = 0; b < no; b++) if (b != a && hw_lin(W + PS[op[b]]) == tw) haspred[op[b]] = 1; }
+      /* phase 0 starts at the pieces nothing leads to (open paths), phase 1 takes the cycles */
+      for (int phase = 0; phase < 2; phase++) for (i64 a = 0; a < no; a++) {
+          i64 k = op[a]; if (used[k] || (phase == 0 && haspred[k])) continue;
           i64 nc = 0; chain[nc++] = k; used[k] = 1; u64 hwd = hw_lin(W + PS[k]), tw;
           for (;;) {
               i64 lastp = chain[nc - 1]; tw = hw_lin(W + PS[lastp] + PL[lastp] - h);
@@ -618,59 +660,98 @@ int main(int argc, char **argv) {
               if (nx < 0) break;
               chain[nc++] = nx; used[nx] = 1;
           }
-          if (tw != hwd) { for (i64 b = 1; b < nc; b++) used[chain[b]] = 0; single[ns++] = k; continue; }
+          int ex = (tw != hwd && nc == 1) ? (closes(k, 1) ? 1 : closes(k, 2) ? 2 : 0) : 0;
+          if (ex) {          /* a whole trail written from a gap-2 or gap-1 opening */
+              closed[k] = 1; nclosed++; trail_of_piece[k] = NT; TR[NT].c = W + PS[k]; TR[NT].R = PL[k] - h - ex; NT++;
+              continue;
+          }
           i64 R = 0; for (i64 b = 0; b < nc; b++) R += PL[chain[b]] - h;
-          unsigned char *c = malloc((size_t)R + 16); i64 q = 0;
+          unsigned char *c = malloc((size_t)R + h + 16); i64 q = 0;
           for (i64 b = 0; b < nc; b++) { memcpy(c + q, W + PS[chain[b]], (size_t)(PL[chain[b]] - h)); q += PL[chain[b]] - h; trail_of_piece[chain[b]] = NT; }
-          TR[NT].c = c; TR[NT].R = R; NT++; nopen += nc;
+          TR[NT].c = c; TR[NT].R = R;
+          if (tw != hwd) { i64 lastp = chain[nc - 1]; memcpy(c + q, W + PS[lastp] + PL[lastp] - h, (size_t)h); TR[NT].fixed = 1; nlinear += nc; }
+          else nopen += nc;
+          NT++;
       }
-      for (i64 a = 0; a < ns; a++) {
-          i64 k = single[a]; int ex = closes(k, 1) ? 1 : closes(k, 2) ? 2 : 0;
-          if (!ex) DIE("open piece %lld cannot be chained into a closed trail", k);
-          closed[k] = 1; nclosed++; trail_of_piece[k] = NT; TR[NT].c = W + PS[k]; TR[NT].R = PL[k] - h - ex; NT++;
-      }
-      free(op); free(used); free(chain); free(single);
+      free(op); free(used); free(haspred); free(chain);
     }
     i64 sumR = 0, maxR = 0; for (i64 t = 0; t < NT; t++) { sumR += TR[t].R; if (TR[t].R > maxR) maxR = TR[t].R; }
-    printf("trails %lld (closed pieces %lld, chained open pieces %lld), sum R %lld\n", NT, nclosed, nopen, sumR); fflush(stdout);
-    /* duplicate windows */
+    printf("trails %lld (closed pieces %lld, chained open pieces %lld), sum R %lld\n", NT, nclosed, nopen, sumR);
+    if (nlinear) printf("%lld pieces form an open path that is not a closed trail; they stay where they are\n", nlinear);
+    fflush(stdout);
+    /* duplicate windows, then the openings of every trail (parallel over trails) */
     u64 NF = fact[n];
     u64 *seenb = calloc((size_t)(NF >> 6) + 1, 8), *dupb = calloc((size_t)(NF >> 6) + 1, 8);
-    i64 *wp = malloc((size_t)(maxR + 8) * 8);
-    if (!seenb || !dupb || !wp) DIE("out of memory");
-    { i64 nwin = 0;
-      for (i64 t = 0; t < NT; t++) {
-          i64 m = trail_windows(&TR[t], wp); nwin += m;
-          for (i64 i = 0; i < m; i++) { u64 r = rank_cyc(&TR[t], wp[i]), bit = 1ULL << (r & 63); if (seenb[r >> 6] & bit) dupb[r >> 6] |= bit; else seenb[r >> 6] |= bit; }
-      }
-      u64 dcount = 0, scount = 0; for (u64 i = 0; i <= (NF >> 6); i++) { scount += __builtin_popcountll(seenb[i]); dcount += __builtin_popcountll(dupb[i]); }
-      printf("trail windows %lld distinct %llu (n! check: %s), duplicated %llu (%.1fs)\n", nwin, scount, scount == NF ? "True" : "False", dcount, wall() - t00); fflush(stdout);
-      free(seenb);
+    if (!seenb || !dupb) DIE("out of memory");
+    int LT = NTHR > 8 ? NTHR : 8; if (LT > omp_get_max_threads()) LT = omp_get_max_threads();
+    i64 nwin = 0;
+    #pragma omp parallel num_threads(LT) reduction(+:nwin)
+    {
+        i64 *wp = malloc((size_t)(maxR + 8) * 8); if (!wp) DIE("out of memory");
+        #pragma omp for schedule(dynamic, 8)
+        for (i64 t = 0; t < NT; t++) {
+            i64 m = trail_windows(&TR[t], wp); nwin += m;
+            for (i64 i = 0; i < m; i++) {
+                u64 r = TR[t].fixed ? rank_lin(TR[t].c + wp[i]) : rank_cyc(&TR[t], wp[i]), bit = 1ULL << (r & 63);
+                u64 old = __atomic_fetch_or(&seenb[r >> 6], bit, __ATOMIC_RELAXED);
+                if (old & bit) __atomic_fetch_or(&dupb[r >> 6], bit, __ATOMIC_RELAXED);
+            }
+        }
+        free(wp);
     }
-    /* options */
-    { i64 hist[8] = {0}, shist[8] = {0};
-      for (i64 t = 0; t < NT; t++) {
-          i64 R = TR[t].R, m = trail_windows(&TR[t], wp);
-          TR[t].olo = NO;
-          for (i64 i = 0; i < m && m >= 2; i++) {
-              i64 i1 = i + 1 == m ? 0 : i + 1, i2 = i1 + 1 == m ? 0 : i1 + 1;
-              i64 g = (wp[i1] - wp[i] + R) % R;
-              if (g >= 2) { if (g > 3) DIE("gap %lld inside a trail", g); add_option((u32)t, wp[i1], g, 0); hist[3 - g + 3]++; }
-              if (use_skip && m >= 3) {
-                  u64 r = rank_cyc(&TR[t], wp[i1]);
-                  if ((dupb[r >> 6] >> (r & 63)) & 1) {
-                      i64 g2 = g + (wp[i2] - wp[i1] + R) % R;
-                      if (g2 >= 2) { add_option((u32)t, wp[i2], g2, g); hist[3 - g2 + 3]++; shist[3 - g2 + 3]++; }
-                  }
+    { u64 dcount = 0, scount = 0; for (u64 i = 0; i <= (NF >> 6); i++) { scount += __builtin_popcountll(seenb[i]); dcount += __builtin_popcountll(dupb[i]); }
+      printf("trail windows %lld distinct %llu (n! check: %s), duplicated %llu (%.1fs)\n", nwin, scount, scount == NF ? "True" : "False", dcount, wall() - t00); fflush(stdout);
+      if (scount != NF) DIE("the trails do not contain every permutation (%llu missing): the model cannot be used on this word", (unsigned long long)(NF - scount));
+      free(seenb); }
+    /* A window may be skipped only if its permutation really occurs twice in the word.  The cyclic word of a trail
+       can contain a window that the word itself does not have (a piece cut open across a duplicate window), so the
+       duplicates are counted again on the word and the two sets are intersected. */
+    { u64 *ws = calloc((size_t)(NF >> 6) + 1, 8), *wd = calloc((size_t)(NF >> 6) + 1, 8); if (!ws || !wd) DIE("out of memory");
+      i64 nwin_word = L - n + 1;
+      #pragma omp parallel num_threads(LT)
+      {
+          int tid = omp_get_thread_num(), nt = omp_get_num_threads();
+          i64 a = nwin_word * tid / nt, b = nwin_word * (tid + 1) / nt; int cnt[16] = {0}, distinct = 0;
+          for (i64 i = a; i < a + n - 1 && i < L; i++) if (cnt[W[i]]++ == 0) distinct++;
+          for (i64 p = a; p < b; p++) {
+              if (cnt[W[p + n - 1]]++ == 0) distinct++;
+              if (distinct == n) {
+                  u64 r = rank_lin(W + p), bit = 1ULL << (r & 63);
+                  u64 old = __atomic_fetch_or(&ws[r >> 6], bit, __ATOMIC_RELAXED);
+                  if (old & bit) __atomic_fetch_or(&wd[r >> 6], bit, __ATOMIC_RELAXED);
               }
+              if (--cnt[W[p]] == 0) distinct--;
           }
-          TR[t].ohi = NO;
       }
+      u64 before = 0, after = 0;
+      for (u64 i = 0; i <= (NF >> 6); i++) { before += __builtin_popcountll(dupb[i]); dupb[i] &= wd[i]; after += __builtin_popcountll(dupb[i]); }
+      if (before != after) { printf("%llu duplicated windows exist only in the cyclic words, not in the word: they will not be skipped" NL, (unsigned long long)(before - after)); fflush(stdout); }
+      free(ws); free(wd); }
+    { i64 hist[8] = {0}, shist[8] = {0}; i64 *ocnt = calloc((size_t)NT + 1, 8);
+      for (int pass = 0; pass < 2; pass++) {
+          #pragma omp parallel num_threads(LT)
+          {
+              i64 *wp = malloc((size_t)(maxR + 8) * 8), lh[8] = {0}, lsh[8] = {0}; if (!wp) DIE("out of memory");
+              #pragma omp for schedule(dynamic, 8)
+              for (i64 t = 0; t < NT; t++) {
+                  i64 k = trail_options(t, wp, dupb, pass ? OP + TR[t].olo : NULL, lh, lsh);
+                  if (!pass) ocnt[t] = k; else if (k != ocnt[t]) DIE("internal error: option count");
+              }
+              free(wp);
+              #pragma omp critical
+              for (int d = 0; d < 8; d++) { hist[d] += lh[d]; shist[d] += lsh[d]; }
+          }
+          if (!pass) {
+              NO = 0; for (i64 t = 0; t < NT; t++) { TR[t].olo = NO; NO += ocnt[t]; TR[t].ohi = NO; }
+              OP = malloc((size_t)(NO + 1) * sizeof(Opt)); if (!OP) DIE("out of memory for %lld options", NO);
+          }
+      }
+      free(ocnt);
       printf("options %lld by extra cost {", NO); for (int d = 0; d < 8; d++) if (hist[d]) printf(" %d: %lld", d - 3, hist[d]);
       printf(" }; dup-skip options {"); for (int d = 0; d < 8; d++) if (shist[d]) printf(" %d: %lld", d - 3, shist[d]);
       printf(" } (%.1fs)\n", wall() - t00); fflush(stdout);
     }
-    free(dupb); free(wp);
+    free(dupb);
     /* current sequence */
     i64 cap = NP * 2 + 1024; Ev *ev = malloc(cap * sizeof(Ev)); i64 N = 0;
     if (!plan_in) {
