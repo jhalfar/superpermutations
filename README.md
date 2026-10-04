@@ -31,14 +31,14 @@ c++ -O3 -std=c++17 superperm-upper-43-80/tools/literal_check.cpp -o literal_chec
 xz -dk words/superpermutation-11-43930628.txt.xz words/superpermutation-12-522745538.txt.xz words/superpermutation-13-6747918058.txt.xz
 ./literal_check 11 0123456789A   words/superpermutation-11-43930628.txt --deletions
 ./literal_check 12 0123456789AB  words/superpermutation-12-522745538.txt --deletions
-./literal_check 13 0123456789ABC words/superpermutation-13-6747918058.txt
+./literal_check 13 0123456789ABC words/superpermutation-13-6747918058.txt --deletions
 ```
 
-The n=13 check needs about 13 GB of RAM and took about 10 minutes here (64-bit Linux). Our results:
+The n=13 check needs about 13 GB of RAM and took 49 minutes here (WSL 2, word read from a Windows disk). Our results:
 
 * n=11: `"length":43930628, "distinct_permutations":39916800, "missing_permutations":0, "extra_occurrences":18814, "coverage_preserving_deletions":[]`
 * n=12: `"length":522745538, "distinct_permutations":479001600, "missing_permutations":0, "extra_occurrences":169343, "coverage_preserving_deletions":[]`
-* n=13: `"length":6747918058, "distinct_permutations":6227020800, "missing_permutations":0, "extra_occurrences":1693436`
+* n=13: `"length":6747918058, "distinct_permutations":6227020800, "missing_permutations":0, "extra_occurrences":1693436, "coverage_preserving_deletions":[]`
 
 A lighter check, `tools/verify_par.c`, uses one bit per permutation (778 MB at n=13) and OpenMP threads. It checks
 n=13 in about 30 s on 16 threads:
@@ -51,8 +51,7 @@ cc -O2 -fopenmp -o verify_par tools/verify_par.c
 `tools/delcheck.c` runs the same single-deletion test as `literal_check --deletions` with two bits per permutation
 and the word read from disk in blocks, so n=13 needs 1.6 GB of RAM instead of about 13 GB (2.5 minutes on 8
 threads). On test words with known deletable letters it returns the same list as `literal_check`, and on the n=11
-and n=12 words the same numbers. For the n=13 word it reports
-`"extra_occurrences":1693436, "coverage_preserving_deletions":[]`:
+n=12 and n=13 words the same numbers:
 
 ```sh
 cc -O2 -fopenmp -o delcheck tools/delcheck.c
