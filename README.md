@@ -11,12 +11,7 @@ closed trails, opened at different places and joined in a different order. No ne
 |---|---|---|---|---|
 | 11 | **43,930,623** | 43,930,624 (Theo H., PR #6 to Pantone's repo, derived from our 43,930,628), 43,930,668 (rumstd, PR #4), 43,930,680 (Pantone) | [`words/superpermutation-11-43930623.txt.xz`](words/superpermutation-11-43930623.txt.xz) | all 39,916,800 permutations; no single letter can be deleted |
 | 12 | **522,745,531** | 522,745,581 (Pantone) | [`words/superpermutation-12-522745531.txt.xz`](words/superpermutation-12-522745531.txt.xz) | all 479,001,600 permutations; no single letter can be deleted |
-| 13 | **6,747,917,987** | 6,747,918,066 (Pantone) | [`words/superpermutation-13-6747917987.txt.xz`](words/superpermutation-13-6747917987.txt.xz) | all 6,227,020,800 permutations; no single letter can be deleted |
-
-For n=13 a first pass of the new step 3 below already gives 6,747,917,970 (2026-10-05): the plan is
-[`plan/trailsearch-13-6747917970.plan`](plan/trailsearch-13-6747917970.plan), the word has SHA-256
-`45166bd621d76a6ada538e05d62776019227048b08e79a660dbd4a018654c385` and passes `tools/delcheck.c`; the compressed
-word will be added.
+| 13 | **6,747,917,970** | 6,747,918,066 (Pantone) | [`words/superpermutation-13-6747917970.txt.xz`](words/superpermutation-13-6747917970.txt.xz) | all 6,227,020,800 permutations; no single letter can be deleted |
 
 Words use the alphabet `0123456789A…`, one line plus LF, as in Pantone's repository. The files are compressed with
 Pantone's `tools/compress_word.py` (XZ with a delta filter of distance n); plain `xz -d` restores them. SHA-256 values
@@ -25,7 +20,7 @@ are in [`SHA256SUMS`](SHA256SUMS).
 `words/` also keeps our earlier words: for n=11, 43,930,674 (2026-10-02, run-level step only; it is the base
 word of the n=11 plan), 43,930,649 and 43,930,644 (2026-10-03/04) and 43,930,628 (2026-10-04, the word Theo H.'s
 43,930,624 was derived from); for n=12, 522,745,538 (2026-10-04); for n=13, 6,747,918,058 (2026-10-03, run-level
-step only; the base word of the n=13 plans).
+step only; the base word of the n=13 plans) and 6,747,917,987 (2026-10-04, before step 3 below).
 
 ## Verify
 
@@ -34,10 +29,10 @@ With Pantone's independent checker:
 ```sh
 git clone https://github.com/jaypantone/superperm-upper-43-80
 c++ -O3 -std=c++17 superperm-upper-43-80/tools/literal_check.cpp -o literal_check
-xz -dk words/superpermutation-11-43930623.txt.xz words/superpermutation-12-522745531.txt.xz words/superpermutation-13-6747917987.txt.xz
+xz -dk words/superpermutation-11-43930623.txt.xz words/superpermutation-12-522745531.txt.xz words/superpermutation-13-6747917970.txt.xz
 ./literal_check 11 0123456789A   words/superpermutation-11-43930623.txt --deletions
 ./literal_check 12 0123456789AB  words/superpermutation-12-522745531.txt --deletions
-./literal_check 13 0123456789ABC words/superpermutation-13-6747917987.txt --deletions
+./literal_check 13 0123456789ABC words/superpermutation-13-6747917970.txt --deletions
 ```
 
 The n=13 check needs about 13 GB of RAM and took 49 minutes here (WSL 2, word read from a Windows disk). We ran it on
@@ -46,14 +41,14 @@ was checked with `tools/delcheck.c` (below), which runs the same test in 1.6 GB.
 
 * n=11: `"length":43930623, "distinct_permutations":39916800, "missing_permutations":0, "extra_occurrences":18815, "coverage_preserving_deletions":[]`
 * n=12: `"length":522745531, "distinct_permutations":479001600, "missing_permutations":0, "extra_occurrences":169343, "coverage_preserving_deletions":[]`
-* n=13 (`delcheck`): `"length":6747917987, "distinct_permutations":6227020800, "missing_permutations":0, "extra_occurrences":1693436, "coverage_preserving_deletions":[]`
+* n=13 (`delcheck`): `"length":6747917970, "distinct_permutations":6227020800, "missing_permutations":0, "extra_occurrences":1693436, "coverage_preserving_deletions":[]`
 
 A lighter check, `tools/verify_par.c`, uses one bit per permutation (778 MB at n=13) and OpenMP threads. It checks
 n=13 in about 30 s on 16 threads:
 
 ```sh
 cc -O2 -fopenmp -o verify_par tools/verify_par.c
-./verify_par words/superpermutation-13-6747917987.txt
+./verify_par words/superpermutation-13-6747917970.txt
 ```
 
 `tools/delcheck.c` runs the same single-deletion test as `literal_check --deletions` with two bits per permutation
@@ -63,7 +58,7 @@ the n=11 and n=12 words and the two earlier n=13 words the same numbers:
 
 ```sh
 cc -O2 -fopenmp -o delcheck tools/delcheck.c
-./delcheck words/superpermutation-13-6747917987.txt
+./delcheck words/superpermutation-13-6747917970.txt
 ```
 
 ## Rebuild the words from their plans (no search needed)
@@ -91,8 +86,9 @@ sha256sum rebuilt-12.txt    # f287da44152c513f7808144335ba71f7da07e27c7286a4b0e7
 n=13 takes two steps. [`plan/plan-13-6747918058.txt`](plan/plan-13-6747918058.txt) lists, in output order, one line
 `piece offset` for each of the 252,120 pieces of Pantone's 6,747,918,066 word. The offset says where that piece's
 closed trail is opened (-1 means the piece is written as it is). This gives our 6,747,918,058 word.
-[`plan/trailsearch-13-6747917987.plan`](plan/trailsearch-13-6747917987.plan) then lists the 252,081 pieces of the
-final word in terms of the trails of that word.
+[`plan/trailsearch-13-6747917970.plan`](plan/trailsearch-13-6747917970.plan) then lists the 252,081 pieces of the
+final word in terms of the trails of that word ([`plan/trailsearch-13-6747917987.plan`](plan/trailsearch-13-6747917987.plan) does the same for
+the earlier 6,747,917,987 word).
 
 ```sh
 cc -O2 -o pieces tools/pieces.c
@@ -101,8 +97,8 @@ xz -dkc superperm-upper-43-80/words/13/superpermutation-13-6747918066.txt.xz > p
 ./pieces pantone-13.txt pieces-13.txt
 ./assemble pantone-13.txt pieces-13.txt plan/plan-13-6747918058.txt step1-13.txt   # ~1 min
 sha256sum step1-13.txt      # fc9be56c413d125924e43241e8774c1ae922b963e7c0a65b50d16887579f381e
-./trailsearch step1-13.txt rebuilt-13.txt --plan-in plan/trailsearch-13-6747917987.plan --time 0 --threads 1   # ~10 min, 11 GB
-sha256sum rebuilt-13.txt    # 152b97c95a332ae822a906b2170c52cb792c3c384cf28455323bbc053c5d41a8
+./trailsearch step1-13.txt rebuilt-13.txt --plan-in plan/trailsearch-13-6747917970.plan --time 0 --threads 1   # ~10 min, 11 GB
+sha256sum rebuilt-13.txt    # 45166bd621d76a6ada538e05d62776019227048b08e79a660dbd4a018654c385
 ```
 
 ## How they were found
