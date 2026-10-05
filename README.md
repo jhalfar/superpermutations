@@ -5,13 +5,20 @@ and ran the searches and wrote the code and this write-up.
 
 Three superpermutations that are shorter than the best known ones (as of 2026-10-05). All re-join the component
 words of Jay Pantone's [43/80 construction](https://github.com/jaypantone/superperm-upper-43-80): they use the same
-closed trails, opened at different places and joined in a different order. No new construction is involved.
+closed trails, opened at different places and joined in a different order (a few trails are written in two
+segments). No new construction is involved.
 
 | n | length | previous best | word | verified |
 |---|---|---|---|---|
-| 11 | **43,930,623** | 43,930,624 (Theo H., PR #6 to Pantone's repo, derived from our 43,930,628), 43,930,668 (rumstd, PR #4), 43,930,680 (Pantone) | [`words/superpermutation-11-43930623.txt.xz`](words/superpermutation-11-43930623.txt.xz) | all 39,916,800 permutations; no single letter can be deleted |
-| 12 | **522,745,531** | 522,745,581 (Pantone) | [`words/superpermutation-12-522745531.txt.xz`](words/superpermutation-12-522745531.txt.xz) | all 479,001,600 permutations; no single letter can be deleted |
+| 11 | **43,930,614** | 43,930,624 (Theo H., PR #6 to Pantone's repo, derived from our 43,930,628), 43,930,668 (rumstd, PR #4), 43,930,680 (Pantone) | [`words/superpermutation-11-43930614.txt.xz`](words/superpermutation-11-43930614.txt.xz) | all 39,916,800 permutations; no single letter can be deleted |
+| 12 | **522,745,464** | 522,745,531 (ours, 2026-10-05 01:45 CEST; Theo H. reached the same length independently a few hours later with a different word, derived from our 522,745,538), 522,745,581 (Pantone) | [`words/superpermutation-12-522745464.txt.xz`](words/superpermutation-12-522745464.txt.xz) | all 479,001,600 permutations; no single letter can be deleted |
 | 13 | **6,747,917,970** | 6,747,918,066 (Pantone) | [`words/superpermutation-13-6747917970.txt.xz`](words/superpermutation-13-6747917970.txt.xz) | all 6,227,020,800 permutations; no single letter can be deleted |
+
+n=13 is being worked on. A later word of length **6,747,917,498** exists as a plan,
+[`plan/trailsearch-13-6747917498.plan`](plan/trailsearch-13-6747917498.plan) (relative to our 6,747,918,058 word, like
+the other n=13 plans); the word has SHA-256 `685bbc4db886f8f226f22341d6e8fbc127216f39135e9d83e65a6af94bd8e7ce` and passes
+`tools/delcheck.c`; `tools/trailsearch.c` rebuilds it from the plan. The compressed word is being
+made (about 100 minutes) and will be added.
 
 Words use the alphabet `0123456789A…`, one line plus LF, as in Pantone's repository. The files are compressed with
 Pantone's `tools/compress_word.py` (XZ with a delta filter of distance n); plain `xz -d` restores them. SHA-256 values
@@ -19,7 +26,7 @@ are in [`SHA256SUMS`](SHA256SUMS).
 
 `words/` also keeps our earlier words: for n=11, 43,930,674 (2026-10-02, run-level step only; it is the base
 word of the n=11 plan), 43,930,649 and 43,930,644 (2026-10-03/04) and 43,930,628 (2026-10-04, the word Theo H.'s
-43,930,624 was derived from); for n=12, 522,745,538 (2026-10-04); for n=13, 6,747,918,058 (2026-10-03, run-level
+43,930,624 was derived from); for n=11 also 43,930,623 and for n=12 522,745,538 (2026-10-04) and 522,745,531 (both 2026-10-05 01:45 CEST); for n=13, 6,747,918,058 (2026-10-03, run-level
 step only; the base word of the n=13 plans) and 6,747,917,987 (2026-10-04, before step 3 below).
 
 ## Verify
@@ -29,9 +36,9 @@ With Pantone's independent checker:
 ```sh
 git clone https://github.com/jaypantone/superperm-upper-43-80
 c++ -O3 -std=c++17 superperm-upper-43-80/tools/literal_check.cpp -o literal_check
-xz -dk words/superpermutation-11-43930623.txt.xz words/superpermutation-12-522745531.txt.xz words/superpermutation-13-6747917970.txt.xz
-./literal_check 11 0123456789A   words/superpermutation-11-43930623.txt --deletions
-./literal_check 12 0123456789AB  words/superpermutation-12-522745531.txt --deletions
+xz -dk words/superpermutation-11-43930614.txt.xz words/superpermutation-12-522745464.txt.xz words/superpermutation-13-6747917970.txt.xz
+./literal_check 11 0123456789A   words/superpermutation-11-43930614.txt --deletions
+./literal_check 12 0123456789AB  words/superpermutation-12-522745464.txt --deletions
 ./literal_check 13 0123456789ABC words/superpermutation-13-6747917970.txt --deletions
 ```
 
@@ -39,8 +46,8 @@ The n=13 check needs about 13 GB of RAM and took 49 minutes here (WSL 2, word re
 the n=11 and n=12 words and on our two earlier n=13 words (6,747,918,058 and 6,747,917,995). The current n=13 word
 was checked with `tools/delcheck.c` (below), which runs the same test in 1.6 GB. Results:
 
-* n=11: `"length":43930623, "distinct_permutations":39916800, "missing_permutations":0, "extra_occurrences":18815, "coverage_preserving_deletions":[]`
-* n=12: `"length":522745531, "distinct_permutations":479001600, "missing_permutations":0, "extra_occurrences":169343, "coverage_preserving_deletions":[]`
+* n=11: `"length":43930614, "distinct_permutations":39916800, "missing_permutations":0, "extra_occurrences":18816, "coverage_preserving_deletions":[]`
+* n=12: `"length":522745464, "distinct_permutations":479001600, "missing_permutations":0, "extra_occurrences":169349, "coverage_preserving_deletions":[]`
 * n=13 (`delcheck`): `"length":6747917970, "distinct_permutations":6227020800, "missing_permutations":0, "extra_occurrences":1693436, "coverage_preserving_deletions":[]`
 
 A lighter check, `tools/verify_par.c`, uses one bit per permutation (778 MB at n=13) and OpenMP threads. It checks
@@ -65,22 +72,25 @@ cc -O2 -fopenmp -o delcheck tools/delcheck.c
 
 A plan lists the pieces of a word in order: which trail of the base word, where it is opened, and with which gap.
 
-n=11: [`plan/trailsearch-11-43930623.plan`](plan/trailsearch-11-43930623.plan) is relative to our 43,930,674 word.
+n=11: [`plan/trailsearch-11-43930614.plan`](plan/trailsearch-11-43930614.plan) is relative to our 43,930,674 word
+([`plan/trailsearch-11-43930623.plan`](plan/trailsearch-11-43930623.plan) gives the earlier 43,930,623 word).
 
 ```sh
 cc -O2 -fopenmp -o trailsearch tools/trailsearch.c -lm
 xz -dk words/superpermutation-11-43930674.txt.xz
-./trailsearch words/superpermutation-11-43930674.txt rebuilt-11.txt --plan-in plan/trailsearch-11-43930623.plan --time 0   # seconds
-sha256sum rebuilt-11.txt    # 502a551fe7102a4e45581b2c38f9494f30e1fe26aec98282327a2d140e937e4d
+./trailsearch words/superpermutation-11-43930674.txt rebuilt-11.txt --plan-in plan/trailsearch-11-43930614.plan --time 0   # seconds
+sha256sum rebuilt-11.txt    # 388ec7d60116acfac039b45533589f45afa85b13d83ae740a916d3a477ca44ab
 ```
 
-n=12: [`plan/trailsearch-12-522745531.plan`](plan/trailsearch-12-522745531.plan) is relative to Pantone's 522,745,581
-word (25,206 pieces).
+n=12: [`plan/trailsearch-12-522745464.plan`](plan/trailsearch-12-522745464.plan) is relative to Pantone's 522,745,581
+word. It was written from the finished word by a converter (the search itself worked on a re-based copy), so a few
+of its lines are segments of trails. [`plan/trailsearch-12-522745531.plan`](plan/trailsearch-12-522745531.plan) gives
+the earlier 522,745,531 word in the same way.
 
 ```sh
 xz -dkc superperm-upper-43-80/words/12/superpermutation-12-522745581.txt.xz > pantone-12.txt
-./trailsearch pantone-12.txt rebuilt-12.txt --plan-in plan/trailsearch-12-522745531.plan --time 0   # ~2 min, 1.3 GB
-sha256sum rebuilt-12.txt    # f287da44152c513f7808144335ba71f7da07e27c7286a4b0e7b7c100214c249e
+./trailsearch pantone-12.txt rebuilt-12.txt --plan-in plan/trailsearch-12-522745464.plan --time 0   # ~2 min, 1.3 GB
+sha256sum rebuilt-12.txt    # e86ea8cb53583f6d5fb267a8e10fd690b8ff85430e78cbc7cd6f327fe2891c24
 ```
 
 n=13 takes two steps. [`plan/plan-13-6747918058.txt`](plan/plan-13-6747918058.txt) lists, in output order, one line
@@ -161,7 +171,8 @@ words:
 ```
 
 Runs are limited by time and the threads exchange results, so the same command gives a different word each time.
-(The 522,745,570 run used an earlier single-threaded version of the tool.) Compared with Pantone's words:
+(The 522,745,570 run used an earlier single-threaded version of the tool.) The words after steps 2 and 3, compared
+with Pantone's words:
 
 | | n=11: 43,930,680 → 43,930,623 | n=12: 522,745,581 → 522,745,531 | n=13: 6,747,918,066 → 6,747,917,987 |
 |---|---|---|---|
@@ -189,8 +200,42 @@ is the "cluster optimisation" of the generalised-TSP literature. One pass over o
 * n=12: 522,745,537 → 522,745,531;
 * n=13: 6,747,917,987 → 6,747,917,970.
 
-The pass, the search options used for 43,930,623, and a GPU version of the search are not in `tools/` yet; they
-will be added once cleaned up. The words above can be rebuilt from their plans with the published tool.
+**Step 4 (2026-10-05): moves that change the order together with the openings.** After step 3 the plain search
+stalls: it re-inserts trails next to neighbours whose openings stay fixed, and the pass of step 3 never changes the
+order. Four additions got it moving again. In each of them the pass of step 3 (or its tables) is what judges a move.
+
+* *Blocks, with the pass inside the search.* A whole run of trails (or part of one) is moved to another place without
+  being re-opened, and the pass is repeated every few hundred iterations in an incremental form that only recomputes
+  the layers that changed. Neither helps alone; together they took n=12 from 522,745,497 to 522,745,482 in one
+  20-minute round. This search runs on a GPU: the card evaluates the openings of the long trails (thousands each)
+  against the whole sequence.
+* *Relocation with re-opening.* From forward and backward tables of the pass one gets, exactly, what is saved by
+  taking a window of consecutive trails out when all other openings may change, and what it costs to insert a trail
+  elsewhere when its new neighbours may re-open. Windows whose saving exceeds the cost are moved and confirmed by the
+  pass. No random search is involved: 522,745,482 → 522,745,466 in four minutes, and at n=13 6,747,917,824 →
+  6,747,917,498 in under two hours.
+* *Segment insertion.* The sequence is cut at three to six joins and its stretches, of any length, are reassembled in
+  another order; each candidate is judged with the best openings of the whole new sequence. This found n=11:
+  43,930,623 → 621 → 619 → 615 → 43,930,614, where every other move had stalled (no reordering inside windows of up
+  to 9 consecutive pieces shortens the 43,930,623 word).
+* *Loops.* The trails and joins of a word form a balanced directed graph, and any connected balanced graph spells a
+  word (Pantone's summary, section 5), so a trail may be written in two segments with a closed block of other trails
+  hung between them. This pays when a join already passes through a cut of another trail: never at n=11, a few
+  letters at n=12, more on our n=13 plans (not applied there yet).
+
+A fifth idea is not ours. Theo H.'s 43,930,624 word (derived from our 43,930,628) opens four trails inside a 1-cycle,
+which costs two letters per trail but lets consecutive trails overlap in n−2 letters. With such openings allowed, the
+pass of step 3 took our 522,745,537 word to 522,745,530 instead of 522,745,531, and the n=12 word above descends from
+that one. On later words (43,930,623 and 522,745,498) these openings gained nothing more.
+
+The words in the table: n=11 comes from segment insertion on the 43,930,623 word; n=12 from the 522,745,530 word by
+rounds of GPU search (the later ones with block moves), each followed by the pass and the loop moves; the n=13 plan
+from the 6,747,917,970 word by GPU search (one 90-minute round without block moves, ten minutes with them), the
+pass, and the relocation.
+
+The tools of steps 3 and 4 and the GPU version of the search are not in `tools/` yet; they will be added once
+cleaned up. The words above can be rebuilt from their plans with the published tool, and checked without any of our
+code.
 
 ## Tools
 
@@ -206,5 +251,6 @@ will be added once cleaned up. The words above can be rebuilt from their plans w
 
 ## Credits and license
 
-The construction is Jay Pantone's; the gap-2 opening was found in rumstd's n=10 word. Apache License 2.0 (see
+The construction is Jay Pantone's; the gap-2 opening was found in rumstd's n=10 word, and the opening inside a
+1-cycle in Theo H.'s n=11 word. Apache License 2.0 (see
 [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE)), the same as the repository the input words come from.
