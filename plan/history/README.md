@@ -36,7 +36,8 @@ single letter can be deleted. The SHA-256 is that of the rebuilt word (one line 
 | 12 | 522,745,466 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745466-rb.plan`](trailsearch-12-522745466-rb.plan) | relocation with re-opening on 522,745,482 (a side branch) | `3176a29a0fec5e6466de7eca6be23c97a9c00707bf086442dd3b143ca24c366a` |
 | 12 | 522,745,464 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745464-rb.plan`](trailsearch-12-522745464-rb.plan) | eight more rounds with block moves from 522,745,482 | `e86ea8cb53583f6d5fb267a8e10fd690b8ff85430e78cbc7cd6f327fe2891c24` |
 | 12 | 522,745,445 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745445-rb.plan`](trailsearch-12-522745445-rb.plan) | relocation with re-opening on 522,745,464 | `fc52ead7b97ba3b50775c3359bb559336e498713b27dba7bda72a30841ef8a90` |
-| 12 | 522,745,383 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745383-rb.plan`](trailsearch-12-522745383-rb.plan) | segment insertion on 522,745,445 (the current word; its plan on Pantone's word is in `plan/`) | `6d787880b4b660f36428715f11a178af816bd1a936f95cfb518217685d99382e` |
+| 12 | 522,745,383 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745383-rb.plan`](trailsearch-12-522745383-rb.plan) | segment insertion on 522,745,445 (its plan on Pantone's word is in `plan/`) | `6d787880b4b660f36428715f11a178af816bd1a936f95cfb518217685d99382e` |
+| 12 | 522,745,376 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745376-rb.plan`](trailsearch-12-522745376-rb.plan) | one more round of GPU search (522,745,379) and segment insertion again (the current word; its plan on Pantone's word is in `plan/`) | `964c633ea377ecbaea3f0d30e974a2ecb925c2e810de8997abf1aa37b92763b1` |
 
 ## The re-based word for n=12
 
