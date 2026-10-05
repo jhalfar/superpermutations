@@ -124,11 +124,14 @@ rounds of GPU search (the later ones with block moves), each followed by the pas
 segment insertion again (522,745,376). From there the search alone found nothing in four rounds. What helped was a
 short search at a constant high temperature (60,000 iterations) whose end sequence, one to ten letters longer than
 the best, is handed to the relocation, the loop moves and segment insertion: 522,745,374, then segment insertion
-with up to five cuts 522,745,366, and one more such start 522,745,356.
+with up to five cuts 522,745,366, and two more such starts 522,745,356 and 522,745,355.
 
 The n=13 word comes from the 6,747,917,970 word by GPU search (one 90-minute round without block moves, ten minutes
 with them), the pass and the relocation (6,747,917,498), and then loop moves and the relocation in turn:
-6,747,917,464, 445, 441, 437, 429, 421.
+6,747,917,464, 445, 441, 437, 429, 421. Segment insertion was too slow to finish a round at n=13 at first. Its
+first run there, with three cuts, took the word from 6,747,917,421 to 6,747,916,917 in 24 rounds: 99, 75, 64,
+46, 44, 33, 26, 23, 23, 12 and 16 letters in the first eleven, then a few letters per round until no candidate
+was shorter.
 
 The tools of steps 3 and 4 and the GPU version of the search are not in `tools/` yet; they will be added once
 cleaned up. The words above can be rebuilt from their plans with the published tool, and checked without any of my
