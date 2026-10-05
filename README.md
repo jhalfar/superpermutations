@@ -15,14 +15,13 @@ runs the searches and writes the code and this text.
 | n | length | Pantone's word | shorter by | file |
 |---|---|---|---|---|
 | 11 | **43,930,614** | 43,930,680 | 66 | [`words/superpermutation-11-43930614.txt.xz`](words/superpermutation-11-43930614.txt.xz) |
-| 12 | **522,745,376** | 522,745,581 | 205 | [`words/superpermutation-12-522745376.txt.xz`](words/superpermutation-12-522745376.txt.xz) |
-| 13 | **6,747,917,498** | 6,747,918,066 | 568 | [`words/superpermutation-13-6747917498.txt.xz`](words/superpermutation-13-6747917498.txt.xz) |
+| 12 | **522,745,356** | 522,745,581 | 225 | [`words/superpermutation-12-522745356.txt.xz`](words/superpermutation-12-522745356.txt.xz) |
+| 13 | **6,747,917,421** | 6,747,918,066 | 645 | [`words/superpermutation-13-6747917421.txt.xz`](words/superpermutation-13-6747917421.txt.xz) |
 
 In each of them every permutation occurs and no single letter can be deleted.
 
-n = 12 and n = 13 are still getting shorter. For n = 13 there is already a word of length 6,747,917,464. It is here
-as a plan, [`plan/trailsearch-13-6747917464.plan`](plan/trailsearch-13-6747917464.plan), and the word has SHA-256
-`7251932fdf981465c9b47360d82a7400248dc0ff06730e642ac312e403ef404b`.
+n = 12 and n = 13 are still getting shorter, and I update the table when a shorter word has passed the checks. The
+words in between are in [`plan/history/`](plan/history/README.md) as plans.
 
 Other recent words for comparison: Theo H. has 43,930,624 and 522,745,531 (PRs #6 and #7 to Pantone's repository),
 both made from earlier words of mine. rumstd has 43,930,668 (PR #4).
@@ -38,9 +37,9 @@ Pantone's checker works for n = 11 and n = 12:
 ```sh
 git clone https://github.com/jaypantone/superperm-upper-43-80
 c++ -O3 -std=c++17 superperm-upper-43-80/tools/literal_check.cpp -o literal_check
-xz -dk words/superpermutation-11-43930614.txt.xz words/superpermutation-12-522745376.txt.xz
+xz -dk words/superpermutation-11-43930614.txt.xz words/superpermutation-12-522745356.txt.xz
 ./literal_check 11 0123456789A  words/superpermutation-11-43930614.txt --deletions
-./literal_check 12 0123456789AB words/superpermutation-12-522745376.txt --deletions
+./literal_check 12 0123456789AB words/superpermutation-12-522745356.txt --deletions
 ```
 
 For n = 13 it needs about 13 GB of RAM and close to an hour. [`tools/delcheck.c`](tools/delcheck.c) runs the same
@@ -48,16 +47,16 @@ test (all permutations present, no deletable letter) in 1.6 GB and about a minut
 
 ```sh
 cc -O2 -fopenmp -o delcheck tools/delcheck.c
-xz -dk words/superpermutation-13-6747917498.txt.xz
-./delcheck words/superpermutation-13-6747917498.txt
+xz -dk words/superpermutation-13-6747917421.txt.xz
+./delcheck words/superpermutation-13-6747917421.txt
 ```
 
 On seven test words with known deletable letters `delcheck` returns the same list as `literal_check`. What the
 checks print for the three words:
 
 * n=11: `"length":43930614, "distinct_permutations":39916800, "missing_permutations":0, "extra_occurrences":18816, "coverage_preserving_deletions":[]`
-* n=12: `"length":522745376, "distinct_permutations":479001600, "missing_permutations":0, "extra_occurrences":169346, "coverage_preserving_deletions":[]`
-* n=13: `"length":6747917498, "distinct_permutations":6227020800, "missing_permutations":0, "extra_occurrences":1693434, "coverage_preserving_deletions":[]`
+* n=12: `"length":522745356, "distinct_permutations":479001600, "missing_permutations":0, "extra_occurrences":169347, "coverage_preserving_deletions":[]`
+* n=13: `"length":6747917421, "distinct_permutations":6227020800, "missing_permutations":0, "extra_occurrences":1693434, "coverage_preserving_deletions":[]`
 
 I ran `literal_check --deletions` on the n=11 and n=12 words and `delcheck` on all three.
 
@@ -77,8 +76,8 @@ sha256sum rebuilt-11.txt    # 388ec7d60116acfac039b45533589f45afa85b13d83ae740a9
 
 # n=12, from Pantone's 522,745,581 word (about 2 minutes, 1.3 GB)
 xz -dkc superperm-upper-43-80/words/12/superpermutation-12-522745581.txt.xz > pantone-12.txt
-./trailsearch pantone-12.txt rebuilt-12.txt --plan-in plan/trailsearch-12-522745376.plan --time 0
-sha256sum rebuilt-12.txt    # 964c633ea377ecbaea3f0d30e974a2ecb925c2e810de8997abf1aa37b92763b1
+./trailsearch pantone-12.txt rebuilt-12.txt --plan-in plan/trailsearch-12-522745356.plan --time 0
+sha256sum rebuilt-12.txt    # cfe09d18369578c7ad619d570d701d01c400963e5848d1ddfa737bb04593bfc6
 ```
 
 n=13 takes two steps, because its plans refer to my 6,747,918,058 word, which itself is Pantone's word with the
@@ -91,8 +90,8 @@ xz -dkc superperm-upper-43-80/words/13/superpermutation-13-6747918066.txt.xz > p
 ./pieces pantone-13.txt pieces-13.txt
 ./assemble pantone-13.txt pieces-13.txt plan/plan-13-6747918058.txt step1-13.txt   # about 1 minute
 sha256sum step1-13.txt      # fc9be56c413d125924e43241e8774c1ae922b963e7c0a65b50d16887579f381e
-./trailsearch step1-13.txt rebuilt-13.txt --plan-in plan/trailsearch-13-6747917498.plan --time 0 --threads 1   # about 10 minutes, 11 GB
-sha256sum rebuilt-13.txt    # 685bbc4db886f8f226f22341d6e8fbc127216f39135e9d83e65a6af94bd8e7ce
+./trailsearch step1-13.txt rebuilt-13.txt --plan-in plan/trailsearch-13-6747917421.plan --time 0 --threads 1   # about 10 minutes, 11 GB
+sha256sum rebuilt-13.txt    # 6799742ec56bb8a2f2e3c5dcbac2b805be39d552f03ed6a52ffd4fc03883ccd3
 ```
 
 [`plan/`](plan/) also has the plans of the earlier published words, and
@@ -121,9 +120,14 @@ possible. I keep the trails and change two things: where each trail is cut open,
    * a few neighbouring trails moved somewhere else, with the trails around both places re-cut. This took n=13 from
      6,747,917,824 to 6,747,917,498 without any random search;
    * the sequence cut at three to six joins and put together in another order. This found n=11 (43,930,623 to
-     43,930,614) and most of the recent gain at n=12 (522,745,445 to 522,745,383);
+     43,930,614) and most of the recent gain at n=12 (522,745,445 to 522,745,383, and with up to five cuts
+     522,745,374 to 522,745,366);
    * a trail written in two segments with a closed block of other trails hung between them. This gives a few letters
      at n=12 and 34 at n=13.
+
+   When these moves find nothing more, a short search at a high temperature ends on a different sequence a few
+   letters longer, and the same moves start again from there. At n=12 that gave 522,745,376 to 522,745,374 and
+   522,745,366 to 522,745,356. At n=13 loop moves and relocation in turn went from 6,747,917,498 to 6,747,917,421.
 5. Cuts inside a 1-cycle. This is Theo H.'s idea, from the 43,930,624 word. It costs two letters per trail but
    lets neighbouring trails overlap in n−2 letters. With it step 3 gives 522,745,530 instead of 522,745,531, and my
    n=12 word descends from that one.
@@ -135,7 +139,7 @@ changed.
 
 | path | content |
 |---|---|
-| `words/` | the three words, and the earlier ones I published (43,930,674 to 43,930,623; 522,745,538 to 522,745,383; 6,747,918,058 to 6,747,917,970) |
+| `words/` | the three words, and the earlier ones I published (43,930,674 to 43,930,623; 522,745,538 to 522,745,376; 6,747,918,058 to 6,747,917,498) |
 | `plan/` | plans of the published words |
 | `plan/history/` | plans of the words found in between, with a table of lengths and hashes |
 | `tools/trailsearch.c` | the search of step 2; also rebuilds a word from a plan |

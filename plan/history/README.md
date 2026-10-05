@@ -1,8 +1,8 @@
 # Plans of earlier words
 
 Words found on the way to the ones in the main table, kept as plans. A plan is a short text file that says how to
-write a word from the trails of a base word, so the published tool rebuilds each word in seconds (n=11) or about a
-minute (n=12):
+write a word from the trails of a base word, so the published tool rebuilds each word in seconds (n=11), about a
+minute (n=12) or about ten minutes and 11 GB of RAM (n=13, with `--threads 1`):
 
 ```sh
 cc -O2 -fopenmp -o trailsearch tools/trailsearch.c -lm
@@ -37,7 +37,11 @@ single letter can be deleted. The SHA-256 is that of the rebuilt word (one line 
 | 12 | 522,745,464 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745464-rb.plan`](trailsearch-12-522745464-rb.plan) | eight more rounds with block moves from 522,745,482 | `e86ea8cb53583f6d5fb267a8e10fd690b8ff85430e78cbc7cd6f327fe2891c24` |
 | 12 | 522,745,445 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745445-rb.plan`](trailsearch-12-522745445-rb.plan) | relocation with re-opening on 522,745,464 | `fc52ead7b97ba3b50775c3359bb559336e498713b27dba7bda72a30841ef8a90` |
 | 12 | 522,745,383 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745383-rb.plan`](trailsearch-12-522745383-rb.plan) | segment insertion on 522,745,445 (its plan on Pantone's word is in `plan/`) | `6d787880b4b660f36428715f11a178af816bd1a936f95cfb518217685d99382e` |
-| 12 | 522,745,376 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745376-rb.plan`](trailsearch-12-522745376-rb.plan) | one more round of GPU search (522,745,379) and segment insertion again (the current word; its plan on Pantone's word is in `plan/`) | `964c633ea377ecbaea3f0d30e974a2ecb925c2e810de8997abf1aa37b92763b1` |
+| 12 | 522,745,376 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745376-rb.plan`](trailsearch-12-522745376-rb.plan) | one more round of GPU search (522,745,379) and segment insertion again (its plan on Pantone's word is in `plan/`) | `964c633ea377ecbaea3f0d30e974a2ecb925c2e810de8997abf1aa37b92763b1` |
+| 12 | 522,745,374 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745374-rb.plan`](trailsearch-12-522745374-rb.plan) | a short hot search from 522,745,376 that ends on another sequence one letter longer, then relocation, a loop move and segment insertion on that sequence | `923970bb594a4a27075434f742f35396927171681f054e996c7b712dff14b233` |
+| 12 | 522,745,366 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745366-rb.plan`](trailsearch-12-522745366-rb.plan) | segment insertion with up to five cuts on 522,745,374 | `15f9ee4f478bcdcb1a751975d43deb9014c1aca11944ff56400b0976f09e1749` |
+| 12 | 522,745,356 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745356-rb.plan`](trailsearch-12-522745356-rb.plan) | another short hot search from 522,745,366, then relocation, loop moves and segment insertion with up to five cuts (the current word; its plan on Pantone's word is in `plan/`) | `cfe09d18369578c7ad619d570d701d01c400963e5848d1ddfa737bb04593bfc6` |
+| 13 | 6,747,917,445 | my 6,747,918,058 word (`words/superpermutation-13-6747918058.txt.xz`) | [`trailsearch-13-6747917445.plan`](trailsearch-13-6747917445.plan) | relocation with re-opening on 6,747,917,464 (whose plan is in `plan/`) | `225ecc2d6f19600ec8384f0092aced150805dcea39903dacf0fd5bdccba1c87e` |
 
 ## The re-based word for n=12
 

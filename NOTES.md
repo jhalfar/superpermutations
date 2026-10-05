@@ -120,10 +120,15 @@ that one. On later words (43,930,623 and 522,745,498) these openings gained noth
 
 The words in the table: n=11 comes from segment insertion on the 43,930,623 word; n=12 from the 522,745,530 word by
 rounds of GPU search (the later ones with block moves), each followed by the pass and the loop moves, down to
-522,745,464, then the relocation (522,745,445), segment insertion (522,745,383), one more search round (522,745,379) and segment
-insertion again; the n=13 word
-from the 6,747,917,970 word by GPU search (one 90-minute round without block moves, ten minutes with them), the
-pass, and the relocation; loop moves on it give the 6,747,917,464 of the plan mentioned at the top.
+522,745,464, then the relocation (522,745,445), segment insertion (522,745,383), one more search round (522,745,379) and
+segment insertion again (522,745,376). From there the search alone found nothing in four rounds. What helped was a
+short search at a constant high temperature (60,000 iterations) whose end sequence, one to ten letters longer than
+the best, is handed to the relocation, the loop moves and segment insertion: 522,745,374, then segment insertion
+with up to five cuts 522,745,366, and one more such start 522,745,356.
+
+The n=13 word comes from the 6,747,917,970 word by GPU search (one 90-minute round without block moves, ten minutes
+with them), the pass and the relocation (6,747,917,498), and then loop moves and the relocation in turn:
+6,747,917,464, 445, 441, 437, 429, 421.
 
 The tools of steps 3 and 4 and the GPU version of the search are not in `tools/` yet; they will be added once
 cleaned up. The words above can be rebuilt from their plans with the published tool, and checked without any of my
