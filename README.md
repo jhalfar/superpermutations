@@ -11,7 +11,7 @@ segments). No new construction is involved.
 | n | length | previous best | word | verified |
 |---|---|---|---|---|
 | 11 | **43,930,614** | 43,930,624 (Theo H., PR #6 to Pantone's repo, derived from our 43,930,628), 43,930,668 (rumstd, PR #4), 43,930,680 (Pantone) | [`words/superpermutation-11-43930614.txt.xz`](words/superpermutation-11-43930614.txt.xz) | all 39,916,800 permutations; no single letter can be deleted |
-| 12 | **522,745,464** | 522,745,531 (ours, 2026-10-05 01:45 CEST; Theo H. reached the same length independently a few hours later with a different word, derived from our 522,745,538), 522,745,581 (Pantone) | [`words/superpermutation-12-522745464.txt.xz`](words/superpermutation-12-522745464.txt.xz) | all 479,001,600 permutations; no single letter can be deleted |
+| 12 | **522,745,383** | 522,745,531 (ours, 2026-10-05 01:45 CEST; Theo H. reached the same length independently a few hours later with a different word, derived from our 522,745,538), 522,745,581 (Pantone) | [`words/superpermutation-12-522745383.txt.xz`](words/superpermutation-12-522745383.txt.xz) | all 479,001,600 permutations; no single letter can be deleted |
 | 13 | **6,747,917,970** | 6,747,918,066 (Pantone) | [`words/superpermutation-13-6747917970.txt.xz`](words/superpermutation-13-6747917970.txt.xz) | all 6,227,020,800 permutations; no single letter can be deleted |
 
 n=13 is being worked on. A later word of length **6,747,917,498** exists as a plan,
@@ -26,8 +26,9 @@ are in [`SHA256SUMS`](SHA256SUMS).
 
 `words/` also keeps our earlier words: for n=11, 43,930,674 (2026-10-02, run-level step only; it is the base
 word of the n=11 plan), 43,930,649 and 43,930,644 (2026-10-03/04) and 43,930,628 (2026-10-04, the word Theo H.'s
-43,930,624 was derived from); for n=11 also 43,930,623 and for n=12 522,745,538 (2026-10-04) and 522,745,531 (both 2026-10-05 01:45 CEST); for n=13, 6,747,918,058 (2026-10-03, run-level
-step only; the base word of the n=13 plans) and 6,747,917,987 (2026-10-04, before step 3 below).
+43,930,624 was derived from); for n=11 also 43,930,623 and for n=12 522,745,538 (2026-10-04) and 522,745,531 (both 2026-10-05 01:45 CEST) and 522,745,464 (07:48); for n=13, 6,747,918,058 (2026-10-03, run-level
+step only; the base word of the n=13 plans) and 6,747,917,987 (2026-10-04, before step 3 below). Plans of the other
+words found on the way are in [`plan/history/`](plan/history/README.md).
 
 ## Verify
 
@@ -36,9 +37,9 @@ With Pantone's independent checker:
 ```sh
 git clone https://github.com/jaypantone/superperm-upper-43-80
 c++ -O3 -std=c++17 superperm-upper-43-80/tools/literal_check.cpp -o literal_check
-xz -dk words/superpermutation-11-43930614.txt.xz words/superpermutation-12-522745464.txt.xz words/superpermutation-13-6747917970.txt.xz
+xz -dk words/superpermutation-11-43930614.txt.xz words/superpermutation-12-522745383.txt.xz words/superpermutation-13-6747917970.txt.xz
 ./literal_check 11 0123456789A   words/superpermutation-11-43930614.txt --deletions
-./literal_check 12 0123456789AB  words/superpermutation-12-522745464.txt --deletions
+./literal_check 12 0123456789AB  words/superpermutation-12-522745383.txt --deletions
 ./literal_check 13 0123456789ABC words/superpermutation-13-6747917970.txt --deletions
 ```
 
@@ -47,7 +48,7 @@ the n=11 and n=12 words and on our two earlier n=13 words (6,747,918,058 and 6,7
 was checked with `tools/delcheck.c` (below), which runs the same test in 1.6 GB. Results:
 
 * n=11: `"length":43930614, "distinct_permutations":39916800, "missing_permutations":0, "extra_occurrences":18816, "coverage_preserving_deletions":[]`
-* n=12: `"length":522745464, "distinct_permutations":479001600, "missing_permutations":0, "extra_occurrences":169349, "coverage_preserving_deletions":[]`
+* n=12: `"length":522745383, "distinct_permutations":479001600, "missing_permutations":0, "extra_occurrences":169350, "coverage_preserving_deletions":[]`
 * n=13 (`delcheck`): `"length":6747917970, "distinct_permutations":6227020800, "missing_permutations":0, "extra_occurrences":1693436, "coverage_preserving_deletions":[]`
 
 A lighter check, `tools/verify_par.c`, uses one bit per permutation (778 MB at n=13) and OpenMP threads. It checks
@@ -82,15 +83,16 @@ xz -dk words/superpermutation-11-43930674.txt.xz
 sha256sum rebuilt-11.txt    # 388ec7d60116acfac039b45533589f45afa85b13d83ae740a916d3a477ca44ab
 ```
 
-n=12: [`plan/trailsearch-12-522745464.plan`](plan/trailsearch-12-522745464.plan) is relative to Pantone's 522,745,581
+n=12: [`plan/trailsearch-12-522745383.plan`](plan/trailsearch-12-522745383.plan) is relative to Pantone's 522,745,581
 word. It was written from the finished word by a converter (the search itself worked on a re-based copy), so a few
-of its lines are segments of trails. [`plan/trailsearch-12-522745531.plan`](plan/trailsearch-12-522745531.plan) gives
-the earlier 522,745,531 word in the same way.
+of its lines are segments of trails. [`plan/trailsearch-12-522745464.plan`](plan/trailsearch-12-522745464.plan) and
+[`plan/trailsearch-12-522745531.plan`](plan/trailsearch-12-522745531.plan) give the earlier 522,745,464 and 522,745,531
+words in the same way.
 
 ```sh
 xz -dkc superperm-upper-43-80/words/12/superpermutation-12-522745581.txt.xz > pantone-12.txt
-./trailsearch pantone-12.txt rebuilt-12.txt --plan-in plan/trailsearch-12-522745464.plan --time 0   # ~2 min, 1.3 GB
-sha256sum rebuilt-12.txt    # e86ea8cb53583f6d5fb267a8e10fd690b8ff85430e78cbc7cd6f327fe2891c24
+./trailsearch pantone-12.txt rebuilt-12.txt --plan-in plan/trailsearch-12-522745383.plan --time 0   # ~2 min, 1.3 GB
+sha256sum rebuilt-12.txt    # 6d787880b4b660f36428715f11a178af816bd1a936f95cfb518217685d99382e
 ```
 
 n=13 takes two steps. [`plan/plan-13-6747918058.txt`](plan/plan-13-6747918058.txt) lists, in output order, one line
@@ -212,12 +214,12 @@ order. Four additions got it moving again. In each of them the pass of step 3 (o
 * *Relocation with re-opening.* From forward and backward tables of the pass one gets, exactly, what is saved by
   taking a window of consecutive trails out when all other openings may change, and what it costs to insert a trail
   elsewhere when its new neighbours may re-open. Windows whose saving exceeds the cost are moved and confirmed by the
-  pass. No random search is involved: 522,745,482 → 522,745,466 in four minutes, and at n=13 6,747,917,824 →
-  6,747,917,498 in under two hours.
+  pass. No random search is involved: 522,745,482 → 522,745,466 and 522,745,464 → 522,745,445 in four minutes each,
+  and at n=13 6,747,917,824 → 6,747,917,498 in under two hours.
 * *Segment insertion.* The sequence is cut at three to six joins and its stretches, of any length, are reassembled in
   another order; each candidate is judged with the best openings of the whole new sequence. This found n=11:
   43,930,623 → 621 → 619 → 615 → 43,930,614, where every other move had stalled (no reordering inside windows of up
-  to 9 consecutive pieces shortens the 43,930,623 word).
+  to 9 consecutive pieces shortens the 43,930,623 word). At n=12 it took 522,745,445 to 522,745,383 in 23 minutes.
 * *Loops.* The trails and joins of a word form a balanced directed graph, and any connected balanced graph spells a
   word (Pantone's summary, section 5), so a trail may be written in two segments with a closed block of other trails
   hung between them. This pays when a join already passes through a cut of another trail: never at n=11, a few
@@ -229,7 +231,8 @@ pass of step 3 took our 522,745,537 word to 522,745,530 instead of 522,745,531, 
 that one. On later words (43,930,623 and 522,745,498) these openings gained nothing more.
 
 The words in the table: n=11 comes from segment insertion on the 43,930,623 word; n=12 from the 522,745,530 word by
-rounds of GPU search (the later ones with block moves), each followed by the pass and the loop moves; the n=13 plan
+rounds of GPU search (the later ones with block moves), each followed by the pass and the loop moves, down to
+522,745,464, then the relocation (522,745,445) and segment insertion; the n=13 plan
 from the 6,747,917,970 word by GPU search (one 90-minute round without block moves, ten minutes with them), the
 pass, and the relocation.
 
