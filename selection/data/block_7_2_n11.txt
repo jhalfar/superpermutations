@@ -1,0 +1,65 @@
+# Block solution of the n = 11 selection: the 56 loops of the (7, 2) block.
+# K = 9 letters: old letters 0 .. 6 in the cyclic order 0123456, added letters 7 and 8; distinguished letter 9.
+# One line per 2-loop: x v.  x = the state at which the row starts (row = the slice chosen from the 2-loop),
+# v = number of cyclic classes of the row: 9 full, 7 short, other numbers = rows of other visible lengths,
+# 0 = loop without a row (x is then the rotation that starts with 0).
+# 32 full rows, 4 short, 3 with 5 visible classes, 3 with 3 (Q = 38); 14 loops without a row in 3 chains
+# (2, 6, 6); one closed walk of 42 rows with 2 closed trails after completion.  Q + D = 52, floor 54.
+# Found by:  python gblock.py 7 2 --cC 2 --pool 3000 --gap 1.01 --time 200 --threads 1 --out FILE
+# (optimum of Q + D + 2 x chains = 58, solver status optimal; the command writes these data lines again).
+801234567 9
+012345687 9
+680123457 9
+860123457 9
+012345867 9
+601234587 9
+568012347 9
+601234758 7
+560123478 9
+012348567 0
+012348576 0
+756012348 9
+012374568 5
+458601237 3
+012374856 0
+845601237 9
+012384567 0
+012384576 0
+560123847 7
+456012387 9
+345680127 5
+345860127 9
+012734856 0
+384560127 9
+834560127 9
+012834567 9
+601283457 9
+560128347 9
+456012837 9
+345601287 9
+234568017 9
+234586017 9
+017234856 0
+238456017 9
+345601728 7
+234560178 9
+018234567 0
+018234576 0
+018234756 0
+018237456 0
+018273456 0
+723456018 9
+123456807 9
+123458607 9
+071234856 0
+456071238 5
+128345607 3
+071823456 0
+812345607 9
+081234567 9
+608123457 9
+560812347 9
+456081237 9
+127345608 3
+234560817 7
+123456087 9

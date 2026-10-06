@@ -1,0 +1,56 @@
+# Connector cycles for the 9-symbol selection of n = 10, completed on n = 10 symbols (completion letter 9).
+# One connector cycle per line: a word of h = n - 3 letters; the cycle is the word and its rotations.
+# 48 cycles without 9 for the 336 small trails and 4 with 9 for the 14 closed trails of the walks (conn.py
+# --cover).  Input of the check of the rule for one level up:  python conn.py n10.txt --lift cycles_n10.txt
+0132456
+0136524
+0142365
+0145623
+0152634
+0154326
+0162543
+0163425
+0231546
+0236415
+0241635
+0245316
+0251364
+0254613
+0261453
+0263514
+0312564
+0316452
+0321465
+0326541
+0345261
+0346125
+0354162
+0356214
+0412653
+0415362
+0421356
+0425631
+0435126
+0436251
+0463152
+0465213
+0512346
+0514632
+0521643
+0524361
+0534216
+0536142
+0563241
+0564123
+0612435
+0613542
+0621534
+0623451
+0643215
+0645132
+0653124
+0654231
+9260341
+9460213
+9250743
+9134507

@@ -1,0 +1,53 @@
+# Connector cycles for Pantone's 8-symbol selection, completed on n = 9 symbols (completion letter 8).
+# One connector cycle per line: a word of h = n - 3 letters; the cycle is the word and its rotations.
+# 48 cycles without 8 for the 48 small trails and one with 8 for the 4 closed trails of the walks (conn.py
+# --cover).  Input of the check of the rule for one level up:  python conn.py base8.txt --lift cycles_n9.txt
+132456
+136524
+142365
+145623
+152634
+154326
+162543
+163425
+154623
+152364
+163524
+162453
+136425
+132546
+145326
+142635
+125643
+164523
+146532
+132654
+134526
+125346
+162354
+143562
+126534
+153624
+135642
+142563
+126435
+143625
+152463
+134652
+123465
+146325
+164352
+152436
+165342
+142536
+156324
+123564
+124356
+135426
+153462
+162345
+156432
+132645
+124653
+165423
+823561

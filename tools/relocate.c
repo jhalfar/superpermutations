@@ -1,50 +1,50 @@
-/* trailsearch.c - local search over the closed trails of a word of Jay Pantone's construction, and the program
-   that rebuilds a word from a plan.
+/* relocate.c - relocation with re-cutting: a window of neighbouring closed trails is moved to another place of the
+   sequence, and the trails around both places are cut again.
 
    Part of github.com/jhalfar/superpermutations.  Apache License 2.0, see LICENSE and NOTICE.  The closed trails are
    those of Jay Pantone's construction (github.com/jaypantone/superperm-upper-43-80).
 
-   What it does.  The input word is split into its closed trails (cyclic words of length R_T).  A word of the same
-   trails is a sequence of pieces: every trail is written once, cut open at one of its cuts, and consecutive pieces
-   are joined with the largest overlap of their ends.  Cutting trail T between the consecutive permutation windows
-   p_i and p_i+1, which lie g letters apart, writes a piece of R_T + n - g letters that starts with the first
-   h = n - 3 letters of p_i+1 (S) and ends with the last h letters of p_i (E).  Joining piece A to piece B costs
-   d(E_A, S_B) = h minus the largest overlap of the two h-words.  The length of the word is
-       L = h + sum of R_T + sum of the costs of the cuts (3 - g) + sum of d over the joins.
-   The search removes a few trails from the sequence and puts each back at its best place with its best cut, and
-   accepts the result by the rule of simulated annealing.  A small trail may also be put back as two segments around
-   a block of other pieces.  If a permutation occurs twice in the trails, a cut may drop one of the two occurrences.
+   What it does.  The search of trailsearch.c never moves a trail and re-cuts its neighbours at the same time.  This
+   pass does, without any random search.  From the fixed-order pass of recut.c run forwards and backwards it has,
+   for every cut o of every piece i, F_i(o) = the cheapest way to write pieces 0 to i with piece i cut at o, and
+   B_i(o) = the cheapest way to write pieces i to the end.  From these tables it gets exactly
+     * rho(W): what is saved by taking a window W of consecutive trails out when all other cuts may change;
+     * iota(t, place): what it costs to put trail t between two neighbouring pieces when both may be cut again
+       (only cuts of the neighbours that are within dpa_tau letters of their best are looked at).
+   A window is a candidate if every trail in it has a place that costs at most --dpa-imax and rho is larger than the
+   sum of the iota.  Each candidate is tried for real: the trails are moved, the fixed-order pass runs on the pieces
+   around every changed place (12, then 48, then 192 on either side, then the whole sequence) and the move is kept
+   if the word is shorter.  Several moves are kept per sweep; later candidates of the sweep must lie clear of the
+   places already changed.  Sweeps repeat until one gains nothing.  OUT.txt.plan is written after every sweep that
+   gained, and the length the pass promises is checked against the sequence.
 
-   The best sequence is written as OUT.txt and as a plan, OUT.txt.plan: one line per piece (P k: piece k of the input
-   word as it is; O t start g g1: trail t cut at offset start with gap g, g1 > 0 if an occurrence is dropped;
-   S t start len: len letters of trail t from offset start).  A plan refers to the word it was made from.
+   Build:  gcc -O2 -mpopcnt -fopenmp -o relocate relocate.c -lm
+   Use:    relocate BASE.txt OUT.txt --plan-in PLAN --threads 1 --time 0 --dpa --dpa-thr 4 --dpa-v
+           n = 13: add --dpa-full 2
 
-   Build:  gcc -O2 -mpopcnt -fopenmp -o trailsearch trailsearch.c -lm
-   Rebuild a word from a plan (no search):
-           trailsearch BASE.txt OUT.txt --plan-in PLAN --time 0
-   Search: trailsearch BASE.txt OUT.txt [--plan-in PLAN] --time SEC --seed S --kmax 10 --T0 0.3 --threads T
-                       --sync 120 [--focus 0.9]
+   Options of the pass.
+     --dpa             run the pass before the search (with --time 0: nothing else) and on the best sequence after it
+     --dpa-thr T       T threads look for the places of the trails (the rest of a sweep is one thread)
+     --dpa-v           one line per step of a sweep (--dpa-vv: also every trial); --as-v is the old name
+     --dpa-lmax L      longest window, in trails (default 24, at most 64)
+     --dpa-imax C      a trail takes part only if it has another place that costs at most C (default 2)
+     --dpa-tau S       cuts of the neighbours within S letters of their best are indexed (default 1; 0 makes the
+                       index about ten times smaller)
+     --dpa-theta T     every place cheaper than T is found (default 3)
+     --dpa-cap M       at most M cuts per piece in the index (default 64)
+     --dpa-win W       the pass after a move starts with W pieces on either side (default 12)
+     --dpa-full M      at most M trials per sweep end with the pass on the whole sequence (default 10; 2 for n = 13)
+     --dpa-maxtry M    at most M trials per sweep (default 2000)
+     --dpa-sec S       inside the search: the pass on the current sequence of thread 0 every S seconds
+     --co, --co-skip   the fixed-order pass alone, as in recut.c
+     and all options of trailsearch.c.
 
-   Options.
-     --time SEC     seconds of search (default 600; 0: only load, write the word and the plan)
-     --iters N      stop after N iterations per thread (one thread and a very large --time make a run repeatable:
-                    the temperature depends on the clock only through --time)
-     --seed S       random seed
-     --kmax K       at most K trails are removed in one iteration (default 6; I used 8 to 12)
-     --T0 TEMP      start temperature in letters (default 1.5; I used 0.3 to 0.6); it falls linearly with the time
-     --threads T    T independent searches on the shared model with temperatures 0.5 to 1.5 times TEMP
-     --sync SEC     every SEC seconds the odd-numbered threads restart from the best sequence found so far
-     --focus P      a trail is big if it has more than 3000 cuts; with probability P an iteration that would move no
-                    big trail is skipped (0.8 to 0.9 for n = 12 and n = 13, where only big trails ever gave a gain)
-     --bigp P       a big trail stays in the removal set only with probability P
-     --plan-in F    start from plan F instead of the input word as it is
-     --ckpt SEC     the plan of the best sequence is written every SEC seconds (default 600)
-     --noskip       no cut drops an occurrence;  --nosplit  no trail is written as two segments
-
-   Memory and time.  A cut is stored in 6 bytes and its words are read from the trail when they are needed.
-   n = 11: 2,800 trails, 3.7 million cuts, 90 MB with one search thread, loads in 3 seconds.  n = 12: 25,200
-   trails, 40 million cuts, 0.8 GB for a rebuild, loads in 13 seconds on 8 threads.  n = 13: 252,000 trails,
-   482 million cuts, about 11 GB and 0.45 GB more per search thread, loads in about 5 minutes.
+   Memory and time (measured).  n = 11: a sweep takes 2 to 21 seconds; on words that have been through the other
+   passes it finds no candidate.  n = 12, one thread: 522,745,526 to 522,745,483 in 751 seconds, 11 sweeps of 45 to
+   72 seconds, moves of 2 to 7 trails.  n = 13, 8 threads: about 12.5 GB; 6,747,917,824 to 6,747,917,498 took 15
+   sweeps of 330 to 460 seconds.
+   Limits: every trail of a window goes to its cheapest place only, and a trail without a place that costs at most
+   --dpa-imax ends a window.
 
    Words.  The comments say "cut" for the place where a closed trail is cut open.  The names in the code and the
    text the program prints use two older words for it: "opening" and "option" (struct Opt, the table OP, "gap-2
@@ -55,32 +55,13 @@
    pieces are joined with the largest overlap of these words.  A "skip" is a cut that also drops one of the two
    occurrences of a permutation that the trails contain twice.  "Cluster optimisation" is the fixed-order pass.
 
-   Where the parts start.  Each part begins with a comment line of dashes, in this order: h-words; trails; options
-   (the table of cuts); events; output (word and plan); hash multimap; one search thread (nodes, index, loading a
-   sequence); what the search keeps about the sequence between iterations; best insertion of a trail; insertion
-   as two segments; statistics; the shared best sequence and the search loop; loading the word; main.
-   recut.c, relocate.c, segins.c, trailsearch_gpu.c and recut_wide.c are copies of this file with parts added.
-   What is said here about the model, the plan and the search holds for all of them.
-
-   This file replaces the first published version of trailsearch.c.  It is the same search (same random numbers and
-   the same sequence after every iteration, so the same command with one thread writes the same plan) and about four
-   times faster, by these changes:
-     * the runs related to a removed trail are found through the index (mark_near) instead of a table over all runs;
-     * the greedy repair keeps, per pending trail, the list of places it looked at (Vis, VC) and patches it after
-       each insertion (vc_update) instead of scanning again; the removal step records these lists (vc_get);
-     * best_split caches the end words and stops early;
-     * an h-word is packed with one 8-byte load (pack8);
-     * a node that is dead for good leaves the index (h_del, index_del, Node.ent);
-     * the arrays that describe the sequence are kept between iterations and patched after an accepted move
-       (seq_build, seq_patch), and the length is kept by differences.
-   What a change to this file must keep if the search is to stay identical:
-     * a new index entry goes to the head of its chain and h_del keeps the order of the others;
-     * index_del uses the keys of index_add in the same order; H.n is never reduced, so rebuilds happen when they did;
-     * order / cand, the trail chains (thead, tnx) and skp describe the sequence between iterations: seq_build after
-       every load, seq_patch after an accepted move; a rejected move must restore the list, the chains and skp
-       exactly, and every node that enters the list must go through node_insert_after (-DTS_CHECK=2 checks all of
-       it and the length at every iteration);
-     * visit lists live for one iteration and never see index_del or ctx_load. */
+   Layout of this file.  It is a copy of the present trailsearch.c (the model, the plan, the fast search, the
+   loader) with two parts added, marked by lines of equal signs: the fixed-order pass of recut.c (co_run, co_full;
+   without --coit) and the relocation.  Removed from the working version: an assignment neighbourhood (--as: the
+   trails of a set put back by one linear assignment problem into the places the others leave, cuts of the others
+   fixed) and a removal rule guided by the symmetries of the trails (--sym).  Both gained nothing: the assignment
+   0 letters on the three plans it was tried on (43,930,623, 522,745,531, 522,745,526), the symmetry rule 0 new
+   best words in 54 trials. */
 #if !defined(_WIN32)
 #define _FILE_OFFSET_BITS 64
 #endif
@@ -115,6 +96,7 @@ static int n, h;
         exit(1);                      \
     } while (0)
 
+/* ==================== shared base (trailsearch.c): model, plan, index, search moves ==================== */
 /* ---------- h-words packed 4 bits per symbol (first symbol highest) */
 static u64 HMASK[17];
 /* h - largest k with suffix_k(e) == prefix_k(s) */
@@ -1485,11 +1467,1141 @@ static void print_stats(const Ev *ev, i64 N) {
     fflush(stdout);
 }
 
+/* ==================== from recut.c: the fixed-order pass (co_run, co_full) ==================== */
+/* ---------- cluster optimisation: for a fixed order of the events, the best cuts of all trails at once.
+   Shortest path through layers, one per event: cost[p] = D(p) + min over the cuts o of the previous event of
+   cost[o] + dist(E(o), S(p)).  The minimum is not taken over pairs: for k = h..1 a table holds the cheapest o for
+   every suffix of length k of E(o) (a hash table, for k <= 3 an array) and prefix_k(S(p)) is looked up; only o with cost[o] - min < k can beat the
+   join without overlap (h + min), so few o enter the tables of small k.  Costs are kept relative to the minimum of
+   their layer (one byte per option) and the cuts are recovered backwards without back-pointers.
+   One option only: segments, pieces of chained trails and of the open path, events outside lo..hi.  An unchanged
+   piece that is a whole closed trail is the cut `start 0` of that trail and is free like any other.
+   Skip cuts: an event may only take the skip it already uses (co_skip = 0); with co_skip = 1 every skip is
+   allowed and the pass is repeated with bans while two events skip the same window. */
+static double wall(void);
+typedef struct {
+    u64 key;
+    u32 gen, val;
+} CSlot;
+typedef struct {
+    CSlot *t;
+    u64 cap;
+    u32 gen;
+    u64 *S, *E, *Ep;
+    int *mv;
+    i64 wcap;         /* current layer: start words, end words, cheapest way in; Ep: end words of the previous layer */
+    unsigned char *d; /* direct tables for k = 1, 2, 3 */
+    unsigned char *rel;
+    i64 rcap;                    /* cost of every option relative to the minimum of its layer; 255: not allowed */
+    i64 *off, *lmin, *cur, lcap; /* per layer: offset into rel, minimum cost, current option (-1: one option only) */
+    i64 *ban;
+    int nban, bancap;      /* co_skip = 1: (event, window) pairs that are not allowed */
+    i64 nfree, nopt, maxm; /* statistics of the last pass: free events, their options, largest layer */
+} CO;
+static int co_skip = 0;
+/* Table of one layer step: keeps for key (the last k letters of an end word) the smallest relative cost. */
+static inline void co_put(CO *q, u64 mask, u64 key, u32 val) {
+    u64 i = hmix(key) & mask;
+    while (q->t[i].gen == q->gen) {
+        if (q->t[i].key == key) {
+            if (val < q->t[i].val)
+                q->t[i].val = val;
+            return;
+        }
+        i = (i + 1) & mask;
+    }
+    q->t[i].key = key;
+    q->t[i].gen = q->gen;
+    q->t[i].val = val;
+}
+/* The smallest relative cost stored for key in this generation of the table, or -1. */
+static inline int co_get(const CO *q, u64 mask, u64 key) {
+    u64 i = hmix(key) & mask;
+    while (q->t[i].gen == q->gen) {
+        if (q->t[i].key == key)
+            return (int)q->t[i].val;
+        i = (i + 1) & mask;
+    }
+    return -1;
+}
+/* the option an event is, or -1 */
+static i64 co_cur(const Ev *x) {
+    if (x->kind == EV_OPT)
+        return x->a;
+    if (x->kind != EV_PIECE)
+        return -1;
+    const Trail *T = &TR[x->t];
+    if (T->fixed || T->c != W + PS[x->a])
+        return -1;
+    for (i64 o = T->ohi - 1; o >= T->olo; o--)
+        if (!OP[o].start && !OP[o].g1)
+            return (x->l == T->R + h + oD(o) && x->s == oS_t(T, o) && x->e == oE_t(T, o)) ? o : -1;
+    return -1;
+}
+/* May event i take cut o, which drops an occurrence?  Without anyskip only the occurrence the event drops
+   now; with anyskip any occurrence that is not banned for this event. */
+static inline int co_skip_ok(const CO *q, const Ev *x, i64 i, const Trail *T, i64 o, int anyskip) {
+    i64 r = oSK_t(T, o);
+    if (!anyskip)
+        return r == x->skip;
+    for (int k = 0; k < q->nban; k++)
+        if (q->ban[2 * k] == i && q->ban[2 * k + 1] == r)
+            return 0;
+    return 1;
+}
+/* events lo..hi may change their cut (their neighbours lo-1 and hi+1 stay); returns the gain in letters */
+static i64 co_run(CO *q, Ev *ev, i64 N, i64 lo, i64 hi, int anyskip, int *nchg) {
+    i64 a = lo > 0 ? lo - 1 : 0, b = hi + 1 < N ? hi + 1 : N - 1, nl = b - a + 1;
+    if (nl > q->lcap) {
+        q->lcap = nl + nl / 2 + 64;
+        q->off = realloc(q->off, q->lcap * 8);
+        q->lmin = realloc(q->lmin, q->lcap * 8);
+        q->cur = realloc(q->cur, q->lcap * 8);
+    }
+    i64 roff = 0, poff = 0, pm = 0, pmin = 0, oldc = 0;
+    int pfree = 0;
+    u64 pe = 0;
+    q->nfree = q->nopt = q->maxm = 0;
+    if (nl == N && q->rcap < NO) {
+        q->rcap = NO;
+        q->rel = realloc(q->rel, (size_t)NO + 1);
+    } /* whole sequence: one byte per option, no more */
+    for (i64 i = a; i <= b; i++) {
+        const Ev *x = &ev[i];
+        i64 li = i - a, o0 = (i >= lo && i <= hi) ? co_cur(x) : -1;
+        q->cur[li] = o0;
+        q->off[li] = roff;
+        if (i > a)
+            oldc += dist(ev[i - 1].e, x->s);
+        if (o0 < 0) { /* one option */
+            i64 cst = 0;
+            if (i > a && !pfree)
+                cst = pmin + dist(pe, x->s);
+            else if (i > a) {
+                const unsigned char *prel = q->rel + poff;
+                int best = h;
+                for (i64 j = 0; j < pm; j++)
+                    if (prel[j] < best) {
+                        int v = prel[j] + dist(q->Ep[j], x->s);
+                        if (v < best)
+                            best = v;
+                    }
+                cst = pmin + best;
+            }
+            q->lmin[li] = pmin = cst;
+            pe = x->e;
+            pfree = 0;
+            continue;
+        }
+        oldc += oD(o0);
+        const Trail *T = &TR[x->t];
+        i64 m = T->ohi - T->olo;
+        if (m > q->wcap) {
+            q->wcap = m + m / 2 + 64;
+            q->S = realloc(q->S, q->wcap * 8);
+            q->E = realloc(q->E, q->wcap * 8);
+            q->Ep = realloc(q->Ep, q->wcap * 8);
+            q->mv = realloc(q->mv, q->wcap * sizeof(int));
+        }
+        if (roff + m > q->rcap) {
+            q->rcap = (roff + m) * 2 + 4096;
+            q->rel = realloc(q->rel, q->rcap);
+        }
+        if (!q->d)
+            q->d = malloc(16 + 256 + 4096);
+        if (!q->S || !q->E || !q->Ep || !q->mv || !q->rel || !q->d)
+            DIE("out of memory");
+        unsigned char *rel = q->rel + roff;
+        const unsigned char *prel = q->rel + poff;
+        u64 *S = q->S, *E = q->E;
+        int *mv = q->mv;
+        for (i64 j = 0; j < m; j++) {
+            i64 o = T->olo + j;
+            if (OP[o].g1 && !co_skip_ok(q, x, i, T, o, anyskip)) {
+                rel[j] = 255;
+                continue;
+            }
+            S[j] = oS_t(T, o);
+            E[j] = oE_t(T, o);
+            rel[j] = 0;
+            mv[j] = i == a ? 0 : !pfree ? dist(pe, S[j]) : h;
+        }
+        if (i > a && pfree) {
+            u64 need = 16;
+            while (need < 2 * (u64)pm)
+                need <<= 1;
+            if (need > q->cap) {
+                free(q->t);
+                q->t = calloc(need, sizeof(CSlot));
+                q->cap = need;
+                q->gen = 0;
+                if (!q->t)
+                    DIE("out of memory");
+            }
+            u64 mask = need - 1;
+            for (int k = h; k >= 4; k--) {
+                i64 cnt = 0;
+                int sh = 4 * (h - k);
+                q->gen++;
+                for (i64 j = 0; j < pm; j++)
+                    if (prel[j] < k) {
+                        co_put(q, mask, q->Ep[j] & HMASK[k], prel[j]);
+                        cnt++;
+                    }
+                if (!cnt)
+                    break;
+                for (i64 j = 0; j < m; j++) {
+                    if (rel[j] == 255 || mv[j] <= h - k)
+                        continue;
+                    int v = co_get(q, mask, S[j] >> sh);
+                    if (v >= 0 && v + h - k < mv[j])
+                        mv[j] = v + h - k;
+                }
+            }
+            /* k = 3, 2, 1: tables indexed by the word */
+            unsigned char *d1 = q->d, *d2 = d1 + 16, *d3 = d2 + 256;
+            int any = 0;
+            memset(q->d, 255, 16 + 256 + 4096);
+            for (i64 j = 0; j < pm; j++) {
+                int r = prel[j];
+                if (r >= 3)
+                    continue;
+                u64 e = q->Ep[j];
+                any = 1;
+                if (r < d3[e & 4095])
+                    d3[e & 4095] = (unsigned char)r;
+                if (r < 2 && r < d2[e & 255])
+                    d2[e & 255] = (unsigned char)r;
+                if (r < 1)
+                    d1[e & 15] = 0;
+            }
+            if (any)
+                for (i64 j = 0; j < m; j++) {
+                    if (rel[j] == 255 || mv[j] <= h - 3)
+                        continue;
+                    int v = d3[S[j] >> (4 * (h - 3))];
+                    if (v + h - 3 < mv[j])
+                        mv[j] = v + h - 3;
+                    if (mv[j] <= h - 2)
+                        continue;
+                    v = d2[S[j] >> (4 * (h - 2))];
+                    if (v + h - 2 < mv[j])
+                        mv[j] = v + h - 2;
+                    if (mv[j] == h && !d1[S[j] >> (4 * (h - 1))])
+                        mv[j] = h - 1;
+                }
+        }
+        int mn = 1 << 20;
+        for (i64 j = 0; j < m; j++)
+            if (rel[j] != 255) {
+                mv[j] += oD(T->olo + j);
+                if (mv[j] < mn)
+                    mn = mv[j];
+            }
+        for (i64 j = 0; j < m; j++)
+            if (rel[j] != 255)
+                rel[j] = (unsigned char)(mv[j] - mn);
+        q->lmin[li] = pmin = pmin + mn;
+        pfree = 1;
+        pm = m;
+        poff = roff;
+        roff += m;
+        q->E = q->Ep;
+        q->Ep = E;
+        q->nfree++;
+        q->nopt += m;
+        if (m > q->maxm)
+            q->maxm = m;
+    }
+    /* backwards: the option of layer i that reaches the cost wanted by layer i+1 (the current one if it does) */
+    i64 newc = q->lmin[nl - 1], want = 0;
+    u64 ns = 0;
+    int chg = 0;
+    for (i64 i = b; i >= a; i--) {
+        i64 li = i - a, o0 = q->cur[li];
+        Ev *x = &ev[i];
+        if (o0 < 0) {
+            if (i < b && q->lmin[li] + dist(x->e, ns) != want)
+                DIE("internal error: cluster optimisation (event %lld)", i);
+            ns = x->s;
+            want = q->lmin[li];
+            continue;
+        }
+        const Trail *T = &TR[x->t];
+        const unsigned char *rel = q->rel + q->off[li];
+        i64 m = T->ohi - T->olo, pick = -1;
+        i64 tgt = i < b ? want : q->lmin[li];
+#define COV(j) (q->lmin[li] + rel[j] + (i < b ? dist(oE_t(T, T->olo + (j)), ns) : 0))
+        if (rel[o0 - T->olo] != 255 && COV(o0 - T->olo) == tgt)
+            pick = o0 - T->olo;
+        for (int pass = 0; pass < 2 && pick < 0; pass++) /* plain cuts first */
+            for (i64 j = 0; j < m; j++)
+                if (rel[j] != 255 && (pass || !OP[T->olo + j].g1) && COV(j) == tgt) {
+                    pick = j;
+                    break;
+                }
+#undef COV
+        if (pick < 0)
+            DIE("internal error: cluster optimisation (event %lld)", i);
+        i64 o = T->olo + pick;
+        if (o != o0) {
+            *x = make_event(o);
+            chg++;
+        }
+        ns = x->s;
+        want = q->lmin[li] + rel[pick] - oD(o);
+    }
+    if (nchg)
+        *nchg = chg;
+    return oldc - newc;
+}
+/* co_skip = 1: bans for events that took a skip another event uses; returns the number of new bans */
+static int i64pair_cmp(const void *a, const void *b) {
+    const i64 *x = a, *y = b;
+    return x[0] < y[0] ? -1 : x[0] > y[0] ? 1 : x[1] < y[1] ? -1 : x[1] > y[1];
+}
+/* After a pass with free choice of the dropped occurrences: every permutation dropped by two or more events
+   is banned for all of them but one (the event that dropped it before the pass, if there is one).
+   Returns the number of new bans; 0 means the result is valid. */
+static int co_clash(CO *q, const Ev *orig, const Ev *ev, i64 N) {
+    i64 ns = 0, *sk = NULL;
+    int added = 0;
+    for (int pass = 0; pass < 2; pass++) {
+        if (pass)
+            sk = malloc((size_t)(ns + 1) * 16);
+        ns = 0;
+        for (i64 i = 0; i < N; i++)
+            if (ev[i].skip >= 0) {
+                if (pass) {
+                    sk[2 * ns] = ev[i].skip;
+                    sk[2 * ns + 1] = i;
+                }
+                ns++;
+            }
+    }
+    qsort(sk, (size_t)ns, 16, i64pair_cmp);
+    for (i64 x = 0; x < ns;) {
+        i64 y = x;
+        while (y < ns && sk[2 * y] == sk[2 * x])
+            y++;
+        if (y - x > 1) {
+            i64 keep = sk[2 * x + 1];
+            for (i64 z = x; z < y; z++)
+                if (orig[sk[2 * z + 1]].skip == sk[2 * x])
+                    keep = sk[2 * z + 1];
+            for (i64 z = x; z < y; z++)
+                if (sk[2 * z + 1] != keep) {
+                    if (q->nban == q->bancap) {
+                        q->bancap = q->bancap ? q->bancap * 2 : 64;
+                        q->ban = realloc(q->ban, (size_t)q->bancap * 16);
+                    }
+                    q->ban[2 * q->nban] = sk[2 * z + 1];
+                    q->ban[2 * q->nban + 1] = sk[2 * x];
+                    q->nban++;
+                    added++;
+                }
+        }
+        x = y;
+    }
+    free(sk);
+    return added;
+}
+/* the whole sequence */
+static void co_full(Ev *ev, i64 N) {
+    double t0 = wall();
+    CO q;
+    memset(&q, 0, sizeof q);
+    Ev *orig = malloc((size_t)N * sizeof(Ev));
+    memcpy(orig, ev, (size_t)N * sizeof(Ev));
+    i64 l0 = seq_length(ev, N), l1;
+    int chg, rounds = 0;
+    for (;;) {
+        i64 gain = co_run(&q, ev, N, 0, N - 1, co_skip, &chg);
+        l1 = seq_length(ev, N);
+        rounds++;
+        if (l0 - l1 != gain)
+            DIE("internal error: cluster optimisation promised %lld, got %lld", gain, l0 - l1);
+        if (!co_skip || !co_clash(&q, orig, ev, N))
+            break;
+        memcpy(ev, orig, (size_t)N * sizeof(Ev));
+    }
+    printf(
+        "cluster optimisation: %lld -> %lld (%d openings changed; %lld of %lld events free, %lld options, at most %lld per event, %d pass%s, %d bans, %.1fs)\n",
+        l0, l1, chg, q.nfree, N, q.nopt, q.maxm, rounds, rounds > 1 ? "es" : "", q.nban, wall() - t0);
+    fflush(stdout);
+    free(orig);
+    free(q.t);
+    free(q.S);
+    free(q.E);
+    free(q.Ep);
+    free(q.mv);
+    free(q.d);
+    free(q.rel);
+    free(q.off);
+    free(q.lmin);
+    free(q.cur);
+    free(q.ban);
+}
+
+/* ==================== own part of this file: relocation with re-cutting (--dpa) ==================== */
+/* ---------- relocation with re-cutting (option --dpa): what a trail costs where it stands and what it would cost
+   elsewhere when all other trails may change their cuts.
+   Forward / backward tables of the fixed-order DP: F_i(o) = cheapest way to write events 0..i with event i cut open
+   at o, B_i(o) = cheapest way to write events i..N-1 (both count D(o)); OPT = min F_{N-1} = min B_0.
+   slack_i(o) = F_i(o) + B_i(o) - D(o) - OPT is what cut o costs more than the best sequence of cuts.
+   Removal of event i saves   rho_i = OPT - min over (p, q) of F_{i-1}(p) + d(E_p, S_q) + B_{i+1}(q).
+   Insertion of trail t (cut o) into the gap between events x, y = x + 1 costs
+       iota = min over (p, q) of F_x(p) + d(E_p, S_o) + D(o) + d(E_o, S_q) + B_y(q) - OPT  >=  max(slack_x(p), slack_y(q)),
+   so only the cuts of x and y with slack <= dpa_tau matter: they are indexed by their words (the ends of E and
+   the beginnings of S, as the nodes are in the index of the search) and every cut of t looks itself up.  A
+   relocation with rho - iota > 0 is tried for real (the trail is moved, the DP is run on the two windows) and kept
+   if the sequence gets shorter. */
+static int dpa_on = 0, dpa_tau = 1, dpa_theta = 3, dpa_win = 12, dpa_cap = 64, dpa_verbose = 0;
+static i64 dpa_maxtry = 2000;
+static CO DPA_co;
+static Ev *DPA_tmp;
+static i64 DPA_cap; /* work area of a sweep: the table of the fixed-order pass, a second copy of the sequence */
+static Ev *dpa_buf(i64 N) {
+    if (N > DPA_cap) {
+        DPA_cap = N + N / 4 + 64;
+        DPA_tmp = realloc(DPA_tmp, (size_t)DPA_cap * sizeof(Ev));
+        if (!DPA_tmp)
+            DIE("out of memory");
+    }
+    return DPA_tmp;
+}
+typedef struct {
+    i64 *cur, *off, *fmin, *bmin;
+    int *mm, *rho;
+    unsigned char *fr, *br;
+    i64 cap, rcap, opt, curcost;
+    u64 *S, *E, *Wp, *Wq;
+    unsigned char *ban, *dd;
+    int *mv;
+    i64 wcap;
+    CO q;
+} DPT;
+/* words, cut costs and bans of the options of event x (one option if o0 < 0); returns their number */
+static i64 dp_words(DPT *D, const Ev *x, i64 o0, u64 *S, u64 *E) {
+    if (o0 < 0) {
+        S[0] = x->s;
+        E[0] = x->e;
+        D->ban[0] = 0;
+        D->dd[0] = 0;
+        return 1;
+    }
+    const Trail *T = &TR[x->t];
+    i64 m = T->ohi - T->olo;
+    for (i64 j = 0; j < m; j++) {
+        i64 o = T->olo + j;
+        D->dd[j] = (unsigned char)oD(o);
+        if (OP[o].g1 && oSK_t(T, o) != x->skip) {
+            D->ban[j] = 1;
+            S[j] = E[j] = 0;
+            continue;
+        }
+        D->ban[j] = 0;
+        S[j] = oS_t(T, o);
+        E[j] = oE_t(T, o);
+    }
+    return m;
+}
+/* mv[j] = min over the options p of the neighbouring layer of prel[p] + d; dir 0: d(Wp[p], Wc[j]), dir 1: d(Wc[j], Wp[p]) */
+static void dp_step(DPT *D, int dir, i64 pm, const u64 *Wp, const unsigned char *prel, i64 m, const u64 *Wc,
+                    const unsigned char *ban, int *mv) {
+    for (i64 j = 0; j < m; j++)
+        mv[j] = h;
+    if (pm <= 4) {
+        for (i64 p = 0; p < pm; p++)
+            if (prel[p] < h)
+                for (i64 j = 0; j < m; j++) {
+                    if (ban[j])
+                        continue;
+                    int v = prel[p] + (dir ? dist(Wc[j], Wp[p]) : dist(Wp[p], Wc[j]));
+                    if (v < mv[j])
+                        mv[j] = v;
+                }
+        return;
+    }
+    CO *q = &D->q;
+    u64 need = 16;
+    while (need < 2 * (u64)pm)
+        need <<= 1;
+    if (need > q->cap) {
+        free(q->t);
+        q->t = calloc(need, sizeof(CSlot));
+        q->cap = need;
+        q->gen = 0;
+        if (!q->t)
+            DIE("out of memory");
+    }
+    u64 mask = need - 1;
+    for (int k = h; k >= 1; k--) {
+        i64 cnt = 0;
+        int sh = 4 * (h - k);
+        q->gen++;
+        for (i64 p = 0; p < pm; p++)
+            if (prel[p] < k) {
+                co_put(q, mask, dir ? Wp[p] >> sh : Wp[p] & HMASK[k], prel[p]);
+                cnt++;
+            }
+        if (!cnt)
+            break;
+        for (i64 j = 0; j < m; j++) {
+            if (ban[j] || mv[j] <= h - k)
+                continue;
+            int v = co_get(q, mask, dir ? Wc[j] & HMASK[k] : Wc[j] >> sh);
+            if (v >= 0 && v + h - k < mv[j])
+                mv[j] = v + h - k;
+        }
+    }
+}
+/* Forward and backward tables of the fixed-order pass for the whole sequence: for every cut of every event
+   its cost relative to the minimum of its layer (fr, br; 255: not allowed), the minima fmin / bmin, and opt, the
+   cost of the best choice of cuts for this order.  The two directions must agree. */
+static void dp_tables(DPT *D, const Ev *ev, i64 N) {
+    if (N + 2 > D->cap) {
+        D->cap = N + N / 4 + 64;
+        size_t m = (size_t)D->cap;
+        D->cur = realloc(D->cur, m * 8);
+        D->off = realloc(D->off, m * 8);
+        D->fmin = realloc(D->fmin, m * 8);
+        D->bmin = realloc(D->bmin, m * 8);
+        D->mm = realloc(D->mm, m * sizeof(int));
+        D->rho = realloc(D->rho, m * sizeof(int));
+    }
+    i64 tot = 0, maxm = 1, cc = 0;
+    for (i64 i = 0; i < N; i++) {
+        D->cur[i] = co_cur(&ev[i]);
+        D->off[i] = tot;
+        i64 m = D->cur[i] < 0 ? 1 : TR[ev[i].t].ohi - TR[ev[i].t].olo;
+        D->mm[i] = (int)m;
+        tot += m;
+        if (m > maxm)
+            maxm = m;
+        cc += (D->cur[i] >= 0 ? oD(D->cur[i]) : 0) + (i + 1 < N ? dist(ev[i].e, ev[i + 1].s) : 0);
+    }
+    D->curcost = cc;
+    if (tot > D->rcap) {
+        D->rcap = tot + tot / 8 + 64;
+        D->fr = realloc(D->fr, (size_t)D->rcap);
+        D->br = realloc(D->br, (size_t)D->rcap);
+        if (!D->fr || !D->br)
+            DIE("out of memory");
+    }
+    if (maxm > D->wcap) {
+        D->wcap = maxm + 64;
+        size_t m = (size_t)D->wcap;
+        D->S = realloc(D->S, m * 8);
+        D->E = realloc(D->E, m * 8);
+        D->Wp = realloc(D->Wp, m * 8);
+        D->Wq = realloc(D->Wq, m * 8);
+        D->ban = realloc(D->ban, m);
+        D->dd = realloc(D->dd, m);
+        D->mv = realloc(D->mv, m * sizeof(int));
+        if (!D->S || !D->E || !D->Wp || !D->Wq || !D->ban || !D->dd || !D->mv)
+            DIE("out of memory");
+    }
+    for (int dir = 0; dir < 2; dir++) {
+        unsigned char *rel = dir ? D->br : D->fr;
+        i64 *lmin = dir ? D->bmin : D->fmin;
+        i64 pm = 0;
+        const unsigned char *prel = NULL;
+        for (i64 z = 0; z < N; z++) {
+            i64 i = dir ? N - 1 - z : z, m = dp_words(D, &ev[i], D->cur[i], D->S, D->E);
+            int *mv = D->mv, mn = 1 << 20;
+            if (!z)
+                for (i64 j = 0; j < m; j++)
+                    mv[j] = 0;
+            else
+                dp_step(D, dir, pm, D->Wp, prel, m, dir ? D->E : D->S, D->ban, mv);
+            for (i64 j = 0; j < m; j++)
+                if (!D->ban[j]) {
+                    mv[j] += D->dd[j];
+                    if (mv[j] < mn)
+                        mn = mv[j];
+                }
+            unsigned char *r = rel + D->off[i];
+            for (i64 j = 0; j < m; j++)
+                r[j] = D->ban[j] ? 255 : (unsigned char)(mv[j] - mn > 254 ? 254 : mv[j] - mn);
+            lmin[i] = (z ? lmin[dir ? i + 1 : i - 1] : 0) + mn;
+            memcpy(D->Wp, dir ? D->S : D->E, (size_t)m * 8);
+            prel = r;
+            pm = m;
+        }
+    }
+    D->opt = D->fmin[N - 1];
+    if (D->opt != D->bmin[0])
+        DIE("internal error: forward DP %lld, backward DP %lld", D->opt, D->bmin[0]);
+}
+#define DP_SLACK(D, i, j, dj) \
+    ((D)->fmin[i] + (D)->fr[(D)->off[i] + (j)] + (D)->bmin[i] + (D)->br[(D)->off[i] + (j)] - (dj) - (D)->opt)
+/* rho for every free event that has both neighbours (others: 0) */
+static void dp_rho(DPT *D, const Ev *ev, i64 N) {
+    for (i64 i = 0; i < N; i++)
+        D->rho[i] = 0;
+    for (i64 i = 1; i + 1 < N; i++) {
+        if (D->cur[i] < 0)
+            continue;
+        i64 pm = dp_words(D, &ev[i - 1], D->cur[i - 1], D->S, D->Wp); /* E of the left neighbour */
+        i64 m =
+            dp_words(D, &ev[i + 1], D->cur[i + 1], D->Wq, D->E); /* S of the right neighbour; its bans stay in D->ban */
+        dp_step(D, 0, pm, D->Wp, D->fr + D->off[i - 1], m, D->Wq, D->ban, D->mv);
+        int best = 1 << 20;
+        const unsigned char *b = D->br + D->off[i + 1];
+        for (i64 j = 0; j < m; j++)
+            if (!D->ban[j] && D->mv[j] + b[j] < best)
+                best = D->mv[j] + b[j];
+        D->rho[i] = (int)(D->opt - (D->fmin[i - 1] + best + D->bmin[i + 1]));
+    }
+}
+/* the cuts with slack <= tau of both sides of every gap, indexed by their words */
+/* gap, word (E of the left event or S of the right event), F or B of the cut relative to the minimum of its layer */
+typedef struct {
+    int g;
+    u64 w;
+    int c;
+} DpE;
+typedef struct {
+    DpE *L, *R;
+    i64 nL, nR, capL, capR;
+    i64 *ls, *rs2;
+    HTab H;
+    u64 *bf, bfmask;
+    i64 gcap;
+    int kmax;
+    u32 *stamp, st;
+    int *bc, *tl;
+    u32 *bo;
+} DpX;
+/* The index of the places a trail could go to: for every gap between two events, the cuts of both neighbours
+   that are within dpa_tau of their best (at most dpa_cap per event), hashed by the ends of their words. */
+static void dpx_build(DpX *X, DPT *D, const Ev *ev, i64 N) {
+    if (N + 2 > X->gcap) {
+        X->gcap = N + N / 4 + 64;
+        size_t m = (size_t)X->gcap;
+        X->ls = realloc(X->ls, (m + 1) * 8);
+        X->rs2 = realloc(X->rs2, (m + 1) * 8);
+        free(X->stamp);
+        X->stamp = calloc(m, sizeof(u32));
+        X->st = 0;
+        X->bc = realloc(X->bc, m * sizeof(int));
+        X->tl = realloc(X->tl, m * sizeof(int));
+        X->bo = realloc(X->bo, m * sizeof(u32));
+    }
+    X->nL = X->nR = 0;
+    /* gap g lies between events g and g + 1; L: cuts of event g with their forward cost, R: cuts of event g + 1 with their backward cost */
+    for (i64 i = 0; i < N; i++) {
+        i64 m = dp_words(D, &ev[i], D->cur[i], D->S, D->E), kept = 0;
+        X->ls[i] = X->nL;
+        X->rs2[i] = X->nR;
+        for (int pass = 0; pass <= dpa_tau && kept < dpa_cap; pass++) /* smallest slack first */
+            for (i64 j = 0; j < m && kept < dpa_cap; j++) {
+                if (D->ban[j])
+                    continue;
+                i64 sl = DP_SLACK(D, i, j, D->dd[j]);
+                if (sl != pass)
+                    continue;
+                kept++;
+                if (X->nL == X->capL) {
+                    X->capL = X->capL ? X->capL * 2 : 65536;
+                    X->L = realloc(X->L, (size_t)X->capL * sizeof(DpE));
+                }
+                if (X->nR == X->capR) {
+                    X->capR = X->capR ? X->capR * 2 : 65536;
+                    X->R = realloc(X->R, (size_t)X->capR * sizeof(DpE));
+                }
+                if (!X->L || !X->R)
+                    DIE("out of memory");
+                /* as the left side of gap i: F_i(o); as the right side of gap i - 1: B_i(o) */
+                X->L[X->nL].g = (int)i;
+                X->L[X->nL].w = D->E[j];
+                X->L[X->nL].c = D->fr[D->off[i] + j];
+                X->nL++;
+                X->R[X->nR].g = (int)i - 1;
+                X->R[X->nR].w = D->S[j];
+                X->R[X->nR].c = D->br[D->off[i] + j];
+                X->nR++;
+            }
+    }
+    X->ls[N] = X->nL;
+    X->rs2[N] = X->nR;
+    /* depth of the index of gap g: ceil((c_g + 2 tau + theta) / 2) - 1 levels, c_g = the cost of its join, so that every insertion
+       cheaper than dpa_theta is found (one that is not found overlaps by too little on both sides) */
+#define DPX_K(g)                                                                       \
+    ({                                                                                 \
+        int k_ = (dist(ev[g].e, ev[(g) + 1].s) + 2 * dpa_tau + dpa_theta + 1) / 2 - 1; \
+        k_<0 ? 0 : k_> h - 1 ? h - 1 : k_;                                             \
+    })
+    i64 nidx = 0;
+    X->kmax = 0;
+    for (i64 e = 0; e < X->nL; e++)
+        if (X->L[e].g < N - 1)
+            nidx += DPX_K(X->L[e].g) + 1;
+    for (i64 e = 0; e < X->nR; e++)
+        if (X->R[e].g >= 0)
+            nidx += DPX_K(X->R[e].g) + 1;
+    h_reset(&X->H, nidx);
+    {
+        u64 bits = 1 << 16;
+        while (bits < (u64)nidx * 16)
+            bits <<= 1;
+        if (bits - 1 != X->bfmask || !X->bf) {
+            free(X->bf);
+            X->bf = malloc(bits / 8);
+            X->bfmask = bits - 1;
+            if (!X->bf)
+                DIE("out of memory");
+        }
+        memset(X->bf, 0, bits / 8);
+    }
+    for (i64 e = 0; e < X->nL; e++) {
+        if (X->L[e].g >= N - 1)
+            continue;
+        int kk = DPX_K(X->L[e].g);
+        if (kk > X->kmax)
+            X->kmax = kk;
+        for (int j = 0; j <= kk; j++) {
+            u64 k0 = HKEY(X->L[e].w & HMASK[h - j], j, 0), b = BFH(k0) & X->bfmask;
+            h_add(&X->H, k0, (int)e);
+            X->bf[b >> 6] |= 1ULL << (b & 63);
+        }
+    }
+    for (i64 e = 0; e < X->nR; e++) {
+        if (X->R[e].g < 0)
+            continue;
+        int kk = DPX_K(X->R[e].g);
+        for (int j = 0; j <= kk; j++) {
+            u64 k1 = HKEY(X->R[e].w >> (4 * j), j, 1), b = BFH(k1) & X->bfmask;
+            h_add(&X->H, k1, (int)e);
+            X->bf[b >> 6] |= 1ULL << (b & 63);
+        }
+    }
+}
+/* cheapest insertions of the trail of event i: gaps in tl[0 ..], cost bc[gap] (iota), cut bo[gap]; returns their number */
+static int dpx_row(DpX *X, const DPT *D, const Ev *x, i64 N) {
+    const Trail *T = &TR[x->t];
+    const HTab *H = &X->H;
+    int nt = 0;
+    if (++X->st == 0) {
+        memset(X->stamp, 0, (size_t)X->gcap * sizeof(u32));
+        X->st = 1;
+    }
+    u32 st = X->st;
+#define DPX_CAND(g_, c_, o_)           \
+    do {                               \
+        int g__ = (g_), c__ = (c_);    \
+        if (X->stamp[g__] != st) {     \
+            X->stamp[g__] = st;        \
+            X->bc[g__] = c__;          \
+            X->bo[g__] = (u32)(o_);    \
+            X->tl[nt++] = g__;         \
+        } else if (c__ < X->bc[g__]) { \
+            X->bc[g__] = c__;          \
+            X->bo[g__] = (u32)(o_);    \
+        }                              \
+    } while (0)
+    for (i64 o = T->olo; o < T->ohi; o++) {
+        if (OP[o].g1 && oSK_t(T, o) != x->skip)
+            continue;
+        u64 S = oS_t(T, o), E = oE_t(T, o);
+        int Dq = oD(o);
+        for (int j = 0; j <= X->kmax; j++) {
+            u64 k0 = HKEY(S >> (4 * j), j, 0), k1 = HKEY(E & HMASK[h - j], j, 1), b0 = BFH(k0) & X->bfmask,
+                b1 = BFH(k1) & X->bfmask;
+            if ((X->bf[b0 >> 6] >> (b0 & 63)) & 1)
+                for (int e = h_get(H, k0); e >= 0; e = H->next[e]) {
+                    const DpE *l = &X->L[H->val[e]];
+                    int g = l->g;
+                    if (dist(l->w, S) != j)
+                        continue;
+                    int best = 1 << 20;
+                    for (i64 r = X->rs2[g + 1]; r < X->rs2[g + 2]; r++) {
+                        int v = dist(E, X->R[r].w) + X->R[r].c;
+                        if (v < best)
+                            best = v;
+                    }
+                    if (best >= (1 << 20))
+                        continue;
+                    /* F_g(p) + j + D + d(E, S_q) + B_{g+1}(q) - OPT */
+                    DPX_CAND(g, (int)(D->fmin[g] + l->c + j + Dq + best + D->bmin[g + 1] - D->opt), o - T->olo);
+                }
+            if ((X->bf[b1 >> 6] >> (b1 & 63)) & 1)
+                for (int e = h_get(H, k1); e >= 0; e = H->next[e]) {
+                    const DpE *rr = &X->R[H->val[e]];
+                    int g = rr->g;
+                    if (dist(E, rr->w) != j)
+                        continue;
+                    int best = 1 << 20;
+                    for (i64 l = X->ls[g]; l < X->ls[g + 1]; l++) {
+                        int v = dist(X->L[l].w, S) + X->L[l].c;
+                        if (v < best)
+                            best = v;
+                    }
+                    if (best >= (1 << 20))
+                        continue;
+                    DPX_CAND(g, (int)(D->fmin[g] + best + Dq + j + rr->c + D->bmin[g + 1] - D->opt), o - T->olo);
+                }
+        }
+    }
+#undef DPX_CAND
+    (void)N;
+    return nt;
+}
+/* cheapest insertions (with re-cutting) of every trail: up to DPA_RK gaps per event, cheapest first */
+#define DPA_RK 4
+typedef struct {
+    int g, c;
+    u32 oo;
+} DpI;
+/* window i..j of the sequence and the estimate of its gain */
+typedef struct {
+    int i, j, est, rho;
+} DpC;
+/* Order of the candidate windows: by falling estimate, then shorter windows first, then by position. */
+static int dpc_cmp(const void *a, const void *b) {
+    const DpC *x = a, *y = b;
+    int lx = x->j - x->i, ly = y->j - y->i;
+    return x->est != y->est ? (x->est > y->est ? -1 : 1)
+           : lx != ly       ? (lx < ly ? -1 : 1)
+                            : (x->i < y->i ? -1 : x->i > y->i);
+}
+static DPT G_dpt;
+static DpX G_dpx;
+static DpI *G_dpi;
+static int *G_dpn;
+static i64 G_dpicap;
+static int dpa_imax = 2, dpa_lmax = 24, dpa_full = 10, dpa_thr = 1, dpa_quiet = 0;
+static double dpa_sec = 0;
+static const char *dpa_ckpt = NULL; /* dpa_ckpt: plan written after every sweep that gained */
+/* the window i..j is taken out and member z goes into gap gp[z] with cut op[z]; then the DP is run on the W
+   events on either side of every changed place (W <= 0: on the whole sequence).  The new sequence is left in tmp,
+   the changed places (the hole first) in pos[0 .. j - i + 1]; returns the length. */
+static i64 dpa_build(const Ev *ev, i64 N, int i, int j, const int *gp, const u32 *op, Ev *tmp, CO *co, i64 W,
+                     i64 *pos) {
+    i64 m = 0;
+    int k = j - i + 1, chg;
+    pos[0] = 0;
+    for (i64 q = 0; q < N; q++) {
+        if (q < i || q > j)
+            tmp[m++] = ev[q];
+        if (q == i - 1)
+            pos[0] = m;
+        for (int z = 0; z < k; z++)
+            if (gp[z] == q) {
+                pos[z + 1] = m;
+                tmp[m++] = make_event(TR[ev[i + z].t].olo + op[z]);
+            }
+    }
+    if (m != N)
+        DIE("internal error: dpa_build wrote %lld of %lld events", m, N);
+    if (W <= 0)
+        co_run(co, tmp, N, 0, N - 1, 0, &chg);
+    else
+        for (int z = 0; z <= k; z++) {
+            i64 a = pos[z] - W, b = pos[z] + W;
+            if (a < 0)
+                a = 0;
+            if (b > N - 1)
+                b = N - 1;
+            co_run(co, tmp, N, a, b, 0, &chg);
+        }
+    return seq_length(tmp, N);
+}
+/* one sweep: tables, candidates (single trails and windows of consecutive trails), trials.  Returns the gain. */
+static i64 dpa_sweep(Ev *ev, i64 N, CO *co, Ev *tmp) {
+    DPT *D = &G_dpt;
+    DpX *X = &G_dpx;
+    double t0 = wall(), t1;
+    int chg;
+    if (dpa_lmax > 64)
+        dpa_lmax = 64;
+    {
+        i64 g0 = co_run(co, ev, N, 0, N - 1, 0, &chg);
+        if (g0 > 0) {
+            if (!dpa_quiet) {
+                printf("dpa: fixed-order DP gains %lld\n", g0);
+                fflush(stdout);
+            }
+            return g0;
+        }
+    }
+    dp_tables(D, ev, N);
+    i64 hs[5] = {0}, nfree = 0, z0 = 0, z1 = 0;
+    for (i64 i = 0; i < N; i++) {
+        if (D->cur[i] < 0)
+            continue;
+        const Trail *T = &TR[ev[i].t];
+        i64 c0 = 0, c1 = 0;
+        nfree++;
+        for (i64 j = 0; j < D->mm[i]; j++) {
+            if (D->fr[D->off[i] + j] == 255)
+                continue;
+            i64 sl = DP_SLACK(D, i, j, oD(T->olo + j));
+            c0 += sl == 0;
+            c1 += sl == 1;
+        }
+        z0 += c0;
+        z1 += c1;
+        hs[c0 <= 1 ? 0 : c0 == 2 ? 1 : c0 <= 5 ? 2 : c0 <= 20 ? 3 : 4]++;
+    }
+    t1 = wall();
+    if (dpa_verbose)
+        printf(
+            "dpa: cost now %lld, best for this order %lld; %lld free events; openings without slack: %lld (events with 1: %lld, 2: %lld, 3-5: %lld, 6-20: %lld, more: %lld), with slack 1: %lld (%.1fs)\n",
+            D->curcost, D->opt, nfree, z0, hs[0], hs[1], hs[2], hs[3], hs[4], z1, t1 - t0);
+    dp_rho(D, ev, N);
+    i64 hr[5] = {0}, sr = 0;
+    for (i64 i = 1; i + 1 < N; i++)
+        if (D->cur[i] >= 0) {
+            int r = D->rho[i];
+            hr[r < 0 ? 0 : r > 3 ? 4 : r]++;
+            sr += r;
+        }
+    if (dpa_verbose) {
+        printf(
+            "dpa: taking one trail out (the others re-opened) saves 0: %lld trails, 1: %lld, 2: %lld, 3: %lld, more: %lld (sum %lld) (%.1fs)\n",
+            hr[0], hr[1], hr[2], hr[3], hr[4], sr, wall() - t1);
+        fflush(stdout);
+    }
+    t1 = wall();
+    dpx_build(X, D, ev, N);
+    if (N > G_dpicap) {
+        G_dpicap = N + N / 4 + 64;
+        G_dpi = realloc(G_dpi, (size_t)G_dpicap * DPA_RK * sizeof(DpI));
+        G_dpn = realloc(G_dpn, (size_t)G_dpicap * sizeof(int));
+        if (!G_dpi || !G_dpn)
+            DIE("out of memory");
+    }
+    i64 hi[5] = {0};
+#pragma omp parallel num_threads(dpa_thr)
+    {
+        DpX Y = *X;
+        size_t gm = (size_t)X->gcap;
+        i64 lh[5] = {0}; /* the index is shared, the scratch arrays are not */
+        Y.stamp = calloc(gm, sizeof(u32));
+        Y.st = 0;
+        Y.bc = malloc(gm * sizeof(int));
+        Y.tl = malloc(gm * sizeof(int));
+        Y.bo = malloc(gm * sizeof(u32));
+        if (!Y.stamp || !Y.bc || !Y.tl || !Y.bo)
+            DIE("out of memory");
+#pragma omp for schedule(dynamic, 16)
+        for (i64 i = 0; i < N; i++) {
+            G_dpn[i] = 0;
+            if (i < 1 || i + 1 >= N || D->cur[i] < 0)
+                continue;
+            int nt = dpx_row(&Y, D, &ev[i], N), nk = 0;
+            DpI *I = G_dpi + (size_t)i * DPA_RK;
+            for (int k = 0; k < nt; k++) {
+                int g = Y.tl[k], c = Y.bc[g], p;
+                if ((g >= i - 2 && g <= i + 1) || c > dpa_imax)
+                    continue; /* not next to itself */
+                if (nk < DPA_RK)
+                    p = nk++;
+                else if (I[DPA_RK - 1].c <= c)
+                    continue;
+                else
+                    p = DPA_RK - 1;
+                while (p > 0 && I[p - 1].c > c) {
+                    I[p] = I[p - 1];
+                    p--;
+                }
+                I[p].g = g;
+                I[p].c = c;
+                I[p].oo = Y.bo[g];
+            }
+            G_dpn[i] = nk;
+            lh[!nk ? 4 : I[0].c < 0 ? 0 : I[0].c > 3 ? 4 : I[0].c]++;
+        }
+#pragma omp critical(dpa)
+        for (int k = 0; k < 5; k++)
+            hi[k] += lh[k];
+        free(Y.stamp);
+        free(Y.bc);
+        free(Y.tl);
+        free(Y.bo);
+    }
+    if (dpa_verbose) {
+        printf(
+            "dpa: %lld + %lld indexed openings (slack <= %d, levels <= %d); the cheapest other place of a trail (the others re-opened) costs 0: %lld trails, 1: %lld, 2: %lld, 3: %lld, more: %lld (%.1fs)\n",
+            X->nL, X->nR, dpa_tau, X->kmax, hi[0], hi[1], hi[2], hi[3], hi[4], wall() - t1);
+        fflush(stdout);
+    }
+    t1 = wall();
+    /* candidates */
+    DpC *cd = NULL;
+    i64 nc = 0, ccap = 0, nwin = 0, nrho = 0;
+    for (i64 i = 1; i + 1 < N; i++) {
+        for (i64 j = i; j + 1 < N && j - i < dpa_lmax; j++) {
+            if (D->cur[j] < 0 || !G_dpn[j])
+                break;
+            /* cheapest place of every member outside the window */
+            i64 sum = 0;
+            int ok = 1;
+            for (i64 t = i; t <= j && ok; t++) {
+                const DpI *I = G_dpi + (size_t)t * DPA_RK;
+                int f = -1;
+                for (int k = 0; k < G_dpn[t]; k++)
+                    if (I[k].g < i - 2 || I[k].g > j + 1) {
+                        f = k;
+                        break;
+                    }
+                if (f < 0)
+                    ok = 0;
+                else
+                    sum += I[f].c;
+            }
+            if (!ok)
+                continue;
+            nwin++;
+            i64 mid = D->opt - D->fmin[i - 1] - D->bmin[j + 1];
+            int rho;
+            if (sum >= mid)
+                continue;
+            if (j == i)
+                rho = D->rho[i];
+            else {
+                i64 pm = dp_words(D, &ev[i - 1], D->cur[i - 1], D->S, D->Wp),
+                    m = dp_words(D, &ev[j + 1], D->cur[j + 1], D->Wq, D->E);
+                dp_step(D, 0, pm, D->Wp, D->fr + D->off[i - 1], m, D->Wq, D->ban, D->mv);
+                int best = 1 << 20;
+                const unsigned char *b = D->br + D->off[j + 1];
+                for (i64 q = 0; q < m; q++)
+                    if (!D->ban[q] && D->mv[q] + b[q] < best)
+                        best = D->mv[q] + b[q];
+                rho = (int)(D->opt - (D->fmin[i - 1] + best + D->bmin[j + 1]));
+                nrho++;
+            }
+            if (rho - sum <= 0)
+                continue;
+            if (nc == ccap) {
+                ccap = ccap ? ccap * 2 : 1024;
+                cd = realloc(cd, (size_t)ccap * sizeof(DpC));
+            }
+            cd[nc].i = (int)i;
+            cd[nc].j = (int)j;
+            cd[nc].est = (int)(rho - sum);
+            cd[nc].rho = rho;
+            nc++;
+        }
+    }
+    if (nc)
+        qsort(cd, (size_t)nc, sizeof(DpC), dpc_cmp);
+    if (dpa_verbose) {
+        printf("dpa: %lld windows of trails that have a cheap other place, %lld evaluated, %lld candidates (%.1fs)\n",
+               nwin, nrho, nc, wall() - t1);
+        fflush(stdout);
+    }
+    t1 = wall();
+    /* trials, best estimate first.  A trial that gains is kept; the trails near its changed places are marked, and
+       later candidates of this sweep must lie clear of them (their numbers come from tables that are now out of
+       date there).  A trial without a gain is repeated with wider DP windows; after a DP on the whole sequence the
+       sweep ends. */
+    i64 total = 0, ntry = 0, nfull = 0, napp = 0, l0 = seq_length(ev, N), lc = l0;
+    int stop = 0;
+    int *tid0 = malloc((size_t)N * sizeof(int)), *where = malloc(((size_t)NT + 1) * sizeof(int));
+    char *dirty = calloc((size_t)NT + 1, 1);
+    for (i64 q = 0; q < N; q++) {
+        tid0[q] = (int)ev[q].t;
+        where[ev[q].t] = (int)q;
+    }
+    for (i64 k = 0; k < nc && ntry < dpa_maxtry && !stop; k++) {
+        const DpC *c = &cd[k];
+        int gp[72], kk = c->j - c->i + 1, ok = 1;
+        u32 op[72];
+        i64 pos[73];
+        int p0 = where[tid0[c->i]];
+        if (p0 < 1 || p0 + kk >= N || dirty[ev[p0 - 1].t] || dirty[ev[p0 + kk].t])
+            continue;
+        for (int z = 0; z < kk && ok; z++) {
+            int t = c->i + z, p = where[tid0[t]];
+            const DpI *I = G_dpi + (size_t)t * DPA_RK;
+            int f = -1;
+            if (p != p0 + z || dirty[tid0[t]] || co_cur(&ev[p]) < 0) {
+                ok = 0;
+                break;
+            }
+            for (int q = 0; q < G_dpn[t]; q++)
+                if (I[q].g < c->i - 2 || I[q].g > c->j + 1) {
+                    f = q;
+                    break;
+                }
+            if (f < 0) {
+                ok = 0;
+                break;
+            }
+            int gl = tid0[I[f].g], gr = tid0[I[f].g + 1];
+            if (dirty[gl] || dirty[gr] || where[gr] != where[gl] + 1) {
+                ok = 0;
+                break;
+            }
+            gp[z] = where[gl];
+            op[z] = I[f].oo;
+        }
+        if (!ok)
+            continue;
+        ntry++;
+        i64 W = dpa_win, l1;
+        for (;;) {
+            l1 = dpa_build(ev, N, p0, p0 + kk - 1, gp, op, tmp, co, W, pos);
+            if (l1 < lc || W <= 0)
+                break;
+            if (W < 16 * (i64)dpa_win && 4 * W < N)
+                W *= 4;
+            else if (nfull < dpa_full) {
+                nfull++;
+                W = 0;
+            } else
+                break;
+        }
+        if (dpa_verbose > 1 || l1 < lc) {
+            printf(
+                "  dpa: window %d..%d (%d trails, first trail %u to gap %d): saves %d, estimate %d, length %lld -> %lld (DP %lld events around)\n",
+                p0, p0 + kk - 1, kk, ev[p0].t, gp[0], c->rho, c->est, lc, l1, W);
+            fflush(stdout);
+        }
+        if (l1 >= lc)
+            continue;
+        memcpy(ev, tmp, (size_t)N * sizeof(Ev));
+        total += lc - l1;
+        lc = l1;
+        napp++;
+        if (W <= 0)
+            stop = 1;
+        else
+            for (int z = 0; z <= kk; z++)
+                for (i64 q = pos[z] - W - 2; q <= pos[z] + W + 2; q++)
+                    if (q >= 0 && q < N)
+                        dirty[ev[q].t] = 1;
+        for (i64 q = 0; q < N; q++)
+            where[ev[q].t] = (int)q;
+    }
+    free(tid0);
+    free(where);
+    free(dirty);
+    if (total) {
+        i64 g1 = co_run(co, ev, N, 0, N - 1, 0, &chg);
+        total += g1;
+        if (dpa_ckpt)
+            write_plan(ev, N, dpa_ckpt);
+    }
+    if (!dpa_quiet || total) {
+        printf(
+            "dpa: %lld -> %lld (%lld candidates, %lld tried, %lld applied, %lld with the DP on the whole sequence; %.1fs)\n",
+            l0, l0 - total, nc, ntry, napp, nfull, wall() - t0);
+        fflush(stdout);
+    }
+    free(cd);
+    return total;
+}
+
+/* ==================== shared base again: the search (it calls the pass for --dpa-sec), the loader, main (it calls dpa_sweep) ==================== */
 /* ---------- shared best sequence */
 static Ev *G_ev;
 static i64 G_N, G_len;
 static int G_dirty;
-static double G_t0, G_last_ck, G_last_log;
+static double G_t0, G_last_ck, G_last_log, G_last_dpa;
 static i64 G_it[256];
 static double wall(void);
 
@@ -1814,6 +2926,34 @@ static void search(Ctx *c, const Ev *init_ev, i64 initN, const char *outplan) {
                 if (adopt)
                     ctx_load(c, c->tmp, an);
             }
+            if (dpa_sec > 0 && c->tid == 0 &&
+                tn - G_last_dpa > dpa_sec) { /* relocation with re-cutting on the current sequence of thread 0 */
+                i64 m = ctx_export(c, c->tmp), g, tg = 0;
+                const char *ck = dpa_ckpt;
+                dpa_ckpt = NULL;
+                dpa_quiet = 1;
+                while ((g = dpa_sweep(c->tmp, m, &DPA_co, dpa_buf(m))) > 0)
+                    tg += g;
+                dpa_ckpt = ck;
+                dpa_quiet = 0;
+                if (tg > 0) {
+                    ctx_load(c, c->tmp, m);
+                    c->cur -= tg;
+                    if (c->cur < c->best_len) {
+                        c->best_len = c->cur;
+#pragma omp critical(gbest)
+                        if (c->cur < G_len) {
+                            printf("t=%.0fs: best %lld -> %lld (thread %d, it %lld, relocation with re-opening)\n",
+                                   wall() - G_t0, G_len, c->cur, c->tid, c->it);
+                            fflush(stdout);
+                            G_N = ctx_export(c, G_ev);
+                            G_len = c->cur;
+                            G_dirty = 1;
+                        }
+                    }
+                }
+                G_last_dpa = wall();
+            }
         }
     }
 #pragma omp critical(gbest)
@@ -1958,8 +3098,9 @@ static i64 trail_options(i64 t, i64 *wp, const u64 *dupb, Opt *out, i64 *hist, i
    loads the plan, runs the passes that were asked for and the search, and writes the plan and the word. */
 int main(int argc, char **argv) {
     if (argc < 3)
-        DIE("usage: trailsearch WORD.txt OUT.txt [--time SEC] [--seed S] [--kmax K] [--T0 TEMP] [--noskip] [--nosplit] [--plan-in FILE] [--ckpt SEC] [--iters N] [--threads T] [--sync SEC]");
+        DIE("usage: relocate BASE.txt OUT.txt --plan-in PLAN --threads 1 --time 0 --dpa --dpa-thr T   (see the comment at the top of relocate.c)");
     const char *plan_in = NULL;
+    int co_first = 0;
     for (int a = 3; a < argc; a++) {
         if (!strcmp(argv[a], "--time") && a + 1 < argc)
             tlimit = atof(argv[++a]);
@@ -1983,6 +3124,36 @@ int main(int argc, char **argv) {
             bigp = atof(argv[++a]);
         else if (!strcmp(argv[a], "--focus") && a + 1 < argc)
             focus = atof(argv[++a]);
+        else if (!strcmp(argv[a], "--co"))
+            co_first = 1;
+        else if (!strcmp(argv[a], "--dpa"))
+            dpa_on = 1;
+        else if (!strcmp(argv[a], "--dpa-tau") && a + 1 < argc)
+            dpa_tau = atoi(argv[++a]);
+        else if (!strcmp(argv[a], "--dpa-theta") && a + 1 < argc)
+            dpa_theta = atoi(argv[++a]);
+        else if (!strcmp(argv[a], "--dpa-imax") && a + 1 < argc)
+            dpa_imax = atoi(argv[++a]);
+        else if (!strcmp(argv[a], "--dpa-lmax") && a + 1 < argc)
+            dpa_lmax = atoi(argv[++a]);
+        else if (!strcmp(argv[a], "--dpa-full") && a + 1 < argc)
+            dpa_full = atoi(argv[++a]);
+        else if (!strcmp(argv[a], "--dpa-thr") && a + 1 < argc)
+            dpa_thr = atoi(argv[++a]);
+        else if (!strcmp(argv[a], "--dpa-sec") && a + 1 < argc)
+            dpa_sec = atof(argv[++a]);
+        else if (!strcmp(argv[a], "--dpa-win") && a + 1 < argc)
+            dpa_win = atoi(argv[++a]);
+        else if (!strcmp(argv[a], "--dpa-cap") && a + 1 < argc)
+            dpa_cap = atoi(argv[++a]);
+        else if (!strcmp(argv[a], "--dpa-maxtry") && a + 1 < argc)
+            dpa_maxtry = atoll(argv[++a]);
+        else if (!strcmp(argv[a], "--dpa-vv") || !strcmp(argv[a], "--as-vv"))
+            dpa_verbose = 2;
+        else if (!strcmp(argv[a], "--dpa-v") || !strcmp(argv[a], "--as-v"))
+            dpa_verbose = 1;
+        else if (!strcmp(argv[a], "--co-skip"))
+            co_first = co_skip = 1;
         else if (!strcmp(argv[a], "--noskip"))
             use_skip = 0;
         else if (!strcmp(argv[a], "--nosplit"))
@@ -2359,14 +3530,21 @@ int main(int argc, char **argv) {
         printf("model length of the plan: %lld (%lld events)\n", seq_length(ev, N), N);
         fflush(stdout);
     }
+    if (co_first)
+        co_full(ev, N);
     /* ---------- destroy / repair search */
     char outplan[4096];
     snprintf(outplan, sizeof outplan, "%s.plan", argv[2]);
+    if (dpa_on) {
+        dpa_ckpt = outplan;
+        while (dpa_sweep(ev, N, &DPA_co, dpa_buf(N)) > 0)
+            ;
+    }
     G_ev = malloc((size_t)(4 * N + 65536) * sizeof(Ev));
     memcpy(G_ev, ev, (size_t)N * sizeof(Ev));
     G_N = N;
     G_len = seq_length(ev, N);
-    G_t0 = G_last_ck = G_last_log = wall();
+    G_t0 = G_last_ck = G_last_log = G_last_dpa = wall();
 #pragma omp parallel num_threads(NTHR)
     {
         Ctx *c = calloc(1, sizeof(Ctx));
@@ -2378,6 +3556,16 @@ int main(int argc, char **argv) {
         tot += G_it[q];
     printf("LNS done: %lld iterations on %d threads, best %lld\n", tot, NTHR, G_len);
     fflush(stdout);
+    if (tot > 0 && co_first) {
+        co_full(G_ev, G_N);
+        G_len = seq_length(G_ev, G_N);
+    }
+    if (tot > 0 && (dpa_on || dpa_sec > 0)) {
+        dpa_ckpt = outplan;
+        while (dpa_sweep(G_ev, G_N, &DPA_co, dpa_buf(G_N)) > 0)
+            ;
+        G_len = seq_length(G_ev, G_N);
+    }
     print_stats(G_ev, G_N);
     write_plan(G_ev, G_N, outplan);
     write_word(G_ev, G_N, argv[2], G_len);

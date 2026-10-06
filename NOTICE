@@ -1,13 +1,27 @@
 Shorter superpermutations
 
-The superpermutations in words/ re-join the component words of the superpermutations on 11, 12 and 13 symbols
-(43,930,680, 522,745,581 and 6,747,918,066 letters) from https://github.com/jaypantone/superperm-upper-43-80 (Apache License 2.0),
-by Jay Pantone. The construction of those components is entirely Pantone's; this repository only changes where each
-component is opened and in what order the components are joined.
+The superpermutations in words/ are built with the construction of Jay Pantone,
+https://github.com/jaypantone/superperm-upper-43-80 (Apache License 2.0). 2-loops, slices, the selection, the
+completion, the transport and the closed trails are his.
+
+The earlier words on 11, 12 and 13 symbols re-join the component words of his superpermutations (43,930,680,
+522,745,581 and 6,747,918,066 letters): they only change where each component is opened and in what order the
+components are joined. The later words on 10, 11, 12 and 13 symbols use other selections inside the same
+construction. These selections are derived from his file tools/construction-input.txt; they differ from his on the
+loops that his selection leaves without a slice, and some of them use slices with other numbers of visible classes,
+read from his rules.
 
 The gap-2 opening used for the n=11 and n=12 words was identified in rumstd's n=10 superpermutation of length 4,034,873
 (pull request #3 to jaypantone/superperm-upper-43-80). The 43,930,644 word was found starting from rumstd's
-43,930,668 word (pull request #4), which builds on Theo H.'s 43,930,678 word (pull request #2).
+43,930,668 word (pull request #4), which builds on Theo H.'s 43,930,678 word (pull request #2). The structure of the
+n=10 word here (groups of seven small closed trails written as paths or closed into loops, in chains of six) was
+read off the same word of rumstd, and the order of its groups is his.
+
+Cutting a trail inside a 1-cycle, as tools/recut_wide.c and tools/word2plan.c do, was identified in Theo H.'s n=11
+superpermutation of length 43,930,624 (pull request #6 to jaypantone/superperm-upper-43-80). The fixed-order pass of
+tools/recut.c was found independently by Theo H. and by the authors of this repository. No code from Theo H.'s
+repository (GPL-3.0-or-later) is included here; the programs in tools/, reproduce/, selection/, arrange/ and proofs/
+were written for this repository.
 
 By Jakub Halfar, with Claude (Opus 5.5) in Claude Code. Jakub Halfar chose the problem and directed the work; Claude
 designed and ran the searches and wrote the code and the text.

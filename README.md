@@ -1,160 +1,159 @@
-# Shorter superpermutations on 11, 12 and 13 symbols
+# Shorter superpermutations on 10, 11, 12 and 13 symbols
 
 A superpermutation on n symbols is a word that contains every permutation of the symbols as a substring. This
-repository holds three such words that are shorter than any I know of, for n = 11, 12 and 13.
+repository holds four such words, for n = 10, 11, 12 and 13, that are shorter than any other I know of. It also
+holds the inputs from which each word can be rebuilt and the programs that made them.
 
-They are built from the pieces of Jay Pantone's
-[43/80 construction](https://github.com/jaypantone/superperm-upper-43-80). I change where each piece is cut open and
-the order in which the pieces are joined. The construction itself is Pantone's.
+All of it is built with Jay Pantone's
+[43/80 construction](https://github.com/jaypantone/superperm-upper-43-80). Until October 5 I kept the closed
+trails of his words and changed where each one is cut and the order in which the pieces are joined. The four words
+here use other selections inside his construction, and so other closed trails. The construction is Pantone's.
 
 I work on this with Claude (Opus 5.5) in Claude Code. I chose the problem and direct the work; Claude designs and
 runs the searches and writes the code and this text.
 
 ## The words
 
-| n | length | Pantone's word | shorter by | file |
-|---|---|---|---|---|
-| 11 | **43,930,614** | 43,930,680 | 66 | [`words/superpermutation-11-43930614.txt.xz`](words/superpermutation-11-43930614.txt.xz) |
-| 12 | **522,745,355** | 522,745,581 | 226 | [`words/superpermutation-12-522745355.txt.xz`](words/superpermutation-12-522745355.txt.xz) |
-| 13 | **6,747,916,917** | 6,747,918,066 | 1,149 | [`words/superpermutation-13-6747916917.txt.xz`](words/superpermutation-13-6747916917.txt.xz) |
+| n | length now | length before | previous record by | change |
+|---|---:|---:|---|---:|
+| 10 | 4,034,855 | 4,034,873 | rumstd | -18 |
+| 11 | 43,930,578 | 43,930,624 | Theo H. | -46 |
+| 12 | 522,737,299 | 522,745,531 | Theo H. | -8,232 |
+| 13 | 6,747,802,875 | 6,747,918,066 | Jay Pantone | -115,191 |
 
-In each of them every permutation occurs and no single letter can be deleted.
+"Before" is the best word of someone else. Theo H.'s two words were made from earlier words of mine. Against
+Pantone's own words of 4,034,889, 43,930,680, 522,745,581 and 6,747,918,066 letters the four words are 34,
+102, 8,282 and 115,191 letters shorter. My own best words on Pantone's closed trails, before the change
+of selection, had 43,930,614, 522,745,350 and 6,747,916,657 letters.
 
-n = 12 and n = 13 are still getting shorter, and I update the table when a shorter word has passed the checks. The
-words in between are in [`plan/history/`](plan/history/README.md) as plans.
-
-Other recent words for comparison: Theo H. has 43,930,624 and 522,745,531 (PRs #6 and #7 to Pantone's repository),
-both made from earlier words of mine. rumstd has 43,930,668 (PR #4).
-
-The files use the alphabet `0123456789ABC`, one line plus a line feed, as in Pantone's repository. They are XZ files
-with a delta filter of distance n, and `xz -d` unpacks them. [`SHA256SUMS`](SHA256SUMS) lists the hashes of the
-archives and of the words inside.
+The files are `words/superpermutation-N-LENGTH.txt.xz`, XZ archives with a delta filter of distance n that `xz -d`
+unpacks: 65 KB, 0.4 MB, 4.1 MB and 45 MB. They use the alphabet `0123456789ABC`, one line plus a line feed, as in
+Pantone's repository. [`SHA256SUMS`](SHA256SUMS) lists the hashes of the archives and of the words inside. In each
+word every permutation occurs and no single letter can be deleted.
 
 ## Checking a word
 
-Pantone's checker works for n = 11 and n = 12:
+Three programs that share no code check the words:
+
+* [`reproduce/tools/check_min.py`](reproduce/tools/check_min.py): every permutation occurs. About 60 lines of
+  Python with numpy.
+* [`tools/delcheck.c`](tools/delcheck.c): every permutation occurs and no single letter can be deleted. 1.6 GB and
+  about two minutes on 8 threads at n = 13.
+* Pantone's `literal_check --deletions` from his repository: the same two statements. At n = 13 it needs about
+  13 GB.
 
 ```sh
-git clone https://github.com/jaypantone/superperm-upper-43-80
-c++ -O3 -std=c++17 superperm-upper-43-80/tools/literal_check.cpp -o literal_check
-xz -dk words/superpermutation-11-43930614.txt.xz words/superpermutation-12-522745355.txt.xz
-./literal_check 11 0123456789A  words/superpermutation-11-43930614.txt --deletions
-./literal_check 12 0123456789AB words/superpermutation-12-522745355.txt --deletions
+cc -O2 -mpopcnt -fopenmp -o delcheck tools/delcheck.c
+xz -dk words/superpermutation-11-43930578.txt.xz
+./delcheck words/superpermutation-11-43930578.txt
 ```
 
-For n = 13 it needs about 13 GB of RAM and close to an hour. [`tools/delcheck.c`](tools/delcheck.c) runs the same
-test (all permutations present, no deletable letter) in 1.6 GB and about a minute on 16 threads:
+`delcheck` must print `"missing_permutations":0` and `"coverage_preserving_deletions_count":0`.
+
+All three passed on each of the four words. For n = 13 `literal_check` ran under Linux: 18 minutes and about
+13 GB.
+
+SHA-256 of the four words:
+
+    n = 10   09e2c807aea5f0890d257f97d5d447c0235d41df9589caff8899f01d2016f7f6
+    n = 11   65ddf4c4a3ebaa69de7bc6be29e0b38ad010055f22ef6abeeffdb4f508176092
+    n = 12   acac6023eff390880f8fec3e48fc3b7ef24c5a45e71bbf8c328a6d8615901717
+    n = 13   91fc31abc4d28626a6839e3c8263f676377744a173349f4ecfd02a3309a337f6
+
+## Rebuilding a word
+
+Each word can be rebuilt from two small files: a selection, which says what the closed trails are, and a plan,
+which lists the closed trails in order and says where each is cut. [`reproduce/`](reproduce/REPRODUCE.md) holds
+both for the four words. With them come a generator, a program that writes the word of a plan and a list of the
+hashes to expect. It needs Python 3 and a C compiler and no solver. The n = 10 word takes seconds, the n = 12 word
+about four minutes and 0.9 GB, the n = 13 word 40 minutes and 2 GB of memory with 14 GB of disk.
+
+The generator writes a base word, a superpermutation that holds every closed trail once. The tools of this
+repository work on base words, so the same plan also rebuilds with the loader of the search programs:
 
 ```sh
-cc -O2 -fopenmp -o delcheck tools/delcheck.c
-xz -dk words/superpermutation-13-6747916917.txt.xz
-./delcheck words/superpermutation-13-6747916917.txt
+cc -O2 -mpopcnt -fopenmp -o trailsearch tools/trailsearch.c -lm
+./trailsearch BASE.txt rebuilt.txt --plan-in PLAN --time 0
 ```
 
-On seven test words with known deletable letters `delcheck` returns the same list as `literal_check`. What the
-checks print for the three words:
-
-* n=11: `"length":43930614, "distinct_permutations":39916800, "missing_permutations":0, "extra_occurrences":18816, "coverage_preserving_deletions":[]`
-* n=12: `"length":522745355, "distinct_permutations":479001600, "missing_permutations":0, "extra_occurrences":169348, "coverage_preserving_deletions":[]`
-* n=13: `"length":6747916917, "distinct_permutations":6227020800, "missing_permutations":0, "extra_occurrences":1693443, "coverage_preserving_deletions":[]`
-
-I ran `literal_check --deletions` on the n=11 and n=12 words and `delcheck` on all three.
-
-## Rebuilding a word from its plan
-
-A plan is a text file that lists the pieces of a word in order: which trail of a base word, where it is cut open,
-and with which gap. [`tools/trailsearch.c`](tools/trailsearch.c) turns a base word and a plan back into the word, so
-you can reproduce every word here without running a search.
-
-```sh
-cc -O2 -fopenmp -o trailsearch tools/trailsearch.c -lm
-
-# n=11, from my 43,930,674 word (seconds)
-xz -dk words/superpermutation-11-43930674.txt.xz
-./trailsearch words/superpermutation-11-43930674.txt rebuilt-11.txt --plan-in plan/trailsearch-11-43930614.plan --time 0
-sha256sum rebuilt-11.txt    # 388ec7d60116acfac039b45533589f45afa85b13d83ae740a916d3a477ca44ab
-
-# n=12, from Pantone's 522,745,581 word (about 2 minutes, 1.3 GB)
-xz -dkc superperm-upper-43-80/words/12/superpermutation-12-522745581.txt.xz > pantone-12.txt
-./trailsearch pantone-12.txt rebuilt-12.txt --plan-in plan/trailsearch-12-522745355.plan --time 0
-sha256sum rebuilt-12.txt    # f5a5b106ebf9a5ee1deb1f168ffa182d91e5b447685a9f86e33598c655098488
-```
-
-n=13 takes two steps, because its plans refer to my 6,747,918,058 word, which itself is Pantone's word with the
-pieces reordered:
-
-```sh
-cc -O2 -o pieces tools/pieces.c
-cc -O2 -o assemble tools/assemble.c
-xz -dkc superperm-upper-43-80/words/13/superpermutation-13-6747918066.txt.xz > pantone-13.txt
-./pieces pantone-13.txt pieces-13.txt
-./assemble pantone-13.txt pieces-13.txt plan/plan-13-6747918058.txt step1-13.txt   # about 1 minute
-sha256sum step1-13.txt      # fc9be56c413d125924e43241e8774c1ae922b963e7c0a65b50d16887579f381e
-./trailsearch step1-13.txt rebuilt-13.txt --plan-in plan/trailsearch-13-6747916917.plan --time 0 --threads 1   # about 10 minutes, 11 GB
-sha256sum rebuilt-13.txt    # 071ad201b7badb2b4bb95347c101e35d6d5c0213a8c0ee0a1d415f1aebb48530
-```
-
-[`plan/`](plan/) also has the plans of the earlier published words, and
-[`plan/history/`](plan/history/README.md) has plans for the words found in between, each with the hash of its word.
-If you want to start from a different word than my best one, take one of those.
+The earlier words, on Pantone's closed trails, rebuild the same way from Pantone's words and the plans in
+[`plan/`](plan/) and [`plan/history/`](plan/history/README.md).
 
 ## How the words were found
 
-Pantone's words are made of closed trails, each written out once and joined to the next with as much overlap as
-possible. I keep the trails and change two things: where each trail is cut open, and the order of the pieces.
+[`NOTES.md`](NOTES.md) is the full account: every step in order with the lengths before and after for each n,
+what it cost, which program does it, what I tried that gave nothing, and what is known about how much is left.
+In short:
 
-1. Reordering runs. Pieces that overlap as much as possible form runs. Ordering the runs is a travelling
-   salesman problem, which Gurobi improves a little: n=13 went from 6,747,918,066 to 6,747,918,058 and n=11 from
-   43,930,680 to 43,930,674.
-2. Cutting trails open in other places. rumstd's n=10 word cuts some trails between two 2-cycles. Such a piece
-   is one letter longer, but pieces cut this way chain with no cost at the joins. A local search over all trails and
-   all cuts (take a few trails out, put each back at its best place) gave 43,930,628, 522,745,537 and 6,747,917,987.
-3. Choosing all cuts at once. For a fixed order, the best cut of every trail can be found for all trails
-   together by dynamic programming. One pass gave 43,930,625, 522,745,531 and 6,747,917,970. Theo H. found the same
-   idea independently and applied it to my earlier words (PRs #6 and #7). My 522,745,531 was in this repository a few
-   hours before PR #7, and it is a different word from Theo's.
-4. Moves that change the order, judged by step 3. After step 3 the search of step 2 stalls, because it never
-   moves a trail and re-cuts its neighbours at the same time. Four kinds of moves do that:
-   * whole blocks of trails moved inside the search, with the pass of step 3 repeated as the search runs (this
-     search uses a GPU);
-   * a few neighbouring trails moved somewhere else, with the trails around both places re-cut. This took n=13 from
-     6,747,917,824 to 6,747,917,498 without any random search;
-   * the sequence cut at three to six joins and put together in another order. This found n=11 (43,930,623 to
-     43,930,614) and most of the recent gain at n=12 (522,745,445 to 522,745,383, and with up to five cuts
-     522,745,374 to 522,745,366). At n=13 the first version was too slow to finish one round. Once it was
-     fast enough it took 6,747,917,421 to 6,747,916,917 in 24 rounds;
-   * a trail written in two segments with a closed block of other trails hung between them. This gives a few letters
-     at n=12 and 34 at n=13.
+Part one, on Pantone's closed trails (October 2 to 5):
 
-   When these moves find nothing more, a short search at a high temperature ends on a different sequence a few
-   letters longer, and the same moves start again from there. At n=12 that gave 522,745,376 to 522,745,374 and
-   522,745,366 to 522,745,355. At n=13 loop moves and relocation in turn went from 6,747,917,498 to 6,747,917,421.
-5. Cuts inside a 1-cycle. This is Theo H.'s idea, from the 43,930,624 word. It costs two letters per trail but
-   lets neighbouring trails overlap in n−2 letters. With it step 3 gives 522,745,530 instead of 522,745,531, and my
-   n=12 word descends from that one.
+1. Reordering runs of pieces by a travelling salesman model: 6 letters at n = 11, 8 at n = 13.
+2. Cutting closed trails open between two 2-cycles, as rumstd's n = 10 word does, in a local search over all
+   trails and cuts: 46, 44 and 71 letters at n = 11, 12 and 13.
+3. All cuts at once for a fixed order, by dynamic programming: 3, 6 and 17 letters. Theo H. found the same pass
+   independently. Cuts inside a 1-cycle, his idea, gave one more letter at n = 12.
+4. Moves that change the order and are judged with all cuts free: relocation, loop moves and segment insertion,
+   which with three cuts is a 3-opt move without reversal. These gave the rest: in all 66, 231 and 1,409 letters
+   below Pantone's words.
 
-[`NOTES.md`](NOTES.md) has the details: the model, the commands of the search runs, and tables of what each step
-changed.
+Part two, other closed trails (October 5 and 6):
+
+5. The closed trails come from a selection. Pantone's selection on 8 symbols leaves 48 loops without a row, and at
+   every later level each loop above them gives a small closed trail of its own. These loops form 48 blocks that
+   can be solved again on their own. A better solution of the block gives fewer closed trails: 7,200 instead of
+   25,200 at n = 12, and with rows of other lengths 3,648, and 23,808 instead of 252,000 at n = 13.
+6. The small closed trails have to be written in chains, and the order of the chains comes from integer programmes
+   where local search does not find it. The pieces of the final words with such a first plan, before any search,
+   were 5,411 letters below my best word of part one at n = 12 and 109,575 at n = 13.
+7. Segment insertion with three cuts on these plans: 1,678 and 2,195 letters.
+8. On these pieces a round of segment insertion has tens of thousands of moves that keep the length. Taking some
+   of them in every round keeps the search going: 866 and 2,012 letters. Local kicks, a small change and its
+   repair, then gave 96 more at n = 12.
+9. At n = 11 the new pieces pay off only after the same passes: 36 letters below my best word of part one, most
+   of the last ones from local kicks.
+10. For n = 10 the word is constructed: the pieces of a selection with two closed walks where Pantone's has four,
+    in the order of rumstd's word, with every cut chosen exactly. It is 18 letters below his.
 
 ## What is in the repository
 
 | path | content |
 |---|---|
-| `words/` | the three words, and the earlier ones I published (43,930,674 to 43,930,623; 522,745,538 to 522,745,356; 6,747,918,058 to 6,747,917,421) |
-| `plan/` | plans of the published words |
-| `plan/history/` | plans of the words found in between, with a table of lengths and hashes |
-| `tools/trailsearch.c` | the search of step 2; also rebuilds a word from a plan |
-| `tools/delcheck.c` | coverage and single-deletion check with little memory |
-| `tools/verify_par.c`, `tools/verify.c` | faster checks of coverage only |
-| `tools/pieces.c`, `tools/assemble.c`, `tools/runjoin.py` | step 1 (`runjoin.py` needs `gurobipy`) |
-| `tools/connector_splice.py` | an earlier Python version of step 2 (needs `numpy`) |
+| `words/` | the four words, and the earlier ones I published |
+| `reproduce/` | selection, plan, generator and checker for each of the four words, with [`REPRODUCE.md`](reproduce/REPRODUCE.md) |
+| `selection/` | how the selections were found: the block searches and their checkers |
+| `arrange/` | how a set of closed trails becomes a first plan: chains, the order of the chains, the lift from n = 12 to n = 13, the n = 10 construction, the bounds |
+| `tools/` | the C programs that shorten a plan, with their own [`README`](tools/README.md) and a test script |
+| `plan/`, `plan/history/` | plans of the earlier words on Pantone's closed trails |
+| `proofs/n9/` | two scripts that check that 408,731 cannot be beaten at n = 9 with Pantone's closed trails, in three families of words |
+| `NOTES.md` | the account of every step |
 | `SHA256SUMS` | hashes of all archives, words and plans |
 
-The programs for steps 3 to 5 and the GPU search are not here yet. I will add them once they are in a state worth
-reading. Nothing above depends on them: every word can be rebuilt from its plan and checked with the tools listed.
+The programs in `tools/`:
+
+| program | what it does |
+|---|---|
+| `trailsearch.c` | local search over trails and cuts; rebuilds a word from a base word and a plan |
+| `recut.c` | the best cut of every trail at once for the order as it is |
+| `relocate.c`, `loopscan.c` | relocation and loop moves |
+| `segins.c` | segment insertion on the CPU; made the words on Pantone's closed trails |
+| `segins_gpu.c`, `segins_kern.cu` | segment insertion for long words: tables kept between rounds, candidates judged on an NVIDIA card, moves of equal length, bounded memory |
+| `segins_ils.c` | local kicks: a small move, a local repair, keep if shorter or equal |
+| `trailsearch_gpu.c`, `kern.cu` | the search on a card, with block moves |
+| `recut_wide.c`, `kern_wide.cu` | the fixed-order pass with cuts inside a 1-cycle (experimental) |
+| `word2plan.c` | writes any word of the same trails as a plan |
+| `delcheck.c`, `letter.c`, `verify.c`, `verify_par.c` | checks |
+| `polish.sh`, `rounds.sh`, `kick.sh`, `mkptx.sh`, `xzpar.sh`, `test.sh` | scripts that run them, build the kernels, pack words and test everything |
+| `pieces.c`, `assemble.c`, `runjoin.py`, `connector_splice.py` | step 1 and the first Python search (`runjoin.py` needs Gurobi with a full licence) |
+
+Rebuilding and checking a word needs a C compiler and Python and nothing else. Finding selections and first plans
+uses integer programmes; the scripts in `selection/` and `arrange/` say which of them need a solver.
+`bash tools/test.sh` builds everything and runs short end-to-end checks at n = 10 and n = 11 with known lengths and
+hashes. The C sources are formatted with clang-format and the [`.clang-format`](.clang-format) file here.
 
 ## Credits and licence
 
-The construction is Jay Pantone's. Cutting a trail between two 2-cycles comes from rumstd's n=10 word, and cutting
-inside a 1-cycle from Theo H.'s n=11 word. Apache License 2.0 (see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE)),
-the same as the repository the input words come from.
+The construction is Jay Pantone's, and so are the terms: closed trail, slice, selection, completion, transport.
+Cutting a closed trail between two 2-cycles comes from rumstd's n = 10 word, and so does the structure of the
+n = 10 word here: groups of seven small trails as paths or loops, in chains of six. Cutting inside a 1-cycle is
+Theo H.'s idea. Apache License 2.0 (see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE)), the same as the repository
+the construction comes from.

@@ -1,0 +1,18 @@
+# Style of the C sources in tools/ (clang-format 23).  Format a file with:  clang-format -i tools/NAME.c
+# The CUDA kernels are C++:  clang-format --assume-filename=kern.cpp < tools/kern.cu
+BasedOnStyle: LLVM
+IndentWidth: 4
+ColumnLimit: 120
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortEnumsOnASingleLine: true
+SortIncludes: Never
+IndentPPDirectives: None
+ReflowComments: false
+BreakStringLiterals: false
+AlignTrailingComments: true
+AlignEscapedNewlines: Left
+InsertBraces: false

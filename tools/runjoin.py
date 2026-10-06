@@ -13,7 +13,13 @@ the actual start/end words.  Output: a plan for assemble.c, one line "piece offs
 
 usage: python runjoin.py pieces.txt plan.txt [time_limit_s] [threads]
 env:   ARC_MAXC (default: all arcs), KS (default 30), GRB_PARAMS (e.g. "MIPFocus=1")
-needs: gurobipy (a size-unlimited license for real instances)
+needs: gurobipy with a full licence.  `pip install gurobipy` comes with a licence limited to about 2,000 variables and
+       constraints, which is too small for these models (n = 11: 373 runs, n = 13: 25,946).  Academic users can get a
+       free full licence from Gurobi; others need a commercial one.  Nothing else in this repository needs a solver:
+       the words this step gave (43,930,674 and 6,747,918,058) are in words/, and every later plan refers to them or
+       to Pantone's words, so the step does not have to be repeated to rebuild or check anything.
+       I have not tried the model on an open solver.  It adds subtour cuts lazily in a callback; a version for HiGHS
+       or for CP-SAT (which has a circuit constraint) would have to be written and tested.
 """
 import collections
 import os
