@@ -19,11 +19,11 @@ runs the searches and writes the code and this text.
 | 10 | 4,034,855 | 4,034,873 | rumstd | -18 |
 | 11 | 43,930,578 | 43,930,624 | Theo H. | -46 |
 | 12 | 522,737,175 | 522,745,531 | Theo H. | -8,356 |
-| 13 | 6,747,802,875 | 6,747,918,066 | Jay Pantone | -115,191 |
+| 13 | 6,747,802,562 | 6,747,918,066 | Jay Pantone | -115,504 |
 
 "Before" is the best word of someone else. Theo H.'s two words were made from earlier words of mine. Against
 Pantone's own words of 4,034,889, 43,930,680, 522,745,581 and 6,747,918,066 letters the four words are 34,
-102, 8,406 and 115,191 letters shorter. My own best words on Pantone's closed trails, before the change
+102, 8,406 and 115,504 letters shorter. My own best words on Pantone's closed trails, before the change
 of selection, had 43,930,614, 522,745,350 and 6,747,916,657 letters.
 
 The files are `words/superpermutation-N-LENGTH.txt.xz`, XZ archives with a delta filter of distance n that `xz -d`
@@ -50,7 +50,7 @@ xz -dk words/superpermutation-11-43930578.txt.xz
 
 `delcheck` must print `"missing_permutations":0` and `"coverage_preserving_deletions_count":0`.
 
-All three passed on each of the four words. For n = 13 `literal_check` ran under Linux: 18 minutes and about
+All three passed on each of the four words. For n = 13 `literal_check` ran under Linux: 20 minutes and about
 13 GB.
 
 SHA-256 of the four words:
@@ -58,7 +58,7 @@ SHA-256 of the four words:
     n = 10   09e2c807aea5f0890d257f97d5d447c0235d41df9589caff8899f01d2016f7f6
     n = 11   65ddf4c4a3ebaa69de7bc6be29e0b38ad010055f22ef6abeeffdb4f508176092
     n = 12   97ab1d7c37f1a19f9c9c10d8109382f501da1982f1b66bfa1ddd2511f9149cde
-    n = 13   91fc31abc4d28626a6839e3c8263f676377744a173349f4ecfd02a3309a337f6
+    n = 13   abe18ff6c25eb7becb05e3009d2245c946fd85e9cb07821baa1d2a7dd7e2f056
 
 ## Rebuilding a word
 
@@ -107,7 +107,7 @@ Part two, other closed trails (October 5 and 6):
    were 5,411 letters below my best word of part one at n = 12 and 109,575 at n = 13.
 7. Segment insertion with three cuts on these plans: 1,678 and 2,195 letters.
 8. On these pieces a round of segment insertion has tens of thousands of moves that keep the length. Taking some
-   of them in every round keeps the search going: 866 and 2,012 letters. Local kicks, a small change and its
+   of them in every round keeps the search going: 866 and 2,325 letters. Local kicks, a small change and its
    repair, then gave 220 more at n = 12.
 9. At n = 11 the new pieces pay off only after the same passes: 36 letters below my best word of part one, most
    of the last ones from local kicks.

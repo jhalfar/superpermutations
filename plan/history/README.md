@@ -44,6 +44,7 @@ single letter can be deleted. The SHA-256 is that of the rebuilt word (one line 
 | 12 | 522,745,355 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745355-rb.plan`](trailsearch-12-522745355-rb.plan) | one more such start from 522,745,356 (the current word; its plan on Pantone's word is in `plan/`) | `f5a5b106ebf9a5ee1deb1f168ffa182d91e5b447685a9f86e33598c655098488` |
 | 12 | 522,737,299 | the n = 12 base word that `reproduce/tools/geng.py` writes (see [`REPRODUCE.md`](../../reproduce/REPRODUCE.md)) | [`n12-522737299.plan`](n12-522737299.plan) | on the closed trails of selection E: the first word I published on them (`words/superpermutation-12-522737299.txt.xz`), before more local kicks gave 522,737,175 | `acac6023eff390880f8fec3e48fc3b7ef24c5a45e71bbf8c328a6d8615901717` |
 | 13 | 6,747,917,445 | my 6,747,918,058 word (`words/superpermutation-13-6747918058.txt.xz`) | [`trailsearch-13-6747917445.plan`](trailsearch-13-6747917445.plan) | relocation with re-opening on 6,747,917,464 (whose plan is in `plan/`) | `225ecc2d6f19600ec8384f0092aced150805dcea39903dacf0fd5bdccba1c87e` |
+| 13 | 6,747,802,875 | the n = 13 base word that `reproduce/tools/geng.py` writes (see [`REPRODUCE.md`](../../reproduce/REPRODUCE.md)) | [`n13-6747802875.plan`](n13-6747802875.plan) | on the closed trails of selection N: the first word I published on them (`words/superpermutation-13-6747802875.txt.xz`), before more passes with moves of equal length gave 6,747,802,562 | `91fc31abc4d28626a6839e3c8263f676377744a173349f4ecfd02a3309a337f6` |
 
 ## The re-based word for n=12
 

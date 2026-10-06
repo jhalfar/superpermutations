@@ -194,7 +194,7 @@ python arrange/plancost.py work/n13-base.txt work/n13-base.tsv work/n13-start.pl
 | SHA-256 of the plan | 93a4946eba5d2493a802b912604c3871a4ef6c57653491dbe5a706f752d8de06 |
 
 185 s and 1.05 GB (numpy held to two threads). The word of this plan was built and checked before the passes
-started. The passes took it to 6,747,802,875.
+started. The passes took it to 6,747,802,562.
 
 ### n = 13 from the transported selection, and the lift
 
