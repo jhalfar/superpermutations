@@ -14,7 +14,8 @@ n >= 13 with the coefficient 1771/3456 where Pantone's theorem has 43/80. Others
 4,034,855, 43,930,578 and 522,737,175 letters for n = 10, 11 and 12 are superpermutations, checked by the Lean kernel
 on the words themselves. The rest are
 lower bounds: a superpermutation on n symbols has at least 46,133, 408,469, 4,033,378, 43,917,903,
-522,622,378, 6,746,626,957 and 93,891,141,008 letters for n = 8 to 14.
+522,622,378, 6,746,626,957 and 93,891,141,008 letters for n = 8 to 14. For n = 8 a second proof, in William
+Echols's framework, gives 46,132.
 
 I work on this with Claude (Opus 5.5) in Claude Code. I chose the problem and direct the work; Claude designs and
 runs the searches and writes the code and this text.
@@ -132,7 +133,7 @@ Part two, other closed trails (October 5 and 6):
 | `tools/` | the C programs that shorten a plan, with their own [`README`](tools/README.md) and a test script |
 | `plan/`, `plan/history/` | plans of the earlier words |
 | `proofs/n9/` | two scripts that check that 408,731 cannot be beaten at n = 9 with Pantone's closed trails, in three families of words |
-| `proofs/lean/` | Lean proofs, with their own [`README`](proofs/lean/README.md): the upper bound with 1771/3456 for every n >= 13, the words of 4,034,855, 43,930,578 and 522,737,175 letters checked by the kernel, one command that checks a word of your own and lower bounds for every n >= 5 |
+| `proofs/lean/` | Lean proofs, with their own [`README`](proofs/lean/README.md): the upper bound with 1771/3456 for every n >= 13, the words of 4,034,855, 43,930,578 and 522,737,175 letters checked by the kernel, one command that checks a word of your own, lower bounds for every n >= 5 and Echols's proof for n = 8 taken to 46,132 without `native_decide` |
 | `NOTES.md` | the account of every step |
 | `SHA256SUMS` | hashes of all archives, words and plans |
 

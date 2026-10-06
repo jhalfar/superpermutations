@@ -1,0 +1,54 @@
+Eight-symbol adaptation: a Lean proof of S(8) >= 46,130.
+The following upstream NOTICE is retained verbatim for attribution and licensing.
+Its references to seven-symbol files and construction data describe the upstream
+project; that construction data is not included in this standalone repository.
+See PORTING.md for the new contribution and exact source revisions.
+
+Superperm7 — a Lean 4 proof that 5898 <= s(7) <= 5906 for superpermutations on seven symbols
+(https://github.com/jlebar/superperm7-ge-5898)
+Copyright 2026 Anthropic, PBC
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This product includes software derived from superperm6
+(https://github.com/BGray-wrl/superperm6, "The exact length of a shortest superpermutation on six
+symbols", by Benjamin Grayzel, Claude Fable 5 and GPT Sol 5.6 Pro), Copyright (c) 2026 Benjamin Grayzel,
+released under the MIT License reproduced below.  The derived files are Superperm7/Basic.lean, Rows.lean,
+Coarsen.lean, RowModel.lean, Path.lean, Normalization.lean, CheapCover.lean, Frontier.lean, GraphRank.lean,
+Euler.lean, CycleLists.lean, Orbit.lean, FirstReturn.lean, PermutationMap.lean, Registry.lean,
+Structural.lean, Section4.lean, Section5Core.lean, Surgery.lean, Chains.lean, ChainTrails.lean,
+CoarsenAux.lean, CoarsenAccounting.lean, CoarsenBridge.lean and Witness.lean; each carries a header naming
+the upstream file and commit and describing the local modifications (see also docs/PORT_LOG.md).
+
+    MIT License
+
+    Copyright (c) 2026 Benjamin Grayzel
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+
+The 5906-symbol word in data/superperm7_5906.txt was found by Greg Egan and Robin Houston (February 2019);
+it is the file 7_5906_nsk666646664466646666_2SYMM_FS.txt published on Egan's page
+(https://www.gregegan.net/SCIENCE/Superpermutations/Superpermutations.html) and in the public
+Superpermutators corpus (https://github.com/superpermutators/superperm).  It is data, included so that
+the headline statement is two-sided, and no claim of originality is made for it.
+
+This product depends on, but does not include, Lean 4 (https://github.com/leanprover/lean4) and mathlib4
+(https://github.com/leanprover-community/mathlib4) with its standard dependency set (batteries, aesop, Qq,
+ProofWidgets4, import-graph, LeanSearchClient, plausible: Apache License 2.0; Cli: MIT License), fetched by
+the build tool at the revisions pinned in lake-manifest.json.

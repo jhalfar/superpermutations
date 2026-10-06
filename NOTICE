@@ -35,5 +35,13 @@ The lower bounds of proofs/lean/lower are proved on top of Xiaolong Liu's preima
 (https://github.com/Haruhiyuki/superpermutations-preimage-chain-lower-bounds) and of the Hunter-Raudvere library
 (https://github.com/urdvr/superpermutations-hunter). Both are used unchanged and are not included here.
 
+proofs/lean/n8 holds changes to William Echols's superperm8-ge-46130
+(https://github.com/williamechols/superperm8-ge-46130, commit 893ab2d92669ea56d012ceca626bf01ca631e920, Apache License
+2.0): for three variants a diff against his files (variants/*/changes.diff, which contains lines of his files), and new
+files. The files that proofs/lean/n8/build.sh puts together from a checkout of his repository are modified copies of
+his work, and each changed file says at its top that it was changed. His NOTICE, which names the projects his is
+derived from (superperm7-ge-5898, Copyright 2026 Anthropic, PBC, Apache License 2.0; superperm6, Copyright (c) 2026
+Benjamin Grayzel, MIT License), is reproduced in proofs/lean/n8/NOTICE.echols.
+
 By Jakub Halfar, with Claude (Opus 5.5) in Claude Code. Jakub Halfar chose the problem and directed the work; Claude
 designed and ran the searches and wrote the code and the text.

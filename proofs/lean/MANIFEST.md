@@ -10,6 +10,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 * `constant/build.sh`
 * `lower/build.sh`
+* `n8/build.sh`
 * `words/build.sh`
 * `words/check_word.sh`
 * `words12/build.sh`
@@ -18,7 +19,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 * `.gitattributes` (344 B): keeps LF line ends in text files, so that the hashes hold on every system
 * `MANIFEST.md`: this list
-* `README.md` (21.1 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
+* `README.md` (23.7 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
 * `SHA256SUMS`: SHA-256 of every other file of this directory
 * `lean-toolchain` (25 B): the Lean version, `leanprover/lean4:v4.31.0`
 
@@ -201,6 +202,39 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `lower/tools/s_ksim.py` (4.7 KB): Python copy of `SSearch.lean`, used by the generators to decide where to cut
 * `lower/tools/s_plan.py` (12.5 KB): generator: one search cut into lemmas for the kernel, states given as paths
 * `lower/tools/s_plan2.py` (16.5 KB): generator: the same with the state of every part written out, for deep searches
+
+## n8/
+
+* `n8/.gitattributes` (127 B): keeps LF line ends in `NOTICE.echols`
+* `n8/NOTICE.echols` (3.5 KB): the `NOTICE` file of Echols's repository, unchanged
+* `n8/README.md` (10.1 KB): the three variants, what replaces `native_decide`, licences, how to build
+* `n8/build.sh` (7.1 KB): puts each variant together from Echols's checkout, builds it, checks the axioms
+* `n8/echols-sources.sha256` (3.3 KB): SHA-256 of the 36 Lean files of Echols's repository at commit 893ab2d
+* `n8/kernel/Superperm8/KCode.lean` (29.2 KB): new: codes of permutations, rotation classes and insertion blocks as
+  indices
+* `n8/kernel/Superperm8/KSearch.lean` (9.6 KB): new: the search on natural numbers, `K.fsearch`
+* `n8/kernel/Superperm8/KSound.lean` (31.4 KB): new: `K.affine_bound_nat`, soundness of the search, and
+  `K.ref_of_cover`
+* `n8/tools/ksim.py` (4.8 KB): Python mirror of `KSearch.lean`, used by `plan.py`
+* `n8/tools/plan.py` (10.6 KB): cuts a search into parts for the kernel and writes the Lean files
+* `n8/variants/v46130k/Plain.lean` (677 B): new top file: the bound 46130 for covering words in plain form
+* `n8/variants/v46130k/changes.diff` (14.3 KB): changes to Echols's files for the bound 46130, as a diff against his
+  commit
+* `n8/variants/v46130k/files.sha256` (3.4 KB): SHA-256 of the 38 hand-written Lean files of the variant for 46130 (his
+  with the changes, and the new ones)
+* `n8/variants/v46130k/generated.sha256` (271 B): SHA-256 of the parts of the search that `plan.py` writes for 46130
+* `n8/variants/v46131k/Plain.lean` (677 B): new top file: the bound 46131 for covering words in plain form
+* `n8/variants/v46131k/changes.diff` (35.0 KB): changes to Echols's files for the bound 46131, as a diff against his
+  commit
+* `n8/variants/v46131k/files.sha256` (3.4 KB): SHA-256 of the 38 hand-written Lean files of the variant for 46131 (his
+  with the changes, and the new ones)
+* `n8/variants/v46131k/generated.sha256` (448 B): SHA-256 of the parts of the search that `plan.py` writes for 46131
+* `n8/variants/v46132bk/Plain.lean` (677 B): new top file: the bound 46132 for covering words in plain form
+* `n8/variants/v46132bk/changes.diff` (35.4 KB): changes to Echols's files for the bound 46132, as a diff against his
+  commit
+* `n8/variants/v46132bk/files.sha256` (3.4 KB): SHA-256 of the 38 hand-written Lean files of the variant for 46132
+  (his with the changes, and the new ones)
+* `n8/variants/v46132bk/generated.sha256` (8.7 KB): SHA-256 of the parts of the search that `plan.py` writes for 46132
 
 ## tools/
 

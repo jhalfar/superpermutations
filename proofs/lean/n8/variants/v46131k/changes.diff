@@ -1,0 +1,783 @@
+--- a/AxiomAudit.lean
++++ b/AxiomAudit.lean
+@@ -1,7 +1,14 @@
++/-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `AxiomAudit.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * refers to `superpermutation_length_ge_46131`.
++-/
+ import Solution
+ 
+ #print Statement.Challenge
+ #print Statement.ContainsAllEightPermutations
+ #print axioms Superperm8.row_affine_bound
+-#print axioms Superperm8.superpermutation_length_ge_46130
++#print axioms Superperm8.superpermutation_length_ge_46131
+ #print axioms solution
+--- a/Challenge.lean
++++ b/Challenge.lean
+@@ -1,3 +1,10 @@
++/-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Challenge.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * the bound 46130 replaced by 46131.
++-/
+ import Mathlib.Data.Fintype.Perm
+ import Mathlib.Data.List.OfFn
+ 
+@@ -9,6 +16,6 @@
+     w = before ++ List.ofFn p ++ after
+ 
+ def Challenge : Prop :=
+-  ∀ w : List (Fin 8), ContainsAllEightPermutations w → 46130 ≤ w.length
++  ∀ w : List (Fin 8), ContainsAllEightPermutations w → 46131 ≤ w.length
+ 
+ end Statement
+--- a/Solution.lean
++++ b/Solution.lean
+@@ -1,9 +1,16 @@
++/-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Solution.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * refers to `superpermutation_length_ge_46131`.
++-/
+ import Challenge
+ import Superperm8.Main
+ 
+ theorem solution : Statement.Challenge := by
+   intro w hw
+-  apply Superperm8.superpermutation_length_ge_46130 w
++  apply Superperm8.superpermutation_length_ge_46131 w
+   intro p
+   obtain ⟨before,after,h⟩ := hw p
+   exact ⟨before,after,h.symm⟩
+--- a/Superperm8/AffineEncoding.lean
++++ b/Superperm8/AffineEncoding.lean
+@@ -1,4 +1,12 @@
+ /-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Superperm8/AffineEncoding.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * for Lean 4.31.0 and Mathlib fabf563a (the original is for Lean 4.30.0 and Mathlib c5ea0035): in `wcode_injective_of_length`, one `simp only at this` that made no progress removed.
++  * the lemmas proved by `native_decide` and the lemmas resting on them removed (`classCode_attained`, `classCode_R`, `classCode_R_iterate`, `classCode_eq_imp_rClass_eq`, `blockCode_attained`, `blockCode_F`, `blockCode_eq_imp_fBlock_eq`); `KCode.lean` proves what replaces them.
++-/
++/-
+  Adapted from jlebar/superperm7-ge-5898, Superperm7/SearchSound.lean.
+  Copyright (c) 2026 Anthropic, PBC. Apache-2.0; see LICENSE and NOTICE.
+  Changes: n=8; no hash table, compressed ids, or external certificates.
+@@ -71,7 +79,6 @@
+           rw [hlen] at ht
+           have hab : a.val = b.val := by
+             have := congrArg (fun x => x / 8 ^ u.length) h
+-            simp only at this
+             rw [Nat.add_comm, Nat.add_mul_div_right _ _ (by positivity),
+               Nat.add_comm (b.val * _), Nat.add_mul_div_right _ _ (by positivity),
+               Nat.div_eq_of_lt ht, Nat.div_eq_of_lt hu] at this
+@@ -82,21 +89,6 @@
+           rw [Fin.ext hab, ih hlen htu]
+ 
+ 
+-/-- The class code is attained by some rotation. -/
+-theorem classCode_attained : ∀ p : Perm8,
+-    (List.range 8).any (fun i => wcode (permWord ((R^[i]) p)) == classCode (permWord p))
+-      = true := by
+-  native_decide
+-
+-theorem classCode_R : ∀ p : Perm8, classCode (permWord (R p)) = classCode (permWord p) := by
+-  native_decide
+-
+-theorem classCode_R_iterate (p : Perm8) : ∀ i : ℕ,
+-    classCode (permWord ((R^[i]) p)) = classCode (permWord p)
+-  | 0 => rfl
+-  | i + 1 => by rw [Function.iterate_succ_apply', classCode_R, classCode_R_iterate p i]
+-
+-
+ theorem Affine.mem_rClass_iff (p q : Perm8) : q ∈ rClass p ↔ ∃ i < 8, (R^[i]) p = q := by
+   simp [rClass, finiteOrbit]
+ 
+@@ -129,31 +121,6 @@
+     · refine ⟨i - 1, by omega, ?_⟩
+       rw [← Function.iterate_succ_apply, Nat.succ_eq_add_one, show i - 1 + 1 = i by omega]
+ 
+-theorem classCode_eq_imp_rClass_eq {p q : Perm8}
+-    (h : classCode (permWord p) = classCode (permWord q)) : rClass p = rClass q := by
+-  have hp := classCode_attained p
+-  have hq := classCode_attained q
+-  rw [List.any_eq_true] at hp hq
+-  obtain ⟨i, hi, hpi⟩ := hp
+-  obtain ⟨j, hj, hqj⟩ := hq
+-  simp only [beq_iff_eq] at hpi hqj
+-  have hcodes : wcode (permWord ((R^[i]) p)) = wcode (permWord ((R^[j]) q)) := by
+-    rw [hpi, hqj, h]
+-  have hw := wcode_injective_of_length (by simp) hcodes
+-  have hperm : (R^[i]) p = (R^[j]) q := permWord_injective hw
+-  rw [← rClass_eq_of_iterate p i, ← rClass_eq_of_iterate q j, hperm]
+-
+-
+-/-- The block code is attained by some `F`-iterate. -/
+-theorem blockCode_attained : ∀ p : Perm8,
+-    (List.range 7).any (fun i => wcode (permWord ((F^[i]) p)) == blockCode (permWord p))
+-      = true := by
+-  native_decide
+-
+-theorem blockCode_F : ∀ p : Perm8, blockCode (permWord (F p)) = blockCode (permWord p) := by
+-  native_decide
+-
+-
+ theorem Affine.mem_fBlock_iff (p q : Perm8) : q ∈ fBlock p ↔ ∃ i < 7, (F^[i]) p = q := by
+   simp [fBlock, finiteOrbit]
+ 
+@@ -186,21 +153,6 @@
+     · refine ⟨i - 1, by omega, ?_⟩
+       rw [← Function.iterate_succ_apply, Nat.succ_eq_add_one, show i - 1 + 1 = i by omega]
+ 
+-theorem blockCode_eq_imp_fBlock_eq {p q : Perm8}
+-    (h : blockCode (permWord p) = blockCode (permWord q)) : fBlock p = fBlock q := by
+-  have hp := blockCode_attained p
+-  have hq := blockCode_attained q
+-  rw [List.any_eq_true] at hp hq
+-  obtain ⟨i, hi, hpi⟩ := hp
+-  obtain ⟨j, hj, hqj⟩ := hq
+-  simp only [beq_iff_eq] at hpi hqj
+-  have hcodes : wcode (permWord ((F^[i]) p)) = wcode (permWord ((F^[j]) q)) := by
+-    rw [hpi, hqj, h]
+-  have hw := wcode_injective_of_length (by simp) hcodes
+-  have hperm : (F^[i]) p = (F^[j]) q := permWord_injective hw
+-  rw [← fBlock_eq_of_iterate p i, ← fBlock_eq_of_iterate q j, hperm]
+-
+-
+ @[simp] theorem relabelMarkedRow_row (σ : Perm8) (x : MarkedRow) :
+     (relabelMarkedRow σ x).row = relabelRow σ x.row := rfl
+ 
+--- a/Superperm8/AffineSearch.lean
++++ b/Superperm8/AffineSearch.lean
+@@ -1,3 +1,10 @@
++/-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Superperm8/AffineSearch.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * the inequality 20 rows - 49 charge <= 136 replaced by 5 rows - 12 charge <= 38 in `score`, `rowScore`, `found`.
++-/
+ import Superperm8.Coarsen
+ import Mathlib.Data.Fintype.Powerset
+ 
+@@ -18,8 +25,8 @@
+     rows.Pairwise MarkedDisjoint
+ 
+ def chargeSum (rows : List MarkedRow) : Nat := (rows.map MarkedRow.charge).sum
+-def score (rows : List MarkedRow) : Int := 20 * (rows.length : Int) - 49 * chargeSum rows
+-def rowScore (x : MarkedRow) : Int := 20 - 49 * (x.charge : Int)
++def score (rows : List MarkedRow) : Int := 5 * (rows.length : Int) - 12 * chargeSum rows
++def rowScore (x : MarkedRow) : Int := 5 - 12 * (x.charge : Int)
+ 
+ def relabelMarkedRow (σ : Perm8) (x : MarkedRow) : MarkedRow :=
+   ⟨relabelRow σ x.row, x.omitted⟩
+@@ -82,7 +89,7 @@
+ def found : Nat → MarkedRow → List Nat → List Nat → Int → Bool
+   | 0, _, _, _, _ => true
+   | fuel+1, last, blocks, classes, s =>
+-    if 136 < s then true else
++    if 38 < s then true else
+       (candidates last).any fun x =>
+         let t := s + rowScore x
+         if 0 < t then
+--- a/Superperm8/Basic.lean
++++ b/Superperm8/Basic.lean
+@@ -1,4 +1,11 @@
+ /-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Superperm8/Basic.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * for Lean 4.31.0 and Mathlib fabf563a (the original is for Lean 4.30.0 and Mathlib c5ea0035): in `perm_eq_of_agree_six`, `simp at this; omega` replaced by `omega`.
++-/
++/-
+ Copyright (c) 2026 Anthropic, PBC. Released under the Apache License 2.0 (see LICENSE); this file is
+ additionally subject to the upstream MIT notice below.
+ 
+@@ -70,7 +77,7 @@
+     · have e := h j hj6
+       rw [hj] at e
+       have := congrArg Fin.val (q.injective e.symm)
+-      simp at this; omega
++      omega
+     · have : j = i := Fin.ext (by omega)
+       rw [this] at hj; exact hj.symm
+ 
+--- a/Superperm8/ChainTrails.lean
++++ b/Superperm8/ChainTrails.lean
+@@ -1,4 +1,11 @@
+ /-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Superperm8/ChainTrails.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * for Lean 4.31.0 and Mathlib fabf563a (the original is for Lean 4.30.0 and Mathlib c5ea0035): `runStartTouchedState` added to one `simpa`.
++-/
++/-
+ Copyright (c) 2026 Anthropic, PBC. Released under the Apache License 2.0 (see LICENSE); this file is
+ additionally subject to the upstream MIT notice below.
+ 
+@@ -887,7 +894,7 @@
+   have hstate := gapRunStart_state route c
+   have hval := congrArg (fun p : TouchedState route => p.1)
+     (hstate.trans hTF)
+-  simpa [gapFirstHole, touchedFPerm_pow_apply_val] using hval.symm
++  simpa [gapFirstHole, touchedFPerm_pow_apply_val, runStartTouchedState] using hval.symm
+ 
+ /-! ## Identifying the concrete gap with the face successor -/
+ 
+--- a/Superperm8/Chains.lean
++++ b/Superperm8/Chains.lean
+@@ -1,4 +1,11 @@
+ /-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Superperm8/Chains.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * for Lean 4.31.0 and Mathlib fabf563a (the original is for Lean 4.30.0 and Mathlib c5ea0035): `runStartTouchedState` and `chainAsRunStart` added to two `simpa` calls.
++-/
++/-
+ Copyright (c) 2026 Anthropic, PBC. Released under the Apache License 2.0 (see LICENSE); this file is
+ additionally subject to the upstream MIT notice below.
+ 
+@@ -282,7 +289,7 @@
+     rw [htN, N₂_eq_F_R]
+   have htFA : t.1 = F (runStartPerm route s).1 := by
+     have hval := congrArg (fun p : TouchedState route => p.1) hst.1
+-    simpa using
++    simpa [runStartTouchedState] using
+       ((touchedTPerm_runStartTouchedState_val route s).symm.trans hval).symm
+   have hAR : (runStartPerm route s).1 = R x := by
+     apply F_injective
+@@ -775,7 +782,7 @@
+       (P := fun u => route.idxOf u.1 < route.idxOf d.1)
+       (fun hab hu => hab.idxOf_lt_chainStart_of_lt hroute hnormal d hu)
+       (by simpa [hshape] using chainRunStarts_isChain route c)
+-      (by simpa using hcd)
++      (by simpa [chainAsRunStart] using hcd)
+       s
+   simpa [hshape] using hs
+ 
+--- a/Superperm8/CheapCover.lean
++++ b/Superperm8/CheapCover.lean
+@@ -1,4 +1,11 @@
+ /-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Superperm8/CheapCover.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * defect budget 44 -> 45: route weight 46121 -> 46122, loss 5805 -> 5806 in `cheap_cover_profile_of_weight_at_most_5890`.
++-/
++/-
+ Copyright (c) 2026 Anthropic, PBC. Released under the Apache License 2.0 (see LICENSE); this file is
+ additionally subject to the upstream MIT notice below.
+ 
+@@ -630,13 +637,13 @@
+     dsimp [x₁, x₂, x₃, x₄] at hx1eq hx2eq hx3eq hx4eq ⊢
+     omega
+ 
+-/-- A route of weight at most 46121 yields a genuine admissible profile of
+-loss at most 5805.  This is the formal route-to-arithmetic boundary used by
++/-- A route of weight at most 46122 yields a genuine admissible profile of
++loss at most 5806.  This is the formal route-to-arithmetic boundary used by
+ the later frontier argument. -/
+ theorem cheap_cover_profile_of_weight_at_most_5890 {route : List Perm8}
+-    (hroute : IsHamiltonianRoute route) (hweight : routeWeight route ≤ 46121) :
++    (hroute : IsHamiltonianRoute route) (hweight : routeWeight route ≤ 46122) :
+     ∃ x : CheapCoverProfile,
+-      x.admissible ∧ x.loss ≤ 5805 ∧
++      x.admissible ∧ x.loss ≤ 5806 ∧
+       costOneCount route = 35280 - x.r ∧
+       costTwoCount route = 5040 + x.r - x.q ∧
+       costThreeCount route = x.q - x.p ∧
+@@ -645,7 +652,7 @@
+   obtain ⟨x, hadm, hx1, hx2, hx3, hx4, hcap⟩ :=
+     cheap_cover_profile_of_hamiltonian_route hroute
+   have hcapLe := cappedRouteWeight_le route
+-  have hloss : x.loss ≤ 5805 := by
++  have hloss : x.loss ≤ 5806 := by
+     have hcapLe' : 8 + cappedRouteWeight route ≤ 8 + routeWeight route :=
+       Nat.add_le_add_left hcapLe 8
+     rw [hcap] at hcapLe'
+--- a/Superperm8/CoarsenAccounting.lean
++++ b/Superperm8/CoarsenAccounting.lean
+@@ -1,4 +1,12 @@
+ /-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Superperm8/CoarsenAccounting.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * for Lean 4.31.0 and Mathlib fabf563a (the original is for Lean 4.30.0 and Mathlib c5ea0035): in `chainCutHoles_disjoint_chainOmittedHoles`, one `simpa` restated with its type.
++  * `fin_six_filter_lt_card`: `native_decide +revert` replaced by `decide +revert`.
++-/
++/-
+ Copyright (c) 2026 Anthropic, PBC. Released under the Apache License 2.0 (see LICENSE); this file is
+ additionally subject to the upstream MIT notice below.
+ 
+@@ -286,7 +294,7 @@
+ theorem fin_six_filter_lt_card (g : Fin 7) :
+     ((Finset.univ : Finset (Fin 7)).filter
+       fun i => i.val < g.val).card = g.val := by
+-  native_decide +revert
++  decide +revert
+ 
+ theorem F_cut_interval_disjoint
+     (p : Perm8) (g i j : Fin 7)
+@@ -348,7 +356,7 @@
+   rcases Finset.mem_image.mp hpCut with ⟨i, hi, hip⟩
+   rcases Finset.mem_image.mp hpOmitted with ⟨j, hj, hjp⟩
+   have hiLt : i.val < (gapLenFin route c).val := by
+-    simpa [chainCutIndices] using hi
++    exact (by simpa [chainCutIndices] using hi : i.val < gapLen route c)
+   have hjLen : j.val <
+       7 - (gapLenFin route c).val := by
+     have hj' := (mem_chainMarkedRow_omitted_iff route c j).1 hj
+--- a/Superperm8/CoarsenAux.lean
++++ b/Superperm8/CoarsenAux.lean
+@@ -1,4 +1,11 @@
+ /-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Superperm8/CoarsenAux.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * defect budget 44 -> 45: route weight 46121 -> 46122.
++-/
++/-
+ Copyright (c) 2026 Anthropic, PBC. Released under the Apache License 2.0 (see LICENSE); this file is
+ additionally subject to the upstream MIT notice below.
+ 
+@@ -419,7 +426,7 @@
+ theorem cheap_profile_for_bridge
+     {route : List Perm8} (hroute : IsHamiltonianRoute route)
+     (hnormal : IsNormalizedRoute route)
+-    (_hweight : routeWeight route ≤ 46121)
++    (_hweight : routeWeight route ≤ 46122)
+     (z : RouteStructuralCounts route hroute) :
+     ∃ x : CheapCoverProfile,
+       x.r = z.r ∧ x.q = z.q ∧ x.p = z.p ∧
+--- a/Superperm8/CoarsenBridge.lean
++++ b/Superperm8/CoarsenBridge.lean
+@@ -1,4 +1,11 @@
+ /-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Superperm8/CoarsenBridge.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * defect budget 44 -> 45: route weight 46121 -> 46122.
++-/
++/-
+ Copyright (c) 2026 Anthropic, PBC. Released under the Apache License 2.0 (see LICENSE); this file is
+ additionally subject to the upstream MIT notice below.
+ 
+@@ -31,7 +38,7 @@
+ theorem retained_arc_system_of_structural_counts
+     {route : List Perm8} (hroute : IsHamiltonianRoute route)
+     (hnormal : IsNormalizedRoute route)
+-    (hweight : routeWeight route ≤ 46121)
++    (hweight : routeWeight route ≤ 46122)
+     (z : RouteStructuralCounts route hroute) :
+     Nonempty
+       (RetainedArcSystem route hroute z.k (z.eta + 1 + z.b)) := by
+@@ -353,7 +360,7 @@
+ theorem prepared_coarsening_of_structural_counts
+     {route : List Perm8} (hroute : IsHamiltonianRoute route)
+     (hnormal : IsNormalizedRoute route)
+-    (hweight : routeWeight route ≤ 46121)
++    (hweight : routeWeight route ≤ 46122)
+     (z : RouteStructuralCounts route hroute) :
+     Nonempty (PreparedCoarsening z.k (z.eta + 1 + z.b)) := by
+   obtain ⟨arcs⟩ :=
+@@ -413,7 +420,7 @@
+ theorem coarsen_cases_of_structural_counts
+     {route : List Perm8} (hroute : IsHamiltonianRoute route)
+     (hnormal : IsNormalizedRoute route)
+-    (hweight : routeWeight route ≤ 46121)
++    (hweight : routeWeight route ≤ 46122)
+     (z : RouteStructuralCounts route hroute) :
+     (∃ inst : CoarsenedInstance z.k (z.eta + 1 + z.b)
+         (7 * z.m - z.r) z.b,
+--- a/Superperm8/Euler.lean
++++ b/Superperm8/Euler.lean
+@@ -1,4 +1,11 @@
+ /-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Superperm8/Euler.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * for Lean 4.31.0 and Mathlib fabf563a (the original is for Lean 4.30.0 and Mathlib c5ea0035): in `permutationMapEulerFormula_of_face_bound`, one `dsimp [lhs, rhs] at *` that made no progress removed.
++-/
++/-
+ Copyright (c) 2026 Anthropic, PBC. Released under the Apache License 2.0 (see LICENSE); this file is
+ additionally subject to the upstream MIT notice below.
+ 
+@@ -389,7 +396,6 @@
+   have hEvenDeficit : Even (rhs - lhs) := by
+     rcases hpar with ⟨z, hz⟩
+     have hzle : z ≤ Fintype.card α + k := by
+-      dsimp [lhs, rhs] at *
+       omega
+     refine ⟨Fintype.card α + k - z, ?_⟩
+     dsimp [lhs, rhs] at *
+--- a/Superperm8/Frontier.lean
++++ b/Superperm8/Frontier.lean
+@@ -1,4 +1,11 @@
+ /-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Superperm8/Frontier.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * defect budget 44 -> 45: 765 -> 766, 5805 -> 5806, 46129 -> 46130.
++-/
++/-
+ Copyright (c) 2026 Anthropic, PBC. Released under the Apache License 2.0 (see LICENSE); this file is
+ additionally subject to the upstream MIT notice below.
+ 
+@@ -15,7 +22,7 @@
+ # Cheap-cover and orbit arithmetic (n = 8)
+ 
+ The numerical parts of Sections 2--4 that the reduction consumes.  At
+-`n = 8` there is no frontier lift: the defect is bounded (`≤ 44`) rather
++`n = 8` there is no frontier lift: the defect is bounded (`≤ 45`) rather
+ than pinned, so only the orbit inequality and the capped-length identity
+ survive from the `n = 7` file; the documentary profile counts are dropped.
+ -/
+@@ -43,11 +50,11 @@
+   omega
+ 
+ theorem capped_at_most_5897_iff_loss {r q p : ℕ} :
+-    45364 + r + q + p ≤ 46129 ↔ 5040 + r + q + p ≤ 5805 := by
++    45364 + r + q + p ≤ 46130 ↔ 5040 + r + q + p ≤ 5806 := by
+   omega
+ 
+ theorem loss_at_most_854_iff {r q p : ℕ} :
+-    5040 + r + q + p ≤ 5805 ↔ r + q + p ≤ 765 := by
++    5040 + r + q + p ≤ 5806 ↔ r + q + p ≤ 766 := by
+   omega
+ 
+ /-- Algebra behind the defect: `r + q + p = 721 + D` once `r ≤ 720 + m`. -/
+@@ -59,14 +66,14 @@
+     r + q + p = 721 + (m + a + b + eta) := by
+   omega
+ 
+-/-- Algebra behind the defect bound `D ≤ 44`. -/
++/-- Algebra behind the defect bound `D ≤ 45`. -/
+ theorem defect_bound_identity {r q p m a b eta k : ℕ}
+     (hk : k = 720 + m - r + a)
+     (hq : q = k + b)
+     (hp : p = eta + 1)
+-    (hbudget : r + q + p ≤ 765)
++    (hbudget : r + q + p ≤ 766)
+     (hr : r ≤ 720 + m) :
+-    m + a + b + eta ≤ 44 := by
++    m + a + b + eta ≤ 45 := by
+   omega
+ 
+ /-- Algebraic consequence of the Euler face count and the definition of
+--- a/Superperm8/Main.lean
++++ b/Superperm8/Main.lean
+@@ -1,20 +1,25 @@
++/-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Superperm8/Main.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * the inequality is 5 rows - 12 charge <= 38, the route weight 46122, the theorem `superpermutation_length_ge_46131` (46131 <= w.length; the original proves 46130).
++  * `row_affine_bound` now follows from `K.affine_bound_nat` (`KSound.lean`) and the search evaluated by the kernel; the imports of `AffineSound` and `AffineCheck` are replaced.
++-/
+ import Superperm8.CoarsenBridge
+-import Superperm8.AffineSound
+-import Superperm8.AffineCheck
++import Superperm8.KL38
+ 
+ namespace Superperm8
+ 
+ theorem row_affine_bound (rows : List MarkedRow) (h : ModelTrail rows) :
+-    20 * rows.length ≤ 136 + 49 * chargeSum rows := by
+-  have := affine_bound_of_search_false 68 affine_search_false rows h
+-  unfold score at this
+-  omega
++    5 * rows.length ≤ 38 + 12 * chargeSum rows :=
++  K.affine_bound_nat 5 12 38 (by decide) 91 fsearch_5_12_38 rows h
+ 
+ theorem coarsened_affine_bound {k τ u b : Nat} (I : CoarsenedInstance k τ u b) :
+-    20*k ≤ 136*τ + 49*u := by
++    5*k ≤ 38*τ + 12*u := by
+   have hsum : ∀ ts : List (List MarkedRow),
+       (∀ t ∈ ts, ModelTrail t) →
+-      20 * ts.flatten.length ≤ 136*ts.length + 49*chargeSum ts.flatten := by
++      5 * ts.flatten.length ≤ 38*ts.length + 12*chargeSum ts.flatten := by
+     intro ts
+     induction ts with
+     | nil => intro _; simp
+@@ -22,7 +27,7 @@
+       intro h
+       have ht := row_affine_bound t (h t (by simp))
+       have hts := ih (fun z hz => h z (by simp [hz]))
+-      simp only [List.flatten_cons, List.length_append, List.length_cons, chargeSum_append]
++      simp only [List.flatten_cons, List.length_append, List.length_cons, K.chargeSum_append']
+       omega
+   have h := hsum I.trails (by
+     intro t ht
+@@ -37,7 +42,7 @@
+ 
+ theorem no_light_normalized_route (route : List Perm8)
+     (hr : IsHamiltonianRoute route) (hn : IsNormalizedRoute route)
+-    (hw : routeWeight route ≤ 46121) : False := by
++    (hw : routeWeight route ≤ 46122) : False := by
+   obtain ⟨c,hc⟩ := normalized_light_route_realizes_registryCandidate hr hn hw
+   obtain ⟨u',hu',⟨I⟩⟩ := coarsen_bridge hc
+   have hbound := coarsened_affine_bound I
+@@ -47,16 +52,16 @@
+   simp only [RegistryCandidate.k, RegistryCandidate.tau, RegistryCandidate.u] at hbound hu'
+   omega
+ 
+-/-- Every eight-symbol superpermutation has length at least 46,130. -/
+-theorem superpermutation_length_ge_46130 (w : Word) (hw : IsSuperpermutation w) :
+-    46130 ≤ w.length := by
++/-- Every eight-symbol superpermutation has length at least 46,131. -/
++theorem superpermutation_length_ge_46131 (w : Word) (hw : IsSuperpermutation w) :
++    46131 ≤ w.length := by
+   by_contra h
+-  have hshort : w.length ≤ 8 + 46121 := by omega
+-  have hex : ∃ w : Word, IsSuperpermutation w ∧ w.length ≤ 8 + 46121 := ⟨w,hw,hshort⟩
+-  obtain ⟨route,hr,hweight⟩ := (exact_path_formulation 46121).mp hex
++  have hshort : w.length ≤ 8 + 46122 := by omega
++  have hex : ∃ w : Word, IsSuperpermutation w ∧ w.length ≤ 8 + 46122 := ⟨w,hw,hshort⟩
++  obtain ⟨route,hr,hweight⟩ := (exact_path_formulation 46122).mp hex
+   obtain ⟨route',hr',hn',hw'⟩ := normalized_route_of_weight_at_most hr hweight
+   exact no_light_normalized_route route' hr' hn' hw'
+ 
+ #print axioms row_affine_bound
+-#print axioms superpermutation_length_ge_46130
++#print axioms superpermutation_length_ge_46131
+ end Superperm8
+--- a/Superperm8/Normalization.lean
++++ b/Superperm8/Normalization.lean
+@@ -1,4 +1,11 @@
+ /-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Superperm8/Normalization.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * for Lean 4.31.0 and Mathlib fabf563a (the original is for Lean 4.30.0 and Mathlib c5ea0035): `Nat.add_assoc` added to the `simpa only` of `costOneCount_insert_between`.
++-/
++/-
+ Copyright (c) 2026 Anthropic, PBC. Released under the Apache License 2.0 (see LICENSE); this file is
+ additionally subject to the upstream MIT notice below.
+ 
+@@ -228,7 +235,7 @@
+       cases pre with
+       | nil => simp [costOneCount, hxu, huy, hxy]; omega
+       | cons b rest =>
+-          simpa only [List.cons_append, costOneCount] using
++          simpa only [List.cons_append, costOneCount, Nat.add_assoc] using
+             congrArg (fun n => (if d a b = 1 then 1 else 0) + n) ih
+ 
+ /-- One normalization exchange. -/
+--- a/Superperm8/Path.lean
++++ b/Superperm8/Path.lean
+@@ -1,4 +1,11 @@
+ /-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Superperm8/Path.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * for Lean 4.31.0 and Mathlib fabf563a (the original is for Lean 4.30.0 and Mathlib c5ea0035): in `route_of_superpermutation`, `simpa [LinearOrder.lift'] using hsortedOrder` replaced by `exact hsortedOrder`.
++-/
++/-
+ Copyright (c) 2026 Anthropic, PBC. Released under the Apache License 2.0 (see LICENSE); this file is
+ additionally subject to the upstream MIT notice below.
+ 
+@@ -198,7 +205,7 @@
+   have hsortedOrder : route.Pairwise (fun p q => p ≤ q) := by
+     exact Finset.pairwise_sort _ _
+   have hsorted : route.Pairwise (fun p q => start p ≤ start q) := by
+-    simpa [LinearOrder.lift'] using hsortedOrder
++    exact hsortedOrder
+   refine ⟨route, ⟨hnodup, hall⟩, ?_⟩
+   have hrouteNonempty : route ≠ [] := by
+     intro hempty
+--- a/Superperm8/Registry.lean
++++ b/Superperm8/Registry.lean
+@@ -1,4 +1,11 @@
+ /-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Superperm8/Registry.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * defect budget 44 -> 45 in `RegistryCandidate.valid` (and in the comments).
++-/
++/-
+ Copyright (c) 2026 Anthropic, PBC. Released under the Apache License 2.0 (see LICENSE); this file is
+ additionally subject to the upstream MIT notice below.
+ 
+@@ -14,9 +21,9 @@
+ /-!
+ # The bounded-defect structural registry (n = 8)
+ 
+-At `n = 8` a light route (`routeWeight ≤ 46121`, i.e. words of length at most
+-`46129`) has defect `D = m + a + b + η ≤ 44`.  There is no frontier lift, so
+-the registry is the set of all `(m, a, b, η, r)` with `D ≤ 44`, `a ≤ r ≤ 6m`
++At `n = 8` a light route (`routeWeight ≤ 46122`, i.e. words of length at most
++`46130`) has defect `D = m + a + b + η ≤ 45`.  There is no frontier lift, so
++the registry is the set of all `(m, a, b, η, r)` with `D ≤ 45`, `a ≤ r ≤ 6m`
+ and `r = 0` when `m = 0`.  The Euler face-fragmentation data `(g, h)` of the
+ `n = 7` registry is not recorded in the candidate (it is still proved, in
+ `Section4.lean`, but the capacity elimination does not use it).
+@@ -36,7 +43,7 @@
+ namespace RegistryCandidate
+ 
+ def valid (c : RegistryCandidate) : Prop :=
+-  c.m + c.a + c.b + c.eta ≤ 44 ∧ c.a ≤ c.r ∧ c.r ≤ 7 * c.m ∧ (c.m = 0 → c.r = 0)
++  c.m + c.a + c.b + c.eta ≤ 45 ∧ c.a ≤ c.r ∧ c.r ≤ 7 * c.m ∧ (c.m = 0 → c.r = 0)
+ 
+ instance (c : RegistryCandidate) : Decidable c.valid := by
+   unfold valid
+--- a/Superperm8/Section4.lean
++++ b/Superperm8/Section4.lean
+@@ -1,4 +1,11 @@
+ /-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Superperm8/Section4.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * defect budget 44 -> 45: route weight 46121 -> 46122.
++-/
++/-
+ Copyright (c) 2026 Anthropic, PBC. Released under the Apache License 2.0 (see LICENSE); this file is
+ additionally subject to the upstream MIT notice below.
+ 
+@@ -59,7 +66,7 @@
+ cases. -/
+ theorem normalized_light_route_gives_registryCandidate
+     {route : List Perm8} (hroute : IsHamiltonianRoute route)
+-    (hnormal : IsNormalizedRoute route) (hweight : routeWeight route ≤ 46121) :
++    (hnormal : IsNormalizedRoute route) (hweight : routeWeight route ≤ 46122) :
+     ∃ c : RegistryCandidate, c.valid := by
+   obtain ⟨z⟩ := routeStructuralCounts_of_weight_at_most_5890
+     hroute hnormal hweight
+@@ -74,7 +81,7 @@
+ def RouteRealizesRegistryCandidate (route : List Perm8)
+     (hroute : IsHamiltonianRoute route) (c : RegistryCandidate) : Prop :=
+   c.valid ∧ ∃ _hnormal : IsNormalizedRoute route,
+-    routeWeight route ≤ 46121 ∧
++    routeWeight route ≤ 46122 ∧
+     ∃ z : RouteStructuralCounts route hroute,
+       c.m = z.m ∧
+       c.a = z.a ∧
+@@ -86,7 +93,7 @@
+ registry candidate, with all five displayed parameters identified. -/
+ theorem normalized_light_route_realizes_registryCandidate
+     {route : List Perm8} (hroute : IsHamiltonianRoute route)
+-    (hnormal : IsNormalizedRoute route) (hweight : routeWeight route ≤ 46121) :
++    (hnormal : IsNormalizedRoute route) (hweight : routeWeight route ≤ 46122) :
+     ∃ c : RegistryCandidate, RouteRealizesRegistryCandidate route hroute c := by
+   obtain ⟨z⟩ := routeStructuralCounts_of_weight_at_most_5890
+     hroute hnormal hweight
+@@ -110,10 +117,10 @@
+ normalized) light Hamilton route. -/
+ theorem light_route_gives_registryCandidate
+     {route : List Perm8} (hroute : IsHamiltonianRoute route)
+-    (hweight : routeWeight route ≤ 46121) :
++    (hweight : routeWeight route ≤ 46122) :
+     ∃ normalized : List Perm8,
+       IsHamiltonianRoute normalized ∧ IsNormalizedRoute normalized ∧
+-      routeWeight normalized ≤ 46121 ∧
++      routeWeight normalized ≤ 46122 ∧
+       ∃ c : RegistryCandidate, c.valid := by
+   obtain ⟨normalized, hnormalized, hnormal, hnormalizedWeight⟩ :=
+     normalized_route_of_weight_at_most hroute hweight
+--- a/Superperm8/Structural.lean
++++ b/Superperm8/Structural.lean
+@@ -1,4 +1,11 @@
+ /-
++NOTICE OF MODIFICATION (Apache License 2.0, section 4(b)).
++This file is `Superperm8/Structural.lean` of github.com/williamechols/superperm8-ge-46130, commit
++893ab2d92669ea56d012ceca626bf01ca631e920 (Apache-2.0), with changes.  The notices of the original follow
++unchanged.  Changed @ATTRIBUTION@:
++  * defect budget 44 -> 45: 765 -> 766, 44 -> 45, route weight 46121 -> 46122.
++-/
++/-
+ Copyright (c) 2026 Anthropic, PBC. Released under the Apache License 2.0 (see LICENSE); this file is
+ additionally subject to the upstream MIT notice below.
+ 
+@@ -19,7 +26,7 @@
+ This file carries a normalized light Hamilton route through the
+ quotient-graph rank calculation.  Unlike the `n = 7` development there is
+ no frontier lift: `p` is the route's actual path count `highCostCount + 1`
+-and the defect is only bounded, `m + a + b + η ≤ 44`.  The exact relation
++and the defect is only bounded, `m + a + b + η ≤ 45`.  The exact relation
+ `46077 + (m + a + b + η) ≤ routeWeight route` is also exposed
+ (`RouteStructuralCounts.defect_add_le_weight`), so a sharper weight bound
+ gives a sharper defect bound (weight `≤ 46120` gives `D ≤ 43`).
+@@ -45,14 +52,14 @@
+   p_route : p = highCostCount route + 1
+   M_route : M = (touchedBlocks route).card
+   k_route : k = rotationComponentCount route hroute
+-  budget : r + q + p ≤ 765
++  budget : r + q + p ≤ 766
+   p_pos : 1 ≤ p
+   p_le_q : p ≤ q
+   M_eq : M = 720 + m
+   k_eq : k = 720 + m - r + a
+   q_eq : q = k + b
+   p_eq : p = eta + 1
+-  defect_le : m + a + b + eta ≤ 44
++  defect_le : m + a + b + eta ≤ 45
+   a_le_r : a ≤ r
+   r_le_six_m : r ≤ 7 * m
+   k_le_M : k ≤ M
+@@ -90,8 +97,8 @@
+   omega
+ 
+ /-- The exact weight/defect relation: `46077 + D ≤ routeWeight route`.  In
+-particular weight `≤ 46120` forces `D ≤ 43` and weight `≤ 46121` forces
+-`D ≤ 44`. -/
++particular weight `≤ 46120` forces `D ≤ 43` and weight `≤ 46122` forces
++`D ≤ 45`. -/
+ theorem defect_add_le_weight (z : RouteStructuralCounts route hroute) :
+     46077 + (z.m + z.a + z.b + z.eta) ≤ routeWeight route := by
+   have hcap := z.capped_weight_eq
+@@ -113,20 +120,20 @@
+ 
+ end RouteStructuralCounts
+ 
+-/-- Every normalized Hamilton route of weight at most 46121 supplies all of
+-the Section 4 counts through `D ≤ 44`, before the face-fragmentation
++/-- Every normalized Hamilton route of weight at most 46122 supplies all of
++the Section 4 counts through `D ≤ 45`, before the face-fragmentation
+ identity. -/
+ theorem routeStructuralCounts_of_weight_at_most_5890 {route : List Perm8}
+     (hroute : IsHamiltonianRoute route)
+     (hnormal : IsNormalizedRoute route)
+-    (hweight : routeWeight route ≤ 46121) :
++    (hweight : routeWeight route ≤ 46122) :
+     Nonempty (RouteStructuralCounts route hroute) := by
+   obtain ⟨x, hadm, hloss, hx1, hx2, _hx3, hx4, _hcap⟩ :=
+     cheap_cover_profile_of_weight_at_most_5890 hroute hweight
+   have horbit := route_profile_orbit_inequality hroute hnormal x hadm hx1 hx2
+   have hadm' := hadm
+   rcases hadm' with ⟨hr600, hp0pos, hp0q, hqbound⟩
+-  have hloss' : x.r + x.q + x.p ≤ 765 := by
++  have hloss' : x.r + x.q + x.p ≤ 766 := by
+     dsimp [CheapCoverProfile.loss] at hloss
+     omega
+   have hpRoute : x.p = highCostCount route + 1 := by omega
+@@ -179,7 +186,7 @@
+   have hpeq : x.p = eta + 1 := by
+     dsimp [eta]
+     omega
+-  have hdefect : m + a + b + eta ≤ 44 := by
++  have hdefect : m + a + b + eta ≤ 45 := by
+     exact defect_bound_identity hkeq hqeq hpeq hloss' (by omega)
+   have haR : a ≤ x.r := by
+     dsimp [a]

@@ -15,6 +15,8 @@ part. This directory holds Lean 4 proofs about how long such a word has to be. I
   least hpv(k) + ceil(2 ((k-2)! - (k-2)) / (k^2 - 4k + 1)) letters for k >= 7 (Theorem B). Theorem C makes
   the denominator smaller by a term that a finite search justifies; the searches are evaluated by the Lean
   kernel for k = 8 to 14.
+* `n8/` takes William Echols's Lean proof of 46,130 <= L(8) to 46,131 and 46,132 and removes `native_decide`
+  from it. It is a second proof, independent of `lower/`, of what Theorem C gives for n = 8 up to 46,132.
 
 The bounds proven here for the length L(n) of the shortest superpermutation:
 
@@ -38,6 +40,8 @@ The parts state their results with the definitions of Pantone's `Challenge.lean`
 (github.com/jaypantone/superperm-upper-43-80): `Covers w` says that every list of K different letters occurs
 in the word `w` as a contiguous part, and `HasWord K n` says that such a word with at most `n` letters
 exists.
+The one exception is `n8/`, which keeps Echols's statement and adds the same statement with `Covers` written
+out.
 
 Every proof is checked by the Lean kernel. There is no `native_decide`, no `sorry` and no added axiom. Every
 statement listed below depends on `propext`, `Classical.choice` and `Quot.sound` and on nothing else.
@@ -60,6 +64,9 @@ What is new here, and what is not:
   table first, as said above.
 * All three lower bounds are built on Liu's library and on the Hunter-Raudvere library, and both libraries
   are used unchanged. [`lower/README.md`](lower/README.md) says in detail which lemma is whose.
+* n = 8 in Echols's framework. The reduction from words to trails is his, used as it is but for one constant
+  that the two new bounds raise. The two inequalities for 46,131 and 46,132 and the search that the kernel
+  evaluates in place of his `native_decide` are new.
 
 ## What is proven
 
@@ -177,6 +184,22 @@ Theorem C needs a search for each pair (c, b). The default build of `lower/` che
 [`lower/README.md`](lower/README.md) has all statements, the values of the three theorems next to Liu's, how
 the bound of Theorem C arises, and the steps of the proofs.
 
+### n = 8 in Echols's framework (`n8/`)
+
+```lean
+-- his statement, with N = 46130, 46131, 46132 in the three variants
+theorem Superperm8.superpermutation_length_ge_46132 (w : Word) (hw : IsSuperpermutation w) :
+    46132 <= w.length
+-- the same about a list in which every list of 8 different letters occurs as a contiguous part
+theorem covering_word_length_ge_46132 :
+    forall w : List (Fin 8),
+      (forall p : List (Fin 8), p.length = 8 -> p.Nodup -> exists u v, w = u ++ p ++ v) -> 46132 <= w.length
+```
+
+His repository is not copied: `n8/` holds diffs against it, three new Lean files and a generator, and you
+clone his repository yourself. This part stops at 46,132. [`n8/README.md`](n8/README.md) says what replaces
+each `native_decide`.
+
 ## What is in this directory
 
 * `constant/`: the development for 1771/3456. 11 hand-written Lean files and an audit file, 38 generated
@@ -189,6 +212,8 @@ the bound of Theorem C arises, and the steps of the proofs.
 * `lower/`: the proofs of the three lower bounds (31 Lean files), the two-sided statements that use them,
   five audit files, the lists of the certificates of Theorem C, their generators, the list of hashes of the
   generated files, `build.sh`, a README.
+* `n8/`: for each of three variants a diff against Echols's repository, a new top file and lists of hashes;
+  three new Lean files, the generator of the search parts, his `NOTICE`, `build.sh`, a README.
 * `tools/`: `common.sh` (settings and functions of the build scripts), `order.py` (build order from the
   import lines), `check_hashes.py`.
 * `lean-toolchain`: the Lean version.
@@ -206,6 +231,8 @@ the bound of Theorem C arises, and the steps of the proofs.
   at commit `d45222190031d162feb1f6f3cf5fe2d11fab726d`.
 * Liu's preimage-chain project, github.com/Haruhiyuki/superpermutations-preimage-chain-lower-bounds,
   at commit `8474c74a15fa59b8ce55bcf6bceaaa23b9a3dca8`.
+* For `n8/` only: Echols's repository, github.com/williamechols/superperm8-ge-46130,
+  at commit `893ab2d92669ea56d012ceca626bf01ca631e920`, and the program `patch`.
 * Python 3.8 or newer, with numpy for `words/gen11.py` and `words/gen12.py`.
 * bash with the usual tools (on Windows: Git Bash).
 
@@ -216,6 +243,9 @@ compiled Mathlib serves everything; the scripts take it from Pantone's checkout.
 sources are used: the modules of them that a statement imports are compiled here.
 
 `lower/` needs all three repositories.
+
+`n8/` needs Lean, Mathlib and Echols's sources. His project pins an older Mathlib; the diffs of `n8/` port his
+files to the one used here.
 
 ## How to build
 
@@ -230,6 +260,8 @@ git clone https://github.com/urdvr/superpermutations-hunter
 git -C superpermutations-hunter checkout d45222190031d162feb1f6f3cf5fe2d11fab726d
 git clone https://github.com/Haruhiyuki/superpermutations-preimage-chain-lower-bounds
 git -C superpermutations-preimage-chain-lower-bounds checkout 8474c74a15fa59b8ce55bcf6bceaaa23b9a3dca8
+git clone https://github.com/williamechols/superperm8-ge-46130
+git -C superperm8-ge-46130 checkout 893ab2d92669ea56d012ceca626bf01ca631e920
 cd ..
 ```
 
@@ -237,12 +269,14 @@ Then run the scripts. Each builds its part from sources into a directory under `
 order, and prints the `#print axioms` lines at the end. `words12/build.sh` continues in the build directory of
 `words/build.sh`, so it comes after it. `constant/build.sh` stands alone.
 `lower/build.sh` continues in that build directory as well and comes between the two.
+`n8/build.sh` stands alone.
 
 ```sh
 constant/build.sh
 words/build.sh
 lower/build.sh             # or: lower/build.sh full
 words12/build.sh
+n8/build.sh
 ```
 
 They are shell scripts of at most 230 lines that call `lean` once per module; `tools/common.sh` (170 lines)
@@ -256,8 +290,9 @@ holds what they share. They are controlled by environment variables:
 | `MATHLIB_PACKAGES` | the compiled Mathlib and the packages it needs | `$PANTONE_DIR/.lake/packages` |
 | `HUNTER_DIR` | checkout of the Hunter-Raudvere library | `deps/superpermutations-hunter` |
 | `PREIMAGE_DIR` | checkout of Liu's preimage-chain project | `deps/` + the name of that repository |
+| `ECHOLS_DIR` | checkout of Echols's repository | `deps/superperm8-ge-46130` |
 | `SUPERPERM_REPO` | checkout of this repository, for the input files | `../..` |
-| `BUILD_DIR` | the build directory | `build/constant`, `build/words` |
+| `BUILD_DIR` | the build directory | `build/constant`, `build/words`, `build/n8` |
 | `JOBS` | Lean processes at the same time | 1 |
 | `JOBS_BIG` | the same for the modules that import all of Mathlib | 1 |
 | `LEAN_THREADS` | threads of one Lean process | 1 |
@@ -272,8 +307,9 @@ to the Lean theorem `HasWord n L` for that word without any file being edited, f
 [`words/README.md`](words/README.md) says what it does and what it costs.
 
 Before Lean starts, each script compares the sources it is about to compile with lists of hashes
-(`constant/pantone-sources.sha256`, `words/hunter-sources.sha256`, `words/preimage-sources.sha256`), runs the
-generators, and compares what they write with the files or hashes in this directory.
+(`constant/pantone-sources.sha256`, `words/hunter-sources.sha256`, `words/preimage-sources.sha256`,
+`n8/echols-sources.sha256`), runs the generators, and compares what they write with the files or hashes in
+this directory.
 
 ## What it costs
 
@@ -292,6 +328,8 @@ empty build directory, one thread per Lean process, other jobs running beside th
 | `lower/build.sh full`, what the large certificates add | 347 | 4.6 h | | 2.8 GB in the searches, 3.3 GB else |
 | `lower/build.sh full` in all | 474 | 5.3 h | 1 h 50 min, one to four processes | 3.6 GB |
 | `words12/build.sh` | 264 | 7.1 h | 70 min, one to ten processes | 1.4 GB, one module 1.7 GB, the last five 3.8 GB |
+| `n8/build.sh`, 46,130 and 46,131 | 82 | 31 min | | 1.9 GB |
+| `n8/build.sh`, 46,132 | 133 | 2.0 h | 51 min, two to four processes | 2.6 GB |
 
 Lean time is the sum over the Lean processes. Memory is the working set. A process that imports all of
 Mathlib (the two libraries, the bridge, the two-sided statements) commits 8 to 9 GB of virtual memory, and it
@@ -303,7 +341,7 @@ The row of `words12/build.sh` is from three runs: `words/check_word.sh` into an 
 three processes for the first 50 modules and ten for the rest, and then the statements with one process.
 
 Disk: the compiled Mathlib 7.4 GB; `build/constant` 0.3 GB; `build/words` 0.5 GB after `words/build.sh`,
-0.5 GB more after `lower/build.sh full` and 2.1 GB more after `words12/build.sh`.
+0.5 GB more after `lower/build.sh full` and 2.1 GB more after `words12/build.sh`; `build/n8` 0.1 GB.
 
 The README of each part has the times per group of modules.
 
@@ -316,11 +354,12 @@ The README of each part has the times per group of modules.
   claimed.
 * `lower/AuditA.lean`, `AuditB.lean`, `AuditC.lean`, `AuditCSmall.lean` and `AuditCFinal.lean` do the same for
   the lower bounds.
+* For `n8/` the statement is Echols's `Challenge.lean`, and `Plain.lean` writes it out.
 * Not trusted: the generators, the certificate data, the tables. They are inputs to kernel checks, and a
   wrong entry makes a check fail.
-* The searches of Theorem C are evaluated by the kernel (`decide +kernel`), with its built-in arithmetic on
-  natural numbers. No compiled code is trusted. The Python copy of the search only decides where a search is
-  cut into lemmas.
+* The searches of Theorem C and of `n8/` are evaluated by the kernel (`decide +kernel`), with its built-in
+  arithmetic on natural numbers. No compiled code is trusted. The Python copies of the two searches only
+  decide where a search is cut into lemmas.
 * For the literal words, one link is outside Lean: that the number in the Lean files is the word in the
   public file. The theorems say that a word of that length exists. That it is the published word is checked
   by `words/verify_word.py` and `words/verify_blocks.py` and by the hashes, not by the kernel.
@@ -333,6 +372,7 @@ The README of each part has the times per group of modules.
   did not review their proofs.
 * The three lower bounds of `lower/` use lemmas of his library and of the Hunter-Raudvere library in the same
   way: compiled here from the sources, their proofs not reviewed by me.
+* `n8/` uses Echols's reduction in the same way.
 
 ## What is not covered
 
@@ -342,3 +382,4 @@ The README of each part has the times per group of modules.
 * Nothing here says that any of the words is shortest.
 * The lower bounds: Theorem B is not proven for k = 5 and 6, and Theorem C has certificates for k = 8 to 14
   only. Pantone's proofs are not here; they are not public.
+* n = 8 in Echols's framework beyond 46,132.
