@@ -159,7 +159,7 @@ The same lines with `n12` give the n = 12 plan (unpack the selection first, as i
 | events of the plan | 800 | 3,648 |
 | length of the chained plan | 43,931,105 | 522,739,939 |
 | SHA-256 of the plan | 0feeeb14e2d9de6795f25509303a003d95263bbd534fcd0625593769b57feab3 | 93d6c671c24a53c7eb1457b3b3fd7d9562484b8b29654da8f468497619f30cb6 |
-| word after the local passes | 43,930,578 | 522,737,299 |
+| word after the local passes | 43,930,578 | 522,737,175 |
 
 Both plans rebuild to valid words of these lengths (`applyplan.py`, then `delcheck`: nothing missing, no letter can
 be deleted). They are the plans the passes started from. Which optimal set of links the solver returns can depend on

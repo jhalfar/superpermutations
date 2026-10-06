@@ -18,16 +18,16 @@ runs the searches and writes the code and this text.
 |---|---:|---:|---|---:|
 | 10 | 4,034,855 | 4,034,873 | rumstd | -18 |
 | 11 | 43,930,578 | 43,930,624 | Theo H. | -46 |
-| 12 | 522,737,299 | 522,745,531 | Theo H. | -8,232 |
+| 12 | 522,737,175 | 522,745,531 | Theo H. | -8,356 |
 | 13 | 6,747,802,875 | 6,747,918,066 | Jay Pantone | -115,191 |
 
 "Before" is the best word of someone else. Theo H.'s two words were made from earlier words of mine. Against
 Pantone's own words of 4,034,889, 43,930,680, 522,745,581 and 6,747,918,066 letters the four words are 34,
-102, 8,282 and 115,191 letters shorter. My own best words on Pantone's closed trails, before the change
+102, 8,406 and 115,191 letters shorter. My own best words on Pantone's closed trails, before the change
 of selection, had 43,930,614, 522,745,350 and 6,747,916,657 letters.
 
 The files are `words/superpermutation-N-LENGTH.txt.xz`, XZ archives with a delta filter of distance n that `xz -d`
-unpacks: 65 KB, 0.4 MB, 4.1 MB and 45 MB. They use the alphabet `0123456789ABC`, one line plus a line feed, as in
+unpacks: 65 KB, 0.4 MB, 3.9 MB and 45 MB. They use the alphabet `0123456789ABC`, one line plus a line feed, as in
 Pantone's repository. [`SHA256SUMS`](SHA256SUMS) lists the hashes of the archives and of the words inside. In each
 word every permutation occurs and no single letter can be deleted.
 
@@ -57,7 +57,7 @@ SHA-256 of the four words:
 
     n = 10   09e2c807aea5f0890d257f97d5d447c0235d41df9589caff8899f01d2016f7f6
     n = 11   65ddf4c4a3ebaa69de7bc6be29e0b38ad010055f22ef6abeeffdb4f508176092
-    n = 12   acac6023eff390880f8fec3e48fc3b7ef24c5a45e71bbf8c328a6d8615901717
+    n = 12   97ab1d7c37f1a19f9c9c10d8109382f501da1982f1b66bfa1ddd2511f9149cde
     n = 13   91fc31abc4d28626a6839e3c8263f676377744a173349f4ecfd02a3309a337f6
 
 ## Rebuilding a word
@@ -108,7 +108,7 @@ Part two, other closed trails (October 5 and 6):
 7. Segment insertion with three cuts on these plans: 1,678 and 2,195 letters.
 8. On these pieces a round of segment insertion has tens of thousands of moves that keep the length. Taking some
    of them in every round keeps the search going: 866 and 2,012 letters. Local kicks, a small change and its
-   repair, then gave 96 more at n = 12.
+   repair, then gave 220 more at n = 12.
 9. At n = 11 the new pieces pay off only after the same passes: 36 letters below my best word of part one, most
    of the last ones from local kicks.
 10. For n = 10 the word is constructed: the pieces of a selection with two closed walks where Pantone's has four,
@@ -123,7 +123,7 @@ Part two, other closed trails (October 5 and 6):
 | `selection/` | how the selections were found: the block searches and their checkers |
 | `arrange/` | how a set of closed trails becomes a first plan: chains, the order of the chains, the lift from n = 12 to n = 13, the n = 10 construction, the bounds |
 | `tools/` | the C programs that shorten a plan, with their own [`README`](tools/README.md) and a test script |
-| `plan/`, `plan/history/` | plans of the earlier words on Pantone's closed trails |
+| `plan/`, `plan/history/` | plans of the earlier words |
 | `proofs/n9/` | two scripts that check that 408,731 cannot be beaten at n = 9 with Pantone's closed trails, in three families of words |
 | `NOTES.md` | the account of every step |
 | `SHA256SUMS` | hashes of all archives, words and plans |

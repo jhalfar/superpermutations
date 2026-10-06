@@ -333,7 +333,7 @@ n = 11 on one thread.
 |---|---|---|---|
 | memory | 0.3 GB on Pantone's pieces, 0.75 GB on the new ones | 1.95 GB | not run; about 16 GB by my estimate |
 | speed | 1,170 trials per minute on Pantone's pieces, 740 on the new ones | 10.6 trials per minute | |
-| gain | most of the letters from 43,930,605 to 43,930,578 on the new pieces; nothing below 43,930,614 on Pantone's | on Pantone's pieces 522,745,355 to 354, 352 to 351, 351 to 350: a letter in 3 of 8 runs of nine minutes; on the new pieces 522,737,395 to 522,737,299 in two loops of runs of seven minutes on one thread | |
+| gain | most of the letters from 43,930,605 to 43,930,578 on the new pieces; nothing below 43,930,614 on Pantone's | on Pantone's pieces 522,745,355 to 354, 352 to 351, 351 to 350: a letter in 3 of 8 runs of nine minutes; on the new pieces 522,737,395 to 522,737,175 in loops of runs of seven minutes on one thread | |
 
 A run with `--ils-trials N` repeats exactly for a seed, whatever the number of threads.
 

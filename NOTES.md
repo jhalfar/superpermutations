@@ -6,7 +6,7 @@ what each step did to each n, what it cost and which tool does it.
 It has two parts. Part one keeps the closed trails of Jay Pantone's words and changes where each one is cut and the
 order of the pieces. That took four days and gave 66 letters at n = 11, 231 at n = 12 and 1,409 at n = 13 below his
 words. Part two changes the closed trails themselves, by other selections inside his construction. That took one
-day and gave 36 more letters at n = 11, 8,051 at n = 12 and 113,782 at n = 13, and at n = 10 a word of
+day and gave 36 more letters at n = 11, 8,175 at n = 12 and 113,782 at n = 13, and at n = 10 a word of
 4,034,855 letters, 18 below rumstd's. Part one is how I got to part two: every pass that polishes the new words
 was written for the old ones.
 
@@ -331,7 +331,7 @@ changes. The trade is always the same: fewer closed trails for a larger Q.
 | 11 | a walk put into every block (X) | 800 | 20,726 | 1,372 | 43,930,578 |
 | 12 | Pantone's selection | 25,200 | 169,344 | 28,806 | 522,745,350 |
 | 12 | blocks solved with full and short rows (C) | 7,200 | 178,080 | 15,355 | 522,740,635 |
-| 12 | blocks solved with rows of other lengths (E) | 3,648 | 182,112 | 7,987 | 522,737,299 |
+| 12 | blocks solved with rows of other lengths (E) | 3,648 | 182,112 | 7,863 | 522,737,175 |
 | 13 | Pantone's selection | 252,000 | 1,693,441 | 284,016 | 6,747,916,657 |
 | 13 | C transported once | 72,000 | 1,780,800 | 88,844 | 6,747,808,844 |
 | 13 | blocks solved on 12 symbols (N) | 23,808 | 1,818,768 | 44,907 | 6,747,802,875 |
@@ -548,7 +548,8 @@ letters: 13 of the 21 from 43,930,605 to 43,930,584 on the selection without the
 from 43,930,593 to 43,930,578 on X. At n = 10 it gave 4 letters once and then nothing in 49 runs. At n = 12 on E
 it took over when the moves of equal length stopped giving: two loops on one thread each, in runs of seven
 minutes, went from 522,737,395 to 522,737,299 in 77 minutes. They were still gaining when I stopped them for the
-release. It has not run at n = 13.
+release. After it the loops ran again, three for an hour and a quarter and then one, and reached 522,737,175 in
+eight and a half hours. Three more hours of runs found nothing. It has not run at n = 13.
 
 ## The n = 10 construction
 
@@ -613,7 +614,7 @@ n = 12: 522,745,350. On C: 522,745,026 (chained plan), 522,743,110 (three cuts, 
 (second run system and three cuts), 635 (moves of equal length). On E: 522,739,939 (chained plan), 522,738,261
 (three cuts), 522,737,971 and on to 522,737,466 (moves of equal length with three cuts), 455 (the same with four
 cuts), 452 (five cuts), 445 and on to 522,737,395 (moves of equal length with three and four cuts),
-522,737,299 (local kicks, stopped for the release).
+522,737,299 (local kicks, stopped for the release), 522,737,175 (local kicks again).
 
 n = 13: 6,747,916,657. On C transported: 6,747,911,676 (the base word itself, with the small trails in their
 chains), 6,747,820,565 (chained plan), 6,747,813,583 (greedy order of the units), 6,747,812,160 (three cuts in
@@ -630,8 +631,8 @@ Where the letters below the best word on Pantone's pieces came from, along these
 | the pieces with their first plan (chains, order of the units) | | | 5,411 | 109,575 |
 | segment insertion with three cuts | | | 1,678 | 2,195 |
 | moves of equal length, with three to five cuts | | | 866 | 2,012 |
-| local kicks | | | 96 | |
-| total | 18 | 36 | 8,051 | 113,782 |
+| local kicks | | | 220 | |
+| total | 18 | 36 | 8,175 | 113,782 |
 
 For n = 12 (selection E) and n = 13 (selection N) the first row is the first plan against the best word on
 Pantone's pieces, and the other rows are the passes on it. At n = 10 and n = 11 the first plans are longer than the
@@ -779,7 +780,7 @@ trails.
 | 10 | | | at least 4,034,842 | small trails in any number of segments, big trails in one |
 | 10 | | | 4,034,855, the optimum | the groups in 8 runs of six along the chains (the second model of the n = 10 section) |
 | 12 | C | 522,740,635 | at least 522,736,830 | one cut per trail, with cuts between two 2-cycles and dropped duplicates |
-| 11, 12, 13 | X, E, N | 43,930,578, 522,737,299, 6,747,802,875 | none | |
+| 11, 12, 13 | X, E, N | 43,930,578, 522,737,175, 6,747,802,875 | none | |
 
 At n = 10 the word is the optimum of the family of its model, with the limits given in the n = 10 section. From
 one optimal word of each of the 25 splits that reach it I moved every segment of one to four consecutive groups or

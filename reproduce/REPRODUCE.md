@@ -10,7 +10,7 @@ checked.
 |---|---|---|---|
 | 10 | 4,034,855 | `selections/n10-selection.txt` (9 symbols, 56 KB) | `plan/n10-4034855.plan` |
 | 11 | 43,930,578 | `selections/n11-selection.txt` (10 symbols, 0.5 MB) | `plan/n11-43930578.plan` |
-| 12 | 522,737,299 | `selections/n12-selection.txt.xz` (11 symbols, 0.6 MB, 5 MB of text) | `plan/n12-522737299.plan` |
+| 12 | 522,737,175 | `selections/n12-selection.txt.xz` (11 symbols, 0.6 MB, 5 MB of text) | `plan/n12-522737175.plan` |
 | 13 | 6,747,802,875 | `selections/n13-selection.txt.xz` (12 symbols, 2.9 MB, 54 MB of text) | `plan/n13-6747802875.plan` |
 
 ## The pipeline
@@ -85,10 +85,10 @@ n = 12:
 ```sh
 xz -dc selections/n12-selection.txt.xz > work/n12-selection.txt
 python tools/geng.py work/n12-selection.txt work/n12-base.txt --table work/n12-base.tsv
-python tools/applyplan.py work/n12-base.txt work/n12-base.tsv plan/n12-522737299.plan work/superpermutation-12-522737299.txt
-python tools/check_min.py 12 work/superpermutation-12-522737299.txt
-./delcheck work/superpermutation-12-522737299.txt 2
-sha256sum work/n12-base.txt work/superpermutation-12-522737299.txt
+python tools/applyplan.py work/n12-base.txt work/n12-base.tsv plan/n12-522737175.plan work/superpermutation-12-522737175.txt
+python tools/check_min.py 12 work/superpermutation-12-522737175.txt
+./delcheck work/superpermutation-12-522737175.txt 2
+sha256sum work/n12-base.txt work/superpermutation-12-522737175.txt
 ```
 
 n = 13 (14 GB of disk; `--noliteral` leaves out one of the two ways `geng.py` finds the trails, the one that needs a
@@ -119,8 +119,8 @@ sha256sum work/n13-base.txt work/superpermutation-13-6747802875.txt
 | sum R = F3(n) + Q | 4,034,352 | 43,929,206 | 522,729,312 | 6,747,757,968 |
 | base word, letters | 4,036,801 | 43,935,602 | 522,762,033 | 6,747,994,945 |
 | events of the plan | 355 | 800 | 3,648 | 23,808 |
-| word, letters | 4,034,855 | 43,930,578 | 522,737,299 | 6,747,802,875 |
-| letters spent on cuts and joins (word - sum R) | 503 | 1,372 | 7,987 | 44,907 |
+| word, letters | 4,034,855 | 43,930,578 | 522,737,175 | 6,747,802,875 |
+| letters spent on cuts and joins (word - sum R) | 503 | 1,372 | 7,863 | 44,907 |
 
 A plan has more events than trails when some trails are written in two segments. `check_min.py` must end with
 `VALID: every permutation occurs`; `delcheck` must print `"missing_permutations":0` and
@@ -133,7 +133,7 @@ n = 10  base word  0ccfcddc26ed6a3268d38dabd8398c308cdf3a14e0d957c88fa554c9ecbd4
 n = 11  base word  9bcb862f56592583c4e4f34e9c7d366e2c3753be98b08d3ce1877ecec02a4e84
         word       65ddf4c4a3ebaa69de7bc6be29e0b38ad010055f22ef6abeeffdb4f508176092
 n = 12  base word  0d36cdd07fe7c90912fc0a295ca9b9895c9fba0ad0769196e2b37960b1657c68
-        word       acac6023eff390880f8fec3e48fc3b7ef24c5a45e71bbf8c328a6d8615901717
+        word       97ab1d7c37f1a19f9c9c10d8109382f501da1982f1b66bfa1ddd2511f9149cde
 n = 13  base word  39491951984db206e07d63ab7beaa6c495f9499966f863804d15474dcdb65e26
         word       91fc31abc4d28626a6839e3c8263f676377744a173349f4ecfd02a3309a337f6
 ```
@@ -191,7 +191,7 @@ I ran three programs that share no code on the words:
   seen).
 - n = 11: checks 1, 2, 3 passed (all 39,916,800 permutations; 19,784 further occurrences of permutations already
   seen).
-- n = 12: checks 1, 2, 3 passed (all 479,001,600 permutations; 177,455 further occurrences of permutations already
+- n = 12: checks 1, 2, 3 passed (all 479,001,600 permutations; 177,466 further occurrences of permutations already
   seen).
 - n = 13: checks 1, 2, 3 passed (all 6,227,020,800 permutations; 1,798,297 further occurrences of permutations
   already seen). Check 3 was run on the same word in a separate run, with the Linux build, because the Windows build
