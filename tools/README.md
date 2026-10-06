@@ -297,7 +297,7 @@ is in the header of the file, in six points:
 
 | | n = 11 | n = 12 | n = 13 |
 |---|---|---|---|
-| host memory | 0.13 to 0.16 GB, 0.27 GB with the card | 2.0 GB with the card before any candidate, 0.2 to 0.7 GB for the candidates (7,200 pieces) | 18.6 to 19.6 GB with narrow pair lists (about 24,000 pieces) |
+| host memory | 0.13 to 0.16 GB, 0.27 GB with the card | 2.0 GB with the card before any candidate, 0.2 to 0.7 GB for the candidates (7,200 pieces) | 18.6 to 19.4 GB with narrow pair lists (about 24,000 pieces) |
 | card memory | not measured | not measured | 6 to 8 GB |
 | time | a whole pass of three cuts 8 s; two rounds of five cuts with slack 1: 64 s on the CPU, 9 s with the card | a round with moves of equal length 3 s on 2 threads, of which judging is 0.1 s; 16 to 19 s on the CPU | 408 rounds with moves of equal length in 2,700 s on 10 threads |
 

@@ -163,7 +163,7 @@ small search problem of its own, and it depends only on the number of added lett
 their neighbours so that their rows lie on one of the big walks. n = 12: the n = 10 selection transported twice,
 with one solution of the block of 504 loops copied into all 48 blocks. n = 13: the same transported three times,
 with one solution of the block of 5,040 loops. The block solutions use rows of other lengths. They come from integer
-programs and neighbourhood search and are not proved optimal as a whole. The programs are in
+programmes and neighbourhood search and are not proved optimal as a whole. The programs are in
 [`../selection/`](../selection/README.md): the search for the n = 10 selection, the block searches, and the scripts
 that build the selections for n = 11, 12 and 13 again from Pantone's `construction-input.txt` and a few small data
 files. The searches need a commercial solver. Building a selection from the data files does not.

@@ -26,6 +26,8 @@ cut, vertex, join, plan). A few more:
   each of its gaps in turn (K = n - 2 letters in a loop).
 - A chain is a sequence of trails that follow each other at cost 1 (small trails) or 0 (trails of one walk).
 - A unit is a chain or a single trail, handled as one object with a first and a last word.
+- An event is one piece as a plan writes it. A trail written in two segments is two events. The programs print
+  this word.
 - A run, in the n = 12 programs, is a maximal sequence of small trails joined below a given level of cost.
 - W is the cost of a join in half letters with the cuts counted in: W(x, y) = 2 (join) + (cut of x) + (cut of y).
 
@@ -38,7 +40,7 @@ after m". Two small trails can follow each other at cost 1 exactly when their lo
 and then each is cut at its vertex without the mobile letter of that orbit. `linkcheck.py` checks this on every cut
 of every small trail (651 such pairs at n = 11, 3,024 at n = 12; the set of pairs that join at cost 1 and the set of
 neighbours are equal). A trail has one cut, so a chain of three or more stays inside one orbit, and the largest set
-of links is an integer program: `chainplan.py`. It is small and solves to optimality in a second, so the number of
+of links is an integer programme: `chainplan.py`. It is small and solves to optimality in a second, so the number of
 units of a piece set (chains and single trails together) is exact: 146 chains and 4 single trails for the 672 small
 trails at n = 11, 768 chains and 336 single trails for the 2,352 at n = 12.
 
@@ -83,12 +85,14 @@ of ten trails at n = 13, and a join of cost c between two vertices at n = 12 is 
 units. So an order found at n = 12 is an order at n = 13 with a known length (`lift13.py`). Cuts at steps of weight
 2 and cuts that drop a repeated permutation do not lift.
 
-**n = 10.** The pieces are 48 groups of seven small trails and 14 big trails. A group can be passed in one run for a
+### The n = 10 construction
+
+The pieces are 48 groups of seven small trails and 14 big trails. A group can be passed in one run for a
 W-sum of 12, or closed into a loop and hung on one cut of one of its trails, which is then written in two segments.
 The loop is rumstd's device, from his word of 4,034,873 letters. `tl10.py` takes an order of the 62 objects and
 finds the best cuts and the best mode of every group exactly. What remains is the order. The cheapest passes through
 the groups join each other at W = 8 in exactly 56 cycles of six groups (`trav10.py`); I call them chains. The 48
-groups can be split into 8 chains in 56 ways (`parts10.py`). For each split an integer program chooses the order of
+groups can be split into 8 chains in 56 ways (`parts10.py`). For each split an integer programme chooses the order of
 the chains, the join at which each is cut open, and which big trails stand in which gap (`chain10.py`). `plans10.py`
 values the result exactly and writes the plan. 25 of the 56 splits give 4,034,855.
 
@@ -97,7 +101,7 @@ values the result exactly and writes the plan. 25 of the 56 splits give 4,034,85
 | statement | program | status |
 |---|---|---|
 | pairs of small trails that join at cost 1 = neighbours in an F-orbit | `linkcheck.py` | exhaustive over all cuts of the small trails of the piece set given |
-| largest number of cost-1 links, smallest number of chains | `chainplan.py`, `plan13n.py`, `gen13.py` | optimal (integer program, solver status 2) |
+| largest number of cost-1 links, smallest number of chains | `chainplan.py`, `plan13n.py`, `gen13.py` | optimal (integer programme, solver status 2) |
 | order of the units | the same, `order13.py` | heuristic (greedy; assignment with patching) |
 | "assignment bound" | `plan13n.py` | lower bound for a closed order of these units with these end words only |
 | run systems of level 8, 10, 12 | `q12b.py` | optimal among symmetric systems: level 8 and level 10 with all cuts, level 12 with cuts at vertices; level 12 with all cuts is not settled; not shown to be optimal among all systems |
@@ -109,7 +113,7 @@ values the result exactly and writes the plan. 25 of the 56 splits give 4,034,85
 | the 56 chains, the 56 partitions into 8 chains | `trav10.py`, `parts10.py` | exhaustive |
 | order of the chains and places of the big trails, per partition | `chain10.py` | optimal in its model (solver status 2 for all 56 partitions): these chains, with the 638 sequences of big trails it offers as blocks; not a bound for other arrangements |
 | bounds for Pantone's pieces at n = 10 and n = 11 | `cert10.py`, `cert11.py` | exhaustive integer computation, cross-checked as described in the headers, not refereed |
-| rows of other lengths do not transport | `liftmip.py` | integer program; optimal on the two small cases, a bound on the n = 11 block |
+| rows of other lengths do not transport | `liftmip.py` | integer programme; optimal on the two small cases, a bound on the n = 11 block |
 
 Every bound here is a bound for one piece set and one family of words. None of them says anything about another
 piece set, and none is a lower bound for superpermutations.
@@ -204,8 +208,10 @@ selection folder builds the same file (SHA-256 of its data lines 12cfdcf1...8c47
 ```sh
 xz -dc arrange/data/n12t-selection.txt.xz > work/n12t-selection.txt
 python arrange/verify.py work/n12t-selection.txt
-python arrange/gen13.py work/n12t-selection.txt work/n13t-base.txt --table work/n13t-base.tsv \n    --plan work/n13t-chain.plan
-python arrange/order13.py work/n12t-selection.txt work/n13t-base.txt work/n13t-base.tsv \n    work/n13t-chain.plan work/n13t-order.plan
+python arrange/gen13.py work/n12t-selection.txt work/n13t-base.txt --table work/n13t-base.tsv \
+    --plan work/n13t-chain.plan
+python arrange/order13.py work/n12t-selection.txt work/n13t-base.txt work/n13t-base.tsv \
+    work/n13t-chain.plan work/n13t-order.plan
 ```
 
 | | |
@@ -294,14 +300,16 @@ of 168; a larger value is better. `q12.py` gives the linear bound of the value, 
 | 10 | vertices only | | 200 | 1,008: 336 each of 5, 6, 7 | the same and 8: 336 | status 2 |
 | 10 | all | 214 | 200 | the same system | | status 2 with `--time 60 --prove 2700`, after 15 to 20 minutes of proof (two runs) |
 | 12 | vertices only | | 266 | 504: 168 of 10, 336 of 13 | the same and 10: 504 | status 2 |
-| 12 | all | 284 | not settled: between 266 and 276 | | | one run, stopped at 3 GB of memory |
+| 12 | all | 284 | not settled: between 266 and 276 | | | two runs: one stopped at 3 GB of memory, one came to the system of 266 again and stopped at the solver's memory limit of 10 GB with the bound at 276 |
 
 A value with "status 2" in the last round, and no cycle left, is the optimum among symmetric systems: no system that
 the 168 relabellings map to itself does better with the cuts allowed. The constraints that exclude cycles hold for
 every system, so the earlier rounds need no proof. Level 8 and level 10 are settled with all cuts, and at level 10
 the cuts at steps of weight 2 add nothing. Level 12 with all cuts is not settled. The system with cuts at vertices
-(266) is a system there too. In the one run with all cuts the first round, before any cycle is excluded, ended with
-optimum 276, which is an upper bound; the run then stopped at 3 GB of memory. None of this says the systems are
+(266) is a system there too. With all cuts the first round, before any cycle is excluded, ends with optimum 276,
+which is an upper bound. A first run then stopped at 3 GB of memory. A second one with 10 GB (`--time 600
+--prove 5400`) excluded cycles for nine rounds, came to the same system of 266 without a cycle and stopped in the
+proof phase at the solver's memory limit, with the bound still at 276. None of this says the systems are
 optimal among all systems, symmetric or not: there the linear bound is what is known, and the gap is 8, 14 and 18
 per orbit at the three levels. In the accounting of the bound, where a run end is charged 3 letters at level 12, the
 level-12 system costs 13,944 letters and the linear bound is 12,432.
@@ -417,7 +425,7 @@ Pantone's n = 8 word, optimal; 426 against 288 for a test selection with rows of
 These were written on the way and are not in this folder. Each showed something.
 
 - An earlier lift that could only carry run systems to n = 13. `lift13.py` lifts any plan.
-- A greedy chain order for n = 12 from before the integer program. It failed on the first piece set, and
+- A greedy chain order for n = 12 from before the integer programme. It failed on the first piece set, and
   `chainplan.py` replaced it.
 - A test whether the 11-symbol selection is the transport of a 10-symbol one (`untransport.py`, now in the selection
   folder). It is not: deleting any one letter leaves thousands of loops below with mixed types. So the gain at n =
@@ -438,7 +446,7 @@ These were written on the way and are not in this folder. Each showed something.
   of rumstd's n = 9 word loses at least 3 letters.
 - At n = 10, the first construction. The small trails of these pieces are Pantone's small trails with the letters
   renamed, so the order of the 48 groups in rumstd's word carries over. With that order, the best cuts and modes
-  from `tl10.py` and the big trails placed by a small integer program, the word had 4,034,860 letters. This is where
+  from `tl10.py` and the big trails placed by a small integer programme, the word had 4,034,860 letters. This is where
   the idea came from: it showed that rumstd's chains of six groups and his loops work on these pieces. The chain
   model replaced it and gave 4,034,855.
 - At n = 10, a local search on the order of the 62 objects with the exact evaluator, moving every segment of 1 to 4
@@ -476,7 +484,7 @@ and is unchanged without it.
 
 Start plans:
 
-- `chainplan.py`: the small trails in chains (integer program), the units ordered greedily, the other trails as the
+- `chainplan.py`: the small trails in chains (integer programme), the units ordered greedily, the other trails as the
   fixed-order pass left them. The start plans of n = 11 and n = 12.
 - `plancost.py`: the length of a plan and what every kind of trail costs in it.
 - `linkcheck.py`: the check that cost-1 pairs of small trails are the neighbours in an F-orbit.
@@ -504,7 +512,7 @@ n = 10 and the bounds for Pantone's pieces:
 
 - `tl10.py`: an order of the groups and big trails of n = 10 valued exactly, with loops; writes plans (module).
 - `trav10.py`, `parts10.py`: the 56 chains of six groups, and the 56 partitions of the groups into chains.
-- `chain10.py`, `plans10.py`: the integer program for a partition; its solutions valued exactly and written as
+- `chain10.py`, `plans10.py`: the integer programme for a partition; its solutions valued exactly and written as
   plans.
 - `tm.py`, `countn.py`, `top.py`, `grp.py`, `fdp.py`: the parser of a base word into trails, cuts and joins, its
   top-level objects, the exact programme inside a group, the fixed-order pass on whole trails (modules).

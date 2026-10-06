@@ -73,4 +73,5 @@ with trails written in several parts, or a different set of trails.
 
 For n = 10 and n = 11 the same method gives bounds that are not tight: at least 4,034,835 letters against rumstd's
 4,034,873, and at least 43,930,420 against my 43,930,614 for one cut per trail (43,930,373 with several). Those
-computations are not in this directory.
+computations are not in this directory. With a sharper programme for the blocks of big trails the bounds for one
+cut per trail are 4,034,860 and 43,930,481; that is `cert10.py` and `cert11.py` in `arrange/`.
