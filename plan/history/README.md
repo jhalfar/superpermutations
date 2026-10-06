@@ -1,6 +1,6 @@
 # Plans of earlier words
 
-Words found on the way to the ones in the main table, kept as plans. A plan is a short text file that says how to
+Earlier words, kept as plans. A plan is a short text file that says how to
 write a word from the trails of a base word, so the published tool rebuilds each word in seconds (n=11), about a
 minute (n=12) or about ten minutes and 11 GB of RAM (n=13, with `--threads 1`):
 
@@ -41,7 +41,7 @@ single letter can be deleted. The SHA-256 is that of the rebuilt word (one line 
 | 12 | 522,745,374 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745374-rb.plan`](trailsearch-12-522745374-rb.plan) | a short hot search from 522,745,376 that ends on another sequence one letter longer, then relocation, a loop move and segment insertion on that sequence | `923970bb594a4a27075434f742f35396927171681f054e996c7b712dff14b233` |
 | 12 | 522,745,366 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745366-rb.plan`](trailsearch-12-522745366-rb.plan) | segment insertion with up to five cuts on 522,745,374 | `15f9ee4f478bcdcb1a751975d43deb9014c1aca11944ff56400b0976f09e1749` |
 | 12 | 522,745,356 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745356-rb.plan`](trailsearch-12-522745356-rb.plan) | another short hot search from 522,745,366, then relocation, loop moves and segment insertion with up to five cuts (its plan on Pantone's word is in `plan/`) | `cfe09d18369578c7ad619d570d701d01c400963e5848d1ddfa737bb04593bfc6` |
-| 12 | 522,745,355 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745355-rb.plan`](trailsearch-12-522745355-rb.plan) | one more such start from 522,745,356 (the current word; its plan on Pantone's word is in `plan/`) | `f5a5b106ebf9a5ee1deb1f168ffa182d91e5b447685a9f86e33598c655098488` |
+| 12 | 522,745,355 | `base-12-rebased.txt.xz` (below) | [`trailsearch-12-522745355-rb.plan`](trailsearch-12-522745355-rb.plan) | one more such start from 522,745,356 (the last word I made on Pantone's closed trails; its plan on Pantone's word is in `plan/`) | `f5a5b106ebf9a5ee1deb1f168ffa182d91e5b447685a9f86e33598c655098488` |
 | 12 | 522,737,299 | the n = 12 base word that `reproduce/tools/geng.py` writes (see [`REPRODUCE.md`](../../reproduce/REPRODUCE.md)) | [`n12-522737299.plan`](n12-522737299.plan) | on the closed trails of selection E: the first word I published on them (`words/superpermutation-12-522737299.txt.xz`), before more local kicks gave 522,737,175 | `acac6023eff390880f8fec3e48fc3b7ef24c5a45e71bbf8c328a6d8615901717` |
 | 13 | 6,747,917,445 | my 6,747,918,058 word (`words/superpermutation-13-6747918058.txt.xz`) | [`trailsearch-13-6747917445.plan`](trailsearch-13-6747917445.plan) | relocation with re-opening on 6,747,917,464 (whose plan is in `plan/`) | `225ecc2d6f19600ec8384f0092aced150805dcea39903dacf0fd5bdccba1c87e` |
 | 13 | 6,747,802,875 | the n = 13 base word that `reproduce/tools/geng.py` writes (see [`REPRODUCE.md`](../../reproduce/REPRODUCE.md)) | [`n13-6747802875.plan`](n13-6747802875.plan) | on the closed trails of selection N: the first word I published on them (`words/superpermutation-13-6747802875.txt.xz`), before more passes with moves of equal length gave 6,747,802,562 | `91fc31abc4d28626a6839e3c8263f676377744a173349f4ecfd02a3309a337f6` |
@@ -56,5 +56,5 @@ be searched from safely. The same words written as plans on Pantone's word need 
 rebuild correctly but are not safe starting points for the search.
 
 The second n=12 line (plans on Pantone's word, 522,745,516 to 522,745,474) and the second n=11 line (plans on
-Pantone's 43,930,680 word) are independent of the lines that led to the current words, in case someone wants a
+Pantone's 43,930,680 word) are independent of the lines that led to my last words on his closed trails, in case someone wants a
 different starting point.
