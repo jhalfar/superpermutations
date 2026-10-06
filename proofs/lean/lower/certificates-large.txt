@@ -1,0 +1,11 @@
+# The large certificates of Theorem C, which "build.sh full" checks besides those of certificates.txt.
+# The format is that of certificates.txt.  Four of them raise the bound: for k = 8 to 46,133, for k = 11 to
+# 43,917,903, for k = 13 to 6,746,626,957 and for k = 14 to 93,891,141,008.  The fifth, 9 1 38 10, is a second
+# and larger search for 408,469, which a certificate of certificates.txt gives as well.  Together they take
+# four to five hours of Lean process time.
+#
+s_plan2.py  8  41  1188   100  --leaf 1500 --band 700 --per-file 8000 --plain
+s_plan.py   9   1    38    10  --leaf 500 --band 300 --per-file 5000
+s_plan2.py 11  91  4016  1000  --leaf 450 --band 250 --per-file 3000
+s_plan2.py 13   4    88    25  --leaf 450 --band 250 --per-file 3000
+s_plan2.py 14  21  1550   400  --leaf 400 --band 250 --per-file 3000

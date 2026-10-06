@@ -835,6 +835,21 @@ rows only and transports to every n, so it has a constant of its own. What I can
 
 X, E and N have rows that do not transport. They say nothing about the constant.
 
+# Lower bounds
+
+The other side of the problem: how long a superpermutation has to be. `proofs/lean/lower/` proves three bounds
+in Lean, on top of Xiaolong Liu's library and the Hunter-Raudvere library. Two are formulas for every n: the
+one Zach Hunter wrote in 2019, for which the note of GPT 5.6 Sol and Marin Kisic gave a proof on paper in
+August 2026, and the one Cole Fritsch proposed in 2020. Pantone announced a Lean proof of nearly the same
+bound as Fritsch's in September 2026. The third starts from the second and replaces its fixed slope by one
+that a finite search justifies; the Lean kernel evaluates the search. For n = 8 to 14 it gives 46,133, 408,469,
+4,033,378, 43,917,903, 522,622,378, 6,746,626,957 and 93,891,141,008. Pantone's announced table has 46,130,
+408,468, 4,033,374, 43,917,903, 522,622,378 and 6,746,626,519 for n = 8 to 13; his proof is not public, and
+mine was made without it. The README of that directory says how the bound arises and which part is whose.
+
+All these bounds exceed n! + (n - 1)! + (n - 2)! by a term of order (n - 4)!, while the words exceed it by
+about half of (n - 3)!. For n = 13 the two sides are about 1.18 million letters apart.
+
 # How the words were checked
 
 Three programs that share no code:

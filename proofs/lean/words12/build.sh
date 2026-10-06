@@ -5,17 +5,19 @@
 #     ./build.sh           everything, in the order below
 #     ./build.sh word      steps 1 and 2 only (needs Pantone's Challenge.lean and Mathlib, nothing else)
 #
-# The script works in the build directory of ../words/build.sh.  What that script has compiled is not
-# compiled again; what is missing is compiled here.
+# The script works in the build directory of ../words/build.sh and ../lower/build.sh.  What those scripts
+# have compiled is not compiled again; what is missing is compiled here.
 #
 #   1. ../words/check_word.sh takes the word file through all of its steps: it generates the certificate
 #      Superperm/N12/ (255 files, 0.9 GB) into the build directory, lets Lean check it (254 modules, about 6
 #      hours of Lean time), and checks the blocks in the Lean files against the word file.
 #   2. The generated files are compared with the list of hashes generated.sha256, and Lean compiles
 #      Superperm/Upper12.lean.
-#   3. Lean compiles Superperm/UpperHunter12.lean and TwoSided12.lean: the upper bound for Hunter.Ssuper 12
-#      and the two-sided statement with Liu's lower bound.  Then Audit12.lean, which writes the statements
-#      out in full.
+#   3. Lean compiles Superperm/UpperHunter12.lean, TwoSided12.lean and TwoSidedAB12.lean: the upper bound for
+#      Hunter.Ssuper 12 and the two-sided statements with the three lower bounds (Liu's value and the values
+#      of Theorems A and B of ../lower).  Then Audit12.lean, which writes the statements out in full.  If
+#      ../lower/build.sh has been run in this build directory, also Superperm/TwoSidedC12.lean, the two-sided
+#      statement with the value of Theorem C; otherwise that file is left out.
 #   4. The "#print axioms" lines of the statements are printed.
 #
 # Settings (environment variables; default after the colon).  LEAN, PYTHON, PANTONE_DIR, MATHLIB_PACKAGES,
@@ -64,9 +66,14 @@ if [ "$PHASE" = all ]; then
     check_hashes "$ROOT/words/hunter-sources.sha256" "$HUNTER_DIR"
     check_hashes "$ROOT/words/preimage-sources.sha256" "$PREIMAGE_DIR"
   fi
-  TWO="Superperm.UpperHunter12 Superperm.TwoSided12 Audit12"
+  TWO="Superperm.UpperHunter12 Superperm.TwoSided12 Superperm.TwoSidedAB12 Audit12"
+  if [ -f "$BUILD/lib/LowerBounds/SFinalSmall.olean" ]; then
+    TWO="$TWO Superperm.TwoSidedC12"
+  else
+    echo "Theorem C is not built in $BUILD (run ../lower/build.sh first): TwoSidedC12 is left out"
+  fi
   JOBS="$JOBS_BIG" build_modules $TWO -- \
-    "$HERE" "$ROOT/words" "$GEN" "$PANTONE_DIR" "$HUNTER_DIR" "$PREIMAGE_DIR"
+    "$HERE" "$ROOT/lower" "$BUILD/sgen" "$ROOT/words" "$GEN" "$PANTONE_DIR" "$HUNTER_DIR" "$PREIMAGE_DIR"
   STATEMENTS="$STATEMENTS $TWO"
 fi
 

@@ -1,0 +1,35 @@
+# The certificates of Theorem C that Lean checks at the default level of build.sh: the small ones.
+# certificates-large.txt has the others, which "build.sh full" adds.
+#
+# A line is:  GENERATOR  k  cn  bn  q  [options of the generator]
+#
+# It stands for the statement ModelStatement k cn bn q (LowerBounds/SModelDef.lean): on k symbols every window
+# satisfies the inequality with c = cn/q and b = bn/q.  Its files are LowerBounds/SGen/C<k>_<cn>_<bn>_<q>*.lean
+# in the build directory.  GENERATOR is tools/s_plan.py or tools/s_plan2.py; the options (--leaf, --band,
+# --per-file, --plain) only decide how the search is cut into lemmas and files and how its states are written,
+# not what is proven.  The bound that Theorem C draws from each certificate is in the comments of the generated
+# LowerBounds/SCertWSmall.lean and SCertW.lean, and README.md lists the best one for each k.  To add a
+# certificate, add a line and run build.sh with CHECK_GENERATED=0.
+#
+s_plan.py   8  17   340   200  --leaf 500 --band 300
+s_plan.py   8  39   780   200  --leaf 500 --band 300
+s_plan.py   8   3    64    10  --leaf 500 --band 300
+s_plan.py   9  63  1890  2000  --leaf 500 --band 300
+s_plan.py   9  29   870   500  --leaf 500 --band 300
+s_plan.py   9  21   630   250  --leaf 400 --band 250
+s_plan.py  10  69   828   400  --leaf 500 --band 300
+s_plan.py  10  81   992   400  --leaf 500 --band 300
+s_plan2.py 10  89  1248   400  --leaf 500 --band 300 --per-file 3000
+s_plan.py  10  47   704   200  --leaf 400 --band 250
+s_plan2.py 10   6    92    25  --leaf 800 --band 400 --per-file 4000
+s_plan.py  11  21   882   400  --leaf 500 --band 300
+s_plan.py  11   7   296    80  --leaf 400 --band 250
+s_plan2.py 11   9   392   100  --leaf 500 --band 300 --per-file 3000
+s_plan.py  12  19  1064   500  --leaf 400 --band 250
+s_plan2.py 12  51  2956  1250  --leaf 450 --band 250 --per-file 3000
+s_plan.py  13   1    16    10  --leaf 500 --band 300
+s_plan.py  13  61  1192   400  --leaf 400 --band 250
+s_plan2.py 13  31   632   200  --leaf 450 --band 250 --per-file 3000
+s_plan.py  14   1    72    40  --leaf 400 --band 250
+s_plan.py  14  19  1368   400  --leaf 400 --band 250
+s_plan2.py 14  41  2952   800  --leaf 600 --band 300 --per-file 3000

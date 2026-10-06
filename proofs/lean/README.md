@@ -10,22 +10,27 @@ part. This directory holds Lean 4 proofs about how long such a word has to be. I
   check each word, and states these upper bounds together with the lower bounds of Xiaolong Liu's Lean
   project.
 * `words12/` does the same for a word for n = 12. It is a part of its own because of its size.
+* `lower/` proves three lower bounds. With hpv(k) = k! + (k-1)! + (k-2)! + k - 3, a superpermutation on k
+  symbols has at least hpv(k) + ceil(2 ((k-2)! - (k-2)) / (k (k-3))) letters for k >= 5 (Theorem A) and at
+  least hpv(k) + ceil(2 ((k-2)! - (k-2)) / (k^2 - 4k + 1)) letters for k >= 7 (Theorem B). Theorem C makes
+  the denominator smaller by a term that a finite search justifies; the searches are evaluated by the Lean
+  kernel for k = 8 to 14.
 
 The bounds proven here for the length L(n) of the shortest superpermutation:
 
-| n | lower: Liu's Lean value | upper: a word or a construction checked here |
-|---|---|---|
-| 7 | 5,892 | 5,905 |
-| 8 | 46,118 | 46,181 |
-| 9 | 408,418 | 408,731 |
-| 10 | 4,033,080 | 4,034,855 |
-| 11 | 43,916,235 | 43,930,578 |
-| 12 | 522,610,764 | 522,737,175 |
-| 13 | | 6,747,849,960 |
-| 14 | | 93,905,309,790 |
+| n | lower: Theorem B | lower: Theorem C | upper: a word or a construction checked here |
+|---|---|---|---|
+| 7 | 5,895 | | 5,905 |
+| 8 | 46,129 | 46,133 | 46,181 |
+| 9 | 408,465 | 408,469 | 408,731 |
+| 10 | 4,033,329 | 4,033,378 | 4,034,855 |
+| 11 | 43,917,793 | 43,917,903 | 43,930,578 |
+| 12 | 522,622,030 | 522,622,378 | 522,737,175 |
+| 13 | 6,746,615,766 | 6,746,626,957 | 6,747,849,960 |
+| 14 | 93,891,107,960 | 93,891,141,008 | 93,905,309,790 |
 
-The lower bounds are theorems of Xiaolong Liu's preimage-chain project. `words/` and `words12/` compile them
-from his sources and state them together with the words.
+Jay Pantone announced a table of lower bounds on 29 September 2026: 46,130, 408,468, 4,033,374, 43,917,903,
+522,622,378 and 6,746,626,519 for n = 8 to 13. His proof is not public. The proofs here were made without it.
 The upper bounds for n = 7 to 12 are literal words; those for n = 13 and 14 are values of the construction of
 `constant/`.
 
@@ -45,6 +50,16 @@ What is new here, and what is not:
   at the top of this repository). The words for n = 7, 8 and 9 are by Teodorescu, Pantone and rumstd.
 * The bridge between `Covers` and `Hunter.Ssuper`, the quantity of the Hunter-Raudvere library, is new. The
   lower bounds it is used with in `words/` are Xiaolong Liu's, from his preimage-chain project.
+* Theorems A and B. The Lean proofs are new; the formulas are not. Zach Hunter wrote the formula of
+  Theorem A on 21 October 2019 in the group thread "New Lower Bound"
+  (https://groups.google.com/g/superpermutators/c/M-1yQC0Aj44) as a bound he expected to prove, and the note
+  of GPT 5.6 Sol and Marin Kisic of 7 August 2026 has a proof on paper that is not formalised. The formula
+  of Theorem B is Cole Fritsch's. He posted it on 20 January 2020 in the same thread with an argument that
+  he himself called far from rigorous and that Zach Hunter disputed the same day.
+* Theorem C, the search behind it and the proof that the search is complete are new. Pantone announced his
+  table first, as said above.
+* All three lower bounds are built on Liu's library and on the Hunter-Raudvere library, and both libraries
+  are used unchanged. [`lower/README.md`](lower/README.md) says in detail which lemma is whose.
 
 ## What is proven
 
@@ -110,6 +125,58 @@ statements (among them rumstd's word of 4,034,873 letters for n = 10 and a secon
 the two checking methods, and where each word file comes from. [`words12/README.md`](words12/README.md) says
 what is changed for n = 12.
 
+### The lower bounds (`lower/`, namespaces `SuperpermLowerBounds` and `SuperpermBridge`)
+
+```lean
+def hpv (k : Nat) : Nat := k.factorial + (k - 1).factorial + (k - 2).factorial + k - 3
+def kisicBound (k : Nat) : Nat :=
+  hpv k + (2 * ((k - 2).factorial - (k - 2)) + k * (k - 3) - 1) / (k * (k - 3))
+def boundB (k : Nat) : Nat :=
+  hpv k + (2 * ((k - 2).factorial - (k - 2)) + (k * k - 4 * k + 1) - 1) / (k * k - 4 * k + 1)
+
+theorem superperm_kisic_bound (hk : 5 <= k) : kisicBound k <= Ssuper k
+theorem superperm_boundB {k : Nat} (hk : 7 <= k) : boundB k <= Ssuper k
+theorem covers_length_ge_kisicBound {k : Nat} (hk : 5 <= k) :
+    forall w : List (Fin k), Covers w -> kisicBound k <= w.length
+theorem covers_length_ge_boundB {k : Nat} (hk : 7 <= k) :
+    forall w : List (Fin k), Covers w -> boundB k <= w.length
+
+-- Theorem C: c = cn / q and b = bn / q; HStatement is the window bound for the chains of Liu's library
+def boundC (k cn bn q : Nat) : Nat :=
+  hpv k + (2 * q * (k - 2).factorial - (2 * q * (k - 2) + bn) + piC k cn q - 1) / piC k cn q
+theorem superperm_boundC (hk : 5 <= k) (hcond : ConditionsC k cn bn q) (hH : HStatement k cn bn q) :
+    boundC k cn bn q <= Ssuper k
+
+-- Theorem C with the searches evaluated: no hypothesis left
+theorem covers_lower_bound_8  : forall w : List (Fin 8),  Covers w -> 46133 <= w.length
+theorem covers_lower_bound_9  : forall w : List (Fin 9),  Covers w -> 408469 <= w.length
+theorem covers_lower_bound_10 : forall w : List (Fin 10), Covers w -> 4033378 <= w.length
+theorem covers_lower_bound_11 : forall w : List (Fin 11), Covers w -> 43917903 <= w.length
+theorem covers_lower_bound_12 : forall w : List (Fin 12), Covers w -> 522622378 <= w.length
+theorem covers_lower_bound_13 : forall w : List (Fin 13), Covers w -> 6746626957 <= w.length
+theorem covers_lower_bound_14 : forall w : List (Fin 14), Covers w -> 93891141008 <= w.length
+
+-- with the literal words
+theorem ssuper_eight_boundC  : 46133 <= Hunter.Ssuper 8 /\ Hunter.Ssuper 8 <= 46181
+theorem ssuper_nine_boundC   : 408469 <= Hunter.Ssuper 9 /\ Hunter.Ssuper 9 <= 408731
+theorem ssuper_ten_boundC    : 4033378 <= Hunter.Ssuper 10 /\ Hunter.Ssuper 10 <= 4034855
+theorem ssuper_eleven_boundC : 43917903 <= Hunter.Ssuper 11 /\ Hunter.Ssuper 11 <= 43930578
+theorem ssuper_twelve_boundC : 522622378 <= Hunter.Ssuper 12 /\ Hunter.Ssuper 12 <= 522737175
+theorem words_twelve_boundC : (exists w : List (Fin 12), Covers w /\ w.length = 522737175) /\
+    forall w : List (Fin 12), Covers w -> 522622378 <= w.length
+```
+
+`Ssuper` is `Hunter.Ssuper`. The division is that of natural numbers, so the last summands of `kisicBound`,
+`boundB` and `boundC` are the ceilings in the formulas. `piC k cn q` is q (k^2 - 4k + 1) - cn (k - 1), and
+`ConditionsC` is three inequalities between the constants. The seven `covers_lower_bound_` lines also hold in
+the form `46133 <= Ssuper 8` (`ssuper_lower_bound_8` and so on).
+
+Theorem C needs a search for each pair (c, b). The default build of `lower/` checks 22 searches and gives
+46,132, 408,469, 4,033,378, 43,917,901, 522,622,378, 6,746,626,601 and 93,891,140,217 for k = 8 to 14;
+`lower/build.sh full` checks five large searches more and gives the values of the table.
+[`lower/README.md`](lower/README.md) has all statements, the values of the three theorems next to Liu's, how
+the bound of Theorem C arises, and the steps of the proofs.
+
 ## What is in this directory
 
 * `constant/`: the development for 1771/3456. 11 hand-written Lean files and an audit file, 38 generated
@@ -119,6 +186,9 @@ what is changed for n = 12.
   generated certificates for n = 7, 8 and 9, lists of hashes, `build.sh`, a README.
 * `words12/`: the statements for n = 12, an audit file, the list of hashes of the generated files,
   `build.sh`, a README.
+* `lower/`: the proofs of the three lower bounds (31 Lean files), the two-sided statements that use them,
+  five audit files, the lists of the certificates of Theorem C, their generators, the list of hashes of the
+  generated files, `build.sh`, a README.
 * `tools/`: `common.sh` (settings and functions of the build scripts), `order.py` (build order from the
   import lines), `check_hashes.py`.
 * `lean-toolchain`: the Lean version.
@@ -145,6 +215,8 @@ need the two lower-bound repositories as well. These three repositories pin the 
 compiled Mathlib serves everything; the scripts take it from Pantone's checkout. Of the repositories only
 sources are used: the modules of them that a statement imports are compiled here.
 
+`lower/` needs all three repositories.
+
 ## How to build
 
 Fetch the repositories into `deps/` and the compiled Mathlib into the first of them:
@@ -164,10 +236,12 @@ cd ..
 Then run the scripts. Each builds its part from sources into a directory under `build/`, in dependency
 order, and prints the `#print axioms` lines at the end. `words12/build.sh` continues in the build directory of
 `words/build.sh`, so it comes after it. `constant/build.sh` stands alone.
+`lower/build.sh` continues in that build directory as well and comes between the two.
 
 ```sh
 constant/build.sh
 words/build.sh
+lower/build.sh             # or: lower/build.sh full
 words12/build.sh
 ```
 
@@ -213,17 +287,23 @@ empty build directory, one thread per Lean process, other jobs running beside th
 | `words/build.sh`, the two libraries | 151 | 68 min | | 3.9 GB |
 | `words/build.sh`, bridge and two-sided | 9 | 8 min | | 3.4 GB |
 | `words/build.sh` in all | 521 | 5.0 h | 3 h 14 min, one to two processes | 3.9 GB |
-| `words12/build.sh` | 262 | 7.1 h | 69 min, one to ten processes | 1.4 GB, one module 1.7 GB, the last three 3.8 GB |
+| `lower/build.sh`, Theorems A and B | 13 | 8 min | | 3.6 GB |
+| `lower/build.sh`, Theorem C at the default level | 114 | 39 min | | 2.5 GB in the searches, 3.6 GB else |
+| `lower/build.sh full`, what the large certificates add | 347 | 4.6 h | | 2.8 GB in the searches, 3.3 GB else |
+| `lower/build.sh full` in all | 474 | 5.3 h | 1 h 50 min, one to four processes | 3.6 GB |
+| `words12/build.sh` | 264 | 7.1 h | 70 min, one to ten processes | 1.4 GB, one module 1.7 GB, the last five 3.8 GB |
 
 Lean time is the sum over the Lean processes. Memory is the working set. A process that imports all of
 Mathlib (the two libraries, the bridge, the two-sided statements) commits 8 to 9 GB of virtual memory, and it
 is slow unless the Mathlib files stay in the file cache; `MINFREE_GB=6` waits for free memory before each
 start.
+Most modules of `lower/` outside the searches are of this kind. The rows of `lower/` are from several runs
+into the build directory of `words/`.
 The row of `words12/build.sh` is from three runs: `words/check_word.sh` into an empty build directory, with
 three processes for the first 50 modules and ten for the rest, and then the statements with one process.
 
-Disk: the compiled Mathlib 7.4 GB; `build/constant` 0.3 GB; `build/words` 0.5 GB after `words/build.sh` and
-2.1 GB more after `words12/build.sh`.
+Disk: the compiled Mathlib 7.4 GB; `build/constant` 0.3 GB; `build/words` 0.5 GB after `words/build.sh`,
+0.5 GB more after `lower/build.sh full` and 2.1 GB more after `words12/build.sh`.
 
 The README of each part has the times per group of modules.
 
@@ -234,8 +314,13 @@ The README of each part has the times per group of modules.
   and `Quot.sound`. `constant/Audit1771.lean`, `words/Audit11.lean` and `words12/Audit12.lean` restate the
   main results with those definitions written out, so that nothing else has to be read to know what is
   claimed.
+* `lower/AuditA.lean`, `AuditB.lean`, `AuditC.lean`, `AuditCSmall.lean` and `AuditCFinal.lean` do the same for
+  the lower bounds.
 * Not trusted: the generators, the certificate data, the tables. They are inputs to kernel checks, and a
   wrong entry makes a check fail.
+* The searches of Theorem C are evaluated by the kernel (`decide +kernel`), with its built-in arithmetic on
+  natural numbers. No compiled code is trusted. The Python copy of the search only decides where a search is
+  cut into lemmas.
 * For the literal words, one link is outside Lean: that the number in the Lean files is the word in the
   public file. The theorems say that a word of that length exists. That it is the published word is checked
   by `words/verify_word.py` and `words/verify_blocks.py` and by the hashes, not by the kernel.
@@ -246,6 +331,8 @@ The README of each part has the times per group of modules.
   his certificate for 9 symbols, which needs more memory than my machine has.
 * The lower bounds of Liu's project that `words/` uses are his theorems. I compile them from his sources and
   did not review their proofs.
+* The three lower bounds of `lower/` use lemmas of his library and of the Hunter-Raudvere library in the same
+  way: compiled here from the sources, their proofs not reviewed by me.
 
 ## What is not covered
 
@@ -253,3 +340,5 @@ The README of each part has the times per group of modules.
 * The words: n = 13. The shortest word known for n = 13 has 6.7 billion letters and is out of reach for this
   method.
 * Nothing here says that any of the words is shortest.
+* The lower bounds: Theorem B is not proven for k = 5 and 6, and Theorem C has certificates for k = 8 to 14
+  only. Pantone's proofs are not here; they are not public.

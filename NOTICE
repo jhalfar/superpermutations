@@ -31,5 +31,9 @@ removed. The file says so at its top, and proofs/lean/constant/patches/Supported
 files of proofs/lean/constant were written for this repository on top of his library; four passages follow his text
 and are named in proofs/lean/constant/README.md.
 
+The lower bounds of proofs/lean/lower are proved on top of Xiaolong Liu's preimage-chain library
+(https://github.com/Haruhiyuki/superpermutations-preimage-chain-lower-bounds) and of the Hunter-Raudvere library
+(https://github.com/urdvr/superpermutations-hunter). Both are used unchanged and are not included here.
+
 By Jakub Halfar, with Claude (Opus 5.5) in Claude Code. Jakub Halfar chose the problem and directed the work; Claude
 designed and ran the searches and wrote the code and the text.

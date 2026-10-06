@@ -9,6 +9,7 @@ These files should have the executable bit (mode 755) in the repository. Everyth
 them, by `python3` or by Lean, and needs mode 644 only.
 
 * `constant/build.sh`
+* `lower/build.sh`
 * `words/build.sh`
 * `words/check_word.sh`
 * `words12/build.sh`
@@ -17,7 +18,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 * `.gitattributes` (344 B): keeps LF line ends in text files, so that the hashes hold on every system
 * `MANIFEST.md`: this list
-* `README.md` (14.5 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
+* `README.md` (21.1 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
 * `SHA256SUMS`: SHA-256 of every other file of this directory
 * `lean-toolchain` (25 B): the Lean version, `leanprover/lean4:v4.31.0`
 
@@ -127,6 +128,80 @@ them, by `python3` or by Lean, and needs mode 644 only.
   of that name (Apache License 2.0): one import changed, one section removed
 * `constant/patches/SupportedStates.diff` (2.4 KB): the same change as a unified diff against his file
 
+## lower/
+
+* `lower/AuditA.lean` (3.0 KB): Theorem A written out with no definition of this project
+* `lower/AuditB.lean` (2.7 KB): Theorem B written out with no definition of this project
+* `lower/AuditC.lean` (4.2 KB): Theorem C, as a statement with its hypothesis, written out with no definition of this
+  project
+* `lower/AuditCFinal.lean` (3.8 KB): the seven best bounds of Theorem C (all 27 certificates) written out by hand
+* `lower/AuditCSmall.lean` (4.2 KB): the seven best bounds of Theorem C from the small certificates written out by
+  hand
+* `lower/LowerBounds/ChainCapacityB.lean` (15.0 KB): the capacity bound with slope k - 3 as arithmetic,
+  `chain_capacity_slope3`
+* `lower/LowerBounds/ChainCapacityC.lean` (30.0 KB): Theorem C: windows (`IsWindow`, `WindowBound`) and the capacity
+  of a list of deficits
+* `lower/LowerBounds/ComponentCapacityB.lean` (20.6 KB): the capacity bound for the chains and components of Liu's
+  library
+* `lower/LowerBounds/ComponentCapacityC.lean` (21.3 KB): Theorem C: `HStatement` and the capacity bound for chains and
+  components
+* `lower/LowerBounds/DeficitOne.lean` (18.6 KB): the deficit-one lemma, `partition_unit_after_full_next_large`
+* `lower/LowerBounds/LemmaZ.lean` (18.0 KB): the lemma about junctions of cost zero, `lemma_Z`
+* `lower/LowerBounds/LemmaZC.lean` (9.1 KB): Theorem C: the junction lemma with the sum of the two deficits
+* `lower/LowerBounds/SBridge.lean` (4.3 KB): bridge: `hStatement_of_model : ModelStatement k cn bn q -> HStatement k
+  cn bn q`
+* `lower/LowerBounds/SBridgeChain.lean` (9.9 KB): bridge: a chain of Liu's library as a chain of entries
+* `lower/LowerBounds/SBridgeModel.lean` (13.7 KB): bridge: the model loses nothing (model chains are chains of
+  entries)
+* `lower/LowerBounds/SBridgePath.lean` (12.9 KB): bridge: the entries of the blocks of a path, doors and seams
+* `lower/LowerBounds/SBridgeRelabel.lean` (7.9 KB): bridge: relabelling of model chains
+* `lower/LowerBounds/SBridgeTheoremC.lean` (1.9 KB): Theorem C with the model in place of the window hypothesis
+* `lower/LowerBounds/SCut.lean` (8.7 KB): lemmas that put a search together from parts, `S.ref_of_cover`,
+  `S.search_false`; no Mathlib
+* `lower/LowerBounds/SDec.lean` (2.4 KB): the tree of used classes written as a list of large numbers, `S.trOf`; no
+  Mathlib
+* `lower/LowerBounds/SLit.lean` (3.4 KB): states of a search written out and compared by evaluation, `S.St.eq_of_beq`;
+  no Mathlib
+* `lower/LowerBounds/SModel.lean` (3.0 KB): `modelStatement_of_search`: from a search that returns false to
+  `ModelStatement`
+* `lower/LowerBounds/SModelDef.lean` (4.2 KB): the model that the search works on: `IsModelChain`, `ModelStatement`
+* `lower/LowerBounds/SRun.lean` (1.2 KB): the run check evaluated by the kernel: `S.runSearch k = false` for k = 5 to
+  15
+* `lower/LowerBounds/SSearch.lean` (14.8 KB): the window search on natural numbers, `S.search`, `S.runSearch`; no
+  Mathlib
+* `lower/LowerBounds/SSound.lean` (46.6 KB): the search is complete: `S.wstatement_of_search`
+* `lower/LowerBounds/SWord.lean` (18.1 KB): words and their codes: what the arithmetic of the search means on words
+* `lower/LowerBounds/TheoremA.lean` (25.9 KB): Theorem A: `kisicBound`, `superperm_kisic_bound`, the values for k = 5
+  to 14
+* `lower/LowerBounds/TheoremAWords.lean` (2.4 KB): Theorem A for covering words over `Fin k`
+* `lower/LowerBounds/TheoremB.lean` (5.1 KB): Theorem B: `superperm_boundB`, the values for k = 7 to 14
+* `lower/LowerBounds/TheoremBCore.lean` (26.6 KB): `boundB` and the assembly of Theorem B from two lemmas taken as
+  hypotheses
+* `lower/LowerBounds/TheoremBWords.lean` (2.1 KB): Theorem B for covering words over `Fin k`
+* `lower/LowerBounds/TheoremC.lean` (10.5 KB): Theorem C from the window hypothesis: `superperm_boundC`
+* `lower/LowerBounds/TheoremCCore.lean` (29.3 KB): Theorem C: `boundC`, `ConditionsC` and the assembly
+* `lower/LowerBounds/TheoremCWords.lean` (3.6 KB): Theorem C from the window hypothesis, for covering words over `Fin
+  k`
+* `lower/LowerBounds/WindowSlackC.lean` (3.5 KB): Theorem C: the window bound in the form with the slack of intervals
+  and runs
+* `lower/README.md` (28.7 KB): the three lower bounds, their values, whose the parts are, the steps of the proofs, how
+  to build
+* `lower/Superperm/TwoSidedA.lean` (2.9 KB): Theorem A and the literal words in one statement, n = 9, 10, 11
+* `lower/Superperm/TwoSidedB.lean` (2.9 KB): Theorem B and the literal words in one statement, n = 9, 10, 11
+* `lower/Superperm/TwoSidedC.lean` (3.2 KB): Theorem C and the literal words in one statement, n = 8, 9, 10, 11
+* `lower/build.sh` (11.6 KB): generates the certificates of Theorem C, builds what it finds in `LowerBounds/`,
+  `Audit*.lean` and `Superperm/`, checks the axioms
+* `lower/certificates-large.txt` (829 B): the large certificates that `build.sh full` adds
+* `lower/certificates.txt` (2.2 KB): the small certificates of Theorem C, checked at the default level: generator, k,
+  cn, bn, q, options
+* `lower/generated.sha256` (45.9 KB): SHA-256 of the 435 Lean files that the generators write into the build directory
+* `lower/tools/s_certs.py` (5.4 KB): writes the generated files that state the certificates (`SCertW*.lean`,
+  `SCertificates*.lean`)
+* `lower/tools/s_final.py` (6.0 KB): writes the generated files with the bounds (`SFinal*.lean`)
+* `lower/tools/s_ksim.py` (4.7 KB): Python copy of `SSearch.lean`, used by the generators to decide where to cut
+* `lower/tools/s_plan.py` (12.5 KB): generator: one search cut into lemmas for the kernel, states given as paths
+* `lower/tools/s_plan2.py` (16.5 KB): generator: the same with the state of every part written out, for deep searches
+
 ## tools/
 
 * `tools/check_hashes.py` (1.5 KB): compares files with a list of SHA-256 hashes, or writes such a list
@@ -231,10 +306,12 @@ them, by `python3` or by Lean, and needs mode 644 only.
 ## words12/
 
 * `words12/Audit12.lean` (1.8 KB): the statements for n = 12 written out with no definition of this project
-* `words12/README.md` (6.7 KB): the statements for n = 12, what differs from n = 11, how to build
+* `words12/README.md` (7.9 KB): the statements for n = 12, what differs from n = 11, how to build
 * `words12/Superperm/TwoSided12.lean` (1.1 KB): lower and upper bound in one statement for n = 12, with Liu's lower
   bound
+* `words12/Superperm/TwoSidedAB12.lean` (2.1 KB): the same with the lower bounds of Theorems A and B
+* `words12/Superperm/TwoSidedC12.lean` (1.4 KB): the same with the lower bound of Theorem C
 * `words12/Superperm/Upper12.lean` (1.3 KB): `hasWord_twelve : HasWord 12 522737175`
 * `words12/Superperm/UpperHunter12.lean` (433 B): `Hunter.Ssuper 12 <= 522737175`
-* `words12/build.sh` (4.1 KB): runs `check_word.sh` on the word for n = 12, builds the statements, prints the axioms
+* `words12/build.sh` (4.7 KB): runs `check_word.sh` on the word for n = 12, builds the statements, prints the axioms
 * `words12/generated.sha256` (23.0 KB): SHA-256 of the 255 files that `gen12.py` writes for this word
