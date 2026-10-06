@@ -1,0 +1,54 @@
+--- a/SuperpermutationUpperBound/Assembly/SupportedStates.lean
++++ b/SuperpermutationUpperBound/Assembly/SupportedStates.lean
+@@ -1,5 +1,15 @@
++/-
++This file is a modified copy of SuperpermutationUpperBound/Assembly/SupportedStates.lean of Jay Pantone's
++repository github.com/jaypantone/superperm-upper-43-80 (commit c8fb7ffdd69be1375580710ae11b47a295b1f0f6),
++which is under the Apache License, Version 2.0.
++
++Two changes: the import of SuperpermutationUpperBound.Partition.SprintFamily is replaced by an import of
++SuperpermutationUpperBound.Foundation.SupportedWords, and the section Partition.SprintFamily at the end
++(stateAlphabet, stateAlphabet_card, stateAlphabet_mem) is removed.  Everything else is his text, unchanged.
++The file SupportedStates.diff in the directory patches shows the change.
++-/
+ import SuperpermutationUpperBound.Assembly.OverlapStates
+-import SuperpermutationUpperBound.Partition.SprintFamily
++import SuperpermutationUpperBound.Foundation.SupportedWords
+ 
+ namespace SuperpermutationUpperBound
+ variable {α : Type}
+@@ -54,34 +64,4 @@
+   rw [supportedOverlapState_card]
+   exact Nat.factorial_mul_descFactorial hl
+ 
+-namespace Partition.SprintFamily
+-
+-def stateAlphabet (k : Nat) : Finset Nat := (10 :: alphabet k).toFinset
+-
+-theorem stateAlphabet_card (k : Nat) : (stateAlphabet k).card = k + 10 := by
+-  have hn : (10 :: alphabet k).Nodup := List.nodup_cons.mpr ⟨alphabet_final k, alphabet_nodup k⟩
+-  rw [stateAlphabet, List.toFinset_card_of_nodup hn]
+-  simp [Nat.add_assoc]
+-
+-theorem stateAlphabet_mem (k : Nat) (a : Nat) :
+-    a ∈ stateAlphabet k ↔ a < k + 11 ∧ a ≠ 9 := by
+-  have hp := full_alphabet_perm k
+-  simp only [stateAlphabet, List.mem_toFinset, List.mem_cons]
+-  constructor
+-  · intro ha
+-    have hm : a ∈ 10 :: (alphabet k ++ [9]) := by
+-      rcases ha with h | h
+-      · exact List.mem_cons.mpr (Or.inl h)
+-      · exact List.mem_cons.mpr (Or.inr (List.mem_append.mpr (Or.inl h)))
+-    have hr : a ∈ List.range (k + 11) := hp.mem_iff.mp hm
+-    refine ⟨List.mem_range.mp hr, ?_⟩
+-    intro heq
+-    subst a
+-    simp only [show (9 : Nat) ≠ 10 by decide, false_or] at ha
+-    exact alphabet_satellite k ha
+-  · intro ⟨ha, hne⟩
+-    have hmem := hp.mem_iff.mpr (List.mem_range.mpr ha)
+-    simpa [hne] using hmem
+-
+-end Partition.SprintFamily
+ end SuperpermutationUpperBound

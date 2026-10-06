@@ -826,10 +826,12 @@ rows only and transports to every n, so it has a constant of its own. What I can
 
       S(n) <= n! + (n - 1)! + (n - 2)! + (1771/3456 + o(1)) (n - 3)!,     1771/3456 = 0.512442.
 
-  I checked the hypotheses of his argument for this selection by computation and did not prove the argument
-  again for it. The rule that carries the cycles one level up was checked literally on two levels and has no
-  written proof for one kind of walk. The cycles at n = 13 are not built, and 203 is not known to be the least
-  number (the bound is 201). Read it as a statement to be checked and not as a theorem.
+  Since October 6 this is a theorem in Lean, for every n >= 13, built on Pantone's Lean library and stated with
+  his definitions (`proofs/lean/constant/`). His lemma carries the 203 cycles to n = 13, where they become
+  7,875. Two things had to be handled that his selections do not have: loops without a row, and closed
+  trails whose count of full minus short rows is not divisible by k - 2. 203 is not known to be the least
+  number of cycles (the bound is 201), and choosing the cycles again at n = 13 would lower the second
+  constant of the bound for a given n, 25/1152.
 
 X, E and N have rows that do not transport. They say nothing about the constant.
 

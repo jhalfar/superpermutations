@@ -1,0 +1,12 @@
+# Text files keep LF line ends on every system, so that the hashes in SHA256SUMS and in the *.sha256 lists
+# are those of the files as checked out.
+*.lean text eol=lf
+*.py text eol=lf
+*.sh text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.tsv text eol=lf
+*.diff text eol=lf
+*.sha256 text eol=lf
+SHA256SUMS text eol=lf
+lean-toolchain text eol=lf

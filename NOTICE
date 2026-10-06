@@ -23,5 +23,13 @@ tools/recut.c was found independently by Theo H. and by the authors of this repo
 repository (GPL-3.0-or-later) is included here; the programs in tools/, reproduce/, selection/, arrange/ and proofs/
 were written for this repository.
 
+proofs/lean/constant/patches/SuperpermutationUpperBound/Assembly/SupportedStates.lean is a modified copy of the file
+SuperpermutationUpperBound/Assembly/SupportedStates.lean of Jay Pantone's repository
+https://github.com/jaypantone/superperm-upper-43-80 (commit c8fb7ffdd69be1375580710ae11b47a295b1f0f6, Apache License
+2.0). Two changes: one import is replaced by another, and the section Partition.SprintFamily at the end of the file is
+removed. The file says so at its top, and proofs/lean/constant/patches/SupportedStates.diff shows the change. The other
+files of proofs/lean/constant were written for this repository on top of his library; four passages follow his text
+and are named in proofs/lean/constant/README.md.
+
 By Jakub Halfar, with Claude (Opus 5.5) in Claude Code. Jakub Halfar chose the problem and directed the work; Claude
 designed and ran the searches and wrote the code and the text.
