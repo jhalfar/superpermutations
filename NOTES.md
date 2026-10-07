@@ -859,6 +859,33 @@ mine was made without it. The README of that directory says how the bound arises
 All these bounds exceed n! + (n - 1)! + (n - 2)! by a term of order (n - 4)!, while the words exceed it by
 about half of (n - 3)!. For n = 13 the two sides are about 1.18 million letters apart.
 
+## L(7) >= 5,899 in Lean (7 October 2026)
+
+`proofs/lean/n7/` proves that a word over 7 symbols that contains every permutation has at least 5,899 letters.
+The bound before was Justin Lebar's 5,898, and the shortest word known has 5,905 letters.
+
+The proof has two levels. Level 1 is checked by the Lean kernel with the axioms `propext`, `Classical.choice`
+and `Quot.sound`. It derives the bound from twelve finite statements about rows of blocks, and each finite
+statement from an equation that says that a search defined in Lean returns `false`. Level 2 evaluates the
+searches by `native_decide`, in 22 equations and 17 files. They visit 1.10 * 10^11 nodes, which is too much for
+the kernel. So the final theorem `covers_lower_bound_7_native` depends on the three axioms and on 22 axioms that
+`native_decide` records, and for those the Lean compiler, the C compiler of the Lean toolchain, the Lean runtime
+and the library built from `PSearch.lean` are trusted. Lebar's proof has the same footing.
+
+How it goes: a model of standard configurations (one main sequence of rows and components that hang off it),
+proven exact for every k >= 5; an accounting that gives every component a value and a weight; a cut of every
+component at its seams of weight 4 or more; reductions that turn every component into a sequence of chains or a
+ring; one knapsack over tables for chains, sequences and rings. The transform is Hunter and Raudvere's and the
+chains are those of Xiaolong Liu's library, both used unchanged. Lebar's proof is not used.
+
+One run from an empty directory on my machine (Ryzen 9 5950X, Windows 11, Git Bash) with 8 threads: 3 h 21 min
+for `n7/build.sh full`, of which 2 h 52 min are the evaluations (20.2 thread-hours of CPU time), after 67
+minutes for the two libraries and 25 minutes for `lower/build.sh`. The build was run on Windows only.
+
+Not covered: the 22 evaluations are not checked by the kernel; the written proof that the Lean files follow is
+not in the package; the node counts of the three largest searches were counted by a C program only; at n = 6 the
+same tables alone do not reach 872, so the method has no end-to-end check there.
+
 # How the words were checked
 
 Three programs that share no code:

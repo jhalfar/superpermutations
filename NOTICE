@@ -31,7 +31,7 @@ removed. The file says so at its top, and proofs/lean/constant/patches/Supported
 files of proofs/lean/constant were written for this repository on top of his library; four passages follow his text
 and are named in proofs/lean/constant/README.md.
 
-The lower bounds of proofs/lean/lower are proved on top of Xiaolong Liu's preimage-chain library
+The lower bounds of proofs/lean/lower and proofs/lean/n7 are proved on top of Xiaolong Liu's preimage-chain library
 (https://github.com/Haruhiyuki/superpermutations-preimage-chain-lower-bounds) and of the Hunter-Raudvere library
 (https://github.com/urdvr/superpermutations-hunter). Both are used unchanged and are not included here.
 

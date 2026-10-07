@@ -10,6 +10,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 * `constant/build.sh`
 * `lower/build.sh`
+* `n7/build.sh`
 * `n8/build.sh`
 * `words/build.sh`
 * `words/check_word.sh`
@@ -19,7 +20,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 * `.gitattributes` (344 B): keeps LF line ends in text files, so that the hashes hold on every system
 * `MANIFEST.md`: this list
-* `README.md` (23.7 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
+* `README.md` (28.0 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
 * `SHA256SUMS`: SHA-256 of every other file of this directory
 * `lean-toolchain` (25 B): the Lean version, `leanprover/lean4:v4.31.0`
 
@@ -203,6 +204,115 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `lower/tools/s_plan.py` (12.5 KB): generator: one search cut into lemmas for the kernel, states given as paths
 * `lower/tools/s_plan2.py` (16.5 KB): generator: the same with the state of every part written out, for deep searches
 
+## n7/
+
+* `n7/Audit5899.lean` (5.5 KB): level 1 written out: the twelve finite statements unfolded, and the theorem from them
+* `n7/Audit5899Native.lean` (1.9 KB): level 2: the final statement with no definition of this project, and the axioms
+  of both levels
+* `n7/Audit5899Search.lean` (4.9 KB): level 1 from twelve search equations as hypotheses, the conclusion with no
+  definition of this project
+* `n7/AuditN.lean` (13.1 KB): the model of standard configurations written out, and that it is exact in both
+  directions
+* `n7/LowerBounds/DCapacity.lean` (16.0 KB): chain lines and the capacity of a component with end prices,
+  `component_capacity_D`
+* `n7/LowerBounds/DJunction.lean` (19.5 KB): the prices at a junction, `junction_le_D`, and the line inequality
+  `lineD_reduced`
+* `n7/LowerBounds/DSearch.lean` (7.5 KB): an earlier compiled search on numbers; `PSound.lean` uses its arithmetic on
+  codes of words; no imports
+* `n7/LowerBounds/DSound.lean` (33.1 KB): that search is complete; `PSound.lean` uses its lemmas about class indices
+  and marks
+* `n7/LowerBounds/JCoverage.lean` (24.9 KB): junctions: blocks and rotation classes, free junctions, the inequality
+  `budget`
+* `n7/LowerBounds/JEntryTree.lean` (14.0 KB): junctions: the components of a path form a tree by their first vertices,
+  `parentComp`
+* `n7/LowerBounds/JLinks.lean` (16.1 KB): junctions: the cost of a junction is an overlap offset between two
+  components, `theoremL`
+* `n7/LowerBounds/NBlock.lean` (26.9 KB): the model on the level of blocks, `BValid`, `toConfig_valid`
+* `n7/LowerBounds/NConfig.lean` (15.7 KB): the model: rows, hanging components, `NConfig`, `NConfig.Valid`,
+  `NConfig.cost`
+* `n7/LowerBounds/NCore.lean` (24.3 KB): the model: from the data of a path (`JoinData`) to a valid configuration
+* `n7/LowerBounds/NPath.lean` (25.4 KB): the model: the components and junctions of a Hamiltonian path as `JoinData`
+* `n7/LowerBounds/NRules.lean` (13.3 KB): the model: rules of every valid configuration (`free_attachment`,
+  `attachment_cost_one`, `len_le`)
+* `n7/LowerBounds/NT4.lean` (36.2 KB): the model: seams of type T4 are never needed, by surgery on block
+  configurations
+* `n7/LowerBounds/NT4Config.lean` (13.5 KB): the same as a statement about valid configurations, `exists_noT4`
+* `n7/LowerBounds/NTheorem.lean` (5.5 KB): the model, lower direction: `exists_stdConfig`,
+  `covers_length_gt_of_no_stdConfig`
+* `n7/LowerBounds/NUpper.lean` (41.1 KB): the model, upper direction: a valid configuration is a word, `exists_word`,
+  `no_stdConfig_iff`
+* `n7/LowerBounds/PArith.lean` (10.3 KB): the arithmetic on the tables, by `decide +kernel`: `profile_of_family`,
+  `many_chains`, the knapsack `kern`
+* `n7/LowerBounds/PEnc.lean` (13.1 KB): both sets of tables of the engine satisfy `PS.Enc`: `stmt_of_searchA`,
+  `stmt_of_searchB`
+* `n7/LowerBounds/PF0aNative.lean` (1.6 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF0bNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF0cNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF0dNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF0eNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF0fNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF0gNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF0hNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF0iNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF0jNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF1aNative.lean` (1.7 KB): evaluation by `native_decide`: sequences with 1 link of weight 4, one of
+  two ranges of parts
+* `n7/LowerBounds/PF1bNative.lean` (1.7 KB): evaluation by `native_decide`: sequences with 1 link of weight 4, one of
+  two ranges of parts
+* `n7/LowerBounds/PF2Native.lean` (1.6 KB): evaluation by `native_decide`: sequences with 2 links of weight 4
+* `n7/LowerBounds/PF3Native.lean` (1.6 KB): evaluation by `native_decide`: sequences with 3 links of weight 4
+* `n7/LowerBounds/PF45Native.lean` (1.8 KB): evaluation by `native_decide`: sequences with 5 and with 4 links of
+  weight 4
+* `n7/LowerBounds/PFamily.lean` (9.9 KB): families of trails: `family_le_49`, and `family_le_44` for seven or more
+  trails
+* `n7/LowerBounds/PFinal.lean` (9.3 KB): level 1 from search equations: `PS.Covered`, `caps_of_search`,
+  `profiles_of_search`, `covers_5899_of_search`
+* `n7/LowerBounds/PFinalNative.lean` (4.2 KB): level 2: `covers_lower_bound_7_native`, from the 22 evaluated equations
+* `n7/LowerBounds/PGeom.lean` (14.0 KB): rows and their links: extension of a row, merge of two rows, trails, rotation
+  of a list of trails
+* `n7/LowerBounds/PGlue.lean` (6.9 KB): gluing trails through a junction: `path_glue`, `ring_glue`
+* `n7/LowerBounds/PHanging.lean` (14.5 KB): hanging components: the family of a component `famH_spec`, its knapsack
+  item `hanging_item`
+* `n7/LowerBounds/PJunction.lean` (8.9 KB): the two reductions at an attachment as one notion: `junction_extLast`,
+  `junction_extFirst`, `junction_merge`
+* `n7/LowerBounds/PLevels.lean` (23.0 KB): the three rules are complete: shortest counterexample `seqCap_level`,
+  `cycle_lemma`, `ringCap_of_stmt`, `prof_rule`
+* `n7/LowerBounds/PModel.lean` (15.6 KB): the objects of the finite statements: `IsFamily`, `IsPath`, `IsRing`,
+  `ChainCap`, `PathCap`, `RingCap`, `NoProfile`
+* `n7/LowerBounds/PProfNative.lean` (2.3 KB): evaluation by `native_decide`: the five profile searches
+* `n7/LowerBounds/PRingNative.lean` (1.6 KB): evaluation by `native_decide`: rings
+* `n7/LowerBounds/PRules.lean` (29.4 KB): from a search that returns false to the finite statements:
+  `seqCap_of_search`, `ringCapT_of_search`, `noProfileK_of_search`
+* `n7/LowerBounds/PSearch.lean` (15.2 KB): the engine: the search on numbers and tables, `seqSearch`, `ringSearch`,
+  `profSearch`; no imports; compiled to C
+* `n7/LowerBounds/PSeq.lean` (15.6 KB): sequences of rows on words, `PS.IsSeq`, and what a search proves about them,
+  `PS.PStmt`
+* `n7/LowerBounds/PShapes.lean` (13.8 KB): the shapes of a component; the hypotheses `Caps`; `glue_path_bound`,
+  `glue_ring_bound`
+* `n7/LowerBounds/PSmall.lean` (2.4 KB): test: the finite statements on 5 symbols from those searches, by the theorems
+  used for 7
+* `n7/LowerBounds/PSmall6Search.lean` (618 B): test: one search on 6 symbols evaluated by the kernel (7.3 GB of
+  memory); no Mathlib
+* `n7/LowerBounds/PSmallSearch.lean` (2.9 KB): test: nine searches on 5 symbols evaluated by the kernel; no Mathlib
+* `n7/LowerBounds/PSound.lean` (30.7 KB): the engine is complete for every set of tables that satisfies `PS.Enc`:
+  `not_ruleAlong_of_search`
+* `n7/LowerBounds/PTables.lean` (7.0 KB): generated data: the seven tables of the finite statements and four tables
+  for the arithmetic; no imports
+* `n7/LowerBounds/PTestNative.lean` (4.6 KB): test: 27 small searches by `native_decide`, the kernel's nine among them
+  and nine with known answers
+* `n7/LowerBounds/PTheorem.lean` (7.6 KB): level 1: `no_config_134` and `covers_5899_of_caps`, from the finite
+  statements
+* `n7/LowerBounds/PTrails.lean` (13.4 KB): the cut at heavy seams, `cutRows_spec`; at least 720 blocks; the accounting
+  `acc_value`, `acc_weight`
+* `n7/README.md` (23.0 KB): 5,899 for n = 7: the statement, the two levels and what each trusts, the proof, the files,
+  how to build, costs
+* `n7/build.sh` (17.7 KB): builds level 1, the engine and its shared library, runs the evaluations, builds the
+  theorem, checks the axioms
+* `n7/evaluations.txt` (952 B): the 17 evaluation modules: level of the build and the 22 equations they prove by
+  `native_decide`
+* `n7/sources.sha256` (7.6 KB): SHA-256 of the 79 Lean files the final theorem is compiled from (60 here, 17 of
+  `lower/`, 2 of `words/`)
+
 ## n8/
 
 * `n8/.gitattributes` (127 B): keeps LF line ends in `NOTICE.echols`
@@ -239,7 +349,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 ## tools/
 
 * `tools/check_hashes.py` (1.5 KB): compares files with a list of SHA-256 hashes, or writes such a list
-* `tools/common.sh` (7.9 KB): settings and shell functions shared by the two build scripts
+* `tools/common.sh` (8.0 KB): settings and shell functions shared by the two build scripts
 * `tools/order.py` (3.4 KB): build order of Lean modules from their import lines, with a stamp per module
 
 ## words/

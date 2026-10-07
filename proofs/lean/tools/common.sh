@@ -157,7 +157,8 @@ print_axioms() {
 
 # axiom_summary: every "#print axioms" line of the whole build, counted by its list of axioms.  A build of
 # this directory must show the three lists [propext], [propext, Quot.sound] and
-# [propext, Classical.choice, Quot.sound] (or no axioms) and nothing else.
+# [propext, Classical.choice, Quot.sound] (or no axioms) and nothing else, except after n7/build.sh, whose
+# evaluation modules add lists that name the axioms of native_decide.
 axiom_summary() {
   axiom_lines "$BUILD"/logs/*.log \
     | sed "s/.*depends on axioms: //; s/.*does not depend on any axioms/(no axioms)/" | sort | uniq -c

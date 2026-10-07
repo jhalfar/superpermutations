@@ -1,0 +1,22 @@
+# The evaluation modules of LowerBounds/, in the order in which build.sh runs them:
+#     module, level of the build (default or full), the equations it proves by native_decide
+# An equation NAME is the theorem SuperpermLowerBounds.PS.NAME; the axiom that native_decide records for it is
+# SuperpermLowerBounds.PS.NAME._native.native_decide.ax_1_1.  The 22 names are the axioms that the final
+# theorem may depend on besides propext, Classical.choice and Quot.sound.
+PProfNative  default  prof36 prof26 prof34 prof14 prof4
+PF45Native   default  f5 f4
+PF3Native    default  f3
+PRingNative  default  ring
+PF2Native    full     f2
+PF1aNative   full     f1_0
+PF1bNative   full     f1_1
+PF0aNative   full     f0_0
+PF0bNative   full     f0_1
+PF0cNative   full     f0_2
+PF0dNative   full     f0_3
+PF0eNative   full     f0_4
+PF0fNative   full     f0_5
+PF0gNative   full     f0_6
+PF0hNative   full     f0_7
+PF0iNative   full     f0_8
+PF0jNative   full     f0_9
