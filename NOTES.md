@@ -6,7 +6,7 @@ what each step did to each n, what it cost and which tool does it.
 It has two parts. Part one keeps the closed trails of Jay Pantone's words and changes where each one is cut and the
 order of the pieces. That took four days and gave 66 letters at n = 11, 231 at n = 12 and 1,409 at n = 13 below his
 words. Part two changes the closed trails themselves, by other selections inside his construction. That took one
-day and gave 36 more letters at n = 11, 8,175 at n = 12 and 114,095 at n = 13, and at n = 10 a word of
+day and gave 36 more letters at n = 11, 8,175 at n = 12 and 114,264 at n = 13, and at n = 10 a word of
 4,034,855 letters, 18 below rumstd's. Part one is how I got to part two: every pass that polishes the new words
 was written for the old ones.
 
@@ -14,7 +14,7 @@ After the two parts come the things I tried that gave nothing, with the numbers,
 again, then what is known about how much is left and how the words were checked.
 
 The tools are in [`tools/`](tools/README.md). The machine was one desktop: a Ryzen 9 5950X with 16 cores, 32 GB of
-RAM and an RTX 5090. Everything here happened between October 2 and October 6, 2026.
+RAM and an RTX 5090. Everything here happened between October 2 and October 7, 2026.
 
 ## The model
 
@@ -334,7 +334,7 @@ changes. The trade is always the same: fewer closed trails for a larger Q.
 | 12 | blocks solved with rows of other lengths (E) | 3,648 | 182,112 | 7,863 | 522,737,175 |
 | 13 | Pantone's selection | 252,000 | 1,693,441 | 284,016 | 6,747,916,657 |
 | 13 | C transported once | 72,000 | 1,780,800 | 88,844 | 6,747,808,844 |
-| 13 | blocks solved on 12 symbols (N) | 23,808 | 1,818,768 | 44,594 | 6,747,802,562 |
+| 13 | blocks solved on 12 symbols (N) | 23,808 | 1,818,768 | 44,425 | 6,747,802,393 |
 
 "Cuts and joins" is the length of the word minus F3(n) and minus Q. The letters C, E, X and N are my names for
 the selections in this file. Pantone's n = 13 word has one open path besides its closed trails, which is the odd 1 in
@@ -624,7 +624,15 @@ stages, loop moves), 6,747,810,280 (the lift), 6,747,808,844 (three cuts). On th
 cuts), 6,747,805,059 (moves of equal length). On N: 6,747,807,082 (first plan), 6,747,805,084 and 6,747,804,887
 (three cuts), 6,747,804,324, 6,747,803,497 and 6,747,803,439 (moves of equal length),
 6,747,803,080 (the same with other pair lists), 6,747,802,875 (the first lists again, stopped for the release),
-6,747,802,701, 632, 583 and 6,747,802,562 (four more passes, the two lists in turn).
+6,747,802,701, 632, 583 and 6,747,802,562 (four more passes, the two lists in turn), 6,747,802,393 (the order
+of the runs and the cuts chosen again).
+
+For the word of 6,747,802,393 letters an integer programme chose the order of the 5,255 runs of the plan before
+it with the cuts fixed (130 letters), and dynamic programming over all cuts then chose every cut exactly for that
+order (9 letters). Repeating the two steps and integer programmes with a random part of the runs opened gave the
+other 30; the programs for these steps are not in the repository. This plan uses 690 cuts that leave out a
+permutation which occurs a second time elsewhere, where the plan of 6,747,802,562 had none, and 609 of them
+follow a piece cut at a step of weight 2 with overlap 10.
 
 Where the letters below the best word on Pantone's pieces came from, along these lines:
 
@@ -634,7 +642,8 @@ Where the letters below the best word on Pantone's pieces came from, along these
 | segment insertion with three cuts | | | 1,678 | 2,195 |
 | moves of equal length, with three to five cuts | | | 866 | 2,325 |
 | local kicks | | | 220 | |
-| total | 18 | 36 | 8,175 | 114,095 |
+| the order of the runs and the cuts chosen again | | | | 169 |
+| total | 18 | 36 | 8,175 | 114,264 |
 
 For n = 12 (selection E) and n = 13 (selection N) the first row is the first plan against the best word on
 Pantone's pieces, and the other rows are the passes on it. At n = 10 and n = 11 the first plans are longer than the
@@ -782,7 +791,7 @@ trails.
 | 10 | | | at least 4,034,842 | small trails in any number of segments, big trails in one |
 | 10 | | | 4,034,855, the optimum | the groups in 8 runs of six along the chains (the second model of the n = 10 section) |
 | 12 | C | 522,740,635 | at least 522,736,830 | one cut per trail, with cuts between two 2-cycles and dropped duplicates |
-| 11, 12, 13 | X, E, N | 43,930,578, 522,737,175, 6,747,802,562 | none | |
+| 11, 12, 13 | X, E, N | 43,930,578, 522,737,175, 6,747,802,393 | none | |
 
 At n = 10 the word is the optimum of the family of its model, with the limits given in the n = 10 section. From
 one optimal word of each of the 25 splits that reach it I moved every segment of one to four consecutive groups or
@@ -858,7 +867,7 @@ Three programs that share no code:
 2. `tools/delcheck.c`: every permutation occurs and no single letter can be deleted.
 3. Pantone's `literal_check --deletions`: the same two statements.
 
-All three passed on each of the four words. For n = 13 `literal_check` ran under Linux: 20 minutes and about
+All three passed on each of the four words. For n = 13 `literal_check` ran under Linux: 22 minutes and about
 13 GB.
 
 The selections were checked before any word existed: every loop has at most one row, the selection is balanced,

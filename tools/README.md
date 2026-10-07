@@ -155,8 +155,8 @@ runs, each with the same plan and the same word from both. At n = 12 I ran `segi
 it wrote the plans of 522,742,394 and 522,742,408 letters that the working version had written, byte for byte, at
 0.7 GB.
 
-At n = 13 I made two runs with the sources of this release. `trailsearch` rebuilt the word of 6,747,802,562 letters
-from its base word and its plan, with the SHA-256 of the front page, in 4 minutes on one thread and 10 GB.
+At n = 13 I made two runs with the sources of this release. `trailsearch` rebuilt the word of 6,747,802,393 letters
+from its base word and its plan, with the SHA-256 of the front page, in 3 minutes on one thread and 10 GB.
 `segins_gpu` repeated one pass of the runs that made the word, the one from 6,747,803,497 to 6,747,803,439, with
 the same options, the same seed, 10 threads and the card. It wrote the same plan and the same word, byte for byte,
 after the same 97 rounds, in 13 minutes at 18.6 GB. A run with moves of equal length repeats exactly for a seed

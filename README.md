@@ -27,11 +27,11 @@ runs the searches and writes the code and this text.
 | 10 | 4,034,855 | 4,034,873 | rumstd | -18 |
 | 11 | 43,930,578 | 43,930,624 | Theo H. | -46 |
 | 12 | 522,737,175 | 522,745,531 | Theo H. | -8,356 |
-| 13 | 6,747,802,562 | 6,747,918,066 | Jay Pantone | -115,504 |
+| 13 | 6,747,802,393 | 6,747,918,066 | Jay Pantone | -115,673 |
 
 "Before" is the best word of someone else. Theo H.'s two words were made from earlier words of mine. Against
 Pantone's own words of 4,034,889, 43,930,680, 522,745,581 and 6,747,918,066 letters the four words are 34,
-102, 8,406 and 115,504 letters shorter. My own best words on Pantone's closed trails, before the change
+102, 8,406 and 115,673 letters shorter. My own best words on Pantone's closed trails, before the change
 of selection, had 43,930,614, 522,745,350 and 6,747,916,657 letters.
 
 The files are `words/superpermutation-N-LENGTH.txt.xz`, XZ archives with a delta filter of distance n that `xz -d`
@@ -58,7 +58,7 @@ xz -dk words/superpermutation-11-43930578.txt.xz
 
 `delcheck` must print `"missing_permutations":0` and `"coverage_preserving_deletions_count":0`.
 
-All three passed on each of the four words. For n = 13 `literal_check` ran under Linux: 20 minutes and about
+All three passed on each of the four words. For n = 13 `literal_check` ran under Linux: 22 minutes and about
 13 GB.
 
 SHA-256 of the four words:
@@ -66,7 +66,7 @@ SHA-256 of the four words:
     n = 10   09e2c807aea5f0890d257f97d5d447c0235d41df9589caff8899f01d2016f7f6
     n = 11   65ddf4c4a3ebaa69de7bc6be29e0b38ad010055f22ef6abeeffdb4f508176092
     n = 12   97ab1d7c37f1a19f9c9c10d8109382f501da1982f1b66bfa1ddd2511f9149cde
-    n = 13   abe18ff6c25eb7becb05e3009d2245c946fd85e9cb07821baa1d2a7dd7e2f056
+    n = 13   96bf9191a6fe281e6cb4a55eef989e158ab5e1d6e46373c3c7be6adb3dfc272b
 
 ## Rebuilding a word
 
@@ -104,7 +104,7 @@ Part one, on Pantone's closed trails (October 2 to 5):
    which with three cuts is a 3-opt move without reversal. These gave the rest: in all 66, 231 and 1,409 letters
    below Pantone's words.
 
-Part two, other closed trails (October 5 and 6):
+Part two, other closed trails (October 5 to 7):
 
 5. The closed trails come from a selection. Pantone's selection on 8 symbols leaves 48 loops without a row, and at
    every later level each loop above them gives a small closed trail of its own. These loops form 48 blocks that
