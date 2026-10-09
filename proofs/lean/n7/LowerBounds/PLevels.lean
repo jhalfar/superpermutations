@@ -1,7 +1,7 @@
 import LowerBounds.PEnc
 
 /-!
-# The three kinds of rules are complete (`PROOF_5899.md`, section 8), for sequences on words
+# The three kinds of rules are complete (the written proof, section 8), for sequences on words
 
 * `seqCap_level` (8.1): the statement `PStmt` for the rule `seqBad`, `seqKeepN`, `seqKeepS` on the
   levels `lo … hi` gives the cap for sequences with `s` links of weight 4 and at most `hi` holes,

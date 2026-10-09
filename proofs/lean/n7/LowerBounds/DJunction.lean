@@ -4,7 +4,7 @@ import LowerBounds.DCapacity
 /-!
 # Theorem D: the junctions (Lemma D2) and the line inequality (Proposition D3)
 
-`opt/n7/price/PROOFS_PRICE.md`, section 3.  Let `(a, b, c)` be a chain line with `a ≤ b` that is
+the written proof of Theorem D, section 3.  Let `(a, b, c)` be a chain line with `a ≤ b` that is
 *closed*, `c + 2 a ≤ b k`, and `γ = min (b - a) (b k - c - 2 a)` (`gammaD`).
 
 * `junction_le_D` (Lemma D2): at a junction of a `σ²`-reduced Hamiltonian path the price of the

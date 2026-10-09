@@ -1,7 +1,7 @@
 import LowerBounds.NConfig
 
 /-!
-# Rules that hold in every standard configuration (`opt/n7/MODEL.md`, sections 4 and 5)
+# Rules that hold in every standard configuration (the written model, sections 4 and 5)
 
 Consequences of `NConfig.Valid`; no Hamiltonian path occurs.
 

@@ -1,7 +1,7 @@
 import LowerBounds.NUpper
 
 /-!
-Audit file for the exact model of the paper `MODEL.md` (not in this package): Theorems W and N
+Audit file for the exact model of the written model (not in this package): Theorems W and N
 (lower direction), Lemma T4, Theorems U and S (upper direction).  In the style of `AuditD.lean`: every definition that the final statement
 uses is written out and Lean is asked to accept that it is the definition of the development
 (`rfl`), and then the theorems of the development are accepted as proofs of the statements
@@ -12,7 +12,7 @@ Both directions are stated, so the model is exact: the least length of a superpe
 
 Lower direction: for `k ≥ 5`, every Hamiltonian path `P` in the graph of permutations gives a
 valid standard configuration `c` (a kernel and hanging components, as in section 4 of
-`MODEL.md`) with `HPV(k) + cost(c) ≤ (k-2)! + wt(P) + k`; the defect of the paper is
+the written model) with `HPV(k) + cost(c) ≤ (k-2)! + wt(P) + k`; the defect of the paper is
 `cost(c) - (k-2)!`.  Hence: if no valid standard configuration has cost at most `(k-2)! + D`,
 every word over `k` symbols that contains all permutations has at least `HPV(k) + D + 1`
 letters.
@@ -66,7 +66,7 @@ example (P : HPath k) : P.IsHamiltonian = ∀ v : Vtx k, v ∈ P.verts := rfl
 
 example (P : HPath k) : P.wtP = (P.verts.zipWith (ew k) P.verts.tail).sum := rfl
 
-/-! ### The model (`MODEL.md`, section 4) -/
+/-! ### The model (the written model, section 4) -/
 
 /-- A row `(e, ℓ)` has the block entries `e, τ₂ e, …, τ₂^(ℓ-1) e`; its exit is `σ⁻¹` of the
 last of them. -/

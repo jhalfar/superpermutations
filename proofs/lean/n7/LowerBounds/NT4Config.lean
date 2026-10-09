@@ -1,7 +1,7 @@
 import LowerBounds.NT4
 
 /-!
-# Lemma T4 of `opt/n7/MODEL.md` as a statement about standard configurations
+# Lemma T4 of the written model as a statement about standard configurations
 
 `NConfig.Valid.exists_noT4` (`k ≥ 3`): every valid standard configuration can be changed into a
 valid standard configuration without seams of type T4 whose cost is not larger.  This is the

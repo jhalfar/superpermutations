@@ -2,7 +2,7 @@ import LowerBounds.PHanging
 
 /-!
 # No valid configuration of cost at most 134 on 7 symbols, from the finite statements
-(`opt/lb/lean/PROOF_5899.md`, sections 5 and 7)
+(the written proof, sections 5 and 7)
 
 * `famC c`: the family of trails of a configuration; `famC_trailFam`, `famC_num` (Lemma FAM).
 * `no_config_134`: given the caps `Caps` (F0–F5, FR) and the profile statements `Profiles` (FF),

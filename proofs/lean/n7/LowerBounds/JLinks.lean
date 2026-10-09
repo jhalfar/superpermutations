@@ -3,7 +3,7 @@ import LowerBounds.TheoremA
 /-!
 # Theorem L: a junction is a short route
 
-`opt/lb/joint/th/PROOFS_JOINT.md`, section 7.  A preimage chain `s` of a Hamiltonian path `P` has
+the written proofs of the joint conditions, section 7.  A preimage chain `s` of a Hamiltonian path `P` has
 slots `v₁, …, v_j ∈ S(P)` (`actualChainRoute s`), a source component `B` and, if it does not end
 at `P.last`, a target component `A`.  `P` contains the edges `head B → σ v₁`, `v_i → σ v_{i+1}`
 and `v_j → tail A`, of weights `w₀, …, w_j`.  The junction cost is
@@ -238,7 +238,7 @@ theorem link_offset (hk : 2 ≤ k) (hP : P.IsHamiltonian)
   rw [hnum]
   exact h
 
-/-- **Theorem L** (`PROOFS_JOINT.md`, section 7), for `k ≥ 2` and every Hamiltonian path:
+/-- **Theorem L** (the written proofs of the joint conditions, section 7), for `k ≥ 2` and every Hamiltonian path:
 `ew (head B(s)) (tail A(s)) ≤ c(s) + 3`. -/
 theorem theoremL (hk : 2 ≤ k) (hP : P.IsHamiltonian)
     (s : {v : Vtx k // v ∈ chainStarts P}) (hs : actualChainRouteEnd s ≠ P.last) :

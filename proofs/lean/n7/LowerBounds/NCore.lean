@@ -1,7 +1,7 @@
 import LowerBounds.NConfig
 
 /-!
-# Theorem N of `opt/n7/MODEL.md`, the combinatorial part
+# Theorem N of the written model, the combinatorial part
 
 No Hamiltonian path occurs in this file.  `JoinData k X` is what the canonical certificate of a
 path provides (`NPath.lean` constructs it): a finite set `X` of components, each with a line of

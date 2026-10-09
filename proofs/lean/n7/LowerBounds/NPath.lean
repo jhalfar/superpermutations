@@ -2,7 +2,7 @@ import LowerBounds.NCore
 import LowerBounds.DJunction
 
 /-!
-# Theorem W of `opt/n7/MODEL.md`: the canonical certificate of a Hamiltonian path as `JoinData`
+# Theorem W of the written model: the canonical certificate of a Hamiltonian path as `JoinData`
 
 For a Hamiltonian path `P` on `k ≥ 5` symbols, `joinData hk hP : JoinData k (ActualComponent P)`
 collects what Theorem N needs from the canonical certificate `cert(P)`:
@@ -31,7 +31,7 @@ variable {k : ℕ}
 
 /-! ### Words -/
 
-/-- The offset of a route up to the rotation of its last slot (Lemma 2 of `MODEL.md`, first
+/-- The offset of a route up to the rotation of its last slot (Lemma 2 of the written model, first
 statement): from `h` an offset `a` leads to `σ v₁`; then the route passes `v₁, …, v_j`. -/
 theorem offset_route_sigma (hk : 1 ≤ k) (h : Vtx k) :
     ∀ (L : List (Vtx k)) (hne : L ≠ []) (a : ℕ), 1 ≤ a →

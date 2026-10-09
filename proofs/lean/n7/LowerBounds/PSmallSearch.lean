@@ -8,8 +8,8 @@ The searches of `PSearch.lean` with arithmetic tables (`…SearchA`) on 5 symbol
 evaluation runs in a small process; `PSmall.lean` uses the equations, and `PTestNative.lean`
 repeats them with the compiled search.
 
-The tables are the true caps on 5 symbols for a few holes (found with the compiled search,
-`scratchP/PK1.lean`): chains `3 3 5 5`, sequences with one link of weight 4 `6 6`, rings
+The tables are the true caps on 5 symbols for a few holes (found with the compiled search):
+chains `3 3 5 5`, sequences with one link of weight 4 `6 6`, rings
 `3 1 2 1`.  Every kind of rule is evaluated once with the true table (answer `false`) and once
 with an entry lowered or a profile that exists (answer `true`).
 -/

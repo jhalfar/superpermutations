@@ -2,7 +2,7 @@ import LowerBounds.NPath
 import Superperm.Bridge
 
 /-!
-# Theorems W and N of `opt/n7/MODEL.md`: every Hamiltonian path gives a standard configuration
+# Theorems W and N of the written model: every Hamiltonian path gives a standard configuration
 
 `k ≥ 5`.  For a Hamiltonian path `P` of weight `wt(P)`, with `D(P) = wt(P) + k - HPV(k)`:
 

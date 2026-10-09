@@ -223,10 +223,9 @@ them tables lowered by one, where the search has to return `true`.
 
 The Lean files are the files of my working directory, unchanged but for one comment line of `AuditN.lean`
 and the line ends of 13 files.
-Their comments name notes and scripts that are not in this package: `PROOF_5899.md` (the proof on paper;
-the section above follows it), `MODEL.md`, `PROOFS_JOINT.md` and `PROOFS_PRICE.md` (the papers behind the
-model and the junctions), `scratchP/pproto.c` (the C program of the node counts), `p_native_build.sh` and
-`build/native/PSearch.dll` (here: step 2 of `build.sh` and the library in the build directory).
+Their comments speak of "the written proof" and "the written model": notes of mine that are not in this
+package. The section above follows the written proof. The C program that the comments cite for the node
+counts is not in the package either.
 
 `PTables.lean` is data. Its first three definitions are the tables M, P_1 to P_5 and PR; the other four are
 helper tables for the arithmetic, computed from the first three by dynamic programming. The numbers of the
@@ -293,6 +292,10 @@ modules of the libraries, `Challenge`, the two files of the bridge and 17 files 
 step 3 that loads all of Mathlib commits about 8 GB of memory. `PFinalNative` took 268 s of the 291 s
 because it was the first module to load Mathlib after the evaluations.
 
+These times are from the run of 7 October 2026. On 9 October the comments of 50 Lean files were changed and no
+code. `build.sh full` then compiled the 40 modules it found changed and ran all evaluations again, over the
+same build directory, in 2 h 13 min with 8 threads and other programs running beside it.
+
 The evaluations, in the order in which they ended:
 
 | module | search | threads | by the clock | CPU time |
@@ -329,7 +332,7 @@ library is 0.5 MB and the C file 0.6 MB.
 ## What is not covered
 
 * The evaluations are not checked by the kernel. This is level 2, as said at the top.
-* The paper `MODEL.md` and the proof on paper are not part of this package; the Lean files are the proof.
+* The written model and the written proof are not part of this package; the Lean files are the proof.
 * The node counts of F2, F1 and F0 were not counted again in Lean, only by the C program. The proof does
   not use any count.
 * The method has no end-to-end check at n = 6, where the tables alone do not reach the known value 872.

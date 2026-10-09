@@ -2,7 +2,7 @@ import LowerBounds.NBlock
 import LowerBounds.NTheorem
 
 /-!
-# Lemma T4 of `opt/n7/MODEL.md`: seams of type T4 are never needed
+# Lemma T4 of the written model: seams of type T4 are never needed
 
 A link of a line is of type T4 if it goes from the block entered at `g` to the block entered at
 `σ x`, `x = τ₂ g`: into the class that would continue the row, one step late.

@@ -2,7 +2,7 @@ import LowerBounds.NRules
 import LowerBounds.SBridge
 
 /-!
-# Objects of the finite statements for 5,899 (`opt/lb/lean/PROOF_5899.md`, section 1)
+# Objects of the finite statements for 5,899 (the written proof, section 1)
 
 * `IsFamily k F`: a list of model chains (`IsModelChain`, `SModelDef.lean`) whose blocks lie in
   pairwise different rotation classes.

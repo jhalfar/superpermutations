@@ -5,7 +5,7 @@ import PreimageChain.ComponentEndpointRigidity
 /-!
 # Theorem T: the entry tree
 
-`opt/lb/joint/th/PROOFS_JOINT.md`, section 3.  `P` is any Hamiltonian path and `k ≥ 2`; no
+the written proofs of the joint conditions, section 3.  `P` is any Hamiltonian path and `k ≥ 2`; no
 reducedness is used anywhere in this file.
 
 * `tail_first` (Theorem T (1)): the tail of a component of `F P` is the first vertex of that

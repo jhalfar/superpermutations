@@ -2,7 +2,7 @@ import LowerBounds.PGeom
 import LowerBounds.NUpper
 
 /-!
-# Trails of a list of rows, and the accounting (`opt/lb/lean/PROOF_5899.md`, sections 3 and 4)
+# Trails of a list of rows, and the accounting (the written proof, sections 3 and 4)
 
 * `cutRows R`: the list of rows `R` cut at its seams of weight other than 3; `cutRows_spec`:
   the pieces are trails, there are at most `rX R + 1` of them (`rX` = the seam excess

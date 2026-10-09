@@ -2,7 +2,7 @@ import LowerBounds.SBridgePath
 import PreimageChain.WeightTwo
 
 /-!
-# Standard configurations (the row-level model of `opt/n7/MODEL.md`, section 4)
+# Standard configurations (the row-level model of the written model, section 4)
 
 Vertices are permutation words (`Vtx k`), `ew` is the overlap weight, `sigma` the rotation,
 `sigmaInv` its inverse and `tau2V v = tau (sigmaInv v)` the map `τ₂` (`x M m ↦ M x m`: rotate
@@ -110,7 +110,7 @@ block of the sequence of rows `R'`. -/
 def HangsOn (c : NConfig k) (R R' : List (NRow k)) : Prop :=
   ∃ H ∈ c.hanging, H.rows = R ∧ ∃ e ∈ rowsEntries R', ((H.slot : Vtx k) : List ℕ) ~r (e : List ℕ)
 
-/-- A standard configuration (`MODEL.md`, section 4, "The row-level model"). -/
+/-- A standard configuration (the written model, section 4, "The row-level model"). -/
 structure Valid (c : NConfig k) : Prop where
   kernel_ne : c.kernel ≠ []
   hanging_ne : ∀ H ∈ c.hanging, H.rows ≠ []

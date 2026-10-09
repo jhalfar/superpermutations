@@ -1,7 +1,7 @@
 import LowerBounds.NT4Config
 
 /-!
-# Theorems U and S of `opt/n7/MODEL.md`: a standard configuration is a superpermutation
+# Theorems U and S of the written model: a standard configuration is a superpermutation
 
 The upper direction.  `k ≥ 3`.
 
@@ -919,7 +919,7 @@ theorem NConfig.Valid.exists_word (hk : 3 ≤ k) {c : NConfig k} (hv : c.Valid) 
   rw [List.length_map, hlen]
   exact h
 
-/-- **Exactness of the model** (`MODEL.md`, Corollary "exactness at row level").  No valid
+/-- **Exactness of the model** (the written model, Corollary "exactness at row level").  No valid
 standard configuration has defect at most `D` if and only if every covering word has at least
 `HPV(k) + D + 1` letters. -/
 theorem no_stdConfig_iff (hk : 5 ≤ k) (D : ℕ) :

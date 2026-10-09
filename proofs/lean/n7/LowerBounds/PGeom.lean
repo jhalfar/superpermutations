@@ -1,7 +1,7 @@
 import LowerBounds.PModel
 
 /-!
-# Geometry of rows for 5,899 (`opt/lb/lean/PROOF_5899.md`, section 2)
+# Geometry of rows for 5,899 (the written proof, section 2)
 
 Statements about words, rows and lists of rows; no configuration occurs.
 

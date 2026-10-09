@@ -1,5 +1,5 @@
 /-!
-# The search for the finite statements of 5,899 (`PROOF_5899.md`, section 8)
+# The search for the finite statements of 5,899 (the written proof, section 8)
 
 One depth-first search over sequences of rows on `k` symbols with pairwise different classes.  The
 first row starts at the word `1 2 … k`.  A row is followed by a row that starts

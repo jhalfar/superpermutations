@@ -6,7 +6,7 @@ import LowerBounds.PFinalNative
 **Trusted here.**  `covers_lower_bound_7_native` depends on the three standard axioms and on one
 axiom per evaluated search equation (22 of them, recorded by `native_decide` in the files
 `LowerBounds/P*Native.lean`): the Lean compiler, the C compiler of the Lean toolchain, the Lean
-runtime and the library `build/native/PSearch.dll` are trusted for these equations.  Everything
+runtime and the library built from `PSearch.lean` are trusted for these equations.  Everything
 else is checked by the kernel (`Audit5899.lean`, `Audit5899Search.lean`).
 
 The statement below uses no definition of this project.

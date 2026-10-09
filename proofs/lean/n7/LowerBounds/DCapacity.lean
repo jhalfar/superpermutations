@@ -3,7 +3,7 @@ import LowerBounds.ComponentCapacityC
 /-!
 # Theorem D: chain lines and the capacity of a component (Lemma D1)
 
-`opt/n7/price/PROOFS_PRICE.md`, section 3.  A *chain line* is a triple `(a, b, c)` such that every
+the written proof of Theorem D, section 3.  A *chain line* is a triple `(a, b, c)` such that every
 exact weight-three chain `Q` of every strongly exitless path on `k` symbols has
 `a r(Q) ≤ b δ(Q) + c` (`r` pieces, total deficit `δ`): `ChainLine k a b c`.
 

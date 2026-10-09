@@ -3,7 +3,7 @@ import LowerBounds.PTrails
 
 /-!
 # Families of trails: Lemma FF and the bound on the number of trails
-(`opt/lb/lean/PROOF_5899.md`, section 5)
+(the written proof, section 5)
 
 For a list of trails `S` on 7 symbols, `prs S` is the list of the pairs `(holes, rows)` of its
 trails, so that `T5899.lE (prs S) = Σ (rows - holes - 5)` and `T5899.lW (prs S) = Σ (holes + 6)`.

@@ -3,7 +3,7 @@ import LowerBounds.PModel
 import LowerBounds.SModel
 
 /-!
-# From search equations to the finite statements (`PROOF_5899.md`, section 8)
+# From search equations to the finite statements (the written proof, section 8)
 
 The objects of `PModel.lean` (chains, families, paths and rings of vertices) are read as
 sequences of rows on words (`PS.IsSeq`, `PSeq.lean`): `PS.seqOf kd F` writes the chains of `F` one

@@ -30,7 +30,7 @@ in the files `P*Native.lean` (one axiom per evaluated equation; `#print axioms` 
 
 These equations were not checked by the kernel.  They were computed by the compiled search of
 `PSearch.lean` (Lean compiler, the C compiler of the Lean toolchain, the Lean runtime, the library
-`build/native/PSearch.dll`).  Everything else is checked by the kernel: this file only applies
+built from it).  Everything else is checked by the kernel: this file only applies
 `covers_5899_of_search` (`PFinal.lean`, axioms `propext`, `Classical.choice`, `Quot.sound`) to the
 equations.
 

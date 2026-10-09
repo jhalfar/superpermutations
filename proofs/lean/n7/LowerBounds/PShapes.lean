@@ -2,7 +2,7 @@ import LowerBounds.PGlue
 import LowerBounds.PFamily
 
 /-!
-# The components of a valid configuration (`opt/lb/lean/PROOF_5899.md`, sections 4 and 6)
+# The components of a valid configuration (the written proof, sections 4 and 6)
 
 * `RowsOK`: what the rows of a component of a valid configuration satisfy; `seg_num`: value and
   weight of a list of rows against those of its trails.

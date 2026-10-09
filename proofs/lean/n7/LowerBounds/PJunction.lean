@@ -1,7 +1,7 @@
 import LowerBounds.PGeom
 
 /-!
-# Junctions (`opt/lb/lean/PROOF_5899.md`, section 2, (G4) and (G5), in one form)
+# Junctions (the written proof, section 2, (G4) and (G5), in one form)
 
 A trail that ends with the row `r` and a trail that begins with the row `r₁` are glued through a
 *junction* `J`: a short trail that begins like `r`, ends like `r₁` and whose blocks are those of

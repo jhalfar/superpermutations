@@ -246,20 +246,20 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `n7/LowerBounds/PEnc.lean` (13.1 KB): both sets of tables of the engine satisfy `PS.Enc`: `stmt_of_searchA`,
   `stmt_of_searchB`
 * `n7/LowerBounds/PF0aNative.lean` (1.6 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
-* `n7/LowerBounds/PF0bNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
-* `n7/LowerBounds/PF0cNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
-* `n7/LowerBounds/PF0dNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
-* `n7/LowerBounds/PF0eNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
-* `n7/LowerBounds/PF0fNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
-* `n7/LowerBounds/PF0gNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
-* `n7/LowerBounds/PF0hNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
-* `n7/LowerBounds/PF0iNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
-* `n7/LowerBounds/PF0jNative.lean` (1.7 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
-* `n7/LowerBounds/PF1aNative.lean` (1.7 KB): evaluation by `native_decide`: sequences with 1 link of weight 4, one of
+* `n7/LowerBounds/PF0bNative.lean` (1.6 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF0cNative.lean` (1.6 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF0dNative.lean` (1.6 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF0eNative.lean` (1.6 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF0fNative.lean` (1.6 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF0gNative.lean` (1.6 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF0hNative.lean` (1.6 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF0iNative.lean` (1.6 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF0jNative.lean` (1.6 KB): evaluation by `native_decide`: chains, one of ten ranges of parts
+* `n7/LowerBounds/PF1aNative.lean` (1.6 KB): evaluation by `native_decide`: sequences with 1 link of weight 4, one of
   two ranges of parts
-* `n7/LowerBounds/PF1bNative.lean` (1.7 KB): evaluation by `native_decide`: sequences with 1 link of weight 4, one of
+* `n7/LowerBounds/PF1bNative.lean` (1.6 KB): evaluation by `native_decide`: sequences with 1 link of weight 4, one of
   two ranges of parts
-* `n7/LowerBounds/PF2Native.lean` (1.6 KB): evaluation by `native_decide`: sequences with 2 links of weight 4
+* `n7/LowerBounds/PF2Native.lean` (1.5 KB): evaluation by `native_decide`: sequences with 2 links of weight 4
 * `n7/LowerBounds/PF3Native.lean` (1.6 KB): evaluation by `native_decide`: sequences with 3 links of weight 4
 * `n7/LowerBounds/PF45Native.lean` (1.8 KB): evaluation by `native_decide`: sequences with 5 and with 4 links of
   weight 4
@@ -267,11 +267,11 @@ them, by `python3` or by Lean, and needs mode 644 only.
   trails
 * `n7/LowerBounds/PFinal.lean` (9.3 KB): level 1 from search equations: `PS.Covered`, `caps_of_search`,
   `profiles_of_search`, `covers_5899_of_search`
-* `n7/LowerBounds/PFinalNative.lean` (4.2 KB): level 2: `covers_lower_bound_7_native`, from the 22 evaluated equations
+* `n7/LowerBounds/PFinalNative.lean` (4.1 KB): level 2: `covers_lower_bound_7_native`, from the 22 evaluated equations
 * `n7/LowerBounds/PGeom.lean` (14.0 KB): rows and their links: extension of a row, merge of two rows, trails, rotation
   of a list of trails
 * `n7/LowerBounds/PGlue.lean` (6.9 KB): gluing trails through a junction: `path_glue`, `ring_glue`
-* `n7/LowerBounds/PHanging.lean` (14.5 KB): hanging components: the family of a component `famH_spec`, its knapsack
+* `n7/LowerBounds/PHanging.lean` (14.4 KB): hanging components: the family of a component `famH_spec`, its knapsack
   item `hanging_item`
 * `n7/LowerBounds/PJunction.lean` (8.9 KB): the two reductions at an attachment as one notion: `junction_extLast`,
   `junction_extFirst`, `junction_merge`
@@ -302,9 +302,9 @@ them, by `python3` or by Lean, and needs mode 644 only.
   and nine with known answers
 * `n7/LowerBounds/PTheorem.lean` (7.6 KB): level 1: `no_config_134` and `covers_5899_of_caps`, from the finite
   statements
-* `n7/LowerBounds/PTrails.lean` (13.4 KB): the cut at heavy seams, `cutRows_spec`; at least 720 blocks; the accounting
+* `n7/LowerBounds/PTrails.lean` (13.3 KB): the cut at heavy seams, `cutRows_spec`; at least 720 blocks; the accounting
   `acc_value`, `acc_weight`
-* `n7/README.md` (23.0 KB): 5,899 for n = 7: the statement, the two levels and what each trusts, the proof, the files,
+* `n7/README.md` (23.1 KB): 5,899 for n = 7: the statement, the two levels and what each trusts, the proof, the files,
   how to build, costs
 * `n7/build.sh` (17.7 KB): builds level 1, the engine and its shared library, runs the evaluations, builds the
   theorem, checks the axioms

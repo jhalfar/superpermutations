@@ -5,7 +5,7 @@ import LowerBounds.LemmaZC
 /-!
 # Theorem J1: coverage and the budget
 
-`opt/lb/joint/th/PROOFS_JOINT.md`, section 2.  Not the whole of J1 is here: the link graph on
+the written proofs of the joint conditions, section 2.  Not the whole of J1 is here: the link graph on
 rows and its trails are not defined in Lean.  What is proved:
 
 * (a) on the level of blocks: `exists_block` (every vertex lies in the rotation class of the

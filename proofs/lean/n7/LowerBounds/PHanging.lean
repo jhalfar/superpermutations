@@ -1,7 +1,7 @@
 import LowerBounds.PShapes
 
 /-!
-# Hanging components (`opt/lb/lean/PROOF_5899.md`, sections 4, 6 and 7)
+# Hanging components (the written proof, sections 4, 6 and 7)
 
 * `famH H`: the trails that a hanging component contributes to the family of the configuration:
   its trails (paid attachment); its trails with the last one glued to the first (free

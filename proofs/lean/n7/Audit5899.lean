@@ -5,7 +5,7 @@ import LowerBounds.PTheorem
 
 What is proved in the files `LowerBounds/P*.lean` up to `PTheorem.lean`, with the statement about
 words written out and the hypotheses (the finite statements F0–F5, FR, FF of
-`opt/lb/lean/PROOF_5899.md`) unfolded to the objects they speak about.
+the written proof) unfolded to the objects they speak about.
 
 Level 2 (the evaluation of the finite statements) is not part of this file yet.
 -/

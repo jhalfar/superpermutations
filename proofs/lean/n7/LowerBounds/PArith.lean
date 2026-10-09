@@ -2,7 +2,7 @@ import LowerBounds.PTables
 import LowerBounds.PModel
 
 /-!
-# The arithmetic for 5,899 (`opt/lb/lean/PROOF_5899.md`, sections 5 and 7)
+# The arithmetic for 5,899 (the written proof, sections 5 and 7)
 
 Everything here is about the tables of `PTables.lean` and lists of numbers; no rows, no words.
 The closed statements about the tables are proved by `decide +kernel` (evaluation in the kernel,

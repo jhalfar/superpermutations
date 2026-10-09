@@ -1,7 +1,7 @@
 import LowerBounds.PJunction
 
 /-!
-# Gluing through a junction (`opt/lb/lean/PROOF_5899.md`, section 6)
+# Gluing through a junction (the written proof, section 6)
 
 * `path_glue`, `path_glue_links`, `path_glue_length`, `path_glue_holes`: in a list of trails
   `first, mid…, last` the last trail is glued to the first one through a junction; the result

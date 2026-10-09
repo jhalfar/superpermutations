@@ -6,7 +6,7 @@ import LowerBounds.PTables
 
 **Trusted here:** every theorem of this file is proved by `native_decide` and so trusts the Lean
 compiler, the C compiler of the Lean toolchain and the loaded library
-`build/native/PSearch.dll` (compiled from `PSearch.lean` by `p_native_build.sh`).  Nothing else
+the library that step 2 of `build.sh` builds from `PSearch.lean`.  Nothing else
 in the development imports this file.
 
 1. The nine statements that `PSmallSearch.lean` proves by the kernel (`decide +kernel`), again by
@@ -53,7 +53,7 @@ theorem b9 : profSearch 5 M5 [(5, 2), (1, 0)] 30 0 1 0 1 = true := by native_dec
 
 /-! ### Known results on 6 and 7 symbols -/
 
-/-- The true chain caps on 6 symbols for 0 to 20 holes (`scratchP/caps6.txt`). -/
+/-- The true chain caps on 6 symbols for 0 to 20 holes. -/
 def M6 : List Nat := [4, 4, 7, 7, 10, 10, 11, 13, 14, 15, 16, 17, 19, 19, 22, 22, 22, 24, 24, 25, 25]
 
 /-- The chain table on 6 symbols passes, in 7 parts (with the arithmetic tables as well). -/
