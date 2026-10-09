@@ -886,6 +886,21 @@ Not covered: the 22 evaluations are not checked by the kernel; the written proof
 not in the package; the node counts of the three largest searches were counted by a C program only; at n = 6 the
 same tables alone do not reach 872, so the method has no end-to-end check there.
 
+# Words of record length (9 October 2026)
+
+`ties/` collects the words of the shortest known length for n = 7, 8, 9 and 10 and sorts them into classes: two
+words are in one class if renaming the symbols, reversing the word or both turns one into the other. There are
+98 classes of 5,905 letters, 26 published classes of 46,181, one of 408,731 and two of 4,034,855.
+
+For n = 7, 12 classes are Andrei Teodorescu's (two words of 18 August 2026 and ten variants of 24 August), one
+is Theo H.'s and 85 are new here. They come from a search that replaces the first or the last chain of the
+kernel of Teodorescu's words. All 98 lie within 217 steps of one another and fall into 8 groups.
+
+For n = 8 the published words are closed paths: the last permutation joins the first with a step of weight 3, so
+every cut at a step of weight 3 is a word of the same length. Pantone's path gives 408 classes, the path of Theo
+H.'s word 26 gives 814, and his word 16 is one more. Of his 25 classes, 23 are rotations of Pantone's path. For
+n = 10 his second word is my word with three steps exchanged.
+
 # How the words were checked
 
 Three programs that share no code:

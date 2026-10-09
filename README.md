@@ -154,6 +154,7 @@ Part two, other closed trails (October 5 to 7):
 | `words/` | the words, and the earlier ones I published |
 | `words/n8/` | the word on 8 symbols: how it is built, its selection and slice order, what is known about it, and in [`tools/`](words/n8/tools/README.md) one program that rebuilds it, prices any selection and runs the search that found it |
 | `recipes/n14/` | the word on 14 symbols as a recipe: generator, plan, checker, with its own [`README`](recipes/n14/README.md) |
+| `ties/` | the words of record length for n = 7 to 10 that I know, with their own [`README`](ties/README.md): 85 new words of 5,905 letters, which published words are the same word, and the 1,223 words of 46,181 letters that rotating three closed paths gives |
 | `reproduce/` | selection, plan, generator and checker for each of the four words, with [`REPRODUCE.md`](reproduce/REPRODUCE.md) |
 | `selection/` | how the selections were found: the block searches and their checkers |
 | `arrange/` | how a set of closed trails becomes a first plan: chains, the order of the chains, the lift from n = 12 to n = 13, the n = 10 construction, the bounds |
