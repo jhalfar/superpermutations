@@ -34,6 +34,10 @@ runs the searches and writes the code and this text.
 | 11 | 43,930,578 | 43,930,624 | Theo H. | -46 |
 | 12 | 522,737,175 | 522,745,531 | Theo H. | -8,356 |
 | 13 | 6,747,802,393 | 6,747,918,066 | Jay Pantone | -115,673 |
+| 14 | 93,904,804,425 | 93,904,804,516 | William Echols | -91 |
+
+The word on 14 symbols would take 94 GB, so it is published as a recipe in [`recipes/n14/`](recipes/n14/README.md):
+a generator, a plan of 83 KB and a checker, as William Echols did with his words.
 
 "Before" is the best word of someone else. Theo H.'s two words were made from earlier words of mine. Against
 Pantone's own words of 4,034,889, 43,930,680, 522,745,581 and 6,747,918,066 letters the four words are 34,
@@ -133,6 +137,7 @@ Part two, other closed trails (October 5 to 7):
 | path | content |
 |---|---|
 | `words/` | the four words, and the earlier ones I published |
+| `recipes/n14/` | the word on 14 symbols as a recipe: generator, plan, checker, with its own [`README`](recipes/n14/README.md) |
 | `reproduce/` | selection, plan, generator and checker for each of the four words, with [`REPRODUCE.md`](reproduce/REPRODUCE.md) |
 | `selection/` | how the selections were found: the block searches and their checkers |
 | `arrange/` | how a set of closed trails becomes a first plan: chains, the order of the chains, the lift from n = 12 to n = 13, the n = 10 construction, the bounds |
