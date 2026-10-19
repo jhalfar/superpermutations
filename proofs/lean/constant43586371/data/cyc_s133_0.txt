@@ -1,0 +1,2 @@
+# connector cycles with z = H for the walk trails of block s133_0.txt on n = 18 symbols
+HC01F23456789AB

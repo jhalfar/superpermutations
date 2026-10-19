@@ -1,0 +1,7 @@
+# connector cycles with z = C for the walk trails of block blocks/t_b73_dw_0.txt on n = 13 symbols
+C568012374
+C680123745
+C601273458
+C701283456
+C801293456
+C495601823

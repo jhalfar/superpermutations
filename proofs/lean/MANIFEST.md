@@ -8,7 +8,11 @@ directory from public input files; the build scripts write these files again and
 These files should have the executable bit (mode 755) in the repository. Everything else is read by
 them, by `python3` or by Lean, and needs mode 644 only.
 
+* `asym/build.sh`
 * `constant/build.sh`
+* `constant305989/build.sh`
+* `constant43586371/build.sh`
+* `constant61937/build.sh`
 * `lower/build.sh`
 * `n7/build.sh`
 * `n8/build.sh`
@@ -20,7 +24,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 * `.gitattributes` (344 B): keeps LF line ends in text files, so that the hashes hold on every system
 * `MANIFEST.md`: this list
-* `README.md` (28.0 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
+* `README.md` (28.6 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
 * `SHA256SUMS`: SHA-256 of every other file of this directory
 * `lean-toolchain` (25 B): the Lean version, `leanprover/lean4:v4.31.0`
 
@@ -129,6 +133,772 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `constant/patches/SuperpermutationUpperBound/Assembly/SupportedStates.lean` (3.2 KB): patched copy of Pantone's file
   of that name (Apache License 2.0): one import changed, one section removed
 * `constant/patches/SupportedStates.diff` (2.4 KB): the same change as a unified diff against his file
+
+## constant305989/
+
+* `constant305989/README.md` (7.8 KB): the block step, the theorems, the files, how to build, the axiom audit
+* `constant305989/SuperpermutationUpperBound305989/AllSizes.lean` (9.1 KB): the level on k + 12 symbols for every k;
+  `Cert.word_ledger`
+* `constant305989/SuperpermutationUpperBound305989/AllSizesB.lean` (8.3 KB): the level on k + 16 symbols for every k;
+  `word_ledgerB`
+* `constant305989/SuperpermutationUpperBound305989/BlockB.lean` (22.4 KB): the block lemma: `above3`, the inventory of
+  repeated walks, `BlockData`, `BlockOK`, the block above every loop
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Big00.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Big01.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Big02.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Big03.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Big04.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Big05.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Big06.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Big07.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Big08.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Big09.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Big10.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Big11.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Big12.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Big13.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/BlockCert.lean` (1.5 KB): generated: the block
+  certificate (data, checks, pointers, assembly)
+* `constant305989/SuperpermutationUpperBound305989/Certificate/BlockChecks.lean` (2.0 KB): generated: the block
+  certificate (data, checks, pointers, assembly)
+* `constant305989/SuperpermutationUpperBound305989/Certificate/BlockData.lean` (69.8 KB): generated: the block
+  certificate (data, checks, pointers, assembly)
+* `constant305989/SuperpermutationUpperBound305989/Certificate/BlockPorts16a.lean` (3.1 KB): generated: the block
+  certificate (data, checks, pointers, assembly)
+* `constant305989/SuperpermutationUpperBound305989/Certificate/BlockPorts16b.lean` (3.1 KB): generated: the block
+  certificate (data, checks, pointers, assembly)
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Cert.lean` (10.4 KB): generated: `Certificate.cert :
+  Cert`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Checks.lean` (10.9 KB): the decidable checks (`WalkOK`,
+  `GroupOK`, `BigOK`, `smallPortsB`, ...) and their soundness
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Chunks9.lean` (156.6 KB): generated: the rows of the two
+  trails in chunks of 64
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Circles.lean` (5.9 KB): generated: the 155 connector
+  cycles on 12 symbols that the long trails use, with their checks
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Complete9.lean` (2.0 KB): generated: the completeness
+  check on 9 symbols assembled
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Complete9_1.lean` (6.6 KB): generated: one seventh of the
+  completeness check on 9 symbols
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Complete9_2.lean` (6.6 KB): generated: one seventh of the
+  completeness check on 9 symbols
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Complete9_3.lean` (6.7 KB): generated: one seventh of the
+  completeness check on 9 symbols
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Complete9_4.lean` (6.7 KB): generated: one seventh of the
+  completeness check on 9 symbols
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Complete9_5.lean` (6.7 KB): generated: one seventh of the
+  completeness check on 9 symbols
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Complete9_6.lean` (6.7 KB): generated: one seventh of the
+  completeness check on 9 symbols
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Complete9_7.lean` (6.7 KB): generated: one seventh of the
+  completeness check on 9 symbols
+* `constant305989/SuperpermutationUpperBound305989/Certificate/D9.lean` (7.9 KB): generated: the 336 2-loops without a
+  row on 9 symbols
+* `constant305989/SuperpermutationUpperBound305989/Certificate/GCircles13.lean` (8.9 KB): generated: the 288 connector
+  cycles on 13 symbols that cover the short walks of the groups
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Groups.lean` (7.2 KB): generated: the 48 groups assembled
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Groups00.lean` (138.8 KB): generated: six of the 48
+  groups (trails, loops without a row), `GroupOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Groups01.lean` (138.8 KB): generated: six of the 48
+  groups (trails, loops without a row), `GroupOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Groups02.lean` (138.8 KB): generated: six of the 48
+  groups (trails, loops without a row), `GroupOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Groups03.lean` (138.8 KB): generated: six of the 48
+  groups (trails, loops without a row), `GroupOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Groups04.lean` (138.8 KB): generated: six of the 48
+  groups (trails, loops without a row), `GroupOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Groups05.lean` (138.8 KB): generated: six of the 48
+  groups (trails, loops without a row), `GroupOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Groups06.lean` (138.8 KB): generated: six of the 48
+  groups (trails, loops without a row), `GroupOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Groups07.lean` (138.8 KB): generated: six of the 48
+  groups (trails, loops without a row), `GroupOK`
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Small00.lean` (5.6 KB): generated: pointers of the group
+  cycles for the short walks (1,440 in all over eight files)
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Small01.lean` (5.7 KB): generated: pointers of the group
+  cycles for the short walks (1,440 in all over eight files)
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Small02.lean` (5.7 KB): generated: pointers of the group
+  cycles for the short walks (1,440 in all over eight files)
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Small03.lean` (5.9 KB): generated: pointers of the group
+  cycles for the short walks (1,440 in all over eight files)
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Small04.lean` (5.9 KB): generated: pointers of the group
+  cycles for the short walks (1,440 in all over eight files)
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Small05.lean` (5.9 KB): generated: pointers of the group
+  cycles for the short walks (1,440 in all over eight files)
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Small06.lean` (5.9 KB): generated: pointers of the group
+  cycles for the short walks (1,440 in all over eight files)
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Small07.lean` (5.9 KB): generated: pointers of the group
+  cycles for the short walks (1,440 in all over eight files)
+* `constant305989/SuperpermutationUpperBound305989/Certificate/WalkA.lean` (71.7 KB): generated: one of the two closed
+  trails on 9 symbols, with its checks
+* `constant305989/SuperpermutationUpperBound305989/Certificate/WalkB.lean` (76.2 KB): generated: one of the two closed
+  trails on 9 symbols, with its checks
+* `constant305989/SuperpermutationUpperBound305989/Certificate/Walks9.lean` (1.3 KB): generated: the two trails as a
+  level
+* `constant305989/SuperpermutationUpperBound305989/Certificate/modules.txt` (375 B): generated: the generated modules in
+  the order in which they are written
+* `constant305989/SuperpermutationUpperBound305989/CorollariesB.lean` (3.1 KB): `finite_305989`, `finiteInteger_305989`,
+  `hasWord_sixteen_B`, `hasWord_seventeen_B`
+* `constant305989/SuperpermutationUpperBound305989/Fifteen.lean` (16.1 KB): the level on 15 symbols: core walks and the
+  block above each of the 6,048 loops; the counts
+* `constant305989/SuperpermutationUpperBound305989/GenericBoundsB.lean` (11.2 KB): the rational bound and the epsilon
+  argument with 305989/604800 and 23333/2217600
+* `constant305989/SuperpermutationUpperBound305989/Hybrid.lean` (14.7 KB): the certificate as a structure (`Cert`, with
+  `gcircles` and `smallPorts`); the levels on 10, 11 and 12 symbols
+* `constant305989/SuperpermutationUpperBound305989/Levels.lean` (14.2 KB): a level as a list of closed trails;
+  transport, completion, cycle cover of a level
+* `constant305989/SuperpermutationUpperBound305989/MainB.lean` (3.1 KB): `finite_bound16` and `eventual_bound16`
+* `constant305989/SuperpermutationUpperBound305989/Relabel.lean` (11.9 KB): relabelling lemma for transport, completion,
+  ports, charts and cycle covers; `relab d0 d`
+* `constant305989/SuperpermutationUpperBound305989/Repeat.lean` (6.1 KB): a closed trail written m times, its transport
+  and inventory
+* `constant305989/SuperpermutationUpperBound305989/Thirteen.lean` (9.4 KB): the counts, the 7,731 connector cycles and
+  the word on 13 symbols
+* `constant305989/SuperpermutationUpperBound305989/WordOfLevel.lean` (6.1 KB): `word_of_level`: one completion and the
+  connector cycles give a word with its ledger
+* `constant305989/block_checks_body.lean` (1.1 KB): the text of `BlockChecks.lean` after its header, read by
+  `gen_blockB.py`
+* `constant305989/build.sh` (4.3 KB): builds the whole development from sources and prints the axioms
+* `constant305989/data/cyc_s103_old2_0.txt` (145 B): the connector cycles of the block on 15 symbols (checked by
+  `gen_blockB.py` only)
+* `constant305989/data/cyc_t_s103_old2_0_n16.txt` (459 B): the 26 connector cycles of the block on 16 symbols
+* `constant305989/data/s103_old2_0.txt` (21.5 KB): the block on 14 symbols: closed walks and loops without a row, lines
+  `x T`
+* `constant305989/gen_blockB.py` (12.2 KB): writes the five generated `Block*` certificate files from the three files in
+  `data/`
+* `constant305989/gen_cert.py` (24.4 KB): writes the generated certificate files shared with `constant61937` from the
+  two public input files
+
+## constant43586371/
+
+* `constant43586371/PROOF.md` (11.7 KB): the limit theorem on paper: construction, lemmas, bounds
+* `constant43586371/PROOF_R.md` (8.6 KB): the family R'(m) of blocks at every level, on paper
+* `constant43586371/README.md` (17.0 KB): the nested block levels, the theorems, the files, how to build, the axiom
+  audit
+* `constant43586371/REFEREE.md` (13.6 KB): report of an independent check of the limit theorem
+* `constant43586371/SuperpermutationUpperBound43586371/AllSizes.lean` (9.1 KB): the level on k + 12 symbols for every k;
+  `Cert.word_ledger`
+* `constant43586371/SuperpermutationUpperBound43586371/AllSizesG.lean` (8.6 KB): a closed level to every size; counts as
+  ratios to factorials; the word with the finite-bound ledger
+* `constant43586371/SuperpermutationUpperBound43586371/BlockG.lean` (26.7 KB): the block lemma with the frame as a
+  parameter: `BlockData`, `BlockOK`, `BlockPorts`, `BlockCert`, the block above every loop
+* `constant43586371/SuperpermutationUpperBound43586371/BlockUp.lean` (7.2 KB): the block lemma with the connector cycles
+  chosen one level up (`BlockCertUp`)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Big00.lean` (3.5 KB): generated: cycle pointers for
+  eight of the 112 long trails, `BigOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Big01.lean` (3.5 KB): generated: cycle pointers for
+  eight of the 112 long trails, `BigOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Big02.lean` (3.5 KB): generated: cycle pointers for
+  eight of the 112 long trails, `BigOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Big03.lean` (3.5 KB): generated: cycle pointers for
+  eight of the 112 long trails, `BigOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Big04.lean` (3.5 KB): generated: cycle pointers for
+  eight of the 112 long trails, `BigOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Big05.lean` (3.5 KB): generated: cycle pointers for
+  eight of the 112 long trails, `BigOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Big06.lean` (3.5 KB): generated: cycle pointers for
+  eight of the 112 long trails, `BigOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Big07.lean` (3.5 KB): generated: cycle pointers for
+  eight of the 112 long trails, `BigOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Big08.lean` (3.5 KB): generated: cycle pointers for
+  eight of the 112 long trails, `BigOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Big09.lean` (3.5 KB): generated: cycle pointers for
+  eight of the 112 long trails, `BigOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Big10.lean` (3.5 KB): generated: cycle pointers for
+  eight of the 112 long trails, `BigOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Big11.lean` (3.5 KB): generated: cycle pointers for
+  eight of the 112 long trails, `BigOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Big12.lean` (3.5 KB): generated: cycle pointers for
+  eight of the 112 long trails, `BigOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Big13.lean` (3.5 KB): generated: cycle pointers for
+  eight of the 112 long trails, `BigOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockB73.lean` (1.7 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockB73Cover.lean` (5.1 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockB73Data.lean` (20.2 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockB73Up0.lean` (1.7 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockB73Walks.lean` (1.9 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockD73.lean` (1.7 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockD73Cover.lean` (5.1 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockD73Data.lean` (21.9 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockD73Up0.lean` (1.5 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockD73Walks.lean` (2.1 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS103.lean` (2.1 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS103Cover.lean` (11.5 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS103Data.lean` (68.5 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS103Up0.lean` (2.2 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS103Up1.lean` (2.2 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS103Up2.lean` (2.3 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS103Up3.lean` (1.7 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS103Walks.lean` (2.8 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS133.lean` (1.4 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS133Cover.lean` (23.5 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS133Data.lean` (162.2 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS133Ports.lean` (3.7 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS133U.lean` (3.2 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS133UCyc.lean` (1.6 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS133UUp0_0.lean` (1.2 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS133UUp0_1.lean` (1.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS133UUp1_0.lean` (1.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS133UUp1_1.lean` (1.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS133UUp2_0.lean` (1.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS133UUp2_1.lean` (1.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS133UUp3_0.lean` (1.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS133UUp3_1.lean` (1.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS133UUp4_0.lean` (1.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS133UUp4_1.lean` (1.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS133Walks.lean` (2.4 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163.lean` (1.4 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover.lean` (3.2 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover0.lean` (3.6 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover1.lean` (3.7 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover10.lean` (3.7 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover11.lean` (3.7 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover12.lean` (3.7 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover13.lean` (3.8 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover14.lean` (3.8 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover15.lean` (3.8 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover16.lean` (2.1 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover2.lean` (3.7 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover3.lean` (3.7 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover4.lean` (3.7 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover5.lean` (3.7 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover6.lean` (3.7 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover7.lean` (3.7 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover8.lean` (3.7 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Cover9.lean` (3.6 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Data.lean` (333.2 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Ports.lean` (8.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163U.lean` (2.7 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163UCyc.lean` (3.5 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163UUp0.lean` (1.9 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163UUp1.lean` (1.9 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163UUp10.lean` (2.1 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163UUp11.lean` (2.1 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163UUp2.lean` (2.0 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163UUp3.lean` (1.9 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163UUp4.lean` (2.0 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163UUp5.lean` (2.0 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163UUp6.lean` (2.0 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163UUp7.lean` (2.0 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163UUp8.lean` (2.0 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163UUp9.lean` (2.0 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockS163Walks.lean` (3.6 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW103.lean` (1.4 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW103Cover.lean` (11.6 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW103Data.lean` (67.0 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW103Ports.lean` (3.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW103U.lean` (2.0 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW103UCover.lean` (11.6 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW103UData.lean` (67.6 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW103UUp0.lean` (2.2 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW103UUp1.lean` (2.2 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW103UUp2.lean` (2.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW103UWalks.lean` (2.6 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW103Walks.lean` (2.4 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW133.lean` (1.4 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW133Cover.lean` (23.7 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW133Data.lean` (161.1 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW133Ports.lean` (3.2 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW133U.lean` (2.8 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW133UCyc.lean` (1.4 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW133UUp0_0.lean` (1.2 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW133UUp0_1.lean` (1.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW133UUp1_0.lean` (1.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW133UUp1_1.lean` (1.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW133UUp2_0.lean` (1.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW133UUp2_1.lean` (1.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW133UUp3_0.lean` (1.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW133UUp3_1.lean` (1.3 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockW133Walks.lean` (2.2 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockX103.lean` (1.4 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockX103Cover.lean` (11.4 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockX103Data.lean` (65.2 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockX103Ports.lean` (3.8 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockX103U.lean` (2.0 KB): generated: a part of the
+  certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockX103UCover.lean` (11.5 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockX103UData.lean` (65.8 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockX103UUp0.lean` (2.2 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockX103UUp1.lean` (2.2 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockX103UUp2.lean` (2.2 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockX103UWalks.lean` (2.8 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/BlockX103Walks.lean` (2.6 KB): generated: a part of
+  the certificate of one block (data, walks, cover, cycle pointers, assembly)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Cert.lean` (10.4 KB): generated: `Certificate.cert :
+  Cert`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Checks.lean` (10.9 KB): the decidable checks
+  (`WalkOK`, `GroupOK`, `BigOK`, `smallPortsB`, ...) and their soundness
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Chunks9.lean` (156.6 KB): generated: the rows of the
+  two trails in chunks of 64
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Circles.lean` (5.9 KB): generated: the 155 connector
+  cycles on 12 symbols that the long trails use, with their checks
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Complete9.lean` (2.1 KB): generated: the completeness
+  check on 9 symbols assembled
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Complete9_1.lean` (6.6 KB): generated: one seventh of
+  the completeness check on 9 symbols
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Complete9_2.lean` (6.7 KB): generated: one seventh of
+  the completeness check on 9 symbols
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Complete9_3.lean` (6.7 KB): generated: one seventh of
+  the completeness check on 9 symbols
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Complete9_4.lean` (6.7 KB): generated: one seventh of
+  the completeness check on 9 symbols
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Complete9_5.lean` (6.7 KB): generated: one seventh of
+  the completeness check on 9 symbols
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Complete9_6.lean` (6.7 KB): generated: one seventh of
+  the completeness check on 9 symbols
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Complete9_7.lean` (6.7 KB): generated: one seventh of
+  the completeness check on 9 symbols
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/D9.lean` (7.9 KB): generated: the 336 2-loops without
+  a row on 9 symbols
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/GCircles13.lean` (8.9 KB): generated: the 288
+  connector cycles on 13 symbols that cover the short walks of the groups
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Groups.lean` (7.3 KB): generated: the 48 groups
+  assembled
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Groups00.lean` (138.8 KB): generated: six of the 48
+  groups (trails, loops without a row), `GroupOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Groups01.lean` (138.8 KB): generated: six of the 48
+  groups (trails, loops without a row), `GroupOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Groups02.lean` (138.8 KB): generated: six of the 48
+  groups (trails, loops without a row), `GroupOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Groups03.lean` (138.8 KB): generated: six of the 48
+  groups (trails, loops without a row), `GroupOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Groups04.lean` (138.8 KB): generated: six of the 48
+  groups (trails, loops without a row), `GroupOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Groups05.lean` (138.8 KB): generated: six of the 48
+  groups (trails, loops without a row), `GroupOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Groups06.lean` (138.8 KB): generated: six of the 48
+  groups (trails, loops without a row), `GroupOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Groups07.lean` (138.8 KB): generated: six of the 48
+  groups (trails, loops without a row), `GroupOK`
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Small00.lean` (5.6 KB): generated: pointers of the
+  group cycles for the short walks (1,440 in all over eight files)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Small01.lean` (5.7 KB): generated: pointers of the
+  group cycles for the short walks (1,440 in all over eight files)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Small02.lean` (5.7 KB): generated: pointers of the
+  group cycles for the short walks (1,440 in all over eight files)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Small03.lean` (5.9 KB): generated: pointers of the
+  group cycles for the short walks (1,440 in all over eight files)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Small04.lean` (5.9 KB): generated: pointers of the
+  group cycles for the short walks (1,440 in all over eight files)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Small05.lean` (5.9 KB): generated: pointers of the
+  group cycles for the short walks (1,440 in all over eight files)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Small06.lean` (5.9 KB): generated: pointers of the
+  group cycles for the short walks (1,440 in all over eight files)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Small07.lean` (5.9 KB): generated: pointers of the
+  group cycles for the short walks (1,440 in all over eight files)
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/WalkA.lean` (71.8 KB): generated: one of the two
+  closed trails on 9 symbols, with its checks
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/WalkB.lean` (76.2 KB): generated: one of the two
+  closed trails on 9 symbols, with its checks
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/Walks9.lean` (1.3 KB): generated: the two trails as a
+  level
+* `constant43586371/SuperpermutationUpperBound43586371/Certificate/modules.txt` (375 B): generated: the generated
+  modules in the order in which they are written
+* `constant43586371/SuperpermutationUpperBound43586371/CorollariesC.lean` (3.2 KB): the bound in the shape of
+  `Finite`/`FiniteInteger` and two `HasWord` values, for one of the eight constants
+* `constant43586371/SuperpermutationUpperBound43586371/CorollariesD.lean` (3.2 KB): the bound in the shape of
+  `Finite`/`FiniteInteger` and two `HasWord` values, for one of the eight constants
+* `constant43586371/SuperpermutationUpperBound43586371/CorollariesE.lean` (3.2 KB): the bound in the shape of
+  `Finite`/`FiniteInteger` and two `HasWord` values, for one of the eight constants
+* `constant43586371/SuperpermutationUpperBound43586371/CorollariesF.lean` (3.2 KB): the bound in the shape of
+  `Finite`/`FiniteInteger` and two `HasWord` values, for one of the eight constants
+* `constant43586371/SuperpermutationUpperBound43586371/CorollariesG.lean` (3.3 KB): the bound in the shape of
+  `Finite`/`FiniteInteger` and two `HasWord` values, for one of the eight constants
+* `constant43586371/SuperpermutationUpperBound43586371/CorollariesH.lean` (3.2 KB): the bound in the shape of
+  `Finite`/`FiniteInteger` and two `HasWord` values, for one of the eight constants
+* `constant43586371/SuperpermutationUpperBound43586371/CorollariesI.lean` (3.1 KB): the bound in the shape of
+  `Finite`/`FiniteInteger` and two `HasWord` values, for one of the eight constants
+* `constant43586371/SuperpermutationUpperBound43586371/CorollariesJ.lean` (3.3 KB): the bound in the shape of
+  `Finite`/`FiniteInteger` and two `HasWord` values, for one of the eight constants
+* `constant43586371/SuperpermutationUpperBound43586371/GenericBoundsC.lean` (11.4 KB): the rational bound and the
+  epsilon argument with the constants of this level
+* `constant43586371/SuperpermutationUpperBound43586371/GenericBoundsD.lean` (11.4 KB): the rational bound and the
+  epsilon argument with the constants of this level
+* `constant43586371/SuperpermutationUpperBound43586371/GenericBoundsE.lean` (11.6 KB): the rational bound and the
+  epsilon argument with the constants of this level
+* `constant43586371/SuperpermutationUpperBound43586371/GenericBoundsF.lean` (11.4 KB): the rational bound and the
+  epsilon argument with the constants of this level
+* `constant43586371/SuperpermutationUpperBound43586371/GenericBoundsG.lean` (11.5 KB): the rational bound and the
+  epsilon argument with the constants of this level
+* `constant43586371/SuperpermutationUpperBound43586371/GenericBoundsH.lean` (11.4 KB): the rational bound and the
+  epsilon argument with the constants of this level
+* `constant43586371/SuperpermutationUpperBound43586371/GenericBoundsI.lean` (11.3 KB): the rational bound and the
+  epsilon argument with the constants of this level
+* `constant43586371/SuperpermutationUpperBound43586371/GenericBoundsJ.lean` (11.6 KB): the rational bound and the
+  epsilon argument with the constants of this level
+* `constant43586371/SuperpermutationUpperBound43586371/Hybrid.lean` (14.7 KB): the certificate as a structure (`Cert`,
+  with `gcircles` and `smallPorts`); the levels on 10, 11 and 12 symbols
+* `constant43586371/SuperpermutationUpperBound43586371/Levels.lean` (14.2 KB): a level as a list of closed trails;
+  transport, completion, cycle cover of a level
+* `constant43586371/SuperpermutationUpperBound43586371/MainC.lean` (3.0 KB): `finite_bound…` and `eventual_bound…` of
+  one of the eight constants
+* `constant43586371/SuperpermutationUpperBound43586371/MainD.lean` (3.0 KB): `finite_bound…` and `eventual_bound…` of
+  one of the eight constants
+* `constant43586371/SuperpermutationUpperBound43586371/MainE.lean` (3.0 KB): `finite_bound…` and `eventual_bound…` of
+  one of the eight constants
+* `constant43586371/SuperpermutationUpperBound43586371/MainF.lean` (3.0 KB): `finite_bound…` and `eventual_bound…` of
+  one of the eight constants
+* `constant43586371/SuperpermutationUpperBound43586371/MainG.lean` (3.0 KB): `finite_bound…` and `eventual_bound…` of
+  one of the eight constants
+* `constant43586371/SuperpermutationUpperBound43586371/MainH.lean` (3.0 KB): `finite_bound…` and `eventual_bound…` of
+  one of the eight constants
+* `constant43586371/SuperpermutationUpperBound43586371/MainI.lean` (2.9 KB): `finite_bound…` and `eventual_bound…` of
+  one of the eight constants
+* `constant43586371/SuperpermutationUpperBound43586371/MainJ.lean` (3.0 KB): `finite_bound…` and `eventual_bound…` of
+  one of the eight constants
+* `constant43586371/SuperpermutationUpperBound43586371/Nested2.lean` (3.0 KB): two block levels: the counts and
+  `word_ledgerC`
+* `constant43586371/SuperpermutationUpperBound43586371/Nested2b.lean` (2.6 KB): two block levels with other blocks or
+  cycles one level up: the counts and `word_ledger`
+* `constant43586371/SuperpermutationUpperBound43586371/Nested2c.lean` (2.4 KB): two block levels with other blocks or
+  cycles one level up: the counts and `word_ledger`
+* `constant43586371/SuperpermutationUpperBound43586371/Nested3.lean` (3.3 KB): three block levels: the counts and
+  `word_ledgerD`
+* `constant43586371/SuperpermutationUpperBound43586371/Nested3b.lean` (2.5 KB): three block levels with cycles one level
+  up: the counts and `word_ledger`
+* `constant43586371/SuperpermutationUpperBound43586371/NestedN1.lean` (2.5 KB): no selection, then blocks: the counts
+  and `word_ledger`
+* `constant43586371/SuperpermutationUpperBound43586371/NestedN2.lean` (2.6 KB): no selection, then blocks: the counts
+  and `word_ledger`
+* `constant43586371/SuperpermutationUpperBound43586371/NestedN3.lean` (2.8 KB): no selection, then blocks: the counts
+  and `word_ledger`
+* `constant43586371/SuperpermutationUpperBound43586371/NoSeed.lean` (3.9 KB): `Stage.noSeed`: a level with no selection,
+  the pending loops are all arrangements
+* `constant43586371/SuperpermutationUpperBound43586371/PortsSplit.lean` (2.0 KB): the cycle pointers of a trail split
+  into parts
+* `constant43586371/SuperpermutationUpperBound43586371/Relabel.lean` (11.9 KB): relabelling lemma for transport,
+  completion, ports, charts and cycle covers; `relab d0 d`
+* `constant43586371/SuperpermutationUpperBound43586371/Repeat.lean` (6.1 KB): a closed trail written m times, its
+  transport and inventory
+* `constant43586371/SuperpermutationUpperBound43586371/Stage.lean` (20.4 KB): `Stage`, `Stage.advance`, `Stage.close`: a
+  level with pending loops, a block above each, charts for the rest
+* `constant43586371/SuperpermutationUpperBound43586371/Thirteen.lean` (9.4 KB): the counts, the 7,731 connector cycles
+  and the word on 13 symbols
+* `constant43586371/SuperpermutationUpperBound43586371/UniR/RArith.lean` (4.8 KB): the key arithmetic of disjointness
+* `constant43586371/SuperpermutationUpperBound43586371/UniR/RAudit.lean` (436 B): `#print axioms` of 12 theorems of the
+  UniR files
+* `constant43586371/SuperpermutationUpperBound43586371/UniR/RAudit8.lean` (333 B): `#print axioms` of the theorems of
+  `RRate8`
+* `constant43586371/SuperpermutationUpperBound43586371/UniR/RBlock.lean` (8.5 KB): R'(m) as a block for every m >= 7:
+  `rData_ok`, `rData_safe`, `rFam`
+* `constant43586371/SuperpermutationUpperBound43586371/UniR/RBlockRows.lean` (17.3 KB): all rows of the block R'(m) are
+  distinct; the loops of the block; their count
+* `constant43586371/SuperpermutationUpperBound43586371/UniR/RDistinct.lean` (21.1 KB): arrangements and keys of the
+  rows; rows by index
+* `constant43586371/SuperpermutationUpperBound43586371/UniR/RIterate.lean` (5.0 KB): the count recursion `cntR` and the
+  closed levels `closedR`
+* `constant43586371/SuperpermutationUpperBound43586371/UniR/RLoops.lean` (9.3 KB): the loops above the canonical loop
+  for a walk; the descriptors `Dl`, `Setting`
+* `constant43586371/SuperpermutationUpperBound43586371/UniR/RMain.lean` (2.2 KB): `kappaR`, `gammaR`, `finite_boundR`
+* `constant43586371/SuperpermutationUpperBound43586371/UniR/RPorts.lean` (19.7 KB): exit shifts and orbits of the ports;
+  the shared cycles cover every walk
+* `constant43586371/SuperpermutationUpperBound43586371/UniR/RRate.lean` (15.1 KB): the normalised recursion and
+  `rate_R`: length at most F3 n + (9/n)(n-3)! for n >= 2^14
+* `constant43586371/SuperpermutationUpperBound43586371/UniR/RRate8.lean` (15.3 KB): `rate_R8`, `rate_R8_eventually`: F3
+  n + (41/5)(n-4)! for n >= 2^14, and (8 + eps)(n-4)! eventually
+* `constant43586371/SuperpermutationUpperBound43586371/UniR/RWalk.lean` (17.0 KB): the walk W(m, g, roles, s) for every
+  gap g: closed trail, bases, length, charge
+* `constant43586371/SuperpermutationUpperBound43586371/Uniform/Arith.lean` (7.6 KB): the invariants of the counts
+  through one double step
+* `constant43586371/SuperpermutationUpperBound43586371/Uniform/Audit.lean` (631 B): `#print axioms` of 17 lemmas of the
+  limit theorem
+* `constant43586371/SuperpermutationUpperBound43586371/Uniform/Block.lean` (6.9 KB): the walk as a block (`famS`), the
+  empty block
+* `constant43586371/SuperpermutationUpperBound43586371/Uniform/Bounds.lean` (9.9 KB): from a closed level to the finite
+  bound and to the epsilon statement
+* `constant43586371/SuperpermutationUpperBound43586371/Uniform/Canon.lean` (9.9 KB): canonical forms of the loops above
+  the canonical loop; their count
+* `constant43586371/SuperpermutationUpperBound43586371/Uniform/Distinct.lean` (21.6 KB): the rows of the walk are
+  pairwise different loops
+* `constant43586371/SuperpermutationUpperBound43586371/Uniform/Iterate.lean` (10.6 KB): the stages for all levels:
+  `closed_level`
+* `constant43586371/SuperpermutationUpperBound43586371/Uniform/Main.lean` (6.1 KB): `small_coefficient`,
+  `coefficient_tends_to_zero`
+* `constant43586371/SuperpermutationUpperBound43586371/Uniform/Ports.lean` (10.6 KB): exit and orbit of the ports of the
+  walk; the single cycle covers it
+* `constant43586371/SuperpermutationUpperBound43586371/Uniform/Walk.lean` (22.5 KB): the walk W(m): a closed trail, its
+  bases, length and charge
+* `constant43586371/SuperpermutationUpperBound43586371/Uniform/WalkLoops.lean` (14.7 KB): the loops of the walk:
+  injectivity, membership, length
+* `constant43586371/SuperpermutationUpperBound43586371/WordOfLevel.lean` (6.1 KB): `word_of_level`: one completion and
+  the connector cycles give a word with its ledger
+* `constant43586371/bound_R.py` (2.9 KB): prints the exact value of `finite_boundR` at a given n, minimised over its
+  parameters
+* `constant43586371/build.sh` (5.2 KB): builds the whole development from sources and prints the axioms
+* `constant43586371/data/b73_dw_0.txt` (6.8 KB): a block (closed walks and loops without a row), lines `x T`
+* `constant43586371/data/block_7_3_enum14_0.txt` (6.8 KB): a block (closed walks and loops without a row), lines `x T`
+* `constant43586371/data/blocks.names` (69 B): the names of the blocks (or of the constants) that the generators write,
+  in order
+* `constant43586371/data/bounds.names` (17 B): the names of the blocks (or of the constants) that the generators write,
+  in order
+* `constant43586371/data/cyc_s133_0.txt` (104 B): the connector cycles of a block
+* `constant43586371/data/cyc_s163_old2_0_ref.txt` (190 B): the connector cycles of a block
+* `constant43586371/data/cyc_t_b73_dw_0_n13.txt` (165 B): the connector cycles of a block
+* `constant43586371/data/cyc_t_block_7_3_enum14_0_n13.txt` (142 B): the connector cycles of a block
+* `constant43586371/data/cyc_t_s103_old2_0_n16.txt` (459 B): the connector cycles of a block
+* `constant43586371/data/cyc_t_w103_0.4795_0_n16.txt` (389 B): the connector cycles of a block
+* `constant43586371/data/cyc_t_w103_0.6245_1_n16.txt` (389 B): the connector cycles of a block
+* `constant43586371/data/cyc_up_s133_0_alph.txt` (272 B): the connector cycles of a block
+* `constant43586371/data/cyc_up_s163_old2_0_alph.txt` (990 B): the connector cycles of a block
+* `constant43586371/data/cyc_up_w133_0_alph.txt` (203 B): the connector cycles of a block
+* `constant43586371/data/cyc_w103_0.4795_0.txt` (147 B): the connector cycles of a block
+* `constant43586371/data/cyc_w103_0.6245_1.txt` (147 B): the connector cycles of a block
+* `constant43586371/data/cyc_w133_0.txt` (104 B): the connector cycles of a block
+* `constant43586371/data/s103_old2_0.txt` (21.5 KB): a block (closed walks and loops without a row), lines `x T`
+* `constant43586371/data/s133_0.txt` (52.2 KB): a block (closed walks and loops without a row), lines `x T`
+* `constant43586371/data/s163_old2_0.txt` (108.2 KB): a block (closed walks and loops without a row), lines `x T`
+* `constant43586371/data/w103_0.4795_0.txt` (21.5 KB): a block (closed walks and loops without a row), lines `x T`
+* `constant43586371/data/w103_0.6245_1.txt` (21.5 KB): a block (closed walks and loops without a row), lines `x T`
+* `constant43586371/data/w133_0.txt` (52.2 KB): a block (closed walks and loops without a row), lines `x T`
+* `constant43586371/gen_blocks.py` (28.1 KB): writes the `Block*` certificate files of the five nested blocks from the
+  files in `data/`
+* `constant43586371/gen_bounds.py` (11.7 KB): writes `GenericBounds`, `Main` and `Corollaries` (C, D) from the files of
+  `constant305989` by text substitution
+* `constant43586371/gen_cert.py` (23.2 KB): writes the generated certificate files shared with `constant61937` from the
+  two public input files
+* `constant43586371/ledgerC.py` (8.2 KB): the ledger of the nested levels with exact fractions: charge, cycles, charts,
+  finite values
+
+## constant61937/
+
+* `constant61937/README.md` (7.6 KB): the cycle re-choice, the theorems, the files, how to build, the axiom audit
+* `constant61937/SuperpermutationUpperBound61937/AllSizes.lean` (9.1 KB): the level on k + 12 symbols for every k;
+  `Cert.word_ledger`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Big00.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Big01.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Big02.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Big03.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Big04.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Big05.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Big06.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Big07.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Big08.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Big09.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Big10.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Big11.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Big12.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Big13.lean` (3.5 KB): generated: cycle pointers for eight
+  of the 112 long trails, `BigOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Cert.lean` (10.3 KB): generated: `Certificate.cert : Cert`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Checks.lean` (10.9 KB): the decidable checks (`WalkOK`,
+  `GroupOK`, `BigOK`, `smallPortsB`, ...) and their soundness
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Chunks9.lean` (156.6 KB): generated: the rows of the two
+  trails in chunks of 64
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Circles.lean` (5.9 KB): generated: the 155 connector cycles
+  on 12 symbols that the long trails use, with their checks
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Complete9.lean` (2.0 KB): generated: the completeness check
+  on 9 symbols assembled
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Complete9_1.lean` (6.6 KB): generated: one seventh of the
+  completeness check on 9 symbols
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Complete9_2.lean` (6.6 KB): generated: one seventh of the
+  completeness check on 9 symbols
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Complete9_3.lean` (6.7 KB): generated: one seventh of the
+  completeness check on 9 symbols
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Complete9_4.lean` (6.7 KB): generated: one seventh of the
+  completeness check on 9 symbols
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Complete9_5.lean` (6.7 KB): generated: one seventh of the
+  completeness check on 9 symbols
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Complete9_6.lean` (6.7 KB): generated: one seventh of the
+  completeness check on 9 symbols
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Complete9_7.lean` (6.6 KB): generated: one seventh of the
+  completeness check on 9 symbols
+* `constant61937/SuperpermutationUpperBound61937/Certificate/D9.lean` (7.9 KB): generated: the 336 2-loops without a row
+  on 9 symbols
+* `constant61937/SuperpermutationUpperBound61937/Certificate/GCircles13.lean` (8.9 KB): generated: the 288 connector
+  cycles on 13 symbols that cover the short walks of the groups
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Groups.lean` (7.2 KB): generated: the 48 groups assembled
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Groups00.lean` (138.8 KB): generated: six of the 48 groups
+  (trails, loops without a row), `GroupOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Groups01.lean` (138.8 KB): generated: six of the 48 groups
+  (trails, loops without a row), `GroupOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Groups02.lean` (138.8 KB): generated: six of the 48 groups
+  (trails, loops without a row), `GroupOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Groups03.lean` (138.8 KB): generated: six of the 48 groups
+  (trails, loops without a row), `GroupOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Groups04.lean` (138.8 KB): generated: six of the 48 groups
+  (trails, loops without a row), `GroupOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Groups05.lean` (138.8 KB): generated: six of the 48 groups
+  (trails, loops without a row), `GroupOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Groups06.lean` (138.8 KB): generated: six of the 48 groups
+  (trails, loops without a row), `GroupOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Groups07.lean` (138.8 KB): generated: six of the 48 groups
+  (trails, loops without a row), `GroupOK`
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Small00.lean` (5.6 KB): generated: pointers of the group
+  cycles for the short walks (1,440 in all over eight files)
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Small01.lean` (5.7 KB): generated: pointers of the group
+  cycles for the short walks (1,440 in all over eight files)
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Small02.lean` (5.7 KB): generated: pointers of the group
+  cycles for the short walks (1,440 in all over eight files)
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Small03.lean` (5.8 KB): generated: pointers of the group
+  cycles for the short walks (1,440 in all over eight files)
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Small04.lean` (5.8 KB): generated: pointers of the group
+  cycles for the short walks (1,440 in all over eight files)
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Small05.lean` (5.8 KB): generated: pointers of the group
+  cycles for the short walks (1,440 in all over eight files)
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Small06.lean` (5.8 KB): generated: pointers of the group
+  cycles for the short walks (1,440 in all over eight files)
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Small07.lean` (5.8 KB): generated: pointers of the group
+  cycles for the short walks (1,440 in all over eight files)
+* `constant61937/SuperpermutationUpperBound61937/Certificate/WalkA.lean` (71.7 KB): generated: one of the two closed
+  trails on 9 symbols, with its checks
+* `constant61937/SuperpermutationUpperBound61937/Certificate/WalkB.lean` (76.2 KB): generated: one of the two closed
+  trails on 9 symbols, with its checks
+* `constant61937/SuperpermutationUpperBound61937/Certificate/Walks9.lean` (1.3 KB): generated: the two trails as a level
+* `constant61937/SuperpermutationUpperBound61937/Certificate/modules.txt` (375 B): generated: the generated modules in
+  the order in which they are written
+* `constant61937/SuperpermutationUpperBound61937/Corollaries.lean` (3.4 KB): `finite_61937`, `finiteInteger_61937`,
+  `hasWord_fourteen`, `_fifteen`, `_sixteen`
+* `constant61937/SuperpermutationUpperBound61937/GenericBounds.lean` (11.0 KB): the rational bound and the epsilon
+  argument
+* `constant61937/SuperpermutationUpperBound61937/Hybrid.lean` (14.7 KB): the certificate as a structure (`Cert`, with
+  `gcircles` and `smallPorts`); the levels on 10, 11 and 12 symbols
+* `constant61937/SuperpermutationUpperBound61937/Levels.lean` (14.2 KB): a level as a list of closed trails; transport,
+  completion, cycle cover of a level
+* `constant61937/SuperpermutationUpperBound61937/Main.lean` (2.8 KB): `finite_bound` and `eventual_bound`
+* `constant61937/SuperpermutationUpperBound61937/Main13.lean` (1.2 KB): `word_thirteen : HasWord 13 6747847656`
+* `constant61937/SuperpermutationUpperBound61937/Repeat.lean` (6.1 KB): a closed trail written m times, its transport
+  and inventory
+* `constant61937/SuperpermutationUpperBound61937/Thirteen.lean` (9.4 KB): the counts, the 7,731 connector cycles and the
+  word on 13 symbols
+* `constant61937/SuperpermutationUpperBound61937/WordOfLevel.lean` (6.1 KB): `word_of_level`: one completion and the
+  connector cycles give a word with its ledger
+* `constant61937/build.sh` (3.7 KB): builds the whole development from sources and prints the axioms
+* `constant61937/gen_cert.py` (24.4 KB): writes the 47 generated certificate files and `modules.txt` from the two public
+  input files
 
 ## lower/
 

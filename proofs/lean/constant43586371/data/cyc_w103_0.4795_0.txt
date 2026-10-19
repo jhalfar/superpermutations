@@ -1,0 +1,5 @@
+# connector cycles with z = E for the walk trails of block w103_0.4795_0.txt on n = 15 symbols
+E2345678C901
+E9A012345678
+E4567C890123
+E1234A567890

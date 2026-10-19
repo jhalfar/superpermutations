@@ -6,6 +6,11 @@ part. This directory holds Lean 4 proofs about how long such a word has to be. I
 * `constant/` proves that for every n >= 13 there is a superpermutation of length at most
   F3(n) + (1771/3456 + o(1)) (n-3)!, where F3(n) = n! + (n-1)! + (n-2)!. Jay Pantone's theorem has 43/80 in
   place of 1771/3456.
+* `constant61937/`, `constant305989/` and `constant43586371/` prove the same kind of bound with smaller
+  coefficients: 61937/120960 = 0.512045... for every n >= 13, 305989/604800 = 0.505934... for every n >= 16,
+  43586371/86486400 = 0.503967... for every n >= 19 and 21751799/43243200 = 0.503010... for every n >= 22. They are copies of
+  `constant/` with the namespace renamed and a different selection inside Pantone's construction; each has its own
+  README.
 * `words/` proves that explicit words for n = 7, 8, 9, 10 and 11 are superpermutations, by letting the kernel
   check each word, and states these upper bounds together with the lower bounds of Xiaolong Liu's Lean
   project.
@@ -234,6 +239,9 @@ by the kernel. Level 2 supplies the equations. `covers_lower_bound_7_native` dep
 
 * `constant/`: the development for 1771/3456. 11 hand-written Lean files and an audit file, 38 generated
   certificate files, the generator, one patched file of Pantone's library, `build.sh`, a README.
+* `constant61937/`, `constant305989/`, `constant43586371/`: the developments for 61937/120960, 305989/604800 and
+  the last two coefficients, with generators,
+  `build.sh` and a README each. They use the patched file of Pantone's library and the hashes of `constant/`.
 * `words/`: the checkers (the two methods, and three files with the changes for n = 12), the statements for
   n = 7 to 11, the bridge, three generators, three verifiers, `check_word.sh` for a word of your own, the
   generated certificates for n = 7, 8 and 9, lists of hashes, `build.sh`, a README.
@@ -310,6 +318,9 @@ point after them.
 
 ```sh
 constant/build.sh
+constant61937/build.sh      # stands alone, like constant/build.sh
+constant305989/build.sh
+constant43586371/build.sh
 words/build.sh
 lower/build.sh             # or: lower/build.sh full
 words12/build.sh

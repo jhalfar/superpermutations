@@ -1,0 +1,4 @@
+# connector cycles with z = C for the walk trails of block blocks/t_block_7_3_enum14_0.txt on n = 13 symbols
+C2374A5601
+C349560712
+C607123945
