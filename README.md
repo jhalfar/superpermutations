@@ -1,8 +1,9 @@
-# Shorter superpermutations on 10, 11, 12 and 13 symbols
+# Shorter superpermutations on 8 and 10 to 14 symbols
 
 A superpermutation on n symbols is a word that contains every permutation of the symbols as a substring. This
-repository holds four such words, for n = 10, 11, 12 and 13, that are shorter than any other I know of. It also
-holds the inputs from which each word can be rebuilt and the programs that made them.
+repository holds such words for n = 8, 10, 11, 12, 13 and 14 that are shorter than any other I know of. It also
+holds the inputs from which the words for n = 10 to 14 can be rebuilt and the programs that made them. The word
+for n = 8 has its own page, [`n8/`](n8/README.md).
 
 All of it is built with Jay Pantone's
 [43/80 construction](https://github.com/jaypantone/superperm-upper-43-80). Until October 5 I kept the closed
@@ -30,6 +31,7 @@ runs the searches and writes the code and this text.
 
 | n | length now | length before | previous record by | change |
 |---|---:|---:|---|---:|
+| 8 | 46,174 | 46,178 | William Echols | -4 |
 | 10 | 4,034,855 | 4,034,873 | rumstd | -18 |
 | 11 | 43,930,578 | 43,930,624 | Theo H. | -46 |
 | 12 | 522,736,969 | 522,737,173 | Theo H. | -204 |
@@ -47,7 +49,8 @@ group: his re-opening of a stretch of consecutive trails and Theo H.'s moving of
 of selection, had 43,930,614, 522,745,350 and 6,747,916,657 letters.
 
 The files are `words/superpermutation-N-LENGTH.txt.xz`, XZ archives with a delta filter of distance n that `xz -d`
-unpacks: 65 KB, 0.4 MB, 3.9 MB and 45 MB. They use the alphabet `0123456789ABC`, one line plus a line feed, as in
+unpacks: 2 KB for n = 8, then 65 KB, 0.4 MB, 3.9 MB and 45 MB for n = 10 to 13. They use the first n letters of
+`0123456789ABC`, one line plus a line feed, as in
 Pantone's repository. [`SHA256SUMS`](SHA256SUMS) lists the hashes of the archives and of the words inside. In each
 word every permutation occurs and no single letter can be deleted.
 
@@ -70,11 +73,12 @@ xz -dk words/superpermutation-11-43930578.txt.xz
 
 `delcheck` must print `"missing_permutations":0` and `"coverage_preserving_deletions_count":0`.
 
-All three passed on each of the four words. For n = 13 `literal_check` ran under Linux: 22 minutes and about
-13 GB.
+All three passed on each of the words for n = 8 and 10 to 13. For n = 13 `literal_check` ran under Linux: 22
+minutes and about 13 GB.
 
-SHA-256 of the four words:
+SHA-256 of the words (each file is the word and one line feed):
 
+    n = 8    66ec57ba428e0ac1affc5503b86821920f0def27380697317033911a6628cddd
     n = 10   09e2c807aea5f0890d257f97d5d447c0235d41df9589caff8899f01d2016f7f6
     n = 11   65ddf4c4a3ebaa69de7bc6be29e0b38ad010055f22ef6abeeffdb4f508176092
     n = 12   97ab1d7c37f1a19f9c9c10d8109382f501da1982f1b66bfa1ddd2511f9149cde
@@ -138,7 +142,8 @@ Part two, other closed trails (October 5 to 7):
 
 | path | content |
 |---|---|
-| `words/` | the four words, and the earlier ones I published |
+| `words/` | the words, and the earlier ones I published |
+| `n8/` | the word on 8 symbols: how it is built, its selection, what is known about it |
 | `recipes/n14/` | the word on 14 symbols as a recipe: generator, plan, checker, with its own [`README`](recipes/n14/README.md) |
 | `reproduce/` | selection, plan, generator and checker for each of the four words, with [`REPRODUCE.md`](reproduce/REPRODUCE.md) |
 | `selection/` | how the selections were found: the block searches and their checkers |
