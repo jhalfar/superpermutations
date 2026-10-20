@@ -58,8 +58,10 @@ restriction this selection gives 46,182, which is why it went unnoticed. With jo
 
 ## What is known about it
 
-* For this selection no order of its pieces gives a shorter word (integer program, words made of whole pieces).
-* In 115 regions of 50 to 70 loops around it, no change of the rows inside one region gives a shorter word.
+* My integer program finds no shorter order of the pieces of this selection, but it keeps the place where each
+  trail is opened as my join program chose it. With other openings the same selection can give a shorter word.
+* In 115 regions of 50 to 70 loops around it, no change of the rows inside one region gives a shorter word, with
+  the same restriction on the openings.
 * These are local statements. They do not say that 46,174 is the shortest possible. The best lower bound I know is
   46,133 ([`proofs/lean/`](../../proofs/lean/README.md)), so the shortest superpermutation on 8 symbols has between
   46,133 and 46,174 letters.

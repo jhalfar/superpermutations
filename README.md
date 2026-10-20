@@ -81,8 +81,8 @@ SHA-256 of the words (each file is the word and one line feed):
     n = 8    66ec57ba428e0ac1affc5503b86821920f0def27380697317033911a6628cddd
     n = 10   09e2c807aea5f0890d257f97d5d447c0235d41df9589caff8899f01d2016f7f6
     n = 11   65ddf4c4a3ebaa69de7bc6be29e0b38ad010055f22ef6abeeffdb4f508176092
-    n = 12   97ab1d7c37f1a19f9c9c10d8109382f501da1982f1b66bfa1ddd2511f9149cde
-    n = 13   96bf9191a6fe281e6cb4a55eef989e158ab5e1d6e46373c3c7be6adb3dfc272b
+    n = 12   48c00acf991d87a396fb162bc66447d9dba90ddc0ac9dca5ffed89e46597fcba
+    n = 13   be150571be3c6dd6b0aeed2c7c394db7c1c0e5cd4e71be2c4ec9d4ec8b8bcf67
 
 ## Rebuilding a word
 
