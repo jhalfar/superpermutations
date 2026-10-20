@@ -32,16 +32,18 @@ runs the searches and writes the code and this text.
 |---|---:|---:|---|---:|
 | 10 | 4,034,855 | 4,034,873 | rumstd | -18 |
 | 11 | 43,930,578 | 43,930,624 | Theo H. | -46 |
-| 12 | 522,737,175 | 522,745,531 | Theo H. | -8,356 |
-| 13 | 6,747,802,393 | 6,747,918,066 | Jay Pantone | -115,673 |
+| 12 | 522,736,969 | 522,737,173 | Theo H. | -204 |
+| 13 | 6,747,802,319 | 6,747,918,066 | Jay Pantone | -115,747 |
 | 14 | 93,904,804,425 | 93,904,804,516 | William Echols | -91 |
 
 The word on 14 symbols would take 94 GB, so it is published as a recipe in [`recipes/n14/`](recipes/n14/README.md):
 a generator, a plan of 83 KB and a checker, as William Echols did with his words.
 
-"Before" is the best word of someone else. Theo H.'s two words were made from earlier words of mine. Against
-Pantone's own words of 4,034,889, 43,930,680, 522,745,581 and 6,747,918,066 letters the four words are 34,
-102, 8,406 and 115,673 letters shorter. My own best words on Pantone's closed trails, before the change
+"Before" is the best word of someone else. Theo H.'s words for n = 11 and 12 were made from earlier words of mine.
+The word for n = 12 starts from William Echols's 522,737,174, and it and the word for n = 13 use two moves from the
+group: his re-opening of a stretch of consecutive trails and Theo H.'s moving of a trail with a new phase. Against Pantone's own words of
+4,034,889, 43,930,680, 522,745,581 and 6,747,918,066 letters the words for n = 10 to 13 are 34, 102, 8,612 and
+115,747 letters shorter. My own best words on Pantone's closed trails, before the change
 of selection, had 43,930,614, 522,745,350 and 6,747,916,657 letters.
 
 The files are `words/superpermutation-N-LENGTH.txt.xz`, XZ archives with a delta filter of distance n that `xz -d`
