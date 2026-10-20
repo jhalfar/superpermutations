@@ -43,6 +43,11 @@ the second: the first 2,316 letters of the second half are the image of the star
 
 [`selection-46174.txt`](selection-46174.txt) lists the 120 loops with their row lengths (0 = no row).
 
+[`ties/`](ties/) holds seven more words of 46,174 letters, in the same format. With the main word they are eight
+words that are different even up to renaming the symbols and reading backwards. All come from this selection,
+up to symmetry, and all pass `literal_check --deletions`. The file names end with the first 12 hex digits of
+the SHA-256 of the word without the line feed.
+
 ## How it was found
 
 A search packed the loops with closed walks of low cost per loop (a set partition over the cheapest walk types) and
