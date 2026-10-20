@@ -3,7 +3,7 @@
 A superpermutation on n symbols is a word that contains every permutation of the symbols as a substring. This
 repository holds such words for n = 8, 10, 11, 12, 13 and 14 that are shorter than any other I know of. It also
 holds the inputs from which the words for n = 10 to 14 can be rebuilt and the programs that made them. The word
-for n = 8 has its own page, [`n8/`](n8/README.md).
+for n = 8 has its own page, [`words/n8/`](words/n8/README.md).
 
 All of it is built with Jay Pantone's
 [43/80 construction](https://github.com/jaypantone/superperm-upper-43-80). Until October 5 I kept the closed
@@ -143,7 +143,7 @@ Part two, other closed trails (October 5 to 7):
 | path | content |
 |---|---|
 | `words/` | the words, and the earlier ones I published |
-| `n8/` | the word on 8 symbols: how it is built, its selection, what is known about it |
+| `words/n8/` | the word on 8 symbols: how it is built, its selection, what is known about it |
 | `recipes/n14/` | the word on 14 symbols as a recipe: generator, plan, checker, with its own [`README`](recipes/n14/README.md) |
 | `reproduce/` | selection, plan, generator and checker for each of the four words, with [`REPRODUCE.md`](reproduce/REPRODUCE.md) |
 | `selection/` | how the selections were found: the block searches and their checkers |

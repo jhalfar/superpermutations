@@ -1,6 +1,6 @@
 # A superpermutation on 8 symbols with 46,174 letters
 
-[`words/superpermutation-8-46174.txt.xz`](../words/superpermutation-8-46174.txt.xz) holds a word on the symbols
+[`words/superpermutation-8-46174.txt.xz`](../superpermutation-8-46174.txt.xz) holds a word on the symbols
 `01234567` that contains all 40,320 permutations and has 46,174 letters. The shortest word I knew of before had
 46,178 letters, by William Echols (October 2026).
 
@@ -9,7 +9,7 @@ SHA-256 of the word without the line feed: `50d9bb150ffcf28482e4663f9d8a5ff449fa
 
 ## Checking it
 
-The three checkers of the main [`README`](../README.md#checking-a-word) all accept it: every permutation occurs
+The three checkers of the main [`README`](../../README.md#checking-a-word) all accept it: every permutation occurs
 (40,377 permutation windows, 57 of them repeats) and no single letter can be deleted.
 
 ```sh
@@ -61,7 +61,7 @@ restriction this selection gives 46,182, which is why it went unnoticed. With jo
 * For this selection no order of its pieces gives a shorter word (integer program, words made of whole pieces).
 * In 115 regions of 50 to 70 loops around it, no change of the rows inside one region gives a shorter word.
 * These are local statements. They do not say that 46,174 is the shortest possible. The best lower bound I know is
-  46,133 ([`proofs/lean/`](../proofs/lean/README.md)), so the shortest superpermutation on 8 symbols has between
+  46,133 ([`proofs/lean/`](../../proofs/lean/README.md)), so the shortest superpermutation on 8 symbols has between
   46,133 and 46,174 letters.
 
 Echols's word is not copied here.
