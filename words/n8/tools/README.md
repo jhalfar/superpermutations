@@ -64,9 +64,8 @@ of trails minus 1. The program knows two models for the order of the slices.
 In both models the parts of a solution that are not joined to the start of the word are cut away in a loop: solve,
 add a cut for each such part, solve again. Every programme of the loop leaves out some cuts, so its optimum is a
 lower bound on J. When J equals the bound, no word of that model is shorter. That is all the program proves: a word
-of another form can be shorter, and for this selection one is
-([below](#trails-opened-inside-a-slice)). The two models overlap: a word of whole slices in which every trail is one run lies
-in both.
+of another form can be shorter, and for this selection one is ([below](#trails-opened-inside-a-slice)). The two
+models overlap: a word of whole slices in which every trail is one run lies in both.
 
 `--min-overlap K` allows only joins of overlap K or more.
 
@@ -127,11 +126,11 @@ python3 words/n8/tools/n8.py check w46173.txt
 ```
 
 `price --min-weight 2` makes the openings variables of the programme: 5,040 openings instead of 784 for this
-selection. Both words above write every trail in one run and open it at a step of weight 3 or 2 inside a slice
-or between two (I checked their plans), so they are words of this model. With Gurobi the loop reached the lower bound J 24 after about 15 minutes and
-kept it until its time limit of 50 minutes, without writing a word that short itself. Together: if every trail is
-written in one run and opened at a step of weight 2 or 3, no word of this selection is shorter than 46,173. I did
-not run this programme with HiGHS.
+selection. Both words above write every trail in one run and open it at a step of weight 3 or 2 inside a slice or
+between two (I checked their plans), so they are words of this model. With Gurobi the loop reached the lower bound J
+24 after about 15 minutes and kept it until its time limit of 50 minutes, without writing a word that short itself.
+Together: if every trail is written in one run and opened at a step of weight 2 or 3, no word of this selection is
+shorter than 46,173. I did not run this programme with HiGHS.
 
 ## Pricing another selection
 
@@ -180,7 +179,9 @@ of whole slices (one word in [`../ties/`](../ties/) is of this kind).
    shorter than `--save-below` (default 46,178) is checked and written to the output directory with its selection.
 
 `search --start SELECTION ...` skips steps 1 and 2. The packing itself gives 46,174 letters, so the search reaches
-it within a minute; the tempering then looks for shorter words near it. It found none in my runs.
+it within a minute; the tempering then looks for shorter words near it. My run of the command at the top of this page
+(`--time 1800 --seed 1`, HiGHS) made 173 moves in each of its 3 chains and 227 pricings. It found no word shorter
+than 46,174 and wrote two words of 46,177.
 
 ## Solvers
 
@@ -209,7 +210,8 @@ ran on the machine.
 | `pack --copies` (27-walk, 4) | 35 s | |
 | `test.sh` | 2 min | 4 min |
 
-`test.sh` also passes with `SOLVER=scip` (7 minutes) and `SOLVER=cbc`. Memory: `rebuild` needs 0.15 GB with
+`test.sh` also passes with `SOLVER=scip` (7 minutes). With `SOLVER=cbc` every test passes but the packing
+(test 8): CBC did not finish that programme in 40 minutes, and I stopped it. Memory: `rebuild` needs 0.15 GB with
 `OPENBLAS_NUM_THREADS=1`, as `test.sh` sets it. Without it numpy reserves memory for every thread of the machine,
 here 1.6 GB, and `price --model slices` reached 2.4 GB.
 

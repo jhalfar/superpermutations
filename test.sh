@@ -18,7 +18,7 @@
 #   4. arrange/test.sh     the arrangement scripts on the n = 10 and n = 11 pieces, without a solver
 #   5. words/n8/tools/test.sh  the n = 8 word: checked, taken apart, rebuilt from its selection with HiGHS (scipy)
 #   6. proofs/n9           with PROOFS=1: the two checkers of the n = 9 result
-# Needs: bash, gcc with OpenMP, xz, sha256sum, Python 3 with numpy and scipy.  No other solver.  About 18 minutes on
+# Needs: bash, gcc with OpenMP, xz, sha256sum, Python 3 with numpy and scipy.  No other solver.  About 15 minutes on
 # one thread and 1 GB of RAM.  Nothing at n = 12 or n = 13 runs here: reproduce/REPRODUCE.md has those commands and
 # their hashes.
 # The script ends with "ALL PARTS PASSED" or with the list of parts that failed; each part prints its own lines.
