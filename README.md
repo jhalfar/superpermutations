@@ -104,6 +104,14 @@ cc -O2 -mpopcnt -fopenmp -o trailsearch tools/trailsearch.c -lm
 The earlier words, on Pantone's closed trails, rebuild the same way from Pantone's words and the plans in
 [`plan/`](plan/) and [`plan/history/`](plan/history/README.md).
 
+The word for n = 8 is rebuilt from its selection by [`words/n8/tools/n8.py`](words/n8/tools/README.md), which
+finds the best order of its pieces with an integer programme. It needs Python 3 with numpy and scipy, whose solver
+HiGHS takes about 3 seconds:
+
+```sh
+python3 words/n8/tools/n8.py rebuild words/n8/selection-46174.txt -o w46174.txt
+```
+
 ## How the words were found
 
 [`NOTES.md`](NOTES.md) is the full account: every step in order with the lengths before and after for each n,
@@ -144,7 +152,7 @@ Part two, other closed trails (October 5 to 7):
 | path | content |
 |---|---|
 | `words/` | the words, and the earlier ones I published |
-| `words/n8/` | the word on 8 symbols: how it is built, its selection, what is known about it |
+| `words/n8/` | the word on 8 symbols: how it is built, its selection and slice order, what is known about it, and in [`tools/`](words/n8/tools/README.md) one program that rebuilds it, prices any selection and runs the search that found it |
 | `recipes/n14/` | the word on 14 symbols as a recipe: generator, plan, checker, with its own [`README`](recipes/n14/README.md) |
 | `reproduce/` | selection, plan, generator and checker for each of the four words, with [`REPRODUCE.md`](reproduce/REPRODUCE.md) |
 | `selection/` | how the selections were found: the block searches and their checkers |

@@ -20,8 +20,8 @@ read off the same word of rumstd, and the order of its groups is his.
 Cutting a trail inside a 1-cycle, as tools/recut_wide.c and tools/word2plan.c do, was identified in Theo H.'s n=11
 superpermutation of length 43,930,624 (pull request #6 to jaypantone/superperm-upper-43-80). The fixed-order pass of
 tools/recut.c was found independently by Theo H. and by the authors of this repository. No code from Theo H.'s
-repository (GPL-3.0-or-later) is included here; the programs in tools/, reproduce/, selection/, arrange/ and proofs/
-were written for this repository.
+repository (GPL-3.0-or-later) is included here; the programs in tools/, reproduce/, selection/, arrange/, proofs/
+and words/n8/tools/ were written for this repository.
 
 proofs/lean/constant/patches/SuperpermutationUpperBound/Assembly/SupportedStates.lean is a modified copy of the file
 SuperpermutationUpperBound/Assembly/SupportedStates.lean of Jay Pantone's repository
@@ -42,6 +42,11 @@ files. The files that proofs/lean/n8/build.sh puts together from a checkout of h
 his work, and each changed file says at its top that it was changed. His NOTICE, which names the projects his is
 derived from (superperm7-ge-5898, Copyright 2026 Anthropic, PBC, Apache License 2.0; superperm6, Copyright (c) 2026
 Benjamin Grayzel, MIT License), is reproduced in proofs/lean/n8/NOTICE.echols.
+
+words/n8/tools/ writes the completion slices, closed trails and port rule of Pantone's construction for n = 8,
+with rows of every length read from his rules as in reproduce/REPRODUCE.md. It can read William Echols's n = 8
+word of 46,178 letters (https://github.com/WilliamEchols/superpermutations) when a user supplies it; the word is
+not included here.
 
 By Jakub Halfar, with Claude (Opus 5.5) in Claude Code. Jakub Halfar chose the problem and directed the work; Claude
 designed and ran the searches and wrote the code and the text.

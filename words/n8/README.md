@@ -42,6 +42,8 @@ times), 3 (four times) and 2 (three times), so J = 8 + 8 + 9 = 25. The element (
 the second: the first 2,316 letters of the second half are the image of the start of the word.
 
 [`selection-46174.txt`](selection-46174.txt) lists the 120 loops with their row lengths (0 = no row).
+[`order-46174.txt`](order-46174.txt) lists the 784 slices of the word in order; with the selection it gives the
+word back letter for letter, without a solver ([`tools/`](tools/README.md#rebuilding-the-46174-word)).
 
 [`ties/`](ties/) holds seven more words of 46,174 letters, in the same format. With the main word they are eight
 words that are different even up to renaming the symbols and reading backwards. All come from this selection,
@@ -50,11 +52,22 @@ the SHA-256 of the word without the line feed.
 
 ## How it was found
 
-A search packed the loops with closed walks of low cost per loop (a set partition over the cheapest walk types) and
-then refined the selection with parallel tempering. For each selection an integer program found the best order of
-the trails and the best joins. My earlier join program allowed only joins of overlap 3 or more; with that
-restriction this selection gives 46,182, which is why it went unnoticed. With joins of every overlap it gives
-46,174.
+A set partition over the closed walk types with the fewest letters per loop packed the loops with four copies of
+the 27-walk. For each selection an integer program found the best order of the trails and the best joins. My join
+program of that time allowed only joins of overlap 3 or more. It priced this packing at 46,182, so the search went
+on from it with parallel tempering and found other selections of 46,178 letters. When I allowed joins of every
+overlap, the packing itself gave 46,174.
+
+The programs are in [`tools/`](tools/README.md), behind one command, `n8.py`. It rebuilds this word from its
+selection in a few seconds with the free solver HiGHS, and prices any selection with a proven lower bound within
+its model (by default: every trail in one run, opened between two slices). It also reads the selection out of any
+word of this framework and runs the search: walk types, packing, parallel tempering. From the top of the
+repository:
+
+```sh
+python3 words/n8/tools/n8.py rebuild words/n8/selection-46174.txt -o w46174.txt
+python3 words/n8/tools/n8.py price words/n8/selection-46174.txt --model slices --min-overlap 3    # the 46,182
+```
 
 ## What is known about it
 

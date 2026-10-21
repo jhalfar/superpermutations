@@ -16,13 +16,14 @@
 #                          that part 1 rebuilt
 #   3. selection/test.sh   builds the four selections again from Pantone's file and runs their checkers
 #   4. arrange/test.sh     the arrangement scripts on the n = 10 and n = 11 pieces, without a solver
-#   5. proofs/n9           with PROOFS=1: the two checkers of the n = 9 result
-# Needs: bash, gcc with OpenMP, xz, sha256sum, Python 3 with numpy and scipy.  No solver.  About 15 minutes on one
-# thread and 1 GB of RAM.  Nothing at n = 12 or n = 13 runs here: reproduce/REPRODUCE.md has those commands and
+#   5. words/n8/tools/test.sh  the n = 8 word: checked, taken apart, rebuilt from its selection with HiGHS (scipy)
+#   6. proofs/n9           with PROOFS=1: the two checkers of the n = 9 result
+# Needs: bash, gcc with OpenMP, xz, sha256sum, Python 3 with numpy and scipy.  No other solver.  About 18 minutes on
+# one thread and 1 GB of RAM.  Nothing at n = 12 or n = 13 runs here: reproduce/REPRODUCE.md has those commands and
 # their hashes.
 # The script ends with "ALL PARTS PASSED" or with the list of parts that failed; each part prints its own lines.
 HERE=$(cd "$(dirname "$0")" && pwd)
-[ $# -ge 1 ] || { sed -n '2,23p' "$0"; exit 1; }
+[ $# -ge 1 ] || { sed -n '2,24p' "$0"; exit 1; }
 PR=$(cd "$1" && pwd) || exit 1; WORK=${2:-./test-all}; THR=${3:-1}
 mkdir -p "$WORK" || exit 1; WORK=$(cd "$WORK" && pwd)
 PY=${PYTHON:-$(command -v python3 || command -v python)}
@@ -56,8 +57,11 @@ if [ -f "$HERE/arrange/test.sh" ]; then
   PY="$PY" bash "$HERE/arrange/test.sh" "$HERE/reproduce" "$WORK/arrange" || fail "arrange/test.sh"
 else echo "no arrange/test.sh here: skipped"; fi
 
+part "5. words/n8/tools/test.sh"
+PYTHON="$PY" bash "$HERE/words/n8/tools/test.sh" "$WORK/n8" || fail "words/n8/tools/test.sh"
+
 if [ "${PROOFS:-0}" = 1 ]; then
-  part "5. proofs/n9"
+  part "6. proofs/n9"
   W9="$PR/words/9/superpermutation-9-408732.txt"
   if [ ! -f "$W9" ] && [ -f "$W9.xz" ]; then xz -dkc "$W9.xz" > "$WORK/pantone-9.txt"; W9="$WORK/pantone-9.txt"; fi
   if [ ! -f "$W9" ]; then fail "proofs/n9: Pantone's n = 9 word is not in $PR/words/9"
