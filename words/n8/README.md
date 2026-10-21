@@ -59,11 +59,15 @@ restriction this selection gives 46,182, which is why it went unnoticed. With jo
 ## What is known about it
 
 * My integer program finds no shorter order of the pieces of this selection, but it keeps the place where each
-  trail is opened as my join program chose it. With other openings the same selection can give a shorter word.
+  trail is opened as my join program chose it. With other openings the same selection gives a shorter word:
+  Theo H. found one of 46,173 letters by running [`tools/trailsearch.c`](../../tools/trailsearch.c)
+  on this selection, which changes the order of the trails and where they are opened (three trails open at a
+  weight-2 step: openings cost 3 letters more, joins 4 less). His word and the steps to repeat it are in
+  [his repository](https://github.com/Tholsh/superpermutation_study/tree/main/data/n8/46173).
 * In 115 regions of 50 to 70 loops around it, no change of the rows inside one region gives a shorter word, with
   the same restriction on the openings.
 * These are local statements. They do not say that 46,174 is the shortest possible. The best lower bound I know is
   46,133 ([`proofs/lean/`](../../proofs/lean/README.md)), so the shortest superpermutation on 8 symbols has between
-  46,133 and 46,174 letters.
+  46,133 and 46,173 letters.
 
 Echols's word is not copied here.

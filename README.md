@@ -41,7 +41,8 @@ runs the searches and writes the code and this text.
 The word on 14 symbols would take 94 GB, so it is published as a recipe in [`recipes/n14/`](recipes/n14/README.md):
 a generator, a plan of 83 KB and a checker, as William Echols did with his words.
 
-"Before" is the best word of someone else. Theo H.'s words for n = 11 and 12 were made from earlier words of mine.
+For n = 8 Theo H. has since found a word of 46,173 letters on the same selection with `tools/trailsearch.c`
+([`words/n8/`](words/n8/README.md)). "Before" is the best word of someone else. Theo H.'s words for n = 11 and 12 were made from earlier words of mine.
 The word for n = 12 starts from William Echols's 522,737,174, and it and the word for n = 13 use two moves from the
 group: his re-opening of a stretch of consecutive trails and Theo H.'s moving of a trail with a new phase. Against Pantone's own words of
 4,034,889, 43,930,680, 522,745,581 and 6,747,918,066 letters the words for n = 10 to 13 are 34, 102, 8,612 and
