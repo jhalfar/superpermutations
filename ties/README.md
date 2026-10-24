@@ -10,6 +10,10 @@ ones I know, says which of them are the same word written differently, and measu
 | 9 | 408,731 | 1 | rumstd |
 | 10 | 4,034,855 | 2 | this repository 1, Theo H. 1 |
 
+For n = 8 the table is about the record length of early October, 46,181. Shorter words have been found since:
+my 46,174 with seven ties ([`../words/n8/`](../words/n8/README.md)) and Theo H.'s 46,173. They are not in this
+directory.
+
 Two words count as the same if one becomes the other after renaming the symbols, reversing the word or both. I
 call such a set of words a class.
 

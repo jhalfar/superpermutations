@@ -81,8 +81,11 @@ python3 words/n8/tools/n8.py price words/n8/selection-46174.txt --model slices -
   [his repository](https://github.com/Tholsh/superpermutation_study/tree/main/data/n8/46173).
 * In 115 regions of 50 to 70 loops around it, no change of the rows inside one region gives a shorter word, with
   the same restriction on the openings.
-* These are local statements. They do not say that 46,174 is the shortest possible. The best lower bound I know is
-  46,133 ([`proofs/lean/`](../../proofs/lean/README.md)), so the shortest superpermutation on 8 symbols has between
-  46,133 and 46,173 letters.
+* These are local statements. They do not say that 46,174 is the shortest possible. The best lower bound I know
+  with a proof that the Lean kernel checks alone is 46,133 (Theorem C, [`proofs/lean/lower/`](../../proofs/lean/lower/README.md));
+  with three equations evaluated by compiled code it is 46,134 ([`proofs/lean/n8_46134/`](../../proofs/lean/n8_46134/README.md)).
+  So the shortest superpermutation on 8 symbols has between 46,134 and 46,173 letters, or between 46,133 and
+  46,173 if one accepts only the kernel. The word of 46,174 and its seven ties are checked by the kernel in
+  [`proofs/lean/words/`](../../proofs/lean/words/README.md) (`hasWord_eight_k`).
 
 Echols's word is not copied here.
