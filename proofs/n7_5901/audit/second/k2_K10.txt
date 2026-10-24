@@ -1,0 +1,5 @@
+k2 statement: tables ccc9a4e26b57100d S 10 LO 35 G 36 CUT 12 potential 10,16,25
+gate: depth 0 parts 1 gate_count 0 kept_top 0 placed_top 0 violations_top 0
+part 0 kept_below 172577 placed_below 172596 violations_below 0
+time: wall 0.0 cpu 0.2
+END

@@ -1,0 +1,207 @@
+Part-file audit of the computations of L(7) >= 5,901 (PROOF_5901.md 0.3); root <research tree>
+
+== Kernel alone
+K0js  [archive of gkjs/parts/K0js.tar.xz (packed)]
+  params: S=0 LO=65 NPARTS=4096 DEPTH=16 CAPS=caps/capD16_k.txt GTOP=96 CUT=12 POT=17,24,5 JS=1 exe=run/gkjs.exe
+  note: "rows placed" above the gate takes the values [3126897, 3126898] in different parts (not a count of Table C)
+  part files 4096 of 4096; distinct statement lines 1
+     4096 x  gpu run S=0 GTOP=96 (holes <= 96) LO=65 CUT=12 POT=17,24,5 JS=1 caps=a85830d7 of 4096 at depth 16
+  caps hash of gkjs/caps/capD16_k.txt (rows 0..0, holes 0..96): a85830d7 EQUAL
+  caps hash of gpu2/k/caps/capD16_k.txt (rows 0..0, holes 0..96): a85830d7 EQUAL
+  kept 497079750869693 (Table C 497079750869693) EQUAL; violations 0
+
+K1js  [archive of gkjs/parts/K1js.tar.xz (packed)]
+  params: S=1 LO=55 NPARTS=2048 DEPTH=14 CAPS=caps/capD16_k.txt GTOP=96 CUT=12 POT=20,29,60 JS=1 exe=run/gkjs.exe
+  note: "rows placed" above the gate takes the values [441566, 441567] in different parts (not a count of Table C)
+  part files 2048 of 2048; distinct statement lines 1
+     2048 x  gpu run S=1 GTOP=96 (holes <= 90) LO=55 CUT=12 POT=20,29,60 JS=1 caps=a99578e8 of 2048 at depth 14
+  caps hash of gkjs/caps/capD16_k.txt (rows 0..1, holes 0..90): a99578e8 EQUAL
+  caps hash of gpu2/k/caps/capD16_k.txt (rows 0..1, holes 0..90): a99578e8 EQUAL
+  kept 755070879353479 (Table C 755070879353479) EQUAL; violations 0
+
+K2js  [archive of gkjs/parts/K2js.tar.xz (packed)]
+  params: S=2 LO=51 NPARTS=512 DEPTH=13 CAPS=caps/capD16_k.txt GTOP=96 CUT=12 POT=20,29,60 JS=1 exe=run/gkjs.exe
+  note: "rows placed" above the gate takes the values [157331, 157332] in different parts (not a count of Table C)
+  part files 512 of 512; distinct statement lines 1
+      512 x  gpu run S=2 GTOP=96 (holes <= 84) LO=51 CUT=12 POT=20,29,60 JS=1 caps=12dad743 of 512 at depth 13
+  caps hash of gkjs/caps/capD16_k.txt (rows 0..2, holes 0..84): 12dad743 EQUAL
+  caps hash of gpu2/k/caps/capD16_k.txt (rows 0..2, holes 0..84): 12dad743 EQUAL
+  kept 375408252302475 (Table C 375408252302475) EQUAL; violations 0
+
+K3  [gpu2/k/parts/K3]
+  params: S=3 LO=48 NPARTS=256 DEPTH=13 CAPS=caps/capD16_k.txt GTOP=96 CUT=12 POT=10,15,30 exe=run/gk4.exe
+  note: "rows placed" above the gate takes the values [264138, 264139] in different parts (not a count of Table C)
+  part files 256 of 256; distinct statement lines 1
+      256 x  gpu run S=3 GTOP=96 (holes <= 78) LO=48 CUT=12 POT=10,15,30 of 256 at depth 13
+  kept 527651578348368 (Table C 527651578348368) EQUAL; violations 0
+
+K4  [gpu2/k/parts/K4]
+  params: S=4 LO=41 NPARTS=64 DEPTH=12 CAPS=caps/capD16_k.txt GTOP=96 CUT=12 POT=10,15,25 exe=run/gk4.exe
+  note: "rows placed" above the gate takes the values [88432, 88433] in different parts (not a count of Table C)
+  part files 64 of 64; distinct statement lines 1
+       64 x  gpu run S=4 GTOP=96 (holes <= 72) LO=41 CUT=12 POT=10,15,25 of 64 at depth 12
+  kept 160141566085840 (Table C 160141566085840) EQUAL; violations 0
+
+K5  [gpu2/k/parts/K5]
+  params: S=5 LO=37 NPARTS=64 DEPTH=12 CAPS=caps/capD16u_5_k.txt GTOP=96 CUT=12 POT=10,16,25 exe=run/gk4.exe
+  note: "rows placed" above the gate takes the values [8866487, 8866488] in different parts (not a count of Table C)
+  part files 64 of 64; distinct statement lines 1
+       64 x  gpu run S=5 GTOP=96 (holes <= 66) LO=37 CUT=12 POT=10,16,25 of 64 at depth 12
+  kept 23993915746406 (Table C 23993915746406) EQUAL; violations 0
+
+K6  [gpu2/k/parts/K6]
+  params: S=6 LO=37 NPARTS=16 DEPTH=10 CAPS=caps/capD16u_6_k.txt GTOP=96 CUT=12 POT=10,16,25 exe=run/gk4.exe
+  note: "rows placed" above the gate takes the values [825004, 825005] in different parts (not a count of Table C)
+  part files 16 of 16; distinct statement lines 1
+       16 x  gpu run S=6 GTOP=96 (holes <= 60) LO=37 CUT=12 POT=10,16,25 of 16 at depth 10
+  kept 2569985903558 (Table C 2569985903558) EQUAL; violations 0
+
+K7  [gpu2/k/parts/K7]
+  params: S=7 LO=35 NPARTS=1 DEPTH=0 CAPS=caps/capD16u_7_k.txt GTOP=96 CUT=12 POT=10,16,25 exe=run/gk4.exe
+  part files 1 of 1; distinct statement lines 1
+        1 x  gpu run S=7 GTOP=96 (holes <= 54) LO=35 CUT=12 POT=10,16,25 of 1 at depth 0
+  kept 320243136927 (Table C 320243136927) EQUAL; violations 0
+
+K10  [gpu2/k/parts/K10]
+  params: S=10 LO=35 NPARTS=1 DEPTH=0 CAPS=caps/capD16u_10_k.txt GTOP=96 CUT=12 POT=10,16,25 exe=run/gk4.exe
+  part files 1 of 1; distinct statement lines 1
+        1 x  gpu run S=10 GTOP=96 (holes <= 36) LO=35 CUT=12 POT=10,16,25 of 1 at depth 0
+  kept 172577 (Table C 172577) EQUAL; violations 0
+
+K8  [single runs]
+  gpu2/k/cpu_K8_k.txt: run S=8 GTOP=96 (holes <= 48) LO=35 CUT=12 POT=10,16,25 part 0 of 1 at depth 0: violations 0   rows placed 42386758371   kept 22732567392   above the 
+  kept 22732567392 (Table C 22732567392) EQUAL; violations 0
+K9  [single runs]
+  gpu2/k/cpu_K9_k.txt: run S=9 GTOP=96 (holes <= 42) LO=35 CUT=12 POT=10,16,25 part 0 of 1 at depth 0: violations 0   rows placed 436185511   kept 384081983   above the gate
+  kept 384081983 (Table C 384081983) EQUAL; violations 0
+
+== Joint
+T1  [gpu2/parts/T1]
+  command: gj2.exe 7 ../jrev/capD.txt run 50 84 1 S7 S7 NPARTS=1024 DEPTH=16 NPARTS2=1 RLO= RHI= ORD=1 REV=1 RMODE=2 RP=0 PA= PB=15 PH=25 JCAP=
+  part files 1024 of 1024; distinct statement lines 1
+     1024 x  gj K=7 caps=../jrev/capD.txt V=50 W=84 B=1 pieces S7 S7  NOCUT=0 PART=*/1024 DEPTH=16 PART2=*/1 RLO=0 RHI=128 REV=1 RP=0 potential 10,15,25 ORD=1 ORDS=0 JCAP=-  table bound of the total: 65
+  found 0   kept 432156242209710   tried 2386049711507025   (Table C 432156242209710, 2386049711507025) EQUAL
+  archive archive of gpu2/parts/T1.tar.xz (packed): 1029 files equal to the live directory, 0 different or absent; 0 live files not in it []
+
+T2_08  [gpu2/parts/T2_08]
+  command: gj2.exe 7 ../jrev/capD.txt run 46 89 1 R S7 NPARTS=1 DEPTH=0 NPARTS2=64 RLO=8 RHI=15 ORD= REV=1 RMODE=2 RP=1 PA= PB=15 PH=40 JCAP=
+  part files 64 of 64; distinct statement lines 1
+       64 x  gj K=7 caps=../jrev/capD.txt V=46 W=89 B=1 pieces R S7  NOCUT=0 PART=*/1 DEPTH=0 PART2=*/64 RLO=8 RHI=15 REV=1 RP=1 potential 10,15,40 ORD=0 ORDS=0 JCAP=-  table bound of the total: 52
+  found 0   kept 101123384635543   tried 591203509244515   (Table C 101123384635543, 591203509244515) EQUAL
+
+T2_16  [gpu2/parts/T2_16]
+  command: gj2.exe 7 ../jrev/capD.txt run 46 89 1 R S7 NPARTS=1 DEPTH=0 NPARTS2=64 RLO=16 RHI=23 ORD= REV=1 RMODE=2 RP=1 PA= PB=15 PH=40 JCAP=
+  part files 64 of 64; distinct statement lines 1
+       64 x  gj K=7 caps=../jrev/capD.txt V=46 W=89 B=1 pieces R S7  NOCUT=0 PART=*/1 DEPTH=0 PART2=*/64 RLO=16 RHI=23 REV=1 RP=1 potential 10,15,40 ORD=0 ORDS=0 JCAP=-  table bound of the total: 59
+  found 0   kept 129493336379997   tried 664376894711771   (Table C 129493336379997, 664376894711771) EQUAL
+
+T2_24  [gpu2/parts/T2_24]
+  command: gj2.exe 7 ../jrev/capD.txt run 46 89 1 R S7 NPARTS=64 DEPTH=18 NPARTS2=1 RLO=24 RHI=31 ORD= REV=1 RMODE=2 RP=1 PA= PB=15 PH=40 JCAP=
+  part files 64 of 64; distinct statement lines 1
+       64 x  gj K=7 caps=../jrev/capD.txt V=46 W=89 B=1 pieces R S7  NOCUT=0 PART=*/64 DEPTH=18 PART2=*/1 RLO=24 RHI=31 REV=1 RP=1 potential 10,15,40 ORD=0 ORDS=0 JCAP=-  table bound of the total: 57
+  found 0   kept 135483427600468   tried 687655387002664   (Table C 135483427600468, 687655387002664) EQUAL
+
+T2_32_hi17  [tune/gj3/parts/T2_32_hi17]
+  command: gj3.exe 7 ../../ringcap/capD_r.txt run 46 89 1 R S7 NPARTS=16 DEPTH=18 NPARTS2=1 RLO=32 RHI=39 RVMIN=17 ORD= ORDS= REV=1 RMODE=2 RP=1 PA= PB=15 PH=40 JCAP=
+  part files 16 of 16; distinct statement lines 1
+       16 x  gj K=7 caps=../../ringcap/capD_r.txt V=46 W=89 B=1 pieces R S7  NOCUT=0 PART=*/16 DEPTH=18 PART2=*/1 RLO=32 RHI=39 RVMIN=17 REV=1 RP=1 potential 10,15,40 ORD=0 ORDS=0 JCAP=-  table bound of the total: 59
+  found 0   kept 151457803584   tried 795609616646   (Table C 151457803584, 795609616646) EQUAL
+
+T2_32_lo17  [gpu2/parts/T2_32_lo17]
+  command: gj2.exe 7 ../tune/caps/lo_32_39_a17.txt run 46 89 1 S7 R NPARTS=16 DEPTH=12 NPARTS2=1 RLO=32 RHI=39 ORD= REV=1 RMODE=2 RP=0 PA= PB=15 PH=30 JCAP=
+  part files 16 of 16; distinct statement lines 1
+       16 x  gj K=7 caps=../tune/caps/lo_32_39_a17.txt V=46 W=89 B=1 pieces S7 R  NOCUT=0 PART=*/16 DEPTH=12 PART2=*/1 RLO=32 RHI=39 REV=1 RP=0 potential 10,15,30 ORD=0 ORDS=0 JCAP=-  table bound of the total: 53
+  found 0   kept 817008248719   tried 4282237016933   (Table C 817008248719, 4282237016933) EQUAL
+
+T2_40_hi20  [tune/gj3/parts/T2_40_hi20]
+  command: gj3.exe 7 ../../ringcap/capD_r.txt run 46 89 1 R S7 NPARTS=16 DEPTH=18 NPARTS2=1 RLO=40 RHI=47 RVMIN=20 ORD= ORDS= REV=1 RMODE=2 RP=1 PA= PB=15 PH=40 JCAP=
+  part files 16 of 16; distinct statement lines 1
+       16 x  gj K=7 caps=../../ringcap/capD_r.txt V=46 W=89 B=1 pieces R S7  NOCUT=0 PART=*/16 DEPTH=18 PART2=*/1 RLO=40 RHI=47 RVMIN=20 REV=1 RP=1 potential 10,15,40 ORD=0 ORDS=0 JCAP=-  table bound of the total: 61
+  found 0   kept 91979996005   tried 476425689572   (Table C 91979996005, 476425689572) EQUAL
+
+T2_40_lo20  [gpu2/parts/T2_40_lo20]
+  command: gj2.exe 7 ../tune/caps/lo_40_47_a20.txt run 46 89 1 S7 R NPARTS=16 DEPTH=12 NPARTS2=1 RLO=40 RHI=47 ORD= REV=1 RMODE=2 RP=0 PA= PB=15 PH=30 JCAP=
+  part files 16 of 16; distinct statement lines 1
+       16 x  gj K=7 caps=../tune/caps/lo_40_47_a20.txt V=46 W=89 B=1 pieces S7 R  NOCUT=0 PART=*/16 DEPTH=12 PART2=*/1 RLO=40 RHI=47 REV=1 RP=0 potential 10,15,30 ORD=0 ORDS=0 JCAP=-  table bound of the total: 55
+  found 0   kept 284267038527   tried 1671708523584   (Table C 284267038527, 1671708523584) EQUAL
+
+T2_48_hi23  [tune/gj3/parts/T2_48_hi23]
+  command: gj3.exe 7 ../../ringcap/capD_r.txt run 46 89 1 R S7 NPARTS=64 DEPTH=18 NPARTS2=1 RLO=48 RHI=55 RVMIN=23 ORD= ORDS= REV=1 RMODE=2 RP=1 PA= PB=15 PH=40 JCAP=
+  part files 64 of 64; distinct statement lines 1
+       64 x  gj K=7 caps=../../ringcap/capD_r.txt V=46 W=89 B=1 pieces R S7  NOCUT=0 PART=*/64 DEPTH=18 PART2=*/1 RLO=48 RHI=55 RVMIN=23 REV=1 RP=1 potential 10,15,40 ORD=0 ORDS=0 JCAP=-  table bound of the total: 62
+  found 0   kept 71260814984   tried 365649914334   (Table C 71260814984, 365649914334) EQUAL
+
+T2_48_lo23  [gpu2/parts/T2_48_lo23]
+  command: gj2.exe 7 ../ringcap/capD_r_rv22.txt run 46 89 1 S7 R NPARTS=64 DEPTH=12 NPARTS2=1 RLO=48 RHI=55 ORD= REV=1 RMODE=2 RP=0 PA= PB=15 PH=30 JCAP=
+  part files 64 of 64; distinct statement lines 1
+       64 x  gj K=7 caps=../ringcap/capD_r_rv22.txt V=46 W=89 B=1 pieces S7 R  NOCUT=0 PART=*/64 DEPTH=12 PART2=*/1 RLO=48 RHI=55 REV=1 RP=0 potential 10,15,30 ORD=0 ORDS=0 JCAP=-  table bound of the total: 53
+  found 0   kept 174112070351   tried 957110796225   (Table C 174112070351, 957110796225) EQUAL
+
+T2_56  [gpu2/parts/T2_56]
+  command: gj2.exe 7 ../jrev/capD.txt run 46 89 1 R S7 NPARTS=64 DEPTH=18 NPARTS2=1 RLO=56 RHI=89 ORD= REV=1 RMODE=2 RP=1 PA= PB=15 PH=40 JCAP=
+  part files 64 of 64; distinct statement lines 1
+       64 x  gj K=7 caps=../jrev/capD.txt V=46 W=89 B=1 pieces R S7  NOCUT=0 PART=*/64 DEPTH=18 PART2=*/1 RLO=56 RHI=89 REV=1 RP=1 potential 10,15,40 ORD=0 ORDS=0 JCAP=-  table bound of the total: 62
+  found 0   kept 28953480015964   tried 152453459284641   (Table C 28953480015964, 152453459284641) EQUAL
+
+T3r  [gpu2/parts/T3r]
+  command: gj2.exe 7 ../jrev/capD.txt run 52 82 2 R S5 R NPARTS=64 DEPTH=10 NPARTS2=1 RLO=8 RHI= ORD= REV=1 RMODE=2 RP=1 PA= PB=16 PH=43 JCAP=
+  part files 64 of 64; distinct statement lines 1
+       64 x  gj K=7 caps=../jrev/capD.txt V=52 W=82 B=2 pieces R S5 R  NOCUT=0 PART=*/64 DEPTH=10 PART2=*/1 RLO=8 RHI=128 REV=1 RP=1 potential 10,16,43 ORD=0 ORDS=0 JCAP=-  table bound of the total: 64
+  found 0   kept 40196474735125   tried 213550167376609   (Table C 40196474735125, 213550167376609) EQUAL
+
+T4r  [gpu2/parts/T4r]
+  command: gj2.exe 7 ../jrev/capD.txt run 56 77 2 R S4 S4 NPARTS=64 DEPTH=10 NPARTS2=1 RLO=8 RHI= ORD=1 REV=1 RMODE=2 RP=1 PA= PB=16 PH=43 JCAP=
+  part files 64 of 64; distinct statement lines 1
+       64 x  gj K=7 caps=../jrev/capD.txt V=56 W=77 B=2 pieces R S4 S4  NOCUT=0 PART=*/64 DEPTH=10 PART2=*/1 RLO=8 RHI=128 REV=1 RP=1 potential 10,16,43 ORD=1 ORDS=0 JCAP=-  table bound of the total: 66
+  found 0   kept 1479145818172   tried 7891206447132   (Table C 1479145818172, 7891206447132) EQUAL
+
+T5  [gpuj/parts/T5]
+  command: gj.exe 7 ../jrev/capD.txt run 60 72 2 S3 S3 S3 NPARTS=16 DEPTH=10 NPARTS2=1 RLO= RHI= ORD= REV= RMODE= RP= PA= PB= PH= JCAP=
+  part files 16 of 16; distinct statement lines 1
+       16 x  gj K=7 caps=../jrev/capD.txt V=60 W=72 B=2 pieces S3 S3 S3  NOCUT=0 PART=*/16 DEPTH=10 PART2=*/1 RLO=0 RHI=128 REV=0 RP=0 potential 10,15,30 ORD=0 JCAP=-  table bound of the total: 68
+  found 0   kept 52379362069149   tried 268009289170899   (Table C 52379362069149, 268009289170899) EQUAL
+
+T6rp  [gpu2/parts/T6rp]
+  command: gj2.exe 7 ../jrev/capD.txt run 58 75 3 S2 R R R NPARTS=16 DEPTH=10 NPARTS2=1 RLO=8 RHI= ORD= REV=1 RMODE=2 RP=0 PA= PB=16 PH=25 JCAP=
+  part files 16 of 16; distinct statement lines 1
+       16 x  gj K=7 caps=../jrev/capD.txt V=58 W=75 B=3 pieces S2 R R R  NOCUT=0 PART=*/16 DEPTH=10 PART2=*/1 RLO=8 RHI=128 REV=1 RP=0 potential 10,16,25 ORD=0 ORDS=0 JCAP=-  table bound of the total: 65
+  found 0   kept 112728682360   tried 592623181185   (Table C 112728682360, 592623181185) EQUAL
+
+T7 (gj2 repeat)  [gpu2/parts/T7]
+  command: gj2.exe 7 ../jrev/capD.txt run 62 70 3 S1 S1 R R NPARTS=1 DEPTH=0 NPARTS2=1 RLO= RHI= ORD= REV= RMODE= RP= PA= PB= PH= JCAP=
+  part files 1 of 1; distinct statement lines 1
+        1 x  gj K=7 caps=../jrev/capD.txt V=62 W=70 B=3 pieces S1 S1 R R  NOCUT=0 PART=*/1 DEPTH=0 PART2=*/1 RLO=0 RHI=128 REV=0 RP=0 potential 10,15,30 ORD=0 ORDS=0 JCAP=-  table bound of the total: 69
+  found 0   kept 1432335917907   tried 7283065963552   (Table C 1432335917907, 7283065963552) EQUAL
+
+T8 (gj2 repeat)  [gpu2/parts/T8]
+  command: gj2.exe 7 ../jrev/capD.txt run 66 65 2 S0 S0 S0 R NPARTS=1 DEPTH=0 NPARTS2=1 RLO= RHI= ORD= REV= RMODE= RP= PA= PB= PH= JCAP=
+  part files 1 of 1; distinct statement lines 1
+        1 x  gj K=7 caps=../jrev/capD.txt V=66 W=65 B=2 pieces S0 S0 S0 R  NOCUT=0 PART=*/1 DEPTH=0 PART2=*/1 RLO=0 RHI=128 REV=0 RP=0 potential 10,15,30 ORD=0 ORDS=0 JCAP=-  table bound of the total: 69
+  found 0   kept 7126584865   tried 36384111126   (Table C 7126584865, 36384111126) EQUAL
+
+T9r  [gpu2/parts/T9r]
+  command: gj2.exe 7 ../jrev/capD.txt run 64 68 4 S0 R R R R NPARTS=1 DEPTH=0 NPARTS2=8 RLO=8 RHI= ORD= REV= RMODE= RP= PA= PB= PH= JCAP=
+  part files 8 of 8; distinct statement lines 1
+        8 x  gj K=7 caps=../jrev/capD.txt V=64 W=68 B=4 pieces S0 R R R R  NOCUT=0 PART=*/1 DEPTH=0 PART2=*/8 RLO=8 RHI=128 REV=0 RP=0 potential 10,15,30 ORD=0 ORDS=0 JCAP=-  table bound of the total: 64
+  found 0   kept 11105597   tried 59706146   (Table C 11105597, 59706146) EQUAL
+
+T6r  [gpu2/parts/T6r]  NOT COUNTED (ORDS run)
+  command: gj2.exe 7 ../jrev/capD.txt run 58 75 3 S2 R R R NPARTS=16 DEPTH=10 NPARTS2=1 RLO=8 RHI= ORD= REV=1 RMODE=2 RP=0 PA= PB=16 PH=25 JCAP=
+  part files 16 of 16; distinct statement lines 1
+       16 x  gj K=7 caps=../jrev/capD.txt V=58 W=75 B=3 pieces S2 R R R  NOCUT=0 PART=*/16 DEPTH=10 PART2=*/1 RLO=8 RHI=128 REV=1 RP=0 potential 10,16,25 ORD=0 ORDS=1 JCAP=-  table bound of the total: 65
+  found 0   kept 98752840534   tried 515328744583   (Table C 98752840534, 515328744583) EQUAL
+
+T9rs  [gpu2/parts/T9rs]  NOT COUNTED (ORDS run)
+  command: gj2.exe 7 ../jrev/capD.txt run 64 68 4 S0 R R R R NPARTS=1 DEPTH=0 NPARTS2=8 RLO=8 RHI= ORD= REV= RMODE= RP= PA= PB= PH= JCAP=
+  part files 8 of 8; distinct statement lines 1
+        8 x  gj K=7 caps=../jrev/capD.txt V=64 W=68 B=4 pieces S0 R R R R  NOCUT=0 PART=*/1 DEPTH=0 PART2=*/8 RLO=8 RHI=128 REV=0 RP=0 potential 10,15,30 ORD=0 ORDS=1 JCAP=-  table bound of the total: 64
+  found 0   kept 4287144   tried 22804444   (Table C 4287144, 22804444) EQUAL
+
+T9s  [gpu2/parts/T9s]  NOT COUNTED (ORDS run)
+  command: gj2.exe 7 ../jrev/capD.txt run 64 68 4 S0 R R R R NPARTS=1 DEPTH=0 NPARTS2=8 RLO= RHI= ORD= REV= RMODE= RP= PA= PB= PH= JCAP=
+  part files 8 of 8; distinct statement lines 1
+        8 x  gj K=7 caps=../jrev/capD.txt V=64 W=68 B=4 pieces S0 R R R R  NOCUT=0 PART=*/1 DEPTH=0 PART2=*/8 RLO=0 RHI=128 REV=0 RP=0 potential 10,15,30 ORD=0 ORDS=1 JCAP=-  table bound of the total: 67
+  found 0   kept 9560336846694   tried 50933661579615   (Table C 9560336846694, 50933661579615) EQUAL
+
+== Summary
+every counted tag: all parts present, one statement line, no violation / found 0, sums equal to Table C

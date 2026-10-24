@@ -1,0 +1,7 @@
+nat: NJ started 2026-10-20 17:19:14, 2 threads, dll build/A16C.dll c61dff79308cc737
+'SuperpermLowerBounds.J16.Audit.t9_native' depends on axioms: [propext,
+ SuperpermLowerBounds.J16.Audit.t9_native._native.native_decide.ax_1_1]
+'SuperpermLowerBounds.J16.Audit.t8_native' depends on axioms: [propext,
+ SuperpermLowerBounds.J16.Audit.t8_native._native.native_decide.ax_1_1]
+[guard] exit 0, peak committed memory of the job 0.58 GB (limit 16.0 GB)
+nat: exit=0 wall=6993s, ended 2026-10-20 19:15:48

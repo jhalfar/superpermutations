@@ -1,0 +1,7 @@
+j2 statement: tables 01873c49badcff4f J(S0 S0 S0 R; 66, 65; 2) rings 0..96
+gate: piece 0 depth 0 parts 1 gate_count 0
+part 0 kept 7126584865 tried 36384111126 found 0 pieces_completed 149045
+above the gate (counted for part 0 only): kept 0 tried 0 found 0 pieces_completed 0
+time: wall 689.8 cpu 689.9
+END
+rc=0

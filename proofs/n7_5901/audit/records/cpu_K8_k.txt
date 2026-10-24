@@ -1,0 +1,1 @@
+run S=8 GTOP=96 (holes <= 48) LO=35 CUT=12 POT=10,16,25 part 0 of 1 at depth 0: violations 0   rows placed 42386758371   kept 22732567392   above the gate: rows placed 0 kept 0   prefixes at the gate 0   time 3477.9s  (0.1530 us per kept)

@@ -1,0 +1,7 @@
+ev: Eval/T9.lean started 2026-10-20 11:22:47, 1 threads, dll build/A16C.dll c61dff79308cc737
+T9' Lean equation jSearch (t9 of J16.Evals), fuel 1000: answer false  (0 ms)
+T9' count, Lean rule (class cut + clip): kept 11105597 tried 59706146 found 0 visits 11105897  (0 ms)
+T9' count, program rule (clip, no class cut): kept 11105597 tried 59706146 found 0 visits 11105897  (0 ms)
+T9' count, no clip, no class cut: kept 11105597 tried 59706146 found 0 visits 11105897  (0 ms)
+[guard] exit 0, peak committed memory of the job 0.55 GB (limit 16.0 GB)
+ev: exit=0 wall=65s, ended 2026-10-20 11:23:52

@@ -1,0 +1,7 @@
+ev: Eval/K8.lean started 2026-10-20 11:26:40, 2 threads, dll ../../../../lb/lean/build/native/K16Count.dll 54d0270ee3d6a3cb
+K8 Lean equation (k8), 8 parts: answer false
+  3411677 ms
+K8 count, 8 parts: kept 22732567392 violations/fuel-out 0
+  3796199 ms
+[guard] exit 0, peak committed memory of the job 0.49 GB (limit 16.0 GB)
+ev: exit=0 wall=7208s, ended 2026-10-20 13:26:48

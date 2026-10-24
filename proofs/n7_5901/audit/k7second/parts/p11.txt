@@ -1,0 +1,5 @@
+k2 statement: tables 4e6c056774886247 S 7 LO 35 G 54 CUT 12 potential 10,16,25
+gate: depth 8 parts 64 gate_count 15911 kept_top 10479 placed_top 67263 violations_top 0
+part 11 kept_below 380729538 placed_below 1469589051 violations_below 0
+time: wall 32.6 cpu 32.7
+END

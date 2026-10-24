@@ -1,0 +1,26 @@
+capD rows 12 lengths [97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97] ring 97
+rows 0..8, x <= 90-6s: capD == Lean Dtab: True  Lean Dtab row lengths [91, 85, 79, 73, 67, 61, 55, 49, 43]
+ring row: Lean TRtab length 85  equal on 0..84: False  first diff: [(77, 121, 126), (78, 122, 127), (79, 123, 128), (80, 124, 129), (81, 125, 130)]
+ring row 85..96: [129, 130, 131, 132, 133, 134, 144, 146, 147, 150, 151, 154]  chain row 85..96: [129, 130, 131, 132, 133, 134, 144, 146, 147, 150, 151, 154]  x+44: [129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140]
+val cap of rows at weight 91..96 (x = w - 6s): {0: [53, 54, 54, 56, 56, 58], 1: [53, 55, 55, 57, 57, 58], 2: [53, 55, 55, 57, 57, 59], 3: [53, 55, 55, 57, 57, 59], 4: [53, 55, 55, 57, 57, 58], 5: [53, 55, 55, 57, 57, 59], 6: [53, 55, 54, 56, 56, 57], 7: [49, 52, 51, 53, 52, 55], 8: [45, 47, 46, 49, 48, 51], 9: [40, 43, 42, 45, 44, 46], 10: [34, 37, 36, 39, 38, 41]}
+row 9 : file below my cl2 closure at 0 levels [] (needs cl1 or Corollary K), above at 0
+row 10 : file below my cl2 closure at 0 levels [] (needs cl1 or Corollary K), above at 0
+row 11 : file below my cl2 closure at 0 levels [] (needs cl1 or Corollary K), above at 0
+row 9 max val within weight 96 (file if present else cl2): 46  within 90: 41
+row 10 max val within weight 96 (file if present else cl2): 41  within 90: 35
+row 11 max val within weight 96 (file if present else cl2): 35  within 90: 29
+row 12 max val within weight 96 (file if present else cl2): 29  within 90: 23
+row 13 max val within weight 96 (file if present else cl2): 23  within 90: 17
+row 14 max val within weight 96 (file if present else cl2): 17  within 90: 11
+row 15 max val within weight 96 (file if present else cl2): 11  within 90: 5
+row 16 max val within weight 96 (file if present else cl2): 5  within 90: -99
+extra items: Counter({'E': 546, 'AB': 519, 'F': 405, "A'": 381, "A''": 256, 'R': 78})
+best kernel within 96, 90, 89: 59 44 44  best extras within 96: 40
+MODE map  positivity
+profiles (piece level): 131436  by first statement: {'K': 248, 'eps0': 46647, 'T1': 24789, 'eps1': 63570, 'T4': 45877, 'T5': 43213, 'T7': 1748, 'T8': 302, 'eps2': 21219, 'T2': 4605, 'T3': 9597, 'T6': 1056, 'T9': 1}
+max links per position among the profiles a statement removes whole: {'K': [10, 0, 0, 0], 'T1': [7, 3, 0, 0], 'T4': [4, 2, 0, 0], 'T5': [3, 1, 1, 0], 'T7': [1, 0, 0, 0], 'T8': [0, 0, 0, 0], 'T2': [7, 0, 0, 0], 'T3': [5, 0, 0, 0], 'T6': [2, 0, 0, 0], 'T9': [0, 0, 0, 0]}
+least (Vneed - V, W - weight) per statement: {'K': [0, 0], 'T1': [0, 0], 'T4': [0, 0], 'T5': [0, 0], 'T7': [0, 0], 'T8': [0, 0], 'T2': [0, 0], 'T3': [0, 0], 'T6': [0, 0], 'T9': [0, 0]}
+UNREMOVED: 0
+shapes: 20  with unremoved profiles: []
+shapes with a double place: {'K+F': {'T1': 1561}, 'K+F+R': {'T4': 185}}
+done

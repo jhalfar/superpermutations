@@ -1,0 +1,14 @@
+nat2: NEv started 2026-10-20 19:17:09, 1 threads
+'SuperpermLowerBounds.Audit5901.k10_ev' depends on axioms: [propext,
+ SuperpermLowerBounds.K16.Audit.k10_native._native.native_decide.ax_1_1]
+'SuperpermLowerBounds.Audit5901.k9_ev' depends on axioms: [propext,
+ SuperpermLowerBounds.K16.Audit.k9_native._native.native_decide.ax_1_1]
+'SuperpermLowerBounds.Audit5901.k8_ev' depends on axioms: [propext,
+ SuperpermLowerBounds.K16.Audit.k8_native._native.native_decide.ax_1_1]
+'SuperpermLowerBounds.Audit5901.t9_ev' depends on axioms: [propext,
+ Quot.sound,
+ SuperpermLowerBounds.J16.Audit.t9_native._native.native_decide.ax_1_1]
+'SuperpermLowerBounds.Audit5901.t8_ev' depends on axioms: [propext,
+ SuperpermLowerBounds.J16.Audit.t8_native._native.native_decide.ax_1_1]
+[guard] exit 0, peak committed memory of the job 7.97 GB (limit 16.0 GB)
+nat2: exit=0 wall=58s, ended 2026-10-20 19:18:07

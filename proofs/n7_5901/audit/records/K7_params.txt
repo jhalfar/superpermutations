@@ -1,0 +1,1 @@
+S=7 LO=35 NPARTS=1 DEPTH=0 CAPS=caps/capD16u_7_k.txt GTOP=96 CUT=12 POT=10,16,25 exe=run/gk4.exe

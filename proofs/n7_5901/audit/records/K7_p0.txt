@@ -1,0 +1,2 @@
+gpu run S=7 GTOP=96 (holes <= 54) LO=35 CUT=12 POT=10,16,25 part 0 of 1 at depth 0: violations 0   rows placed 639940882425   kept 320243136927   above the gate: rows placed 0 kept 0   prefixes at the gate 0 (this part 1)
+card: kept 320243136927 in 32.25s = 9.930e+09 kept/s (0.00010 us per kept); steps 908674633617, 2.8 per kept, 2.818e+10 steps/s; threads 262144, steps per round 5000, rounds 1994, splits 82139212; step slots used 90.1%; threads busy at the end of a round 82.9%; time: host gate 0.00s, split kernel 0.63s, run kernel 31.61s; device memory 692 MB

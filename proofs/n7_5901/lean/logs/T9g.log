@@ -1,0 +1,13 @@
+ev: Eval/T9g.lean started 2026-10-20 13:27:14, 2 threads, dll build/A16C.dll c61dff79308cc737
+false
+(11105597, 59706146, 0, 11105939)
+[(11105595, 59706136, 0, 11105895),
+ (1, 5, 0, 7),
+ (0, 0, 0, 6),
+ (0, 0, 0, 6),
+ (1, 5, 0, 7),
+ (0, 0, 0, 6),
+ (0, 0, 0, 6),
+ (0, 0, 0, 6)]
+[guard] exit 0, peak committed memory of the job 0.55 GB (limit 16.0 GB)
+ev: exit=0 wall=47s, ended 2026-10-20 13:28:01

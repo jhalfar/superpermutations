@@ -1,0 +1,13 @@
+2026-10-20 19:15:54 start NK7_0
+2026-10-20 19:23:01 queue limited to K7 (coordinator: 5,900 has priority); K6 later: cp nk_order_full.txt nk_order.txt; ./nk_queue.sh 3
+2026-10-20 21:52:11 done NK7_0 wall=9377s
+2026-10-20 21:52:11 start NK7_1
+2026-10-21 01:35:03 done NK7_1 wall=13371s
+2026-10-21 01:35:03 start NK7_2
+2026-10-21 13:48:01 done NK7_2 wall=43978s
+2026-10-21 13:48:01 start NK7_3
+2026-10-21 16:46:29 done NK7_3 wall=10707s
+2026-10-21 16:46:29 queue finished
+2026-10-24 03:26:44 start NK6_00
+2026-10-24 07:12:36 done NK6_00 wall=13552s
+2026-10-24 07:12:36 start NK6_01

@@ -1,0 +1,35 @@
+====================================================================================================
+TIER D, defect 16: need sum v >= 40 within sum w <= 96
+tables: max val of a sequence within weight 90: 44; within 96: 59;  chains: 60:39 64:39 68:41 72:44 76:44 80:44 84:44 88:44 92:54 96:58
+eps-0 hanging items of positive value: 1194; plain excess pieces g=1: 546, g=2: 405; excess parts in all: 44810 (two-piece: 42584)
+HB0: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 2 2 2 2 2 2 2 5 5 9 9 9 9 9 9 9 9 9 9 12 12 12 12 13 13 16 16 16 16 16 16 19 19 19 19 19 19 20 20 22 22 22 23 26 26 26 26 26 26 26 26 26 26 26 26 27 28 28 28 29 29 36 38 38 38 38 38 38 38 38 38 38 38 38 38 38 38 40 40 40 40
+(profiles) surviving: 299595 = eps 0: 160906, eps 1: 117022, eps 2: 21667;  shapes 361, cells 3210
+   realised piece by piece (LOW): eps 0: 152901, eps 1: 113311, eps 2: 21547
+   eps 0: shapes 206, by pieces: 1:11 2:70 3:90 4:30 5:5;  cells 2055
+   eps 1: shapes 121, by pieces: 2:52 3:56 4:13;  cells 962
+   eps 2: shapes 34, by pieces: 2:13 3:19 4:2;  cells 193
+(defect-15 statements as cuts) removed: S1:3999 S2:562 S3:16 S4:370 S5:92;  left: 294556 = eps 0: 160906, eps 1: 114172, eps 2: 19478;  shapes left 322, cells left 2988
+   left, eps 0: shapes 206, by pieces: 1:11 2:70 3:90 4:30 5:5
+   left, eps 1: shapes 101, by pieces: 2:36 3:52 4:13
+   left, eps 2: shapes 15, by pieces: 3:13 4:2
+statements (pieces; V, W; B): 20;  written shapes_D16_D.tsv, cells_D16_D.tsv, stmts_D16_D.tsv
+   (S; 40, 96; 0)  links<=10  profiles 248  slack 19  left after 15: 248  shapes 11
+   (R S; 46, 89; 1)  links<=7  profiles 9210  slack 16  left after 15: 9210  shapes 16
+   (S S; 50, 84; 0)  links<=7,3  profiles 12686  slack 15  left after 15: 12686  shapes 36
+   (S S; 51, 83; 1)  links<=6,2  profiles 19346  slack 14  left after 15: 19346  shapes 54
+   (S S; 55, 78; 0)  links<=4,2  profiles 1561  slack 7  left after 15: 0  shapes 13
+   (S S; 56, 77; 1)  links<=2,1  profiles 1738  slack 5  left after 15: 0  shapes 16
+   (R R S; 52, 82; 2)  links<=5  profiles 37892  slack 12  left after 15: 37892  shapes 18
+   (R S S; 56, 77; 1)  links<=4,2  profiles 57978  slack 10  left after 15: 57416  shapes 30
+   (R S S; 57, 76; 2)  links<=4,1  profiles 66720  slack 9  left after 15: 66720  shapes 48
+   (R S S; 61, 71; 1)  links<=1,0  profiles 370  slack 2  left after 15: 0  shapes 6
+   (R S S; 62, 70; 2)  links<=0,0  profiles 92  slack 1  left after 15: 0  shapes 4
+   (S S S; 60, 72; 0)  links<=3,1,1  profiles 19210  slack 8  left after 15: 18952  shapes 13
+   (S S S; 61, 71; 1)  links<=2,1,1  profiles 39092  slack 6  left after 15: 38650  shapes 22
+   (S S S; 62, 70; 2)  links<=2,1,0  profiles 17671  slack 5  left after 15: 17671  shapes 24
+   (R R R S; 58, 75; 3)  links<=2  profiles 7414  slack 7  left after 15: 7414  shapes 12
+   (R R S S; 62, 70; 2)  links<=1,0  profiles 5280  slack 5  left after 15: 5264  shapes 9
+   (R R S S; 63, 69; 3)  links<=1,0  profiles 2396  slack 3  left after 15: 2396  shapes 18
+   (R S S S; 66, 65; 1)  links<=0,0,0  profiles 526  slack 2  left after 15: 526  shapes 2
+   (R S S S; 67, 64; 2)  links<=0,0,0  profiles 156  slack 1  left after 15: 156  shapes 4
+   (R R R R S; 64, 68; 4)  links<=0  profiles 9  slack 0  left after 15: 9  shapes 5

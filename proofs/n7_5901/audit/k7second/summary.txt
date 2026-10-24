@@ -1,0 +1,6 @@
+k2 statement: tables 4e6c056774886247 S 7 LO 35 G 54 CUT 12 potential 10,16,25
+gate: depth 8 parts 64 gate_count 15911 kept_top 10479 placed_top 67263 violations_top 0
+parts 64 of 64; problems []
+kept 320243136927   placed 987439450550   violations 0   cpu 22683 s (6.301 thread-hours), 0.0708 us per kept
+Table C (gk4 on the card): kept 320243136927 -> EQUAL
+RESULT: all parts present, one statement line, no violation, kept equal to Table C

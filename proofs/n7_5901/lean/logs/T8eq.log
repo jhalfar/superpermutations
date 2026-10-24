@@ -1,0 +1,5 @@
+ev: Eval/T8eq.lean started 2026-10-20 13:28:54, 2 threads, dll build/A16C.dll c61dff79308cc737
+T8 Lean equation jSearch (t8 of J16.Evals), fuel 1000, 35 parts: answer false
+  6460082 ms
+[guard] exit 0, peak committed memory of the job 0.51 GB (limit 16.0 GB)
+ev: exit=0 wall=6461s, ended 2026-10-20 15:16:35

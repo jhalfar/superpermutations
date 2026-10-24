@@ -1,0 +1,5 @@
+ev: Eval/T8cnt.lean started 2026-10-20 14:38:22, 2 threads, dll build/A16C.dll c61dff79308cc737
+T8 count, Lean rule, 35 parts: kept 7126584865 tried 36384111126 found 0 visits 7126585015
+  6925342 ms
+[guard] exit 0, peak committed memory of the job 0.51 GB (limit 16.0 GB)
+ev: exit=0 wall=6926s, ended 2026-10-20 16:33:48

@@ -1,0 +1,242 @@
+/* gk4.cu (agent n7-gpu, 2026-10-11): the kernel-alone search of kfast.c of defect 15 (a file of mine, not in this repository) on the card, fourth layout
+ * (same tree and same counts as gk.cu, gk2.cu, gk3.cu; fewer loads from device memory per kept prefix).
+ * One thread = one depth-first walk.  A frame is a KEPT prefix; a step of a thread = (pop if the frame is
+ * exhausted) + (take the next successor row if the current one has no length left) + (judge one row length) +
+ * (push if kept), so that all threads of a warp run the same code in every step.
+ * The class set (720 bits, 24 words per thread) lives in SHARED memory while gk_run runs (word-major: the 32 threads
+ * of a warp never share a bank).  A frame is 16 bytes, read and written as one vector.
+ * gk_run:   every active thread does at most K steps.
+ * gk_steal: every idle thread takes a prefix of the host's list, or splits the shallowest frame of a random busy
+ *           thread that still has work in it (the later lengths of its current successor row, half of its untried
+ *           successors).
+ * Frame of a kept prefix with end vertex x (dd holes, t links of weight 4; m, M least and largest potential on the
+ * path before it), current successor row number j (weight 4 iff j >= n3) with len2 free classes, lengths <= l2 done:
+ *   a = cm (32, untried successors) | x << 32 (13) | len2 << 45 (3) | l2 << 48 (3) | j << 51 (5) | mkN << 56 (6)
+ *   b = m (16) | M << 16 (16) | dd << 32 (7) | t << 39 (4) | mkS << 43 (6)
+ * Tables: ROWC2[x * 32 + j] = the 6 classes (10 bits each) of the row that starts at successor j of x;
+ *   X2[(x * 32 + j) * 8 + l - 1] = end vertex of that row with length l; SUCCC[x * 6 + q / 6] = class of the start of
+ *   successor q (10 bits each); RULE entry: A1 (16) | A2 << 16 | flags << 32 (1 kN, 2 kS, 4 violation) | mkN << 40 | mkS << 48.
+ */
+typedef unsigned long long u64;
+typedef unsigned int u32;
+#define GM 128
+#define RM 256
+#define STK 160
+#define UW 24
+#define BT 256
+#ifndef RC
+#define RC 0      /* 1: the parent frame (and its row) stays in registers: a leaf costs no frame store, no frame load, no row reload */
+#endif
+#ifndef FC
+#define FC 0      /* > 0 (power of 2): the last FC frames and their rows in shared memory */
+#endif
+#ifndef LEARN
+#define LEARN 0   /* 1: a row length that is not kept below this frame (rule or cut: both depend on the frame and the length only) is not judged again; an empty mask drops the untried successors of that link kind */
+#endif
+#if LEARN
+#define LEARNK() do { if (type) { mkS &= ~(1u << (6 - l2)); if (!mkS) cm &= (1u << n3) - 1; } else { mkN &= ~(1u << (6 - l2)); if (!mkN) cm &= ~((1u << n3) - 1); } } while (0)
+#else
+#define LEARNK()
+#endif
+#ifndef NR
+#define NR 1      /* successor rows scanned per step at most */
+#endif
+struct __align__(16) V2 { u64 a, b; };
+#define UBIT(c) ((sh[((c) >> 5) * BT + tid] >> ((c) & 31)) & 1u)
+#define USET(c) (sh[((c) >> 5) * BT + tid] |= 1u << ((c) & 31))
+#define UCLR(c) (sh[((c) >> 5) * BT + tid] &= ~(1u << ((c) & 31)))
+
+#define UNPACKN(w) do { cm = (u32)(w).a; x = (int)((w).a >> 32) & 0x1fff; len2 = (int)((w).a >> 45) & 7; l2 = (int)((w).a >> 48) & 7; j = (int)((w).a >> 51) & 31; \
+    mkN = (u32)((w).a >> 56) & 63; m = (int)(short)((w).b & 0xffff); M = (int)(short)(((w).b >> 16) & 0xffff); dd = (int)((w).b >> 32) & 127; \
+    t = (int)((w).b >> 39) & 15; mkS = (u32)((w).b >> 43) & 63; type = j >= n3; } while (0)
+#define UNPACK(w) do { UNPACKN(w); rc2 = ROWC2[x * 32 + j]; } while (0)
+#define PACKA() ((u64)cm | ((u64)x << 32) | ((u64)len2 << 45) | ((u64)l2 << 48) | ((u64)j << 51) | ((u64)mkN << 56))
+#define PACKB() ((u64)(m & 0xffff) | ((u64)(M & 0xffff) << 16) | ((u64)dd << 32) | ((u64)t << 39) | ((u64)mkS << 43))
+
+static __device__ __forceinline__ u32 avail6(u64 w, int q0, int jlo, int jhi, const u32 *sh, int tid) {
+    u32 av = 0;
+    for (int p = 0; p < 6; p++) { const int q = q0 + p; const u32 c = (u32)(w >> (10 * p)) & 1023; const u32 fr = UBIT(c) ^ 1u; if (q >= jlo && q < jhi) av |= fr << q; }
+    return av;
+}
+
+extern "C" __global__ void gk_run(const u64 *ROWC2, const V2 *SUCCC, const unsigned short *X2, const u64 *RULE,
+                                  u32 *USED, int *HDR, u64 *CNT, V2 *STKM, u64 *CTL,
+                                  int N, int K, int n3, int ns, int cut, int pota, int potb, int poth)
+{
+    __shared__ u32 sh[UW * BT];
+#if FC
+    __shared__ u64 fa[FC * BT], fb[FC * BT], fr[FC * BT];
+#endif
+    const int tid = threadIdx.x;
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i >= N) return;
+    int *h = HDR + 4 * i;
+    if (h[0] == 0) return;
+    u32 *ug = USED + (size_t)UW * i;
+    for (int w = 0; w < UW; w++) sh[w * BT + tid] = ug[w];
+    V2 *sk = STKM + (size_t)i * STK;
+    int top = h[1];
+    const int base = h[2];
+    u32 cm, mkN, mkS; int x, len2, m, M, dd, t, j, l2, type; u64 rc2;
+    { V2 w = sk[top]; UNPACK(w); }
+    u32 kept = 0, nodes = 0, viol = 0, cutr = 0;
+    u64 pa_ = 0, pb_ = 0, prc_ = 0; u32 pv_ = 0; int clo = top;
+    int it, alive = 1;
+    for (it = 0; it < K; it++) {
+        u32 mk2 = type ? mkS : mkN;
+        u32 rem = (mk2 >> (6 - len2)) & ((1u << (len2 - l2)) - 1);          /* bit i: length len2 - i still to judge */
+        if (!(rem | cm)) {                                                  /* exhausted: back to the parent, free the classes of the row */
+            if (top == base) { alive = 0; it++; break; }
+            top--;
+#if RC
+            if (pv_) { V2 w; w.a = pa_; w.b = pb_; UNPACKN(w); rc2 = prc_; pv_ = 0; } else { V2 w = sk[top]; UNPACK(w); }
+#elif FC
+            if (top >= clo) { V2 w; const int s_ = (top & (FC - 1)) * BT + tid; w.a = fa[s_]; w.b = fb[s_]; UNPACKN(w); rc2 = fr[s_]; } else { V2 w = sk[top]; UNPACK(w); clo = top; }
+#else
+            { V2 w = sk[top]; UNPACK(w); }
+#endif
+            for (int q = 0; q < l2; q++) { u32 c = (u32)(rc2 >> (10 * q)) & 1023; UCLR(c); }
+            mk2 = type ? mkS : mkN;
+            rem = (mk2 >> (6 - len2)) & ((1u << (len2 - l2)) - 1);
+        }
+        if (!rem) {                                                         /* next successor row */
+            if (!cm) continue;
+            for (int nr = 0; ; ) {
+            j = __ffs((int)cm) - 1; cm &= cm - 1;
+            type = j >= n3; rc2 = ROWC2[x * 32 + j];
+            len2 = 1; u32 ok = 1;
+            for (int q = 1; q < 6; q++) { u32 c = (u32)(rc2 >> (10 * q)) & 1023; ok &= UBIT(c) ^ 1u; len2 += (int)ok; }
+            l2 = 0; mk2 = type ? mkS : mkN;
+            rem = (mk2 >> (6 - len2)) & ((1u << len2) - 1);
+            if (rem || ++nr >= NR || !cm) break;
+            }
+            if (!rem) { len2 = 0; continue; }
+        }
+        l2 = len2 - (31 - __clz((int)rem));                                 /* the shortest length not judged yet */
+        nodes++;
+        const int tt = t + type, r2 = top + 1, dd2 = dd + 6 - l2;
+        const u64 R = RULE[((size_t)tt * GM + dd2) * RM + r2];
+        if (R & (4ull << 32)) { viol++; continue; }
+        u32 a = (u32)(R >> 32) & 1, b = (u32)(R >> 33) & 1;
+        if (!(a | b)) { LEARNK(); continue; }
+        int m2 = m, M2 = M;
+        if (cut) {
+            int fp = pota * top - 2 * poth * t - potb * dd - (type ? poth : 0);
+            if (fp < m2) m2 = fp;
+            if (fp > M2) M2 = fp;
+            int f = pota * r2 - 2 * poth * tt - potb * dd2, g = f - poth;
+            int A1 = (int)(short)(R & 0xffff), A2 = (int)(short)((R >> 16) & 0xffff);
+            int mN = f < m2 ? f : m2, MN = f > M2 ? f : M2, mS = g < m2 ? g : m2, MS = g > M2 ? g : M2;
+            if (a && mN < 0 && !(MN + mN >= A1 || mN >= A2)) { a = 0; cutr++; }
+            if (b && mS < 0 && !(MS + mS >= A1 || mS >= A2)) { b = 0; cutr++; }
+            if (!(a | b)) { LEARNK(); continue; }
+        }
+        kept++;
+#if RC
+        if (pv_) { V2 w; w.a = pa_; w.b = pb_; sk[top - 1] = w; }
+        pa_ = PACKA(); pb_ = PACKB(); prc_ = rc2; pv_ = 1;
+#elif FC
+        { if (top - clo == FC) { V2 w; const int s_ = (clo & (FC - 1)) * BT + tid; w.a = fa[s_]; w.b = fb[s_]; sk[clo] = w; clo++; }
+          const int s_ = (top & (FC - 1)) * BT + tid; fa[s_] = PACKA(); fb[s_] = PACKB(); fr[s_] = rc2; }
+#else
+        { V2 w; w.a = PACKA(); w.b = PACKB(); sk[top] = w; }
+#endif
+        for (int q = 0; q < l2; q++) { u32 c = (u32)(rc2 >> (10 * q)) & 1023; USET(c); }
+        const int xn = X2[((x * 32 + j) << 3) + l2 - 1];
+        top++;
+        if (top >= STK - 1) { CTL[3] = 1; alive = 0; break; }
+        x = xn; dd = dd2; t = tt; m = m2; M = M2;
+        mkN = (u32)(R >> 40) & 63; mkS = (u32)(R >> 48) & 63;
+        {
+            const int jlo = (a && mkN) ? 0 : n3, jhi = (b && mkS) ? ns : n3;
+            u32 av = 0;
+            if (jlo < jhi) {
+                const V2 *sc = SUCCC + x * 3;
+                const V2 s0 = sc[0];
+                av = avail6(s0.a, 0, jlo, jhi, sh, tid) | avail6(s0.b, 6, jlo, jhi, sh, tid);
+                if (jhi > 12) {
+                    const V2 s1 = sc[1], s2 = sc[2];
+                    av |= avail6(s1.a, 12, jlo, jhi, sh, tid) | avail6(s1.b, 18, jlo, jhi, sh, tid) | avail6(s2.a, 24, jlo, jhi, sh, tid);
+                }
+            }
+            cm = av;
+        }
+        len2 = 0; l2 = 0; j = 0; type = 0; rc2 = 0;
+    }
+#if RC
+    if (pv_) { V2 w; w.a = pa_; w.b = pb_; sk[top - 1] = w; }
+#elif FC
+    for (int g = clo; g < top; g++) { V2 w; const int s_ = (g & (FC - 1)) * BT + tid; w.a = fa[s_]; w.b = fb[s_]; sk[g] = w; }
+#endif
+    { V2 w; w.a = PACKA(); w.b = PACKB(); sk[top] = w; }
+    for (int w = 0; w < UW; w++) ug[w] = sh[w * BT + tid];
+    h[1] = top; h[0] = alive;
+    u64 *cn = CNT + 8 * (size_t)i;
+    cn[0] += kept; cn[1] += nodes; cn[2] += viol; cn[3] += cutr; cn[4] += (u64)it;
+    if (alive) atomicAdd(CTL + 1, 1ull);
+}
+
+extern "C" __global__ void gk_steal(const u64 *ROWC2, u32 *USED, int *HDR, V2 *STKM, int *LOCK, u64 *CTL,
+                                    const u32 *TASKU, const u64 *TASKF, int N, int qn, int depth0, int round, int tries, int n3)
+{
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i >= N) return;
+    int *h = HDR + 4 * i;
+    if (h[0] != 0) return;
+    u32 *ub = USED + (size_t)UW * i;
+    V2 *sk = STKM + (size_t)i * STK;
+    if (CTL[0] < (u64)qn) {
+        u64 q = atomicAdd(CTL, 1ull);
+        if (q < (u64)qn) {
+            const u32 *tu = TASKU + q * UW;
+            for (int w = 0; w < UW; w++) ub[w] = tu[w];
+            sk[depth0].a = TASKF[2 * q]; sk[depth0].b = TASKF[2 * q + 1];
+            h[1] = depth0; h[2] = depth0; __threadfence(); h[0] = 2;
+            return;
+        }
+    }
+    u32 s = (u32)i * 2654435761u + (u32)round * 0x9E3779B9u + 12345u;
+    for (int a = 0; a < tries; a++) {
+        s ^= s << 13; s ^= s >> 17; s ^= s << 5;
+        int v = (int)(((u64)s * (u64)N) >> 32);
+        if (v == i) continue;
+        int *hv = HDR + 4 * v;
+        if (hv[0] == 0) continue;
+        { int got = 0; for (int sp = 0; sp < 64 && !got; sp++) got = atomicCAS(LOCK + v, 0, 1) == 0; if (!got) continue; }
+        __threadfence();
+        int vt = hv[1], vb = hv[2], found = 0;
+        V2 *vs = STKM + (size_t)v * STK;
+        for (int f = vb; f <= vt; f++) {
+            const u64 wa = vs[f].a, wb = vs[f].b;
+            u32 cm = (u32)wa, mkN = (u32)(wa >> 56) & 63, mkS = (u32)(wb >> 43) & 63;
+            int len2 = (int)(wa >> 45) & 7, l2 = (int)(wa >> 48) & 7, j = (int)(wa >> 51) & 31;
+            u32 mk2 = (j >= n3) ? mkS : mkN;
+            u32 rem = (mk2 >> (6 - len2)) & ((1u << (len2 - l2)) - 1);
+            int pc = __popc(cm), pr = __popc(rem), nst, tl = 0, ls = l2;   /* tl: the thief takes the lengths after ls */
+            if (f < vt) { nst = (pc + 1) / 2; tl = pr > 0; }
+            else if (pr > 0) { nst = (pc + 1) / 2; if (pc == 0 && pr >= 2) { tl = 1; ls = len2 - (31 - __clz((int)rem)); } }
+            else nst = pc / 2;
+            if (nst == 0 && !tl) continue;
+            u32 scm = cm;
+            for (int q = 0; q < pc - nst; q++) scm &= scm - 1;
+            u32 vcm = cm ^ scm;
+            const u64 k0 = wa & ~0xffffffffull & ~(7ull << 45) & ~(7ull << 48);
+            vs[f].a = k0 | vcm | ((u64)(tl ? ls : len2) << 45) | ((u64)l2 << 48);
+            sk[f].a = k0 | scm | ((u64)(tl ? len2 : 0) << 45) | ((u64)(tl ? ls : 0) << 48);
+            sk[f].b = wb;
+            const u32 *uv = USED + (size_t)UW * v;
+            for (int w = 0; w < UW; w++) ub[w] = uv[w];
+            u64 ga = wa;                                    /* the rows of the frames above f: successor j, length l2 of the frame below */
+            for (int g = f; g < vt; g++) {
+                if (g > f) ga = vs[g].a;
+                u64 rg = ROWC2[((int)(ga >> 32) & 0x1fff) * 32 + ((int)(ga >> 51) & 31)]; int lg = (int)(ga >> 48) & 7;
+                for (int q = 0; q < lg; q++) { u32 c = (u32)(rg >> (10 * q)) & 1023; ub[c >> 5] &= ~(1u << (c & 31)); }
+            }
+            h[1] = f; h[2] = f; __threadfence(); h[0] = 2;
+            found = 1;
+            break;
+        }
+        __threadfence(); LOCK[v] = 0;
+        if (found) { atomicAdd(CTL + 4, 1ull); break; }
+    }
+}
