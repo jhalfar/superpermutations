@@ -34,7 +34,7 @@ Every word over 7 symbols that contains all 5,040 permutations has at least 5,89
 * method: Lean theorem covers_lower_bound_7_native, level 2: level 1 (model, kernel-checked) plus 22 search equations evaluated by compiled code with native_decide; proofs/lean/n7
 * credit: Jakub Halfar (with Claude); date 2026-10-07
 * reproduce: `JOBS=8 ./build.sh full` in `proofs/lean/n7`
-* evidence: `proofs/lean/n7/README.md` (sha256 `440a0fc92aa1...`)
+* evidence: `proofs/lean/n7/README.md` (sha256 `c3a64e9055fa...`)
 * source: `proofs/lean/n7/README.md:1`
 * notes: Level 1 alone depends on propext, Classical.choice, Quot.sound; the 22 search equations rest on native_decide (one axiom each).
 
