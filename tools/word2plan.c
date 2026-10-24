@@ -44,6 +44,9 @@
                      [--rephase OUT.txt] [--rephase-narrow OUT.txt] [--quiet]
           --noskip       the plan will be loaded with trailsearch --noskip (no cut drops a duplicate)
           --events FILE  also list every event with its position in OTHER and the overlap with the previous event
+   Exit code: 0 if the plan rebuilds OTHER and is safe to search from, 2 if it does not rebuild OTHER, 3 if it does but
+   is NOT safe to search from (without --rebase or --rephase); the plan is written in every case.  The search tools
+   refuse a plan that is not safe (exit code 4).
 
    Words: "opening" = cut, "gap" = weight of the step that is cut, "event" = one piece as written.
 
@@ -1449,5 +1452,7 @@ int main(int argc, char **argv) {
         safe
             ? "; every event holds whole windows and every skipped window is declared: safe to search from"
             : "; BUT see the issues above: NOT safe to search from. Use --rebase NEWBASE.txt and convert again on NEWBASE");
-    return 0;
+    /* exit code 3: the plan is written, but the search tools refuse it; with --rebase or --rephase the new base word or
+       word is what was asked for, so the code stays 0 */
+    return safe || rebase || reph || reph_narrow ? 0 : 3;
 }
