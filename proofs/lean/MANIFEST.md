@@ -1380,7 +1380,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 ## words12/
 
 * `words12/Audit12.lean` (1.8 KB): the statements for n = 12 written out with no definition of this project
-* `words12/README.md` (7.9 KB): the statements for n = 12, what differs from n = 11, how to build
+* `words12/README.md` (8.9 KB): the statements for n = 12, what differs from n = 11, how to build
 * `words12/Superperm/TwoSided12.lean` (1.1 KB): lower and upper bound in one statement for n = 12, with Liu's lower
   bound
 * `words12/Superperm/TwoSidedAB12.lean` (2.1 KB): the same with the lower bounds of Theorems A and B

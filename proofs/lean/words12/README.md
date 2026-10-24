@@ -128,6 +128,23 @@ files, `Main` and the statement written by `check_word.sh`. The part files commi
 from `UpperHunter12` on, which load all of Mathlib, 9.1 to 9.2 GB. The files for n = 12 take 2.1 GB of the
 build directory: 0.9 GB of generated Lean files and 1.2 GB of compiled modules.
 
+## The word of 522,736,969 letters
+
+The newer word for n = 12, `words/superpermutation-12-522736969.txt.xz`, has not been checked in Lean yet. It
+meets the condition of the method used here: `../words/word_info.py` finds every one of the 39,916,800
+rotation classes in one stretch (`classes_full=39916800`). So one command makes the theorem for it, with the
+same generator `gen12.py` and the same checkers as for 522,737,175:
+
+```sh
+../words/check_word.sh ../../../words/superpermutation-12-522736969.txt.xz --jobs 4 --minfree 6 --yes
+```
+
+It writes `Checked_12_522736969.lean` with `HasWord 12 522736969`, the same statement written out with no
+definition of this project, and `#print axioms`, which must show `propext`, `Classical.choice` and
+`Quot.sound` only. Expect about what the table above gives for 522,737,175: 0.9 GB of generated Lean files,
+about 7 hours of Lean time and 2.1 GB of build directory. The generated files are not stored here, and there
+is no `generated.sha256` for them yet.
+
 ## What is trusted
 
 As in `../words`: the Lean kernel, the definitions `Covers` and `HasWord`, for the statements about
