@@ -16,6 +16,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `lower/build.sh`
 * `lower/certificates/C14_843_63334_16000/build.sh`
 * `n7/build.sh`
+* `n7_5900/build.sh`
 * `n8/build.sh`
 * `n8_46134/build.sh`
 * `n8struct/build.sh`
@@ -1112,6 +1113,161 @@ them, by `python3` or by Lean, and needs mode 644 only.
   `native_decide`
 * `n7/sources.sha256` (7.6 KB): SHA-256 of the 79 Lean files the final theorem is compiled from (60 here, 17 of
   `lower/`, 2 of `words/`)
+
+## n7_5900/
+
+* `n7_5900/Audit5900.lean` (9.5 KB): Audit of level 1 for 5,900: the theorem from the finite statements (no
+  `native_decide`)
+* `n7_5900/Audit5900Native.lean` (1.8 KB): Audit of level 2 for 5,900: the final statement with the searches evaluated
+* `n7_5900/Audit5900Search.lean` (5.7 KB): Audit of level 1 for 5,900 with the finite statements replaced by search
+  equations
+* `n7_5900/LowerBounds/A15Arith.lean` (11.2 KB): The arithmetic of the accounting at defect 15 (the written proof,
+  sections 3.3 and 3.7)
+* `n7_5900/LowerBounds/A15Core.lean` (20.4 KB): The pieces of a configuration at defect 15 against the tables and the
+  joint statements
+* `n7_5900/LowerBounds/A15Cut.lean` (14.8 KB): The accounting at defect 15: Lemma ACC15, the excess, the number of
+  chains, the cuts
+* `n7_5900/LowerBounds/A15Final.lean` (2.8 KB): No valid configuration of cost at most 135 on 7 symbols
+* `n7_5900/LowerBounds/A15Pieces.lean` (30.3 KB): From the components of a configuration to pieces on words
+* `n7_5900/LowerBounds/A15Tables.lean` (6.0 KB): Certificates for the arithmetic of the accounting at defect 15
+  (generated; do not edit)
+* `n7_5900/LowerBounds/A15Test.lean` (3.3 KB): Tests of the arithmetic of the accounting at defect 15
+* `n7_5900/LowerBounds/F5900.lean` (2.8 KB): 5,900 for 7 symbols, from the searches (the written proof, section 6)
+* `n7_5900/LowerBounds/F5900Joint.lean` (3.6 KB): 5,900 for 7 symbols, from the finite statements and from the
+  searches of the parts that
+* `n7_5900/LowerBounds/F5900Native.lean` (1.7 KB): 5,900 for 7 symbols, with the searches evaluated as compiled code
+* `n7_5900/LowerBounds/J15Final.lean` (15.7 KB): The joint statements of 5,900 from six searches (the written proof,
+  sections 5.3 to 5.5)
+* `n7_5900/LowerBounds/J15FinalNative.lean` (6.1 KB): The six evaluated statements of part C, with the searches
+  evaluated as compiled code
+* `n7_5900/LowerBounds/J15Rules.lean` (52.5 KB): A counterexample with the fewest rows is found (the written proof,
+  section 5.4)
+* `n7_5900/LowerBounds/J15S1_00Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S1_01Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S1_02Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S1_03Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S1_04Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S1_05Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S1_06Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S1_07Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S1_08Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S1_09Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S1_10Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S1_11Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A1_00Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A1_01Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A1_02Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_00Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_01Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_02Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_03Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_04Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_05Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_06Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_07Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_08Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_09Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_10Native.lean` (2.1 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_11Native.lean` (2.1 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_12Native.lean` (2.1 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_13Native.lean` (2.1 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_14Native.lean` (2.1 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_15Native.lean` (2.1 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_16Native.lean` (2.1 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S2A2_17Native.lean` (2.1 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S3Native.lean` (2.0 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S4Native.lean` (1.9 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15S5Native.lean` (1.9 KB): A statement of part C of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/J15Search.lean` (18.8 KB): The search for the joint statements of 5,900 (the written proof,
+  section 5.4)
+* `n7_5900/LowerBounds/J15SmallSearch.lean` (5.2 KB): Small joint searches, evaluated by the kernel (5 symbols)
+* `n7_5900/LowerBounds/J15Sound.lean` (70.8 KB): The search of `J15Search.lean` is complete
+* `n7_5900/LowerBounds/J15TestNative.lean` (5.0 KB): Tests of the compiled joint search (not part of any proof)
+* `n7_5900/LowerBounds/KDefs.lean` (3.4 KB): The statements of the proof of 5,900 on words
+* `n7_5900/LowerBounds/KFinal.lean` (12.1 KB): Table T' and Theorem K from search equations (the written proof,
+  sections 2.2, 2.3, 4.6)
+* `n7_5900/LowerBounds/KFinalNative.lean` (6.9 KB): Table T' and Theorem K, with the searches evaluated as compiled
+  code
+* `n7_5900/LowerBounds/KK0_00Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK0_01Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK0_02Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK0_03Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK0_04Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK0_05Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK0_06Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK0_07Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK0_08Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK0_09Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK0_10Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK1_00Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK1_01Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK1_02Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK1_03Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK1_04Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK1_05Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK1_06Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK1_07Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK2_00Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK2_01Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK2_02Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK2_03Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK2_04Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK2_05Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK2_06Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK2_07Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK2_08Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK2_09Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK2_10Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK2_11Native.lean` (1.6 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK3Native.lean` (1.5 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK4Native.lean` (1.5 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK5Native.lean` (1.5 KB): A statement of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KK87Native.lean` (1.8 KB): Statements of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KPot.lean` (27.8 KB): The potential, Lemma REV and Lemma CUT (the written proof, sections 4.4
+  and 4.5)
+* `n7_5900/LowerBounds/KRev.lean` (11.0 KB): Reading a sequence backwards (the written proof, section 4.3)
+* `n7_5900/LowerBounds/KRules.lean` (14.7 KB): From search equations to the statements F(s; lo - 1, hi)
+* `n7_5900/LowerBounds/KSearch.lean` (14.4 KB): The search for the kernel-alone statements of 5,900 (the written
+  proof, section 4)
+* `n7_5900/LowerBounds/KSmall.lean` (2.2 KB): The chain of proofs of part B on 5 symbols, with the searches evaluated
+  by the kernel
+* `n7_5900/LowerBounds/KSmallNative.lean` (2.4 KB): Statements of part B of 5,900, evaluated as compiled code
+* `n7_5900/LowerBounds/KSmallSearch.lean` (2.8 KB): Small searches with the reversal cut, evaluated by the kernel (5
+  symbols)
+* `n7_5900/LowerBounds/KSound.lean` (33.4 KB): The search of `KSearch.lean` is complete
+* `n7_5900/LowerBounds/KTables.lean` (6.2 KB): Tables for 5,900 (generated; do not edit)
+* `n7_5900/LowerBounds/KTestNative.lean` (4.3 KB): Tests of the compiled search of `KSearch.lean` (not part of any
+  proof)
+* `n7_5900/LowerBounds/KTestTables.lean` (5.4 KB): Reference tables for tests (generated; do not edit)
+* `n7_5900/PROOF_5900.md` (75.0 KB): L(7) >= 5,900: the written proof
+* `n7_5900/README.md` (6.5 KB): what is proven, the parts, how to build, what it cost, what is trusted
+* `n7_5900/build.sh` (12.0 KB): Build the proof that a superpermutation on 7 symbols has at least 5,900 letters.
+* `n7_5900/evaluations.txt` (1.4 KB): the evaluation modules of level 2 with the library each one loads, in the order
+  of the run
+* `n7_5900/sources.sha256` (10.0 KB): SHA-256 of the Lean files of this directory, checked by build.sh
+* `n7_5900/tools/README.md` (1.4 KB): what is proven, the parts, how to build, what it cost, what is trusted
+* `n7_5900/tools/j15/gates.py` (1.2 KB): The gates of the six statements (piece, rows, classes) and the number of
+  modules; read by gen_native.py and by
+* `n7_5900/tools/j15/gen_native.py` (8.4 KB): Generates the evaluation modules of part C of 5,900
+  (LowerBounds/J15*Native.lean), J15FinalNative.lean, the or
+* `n7_5900/tools/j15/mkorder.py` (1.8 KB): Writes scratchJ15/both_order.txt: the evaluation modules of part B
+  (scratchK/native_order.txt) and of part C
+* `n7_5900/tools/k/gen_native.py` (9.0 KB): Generates the evaluation modules of part B of 5,900
+  (LowerBounds/K*Native.lean), KFinalNative.lean and the ord
+* `n7_5900/tools/k/gen_tables.py` (2.9 KB): Generates LowerBounds/KTables.lean from PTables.lean (set B) and
+  capD15.txt (table D; tables/ here).
+* `n7_5900/tools/k/gen_testtables.py` (1.5 KB): Generates LowerBounds/KTestTables.lean: the reference tables D^u_7,
+  D^u_8 (rows T_0..T_(S-1), D_S) of the firs
+* `n7_5900/tools/tables/capD15.txt` (2.0 KB): table file read by the generators
+* `n7_5900/tools/tables/capD15u_0.txt` (302 B): table file read by the generators
+* `n7_5900/tools/tables/capD15u_1.txt` (613 B): table file read by the generators
+* `n7_5900/tools/tables/capD15u_2.txt` (928 B): table file read by the generators
+* `n7_5900/tools/tables/capD15u_3.txt` (1.2 KB): table file read by the generators
+* `n7_5900/tools/tables/capD15u_4.txt` (1.6 KB): table file read by the generators
+* `n7_5900/tools/tables/capD15u_5.txt` (1.9 KB): table file read by the generators
+* `n7_5900/tools/tables/capD15u_6.txt` (2.2 KB): table file read by the generators
+* `n7_5900/tools/tables/capD15u_7.txt` (2.6 KB): table file read by the generators
+* `n7_5900/tools/tables/capD15u_8.txt` (2.9 KB): table file read by the generators
 
 ## n8/
 
