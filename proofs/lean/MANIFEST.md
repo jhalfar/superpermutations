@@ -16,6 +16,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `lower/build.sh`
 * `n7/build.sh`
 * `n8/build.sh`
+* `n8_46134/build.sh`
 * `n8struct/build.sh`
 * `words/build.sh`
 * `words/check_word.sh`
@@ -25,7 +26,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 * `.gitattributes` (344 B): keeps LF line ends in text files, so that the hashes hold on every system
 * `MANIFEST.md`: this list
-* `README.md` (29.2 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
+* `README.md` (29.7 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
 * `SHA256SUMS`: SHA-256 of every other file of this directory
 * `lean-toolchain` (25 B): the Lean version, `leanprover/lean4:v4.31.0`
 
@@ -1131,6 +1132,31 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `n8/variants/v46132bk/files.sha256` (3.4 KB): SHA-256 of the 38 hand-written Lean files of the variant for 46132
   (his with the changes, and the new ones)
 * `n8/variants/v46132bk/generated.sha256` (8.7 KB): SHA-256 of the parts of the search that `plan.py` writes for 46132
+
+## n8_46134/
+
+* `n8_46134/AuditD.lean` (3.5 KB): both levels restated with the definitions of `Challenge.lean` and of the
+  preimage-chain library
+* `n8_46134/LowerBounds/D8.lean` (8.4 KB): k = 8: `covers_boundD_8` from the three hypotheses about chains
+* `n8_46134/LowerBounds/DFinal.lean` (1.9 KB): `covers_boundD_8_of_search`: the bound from the three search equations
+  (level 1)
+* `n8_46134/LowerBounds/DFinalNative.lean` (3.3 KB): `covers_lower_bound_8_native`, `ssuper_lower_bound_8_native`
+  (level 2)
+* `n8_46134/LowerBounds/DLine1Native.lean` (1.7 KB): evaluation by `native_decide`: the line 4 r <= 9 δ + 56
+* `n8_46134/LowerBounds/DLine2Native.lean` (1.8 KB): evaluation by `native_decide`: the line 17 r <= 38 δ + 264
+* `n8_46134/LowerBounds/DModel.lean` (8.9 KB): the hypotheses for model chains, and from them for the chains of the
+  preimage-chain library
+* `n8_46134/LowerBounds/DSmall.lean` (1.5 KB): `ssuper_ge_153_D`: Theorem D on 5 symbols with the kernel search
+* `n8_46134/LowerBounds/DSmallSearch.lean` (631 B): a search on 5 symbols, evaluated by the kernel
+* `n8_46134/LowerBounds/DTestNative.lean` (2.6 KB): small searches by the kernel and by `native_decide`, and searches
+  with known answers
+* `n8_46134/LowerBounds/DTheorem.lean` (5.9 KB): Theorem D for every k >= 5: `theoremD_pathwise`, `superperm_boundD`,
+  `covers_length_ge_boundD`
+* `n8_46134/LowerBounds/DZoneNative.lean` (2.0 KB): evaluation by `native_decide`: the zone statement
+* `n8_46134/README.md` (6.5 KB): L(8) >= 46,134: the two levels, the statements and axioms, the argument, the files,
+  how to build
+* `n8_46134/build.sh` (10.1 KB): builds the engine, level 1, the three evaluations, the theorem and the audit; checks
+  the axioms
 
 ## n8struct/
 

@@ -22,6 +22,10 @@ part. This directory holds Lean 4 proofs about how long such a word has to be. I
   kernel for k = 8 to 14.
 * `n8/` takes William Echols's Lean proof of 46,130 <= L(8) to 46,131 and 46,132 and removes `native_decide`
   from it. It is a second proof, independent of `lower/`, of what Theorem C gives for n = 8 up to 46,132.
+* `n8_46134/` proves that a superpermutation on 8 symbols has at least 46,134 letters (Theorem D). Like `n7/`
+  it has two levels: level 1 is checked by the kernel and proves the bound from three equations about a
+  finite search; level 2 evaluates the three equations by `native_decide`. Without `native_decide` the bound
+  for n = 8 stays 46,133 (Theorem C).
 * `n8struct/` proves two facts about the selection of my word of 46,174 letters for n = 8: the closed walk of
   27 loops costs 16 and is one closed trail, and four copies of it fit into the 120 loops in exactly one way
   up to renaming and reversal. Kernel only.
@@ -43,7 +47,8 @@ The bounds proven here for the length L(n) of the shortest superpermutation:
 | 14 | 93,891,107,960 | 93,891,141,008 | 93,905,309,790 |
 
 The 5,899 for n = 7 is not a value of Theorem C. It is the result of `n7/`, and it is the one bound of
-this table whose proof trusts compiled code.
+this table whose proof trusts compiled code. For n = 8, `n8_46134/` gives 46,134 with three equations
+evaluated by compiled code; the table keeps the bound that the kernel checks alone.
 Jay Pantone announced a table of lower bounds on 29 September 2026: 46,130, 408,468, 4,033,374, 43,917,903,
 522,622,378 and 6,746,626,519 for n = 8 to 13. His proof is not public. The proofs here were made without it.
 The upper bounds for n = 7 to 12 are literal words; those for n = 13 and 14 are values of the construction of
