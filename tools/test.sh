@@ -1,6 +1,7 @@
 #!/bin/bash
 # test.sh - build every tool and run short end-to-end sequences at n = 10 and n = 11 with known lengths and SHA-256
-# values: on Jay Pantone's n = 11 word (tests 1 to 16) and on the words of the other selections (tests 17 to 20).
+# values: on Jay Pantone's n = 11 word (tests 1 to 16) and on the words of the other selections (tests 17 to 20),
+# and the coverage checks at n = 8 on a tie of the 46,174 word (test 21).
 #
 # usage: bash tools/test.sh PANTONE11.txt [REPO=the directory above tools/] [WORK=./test-n11] [THREADS=1]
 #
@@ -12,7 +13,7 @@
 #                  unless KEEP=1 is set)
 #   THREADS        threads of the passes.  The expected values do not depend on it.
 #
-# Needs: bash, gcc with OpenMP, xz, sha256sum, and Python 3 for tests 17 to 20 (they are skipped without it).
+# Needs: bash, gcc with OpenMP, xz, sha256sum, and Python 3 for tests 17 to 21 (they are skipped without it).
 # 10 to 15 minutes on one thread and 0.6 GB of RAM.
 # Every word written is checked with delcheck (all permutations present, no letter that can be deleted).
 # GPU=1 also runs the search and segment insertion on the card.  It needs an NVIDIA card and the two kernel files
@@ -20,7 +21,7 @@
 # The script prints one line per test and ends with "ALL n TESTS PASSED" or with the list of failures.
 # The lengths and hashes below were produced on Windows (MinGW gcc 13.2) and on Linux (gcc 13.3), both x86-64.
 HERE=$(cd "$(dirname "$0")" && pwd)
-[ $# -ge 1 ] || { sed -n '2,18p' "$0"; exit 1; }
+[ $# -ge 1 ] || { sed -n '2,19p' "$0"; exit 1; }
 P680=$1; REPO=${2:-$(cd "$HERE/.." && pwd)}; WORK=${3:-./test-n11}; THR=${4:-1}
 CC=${CC:-gcc}; CFLAGS=${CFLAGS:--O2 -mpopcnt -fopenmp}
 case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) DL= ;; *) DL=-ldl ;; esac      # the two GPU files open the CUDA driver library at run time
@@ -157,7 +158,7 @@ fi
 PY=${PYTHON:-$(command -v python3 || command -v python)}
 export PYTHONDONTWRITEBYTECODE=1 # leave no __pycache__ next to the scripts of reproduce/
 if [ -z "$PY" ] || [ ! -d "$REPO/reproduce" ]; then
-  echo "== 17 to 20 skipped: no Python 3, or no reproduce/ in $REPO"
+  echo "== 17 to 21 skipped: no Python 3, or no reproduce/ in $REPO"
 else
   newword() {    # N LENGTH BASE-SHA WORD-SHA: generator, loader, the writer of reproduce/, and their agreement
     local n=$1 L=$2 bsha=$3 wsha=$4 R=$REPO/reproduce sel plan
@@ -182,6 +183,25 @@ else
   echo "== 20. moves of equal length on the n = 11 word: 3 rounds, the length must stay"
   OMP_NUM_THREADS=1 "$B/segins_gpu" "$WORK/n11-base.txt" "$WORK/t20.txt" --plan-in "$REPO/reproduce/plan/n11-43930578.plan" --time 0 --threads 1 --or3 3 --or3-slack 1 --or3-eq 300 --or3-seed 1 --or3-rounds 3 > "$WORK/t20.log" 2>&1
   word "n = 11: moves of equal length on the new pieces" "$WORK/t20.txt" 43930578 e07c5fbc4f28cc06a5897df22692967a48142b6aef8fbf175e13890adf2f303c
+  echo "== 21. n = 8: the coverage checks.  The tie 3677542ddb4f is an image of a word of selection-46174 under a symmetry;"
+  echo "       on the base word of the selection itself word2plan rebuilds it, but the plan is NOT safe to search from"
+  N8=$REPO/words/n8; T8=$N8/ties/superpermutation-8-46174-3677542ddb4f.txt.xz
+  "$PY" "$REPO/reproduce/tools/geng.py" "$N8/selection-46174.txt" "$WORK/n8-base.txt" > "$WORK/n8-geng.log" 2>&1
+  [ "$(sha "$WORK/n8-base.txt")" = fc4f6f5434806ba2f69918a6946bc661b9793c86c63f529484d364127cf6402a ] && ok "n = 8: base word from selection-46174, SHA-256 as expected" || bad "n = 8: base word SHA-256 $(sha "$WORK/n8-base.txt")"
+  xz -dkc "$T8" > "$WORK/t21-tie.txt"; xz -dkc "$REPO/words/superpermutation-8-46174.txt.xz" > "$WORK/t21-word.txt"
+  "$B/word2plan" "$WORK/n8-base.txt" "$WORK/t21-tie.txt" "$WORK/t21u.plan" > "$WORK/t21a.log" 2>&1; e=$?
+  [ $e = 3 ] && grep -q 'NOT safe to search from' "$WORK/t21a.log" && ok "n = 8: word2plan: exact but NOT safe to search from, exit code 3" || bad "n = 8: word2plan on the tie, exit code $e"
+  "$B/trailsearch" "$WORK/n8-base.txt" "$WORK/t21s.txt" --plan-in "$WORK/t21u.plan" --time 100000 --iters 2000 --seed 7 --kmax 8 --T0 0.7 --threads 1 > "$WORK/t21s.log" 2>&1; e=$?
+  [ $e = 4 ] && [ ! -f "$WORK/t21s.txt" ] && grep -q '^REFUSED' "$WORK/t21s.log" && ok "n = 8: trailsearch refuses to search from that plan (the first release wrote 46,105 letters with 295 permutations missing)" || bad "n = 8: trailsearch on the unsafe plan, exit code $e"
+  "$B/recut" "$WORK/n8-base.txt" "$WORK/t21r.txt" --plan-in "$WORK/t21u.plan" --co-skip --time 0 > "$WORK/t21r.log" 2>&1; e=$?
+  [ $e = 4 ] && [ ! -f "$WORK/t21r.txt" ] && ok "n = 8: recut refuses it too" || bad "n = 8: recut on the unsafe plan, exit code $e"
+  "$B/trailsearch" "$WORK/n8-base.txt" "$WORK/t21b.txt" --plan-in "$WORK/t21u.plan" --time 0 > "$WORK/t21b.log" 2>&1; e=$?
+  [ $e = 0 ] && cmp -s "$WORK/t21b.txt" "$WORK/t21-tie.txt" && ok "n = 8: with --time 0 trailsearch still rebuilds the tie from it, byte for byte" || bad "n = 8: rebuild from the unsafe plan, exit code $e"
+  "$B/word2plan" "$WORK/n8-base.txt" "$WORK/t21-word.txt" "$WORK/t21w.plan" --quiet > "$WORK/t21c.log" 2>&1; e=$?
+  { echo "TRAILSEARCH-PLAN 8 46224 15"; sed -n '2,16p' "$WORK/t21w.plan"; } > "$WORK/t21d.plan"     # the plan of the 46,174 word without its last trail
+  "$B/trailsearch" "$WORK/n8-base.txt" "$WORK/t21d.txt" --plan-in "$WORK/t21d.plan" --time 0 > "$WORK/t21d.log" 2>&1; e2=$?
+  [ $e = 0 ] && [ $e2 = 4 ] && [ ! -f "$WORK/t21d.txt" ] && [ -f "$WORK/t21d.txt.rejected" ] && ok "n = 8: a word that misses permutations is not written: $(grep -o '[0-9]* are missing' "$WORK/t21d.log")" || bad "n = 8: the check of the written word, exit codes $e and $e2"
+  rm -f "$WORK"/t21*.rejected "$WORK/n8-base.txt"
 fi
 
 [ "${KEEP:-0}" = 1 ] || rm -f "$WORK"/t*.txt "$WORK"/a-n*.txt "$WORK"/n1?-base.txt "$W674" "$W628"       # KEEP=1 keeps the words
