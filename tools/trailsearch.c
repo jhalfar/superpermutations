@@ -19,6 +19,13 @@
    word as it is; O t start g g1: trail t cut at offset start with gap g, g1 > 0 if an occurrence is dropped;
    S t start len: len letters of trail t from offset start).  A plan refers to the word it was made from.
 
+   Checks.  A plan read with --plan-in is used only if every permutation of the input word lies inside one of its
+   events.  A permutation that only forms across a join (word2plan: "NOT safe to search from") is lost when the join
+   changes, so such a plan is refused with exit code 4 if the run can change the sequence (--time > 0); with
+   --time 0 alone the word of the plan is only rebuilt, with a warning.  Every word is checked while it is written:
+   if it has fewer distinct permutations than the input word, it is kept as OUT.txt.rejected, OUT.txt and
+   OUT.txt.plan are not written, and the exit code is 4.
+
    Build:  gcc -O2 -mpopcnt -fopenmp -o trailsearch trailsearch.c -lm
    Rebuild a word from a plan (no search):
            trailsearch BASE.txt OUT.txt --plan-in PLAN --time 0
@@ -319,31 +326,129 @@ static void seg_events(i64 c1, i64 c2, Ev *e1, Ev *e2) {
     e2->skip = -1;
 }
 
+/* ---------- coverage: the permutations a word really contains, as a bitmap of n! bits indexed by rank.  The model
+   keeps a permutation only if it lies inside an event; one that only forms across a join is lost when the join
+   changes.  So a plan is checked when it is loaded (plan_check) and every word while it is written (write_word). */
+static int NTHR;
+static i64 base_perms; /* distinct permutations of the input word: no word written may have fewer */
+/* the last n letters pushed, kept twice so that the window is one block of memory */
+typedef struct {
+    int cnt[16], distinct, j; /* j: the place of the oldest letter, where the next one goes */
+    i64 r;
+    unsigned char buf[32];
+} Win;
+static inline void win_push(Win *w, unsigned char c, u64 *bits) {
+    if (w->r >= n && --w->cnt[w->buf[w->j]] == 0)
+        w->distinct--;
+    if (w->cnt[c]++ == 0)
+        w->distinct++;
+    w->buf[w->j] = w->buf[w->j + n] = c;
+    if (++w->j == n)
+        w->j = 0;
+    if (++w->r >= n && w->distinct == n) {
+        u64 q = rank_lin(w->buf + w->j);
+        __atomic_fetch_or(&bits[q >> 6], 1ULL << (q & 63), __ATOMIC_RELAXED);
+    }
+}
+static u64 *cov_alloc(void) {
+    u64 *b = calloc((size_t)((fact[n] + 63) / 64), 8);
+    if (!b)
+        DIE("out of memory (a bitmap of %llu bits for the coverage check)", (unsigned long long)fact[n]);
+    return b;
+}
+static i64 cov_count(const u64 *b) {
+    i64 s = 0, m = (i64)((fact[n] + 63) / 64);
+    for (i64 i = 0; i < m; i++)
+        s += __builtin_popcountll(b[i]);
+    return s;
+}
+/* letter r of event x, as write_word writes it */
+static inline unsigned char ev_letter(const Ev *x, i64 r) {
+    if (x->kind == EV_PIECE)
+        return W[PS[x->a] + r];
+    const Trail *t = &TR[x->t];
+    i64 st = x->kind == EV_OPT ? (i64)OP[x->a].start : x->a;
+    return t->c[(st + r) % t->R];
+}
+/* marks the permutations in the windows of the word p[0 .. len), in blocks of 64 K letters on NTHR threads */
+static void cover_add(const unsigned char *p, i64 len, u64 *b) {
+    const i64 CH = 1 << 16;
+    i64 nch = (len + CH - 1) / CH;
+#pragma omp parallel for schedule(dynamic, 16) num_threads(NTHR)
+    for (i64 k = 0; k < nch; k++) {
+        Win w;
+        memset(&w, 0, sizeof w);
+        for (i64 i = k * CH; i < (k + 1) * CH + n - 1 && i < len; i++)
+            win_push(&w, p[i], b);
+    }
+}
+/* distinct permutations in the windows of the word p[0 .. len) */
+static i64 cover_lin(const unsigned char *p, i64 len) {
+    u64 *b = cov_alloc();
+    cover_add(p, len, b);
+    i64 s = cov_count(b);
+    free(b);
+    return s;
+}
+/* Checks that every permutation of the input word lies inside one event of the loaded plan.  A plan that word2plan
+   calls "NOT safe to search from" fails this (windows that lie in a join, segments trimmed at a tight junction).
+   refuse: the run can change joins, so it stops with exit code 4; otherwise (a rebuild) only a warning. */
+static void plan_check(const Ev *ev, i64 N, int refuse) {
+    u64 *b = cov_alloc();
+#pragma omp parallel for schedule(dynamic, 16) num_threads(NTHR)
+    for (i64 i = 0; i < N; i++) {
+        Win w;
+        memset(&w, 0, sizeof w);
+        for (i64 r = 0; r < ev[i].l; r++)
+            win_push(&w, ev_letter(&ev[i], r), b);
+    }
+    i64 inside = cov_count(b);
+    free(b);
+    if (inside >= base_perms) {
+        printf("plan check: every permutation of the input word lies inside an event\n");
+        fflush(stdout);
+        return;
+    }
+    fprintf(
+        stderr,
+        "%s: %lld of the %lld permutations of the input word lie only across joins of the plan, not inside an event; a search or pass would lose them.  Convert the word again with word2plan --rebase, or on a base word in the labelling of the word.\n",
+        refuse ? "REFUSED" : "WARNING", base_perms - inside, base_perms);
+    if (refuse)
+        exit(4);
+}
+
 /* ---------- output */
+/* Writes the word of the sequence.  It goes to path.part first, and the windows of every block of letters are
+   checked as the block is written: if the word has fewer distinct permutations than the input word, it is kept as
+   path.rejected, nothing is written to path, and the program stops with exit code 4. */
 static void write_word(const Ev *ev, i64 N, const char *path, i64 expect) {
-    FILE *f = fopen(path, "wb");
+    char part[4200], rej[4200];
+    snprintf(part, sizeof part, "%s.part", path);
+    snprintf(rej, sizeof rej, "%s.rejected", path);
+    FILE *f = fopen(part, "wb");
     if (!f)
-        DIE("cannot write %s", path);
+        DIE("cannot write %s", part);
     size_t cap = 1 << 22, ob = 0;
     char *out = malloc(cap);
+    u64 *bits = cov_alloc();
+    unsigned char *nb =
+        malloc(cap + 16); /* the letters of the block as numbers, after the last n - 1 of the one before */
+    i64 nbo = 0;
     i64 total = 0;
     u64 tail = 0;
     for (i64 i = 0; i < N; i++) {
         const Ev *x = &ev[i];
         i64 skip = i ? h - dist(tail, x->s) : 0;
         for (i64 r = skip; r < x->l; r++) {
-            unsigned char c;
-            if (x->kind == EV_PIECE)
-                c = W[PS[x->a] + r];
-            else {
-                const Trail *t = &TR[x->t];
-                i64 st = x->kind == EV_OPT ? (i64)OP[x->a].start : x->a;
-                c = t->c[(st + r) % t->R];
-            }
+            unsigned char c = ev_letter(x, r);
+            nb[nbo++] = c;
             out[ob++] = AL[c];
             if (ob == cap) {
                 fwrite(out, 1, ob, f);
                 ob = 0;
+                cover_add(nb, nbo, bits);
+                memmove(nb, nb + nbo - (n - 1), (size_t)n - 1);
+                nbo = n - 1;
             }
         }
         total += x->l - skip;
@@ -353,8 +458,25 @@ static void write_word(const Ev *ev, i64 N, const char *path, i64 expect) {
     fwrite(out, 1, ob, f);
     fclose(f);
     free(out);
+    cover_add(nb, nbo, bits);
+    free(nb);
+    i64 got = cov_count(bits);
+    free(bits);
     if (total != expect)
         DIE("internal error: wrote %lld letters, model says %lld", total, expect);
+    if (got < base_perms) {
+        remove(rej);
+        rename(part, rej);
+        fprintf(
+            stderr,
+            "REFUSED: the word of %lld letters has %lld distinct permutations, the input word %lld: %lld are missing.  It is not a superpermutation; it was not written to %s and is kept as %s.\n",
+            total, got, base_perms, base_perms - got, path, rej);
+        exit(4);
+    }
+    remove(path);
+    if (rename(part, path))
+        DIE("cannot rename %s to %s", part, path);
+    printf("coverage check: %lld distinct permutations, as in the input word\n", got);
 }
 /* Writes the sequence as a plan: a head line, then one line per event (P, O or S), with LF line ends. */
 static void write_plan(const Ev *ev, i64 N, const char *path) {
@@ -2007,6 +2129,7 @@ int main(int argc, char **argv) {
     fact[0] = 1;
     for (int i = 1; i < 17; i++)
         fact[i] = fact[i - 1] * i;
+    base_perms = cover_lin(W, L); /* the words written are checked against it */
     /* permutation windows and pieces (split at gaps >= 4) */
     {
         int cnt[16] = {0}, distinct = 0;
@@ -2358,6 +2481,7 @@ int main(int argc, char **argv) {
         fclose(f);
         printf("model length of the plan: %lld (%lld events)\n", seq_length(ev, N), N);
         fflush(stdout);
+        plan_check(ev, N, tlimit > 0);
     }
     /* ---------- destroy / repair search */
     char outplan[4096];
@@ -2379,8 +2503,8 @@ int main(int argc, char **argv) {
     printf("LNS done: %lld iterations on %d threads, best %lld\n", tot, NTHR, G_len);
     fflush(stdout);
     print_stats(G_ev, G_N);
+    write_word(G_ev, G_N, argv[2], G_len); /* stops with exit code 4 if the word lacks a permutation */
     write_plan(G_ev, G_N, outplan);
-    write_word(G_ev, G_N, argv[2], G_len);
     printf("wrote %s length %lld (%.0fs)\n", argv[2], G_len, wall() - t00);
     return 0;
 }
