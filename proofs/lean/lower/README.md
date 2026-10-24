@@ -25,6 +25,11 @@ searches, checked by the Lean kernel, for 27 pairs (c, b). The best of them give
 | 13 | 6,746,553,315 | 6,746,615,766 | 6,746,626,957 | 6,746,523,219 | |
 | 14 | 93,890,534,411 | 93,891,107,960 | 93,891,141,008 | 93,890,256,441 | |
 
+For k = 14 one more certificate, 14 843 63334 16000, gives 93,891,141,126. Its Lean files take 12 GB and 61
+hours of Lean time, so it is not part of the build levels below; it is a recipe of its own in
+[`certificates/C14_843_63334_16000/`](certificates/C14_843_63334_16000/README.md), with the hashes of the
+generated files and the axioms of my run.
+
 Liu's values are those of `PreimageChain.superperm_numerical_bounds_closed`.
 
 The build has two levels. The default level checks 22 of the 27 searches and gives, for Theorem C, 46,132,
@@ -415,6 +420,7 @@ copy of the search and the list of hashes are not trusted: Lean checks the files
 * Theorem B for k = 5 and 6, and certificates of Theorem C for k = 5, 6, 7 and k = 15. Theorem A covers
   k = 5 and 6; the soundness theorem of the search holds for 5 <= k <= 15.
 * Later certificates. Certificates for 522,622,398 (k = 12) and 6,746,627,046 (k = 13) have been built since
-  this version was put together and are not in it. Higher values are known by computation only, with no Lean
-  certificate: 408,470 (k = 9), 43,917,905 (k = 11), 522,622,405 (k = 12), 6,746,627,223 (k = 13) and
-  93,891,141,126 (k = 14).
+  this version was put together and are not in it. The one for 93,891,141,126 (k = 14) is here as a recipe
+  (`certificates/C14_843_63334_16000/`). Higher values are known by computation only, with no Lean
+  certificate: 408,470 (k = 9), 4,033,380 (k = 10), 43,917,906 (k = 11), 522,622,406 (k = 12) and
+  6,746,627,241 (k = 13).

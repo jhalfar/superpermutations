@@ -14,6 +14,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `constant43586371/build.sh`
 * `constant61937/build.sh`
 * `lower/build.sh`
+* `lower/certificates/C14_843_63334_16000/build.sh`
 * `n7/build.sh`
 * `n8/build.sh`
 * `n8_46134/build.sh`
@@ -26,7 +27,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 * `.gitattributes` (344 B): keeps LF line ends in text files, so that the hashes hold on every system
 * `MANIFEST.md`: this list
-* `README.md` (29.7 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
+* `README.md` (29.9 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
 * `SHA256SUMS`: SHA-256 of every other file of this directory
 * `lean-toolchain` (25 B): the Lean version, `leanprover/lean4:v4.31.0`
 
@@ -973,7 +974,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
   k`
 * `lower/LowerBounds/WindowSlackC.lean` (3.5 KB): Theorem C: the window bound in the form with the slack of intervals
   and runs
-* `lower/README.md` (28.7 KB): the three lower bounds, their values, whose the parts are, the steps of the proofs, how
+* `lower/README.md` (29.1 KB): the three lower bounds, their values, whose the parts are, the steps of the proofs, how
   to build
 * `lower/Superperm/TwoSidedA.lean` (2.9 KB): Theorem A and the literal words in one statement, n = 9, 10, 11
 * `lower/Superperm/TwoSidedB.lean` (2.9 KB): Theorem B and the literal words in one statement, n = 9, 10, 11
@@ -983,6 +984,18 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `lower/certificates-large.txt` (829 B): the large certificates that `build.sh full` adds
 * `lower/certificates.txt` (2.2 KB): the small certificates of Theorem C, checked at the default level: generator, k,
   cn, bn, q, options
+* `lower/certificates/C14_843_63334_16000/Final_C14_843_63334_16000.lean` (1.9 KB): `covers_length_ge_93891141126`,
+  `ssuper_ge_93891141126`
+* `lower/certificates/C14_843_63334_16000/README.md` (3.1 KB): the certificate 14 843 63334 16000 (93,891,141,126) as
+  a recipe: files, statement, axioms, cost
+* `lower/certificates/C14_843_63334_16000/build.sh` (4.8 KB): generates the Lean files, checks them against
+  `generated.sha256`, compiles them, writes and checks the final statement
+* `lower/certificates/C14_843_63334_16000/fix_imports.py` (3.0 KB): makes each generated part import only the data
+  files it uses
+* `lower/certificates/C14_843_63334_16000/generated.sha256` (512.4 KB): SHA-256 of the 5,347 Lean files that
+  `build.sh` generates
+* `lower/certificates/C14_843_63334_16000/make_final.py` (3.1 KB): writes the final statement of a certificate from
+  the head file of the generator
 * `lower/generated.sha256` (45.9 KB): SHA-256 of the 435 Lean files that the generators write into the build directory
 * `lower/tools/s_certs.py` (5.4 KB): writes the generated files that state the certificates (`SCertW*.lean`,
   `SCertificates*.lean`)

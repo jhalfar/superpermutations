@@ -44,10 +44,12 @@ The bounds proven here for the length L(n) of the shortest superpermutation:
 | 11 | 43,917,793 | 43,917,903 | 43,930,578 |
 | 12 | 522,622,030 | 522,622,378 | 522,737,175 |
 | 13 | 6,746,615,766 | 6,746,626,957 | 6,747,849,960 |
-| 14 | 93,891,107,960 | 93,891,141,008 | 93,905,309,790 |
+| 14 | 93,891,107,960 | 93,891,141,126 | 93,905,309,790 |
 
 The 5,899 for n = 7 is not a value of Theorem C. It is the result of `n7/`, and it is the one bound of
-this table whose proof trusts compiled code. For n = 8, `n8_46134/` gives 46,134 with three equations
+this table whose proof trusts compiled code. For n = 14 the value 93,891,141,126 comes from a certificate
+that is a recipe of its own (`lower/certificates/C14_843_63334_16000/`, 61 hours of Lean time); the build
+levels of `lower/` stop at 93,891,141,008. For n = 8, `n8_46134/` gives 46,134 with three equations
 evaluated by compiled code; the table keeps the bound that the kernel checks alone.
 Jay Pantone announced a table of lower bounds on 29 September 2026: 46,130, 408,468, 4,033,374, 43,917,903,
 522,622,378 and 6,746,626,519 for n = 8 to 13. His proof is not public. The proofs here were made without it.
