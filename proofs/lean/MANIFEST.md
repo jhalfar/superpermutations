@@ -1241,8 +1241,8 @@ them, by `python3` or by Lean, and needs mode 644 only.
   proof)
 * `n7_5900/LowerBounds/KTestTables.lean` (5.4 KB): Reference tables for tests (generated; do not edit)
 * `n7_5900/PROOF_5900.md` (75.0 KB): L(7) >= 5,900: the written proof
-* `n7_5900/README.md` (6.5 KB): what is proven, the parts, how to build, what it cost, what is trusted
-* `n7_5900/build.sh` (12.0 KB): Build the proof that a superpermutation on 7 symbols has at least 5,900 letters.
+* `n7_5900/README.md` (6.7 KB): what is proven, the parts, how to build, what it cost, what is trusted
+* `n7_5900/build.sh` (12.3 KB): Build the proof that a superpermutation on 7 symbols has at least 5,900 letters.
 * `n7_5900/evaluations.txt` (1.4 KB): the evaluation modules of level 2 with the library each one loads, in the order
   of the run
 * `n7_5900/sources.sha256` (10.0 KB): SHA-256 of the Lean files of this directory, checked by build.sh

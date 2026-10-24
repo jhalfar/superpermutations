@@ -117,6 +117,10 @@ evaluate() {
       continue
     fi
     [ -e "$BUILD/STOP" ] && { echo "stopped by the file $BUILD/STOP"; exit 2; }
+    # what the module imports (tables, engines) is compiled first; up-to-date modules are skipped
+    # shellcheck disable=SC2046
+    ( JOBS="$JOBS_BIG" build_modules $(sed -n 's/^import //p' "$HERE/${mod//.//}.lean") -- "${SOURCES[@]}" ) \
+      || die "the imports of $mod did not compile"
     rm -f "$out.stamp"
     t0=$(date +%s)
     echo "  evaluating $mod with $JOBS threads ($(date '+%F %T'))"

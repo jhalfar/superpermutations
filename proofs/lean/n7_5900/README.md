@@ -83,9 +83,11 @@ What it cost me:
 * The assembly (`KFinalNative`, `J15FinalNative`, `F5900Native`, `Audit5900Native` and the level-1 files) took
   under five minutes on 2026-10-24.
 * I have not rebuilt level 2 from an empty directory: it takes days. On 2026-10-24 I rebuilt, from the files of
-  this directory as `git archive` writes them and in an empty build directory, the two engines, level 1 and the
-  tests (`build.sh`) and one evaluation module (`build.sh one J15S5Native`); README.md of the repository's
-  release notes the result (see below).
+  the repository as `git archive` writes them and in an empty build directory, with four processes:
+  `../n7/build.sh` (default level, the two libraries included) in 47 minutes; then `build.sh one J15S5Native`,
+  that is the two engines, level 1, the kernel tests, `KTestNative` (23 s), `J15TestNative` (26 s) and the
+  evaluation `J15S5Native` (7 s), in 5 minutes, all exit 0 with the axiom checks passed; then
+  `../n7_5901/build.sh` in 5 minutes. The whole run committed at most 31.5 GB.
 
 ## What is trusted, and what is not done
 
