@@ -99,8 +99,9 @@ directory, and prints the `#print axioms` lines. Settings are those of `../tools
 I ran both generators in this layout and compared the output with the files here: all 53 generated files are
 identical. I built the 66 modules of the development with one Lean process on one thread, in my working
 directory and with the compiled library of `../constant/` on the module path: 38 minutes, 2,222 s of Lean time.
-The new modules take at most 33 s each; `BlockChecks` needs 5.0 GB of working set, `BlockPorts16a` 4.4 GB. I have
-not run `build.sh` from an empty build directory in this layout.
+The new modules take at most 33 s each; `BlockChecks` needs 5.0 GB of working set, `BlockPorts16a` 4.4 GB. On
+2026-10-24 I ran `build.sh` from an empty build directory, on the files of this repository as `git archive`
+writes them, with five Lean processes: 161 modules, 12 minutes, exit 0.
 
 ## Axiom audit
 

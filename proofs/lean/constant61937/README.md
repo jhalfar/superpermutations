@@ -105,8 +105,9 @@ project.
 I ran the generator in this layout and compared its output with the files here: all 48 files are identical. I
 built the 58 modules of the development with one Lean process on one thread, in my working directory and with the
 compiled library of `../constant/` on the module path: 37.5 minutes, and the largest process
-(`Certificate/WalkB`) at 3.9 GB of working set. I have not run `build.sh` from an empty build directory in this
-layout.
+(`Certificate/WalkB`) at 3.9 GB of working set. On 2026-10-24 I ran `build.sh` from an empty build directory, on the files
+of this repository as `git archive` writes them, with five Lean processes: 153 modules (Pantone's library and
+this development), 13 minutes, exit 0.
 
 ## Axiom audit
 

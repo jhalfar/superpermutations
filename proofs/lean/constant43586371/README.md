@@ -150,7 +150,9 @@ with one Lean process on one thread, in my working directory and with the compil
 module path: the 149 modules for the eight constants took 45.5 minutes (2,564 s of Lean time, at most 6.1 GB of
 working set, in `BlockW133UUp0_1` and `BlockS133UUp0_1`), and the 11 modules of `Uniform/` 3.7 minutes (1.9 GB). The 11 modules of `UniR/` with the 9 `Uniform/` modules
 they need and the 13 base modules took 6 minutes (23 s of it for `RRate`), 1.9 GB at most.
-I have not run `build.sh` from an empty build directory in this layout.
+On 2026-10-24 I ran `build.sh` from an empty build directory, on the files of this repository as `git archive`
+writes them, with five Lean processes: 322 modules, 26 minutes, exit 0; its `#print axioms` lines are 168 times
+[propext, Classical.choice, Quot.sound], 129 times [propext, Quot.sound], 27 times [propext] and twice none.
 
 ## Axiom audit
 

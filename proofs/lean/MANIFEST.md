@@ -41,7 +41,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
   (n-4)! - 2(n-5)! and 9(n-4)!
 * `asym/ConstAsym/Remainder8.lean` (8.3 KB): `remainder_order8`, `lower2_L`, `remainder_limit8`: the bounds 2(n-4)! -
   2(n-5)! and 41/5 (n-4)!, the constant in [2, 8]
-* `asym/README.md` (6.4 KB): the shortest superpermutation: the limit of the coefficient, the order of the remainder,
+* `asym/README.md` (6.7 KB): the shortest superpermutation: the limit of the coefficient, the order of the remainder,
   its constant in [2, 8]; how to build; the axiom audit
 * `asym/build.sh` (2.0 KB): builds Pantone's library, the Hunter modules, the needed part of `../constant43586371` and
   the two files here from sources, and prints the axioms
@@ -154,7 +154,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 ## constant305989/
 
-* `constant305989/README.md` (7.7 KB): the block step, the theorems, the files, how to build, the axiom audit
+* `constant305989/README.md` (7.9 KB): the block step, the theorems, the files, how to build, the axiom audit
 * `constant305989/SuperpermutationUpperBound305989/AllSizes.lean` (9.1 KB): the level on k + 12 symbols for every k;
   `Cert.word_ledger`
 * `constant305989/SuperpermutationUpperBound305989/AllSizesB.lean` (8.3 KB): the level on k + 16 symbols for every k;
@@ -304,7 +304,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 * `constant43586371/PROOF.md` (11.7 KB): the limit theorem on paper: construction, lemmas, bounds
 * `constant43586371/PROOF_R.md` (8.6 KB): the family R'(m) of blocks at every level, on paper
-* `constant43586371/README.md` (17.0 KB): the nested block levels, the theorems, the files, how to build, the axiom
+* `constant43586371/README.md` (17.3 KB): the nested block levels, the theorems, the files, how to build, the axiom
   audit
 * `constant43586371/REFEREE.md` (13.6 KB): report of an independent check of the limit theorem
 * `constant43586371/SuperpermutationUpperBound43586371/AllSizes.lean` (9.1 KB): the level on k + 12 symbols for every k;
@@ -800,7 +800,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 ## constant61937/
 
-* `constant61937/README.md` (7.6 KB): the cycle re-choice, the theorems, the files, how to build, the axiom audit
+* `constant61937/README.md` (7.7 KB): the cycle re-choice, the theorems, the files, how to build, the axiom audit
 * `constant61937/SuperpermutationUpperBound61937/AllSizes.lean` (9.1 KB): the level on k + 12 symbols for every k;
   `Cert.word_ledger`
 * `constant61937/SuperpermutationUpperBound61937/Certificate/Big00.lean` (3.5 KB): generated: cycle pointers for eight

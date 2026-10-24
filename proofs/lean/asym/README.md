@@ -82,8 +82,10 @@ HUNTER_DIR=$PWD/deps/superpermutations-hunter ./build.sh
 the four files here, and prints the `#print axioms` lines. The settings are those of `../tools/common.sh`.
 
 I compiled the four files here against the 75 Hunter modules built afresh from the checkout above, with the compiled
-`Uniform` modules of my working directory: 27 minutes of wall time, 3.9 GB of working set at most. I have not run
-`build.sh` in this layout.
+`Uniform` modules of my working directory: 27 minutes of wall time, 3.9 GB of working set at most. On 2026-10-24 I ran
+`build.sh` from an empty build directory, on the files of this repository as `git archive` writes them, with three
+Lean processes: 293 modules, about 29 minutes in two runs (the first, with five processes, stopped when my
+memory limit of 32 GB for the whole build refused a Mathlib file; the second went on from there), exit 0.
 
 ## Axiom audit
 
