@@ -1,0 +1,8 @@
+nat2: NEv7 started 2026-10-24 16:19:10, 1 threads
+'SuperpermLowerBounds.Audit5901.k7_ev' depends on axioms: [propext,
+ SuperpermLowerBounds.K16.Audit.k7_0_16._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k7_16_32._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k7_32_48._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k7_48_64._native.native_decide.ax_1_1]
+[guard] exit 0, peak committed memory of the job 7.95 GB (limit 16.0 GB)
+nat2: exit=0 wall=16s, ended 2026-10-24 16:19:26

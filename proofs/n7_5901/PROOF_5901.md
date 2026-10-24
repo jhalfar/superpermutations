@@ -244,12 +244,12 @@ different and proves something different.
     19:15 to 2026-10-21 16:46 (77,433 s of wall time; `lean/nk_queue.log`). `NEv.lean` turns the first five into
     the fields themselves, with the definitions of `K16Final.lean` and `J16Bridge.lean`:
     `Audit5901.k10_ev : K16.Ev Utab10 10 36 36 10 16 25 false`, `k9_ev`, `k8_ev`,
-    `t9_ev : J16.Ev DRj [...] J16.rT9 64 68 4` and `t8_ev`. For K7 the step from the four theorems to the field
-    `k7 : K16.Ev Utab7 7 36 54 10 16 25 false` is a case split on the part number, of the kind that
-    `f1_covered_native` of the proof of 5,899 makes with two ranges; I have not yet written it into a compiled
-    file. `#print axioms` lists propext (and Quot.sound for `t9_ev`) and the one `native_decide` axiom of the
-    equation, for example `K16.Audit.k8_native._native.native_decide.ax_1_1`, and the logs of the four K7 files
-    list the same for `k7_0_16` to `k7_48_64`; `NEv.lean` compiles in 58 s. Before that I evaluated the first
+    `t9_ev : J16.Ev DRj [...] J16.rT9 64 68 4` and `t8_ev`. `NEv7.lean` does the same for K7:
+    `k7_ev : K16.Ev Utab7 7 36 54 10 16 25 false` from the four theorems, by a case split on the part number of
+    the kind that `f1_covered_native` of the proof of 5,899 makes with two ranges. `#print axioms` lists propext
+    (and Quot.sound for `t9_ev`) and the `native_decide` axioms of the equations, for example
+    `K16.Audit.k8_native._native.native_decide.ax_1_1`, and for `k7_ev` the four axioms of `k7_0_16` to
+    `k7_48_64`; `NEv.lean` compiles in 58 s and `NEv7.lean` in 16 s. Before that I evaluated the first
     five equations by `#eval`: K10 in 1 s, K9 in 84 s, K8 in 57 min on 2 threads, T9' in 16 s and T8 in 108 min
     on 2 threads, all with the answer "nothing found". The counting copy of the joint engine gives the counts of
     Table C on T9' (11,105,597 kept, 59,706,146 tried) and on T8 (7,126,584,865 kept, 36,384,111,126 tried, 115

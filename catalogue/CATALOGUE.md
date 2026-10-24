@@ -101,7 +101,7 @@ Every word over 7 symbols that contains all 5,040 permutations has at least 5,90
 * class: all words
 * method: computer-assisted: Lean checks the reduction to thirty search equations (n7-lb-5901-lean-l1) and six of them by native_decide; the others rest on searches by C, C++ and CUDA programs (trust table in proofs/n7_5901/README.md)
 * credit: Jakub Halfar (with Claude); date 2026-10-20
-* evidence: `proofs/n7_5901/README.md` (sha256 `588130eb54ec...`); `proofs/n7_5901/PROOF_5901.md` (sha256 `2a13819c4408...`); `proofs/n7_5901/table/TABLE_C16.md` (sha256 `547191cd3769...`); `proofs/n7_5901/audit/partaudit.txt` (sha256 `35e94019be65...`)
+* evidence: `proofs/n7_5901/README.md` (sha256 `51a515de70a9...`); `proofs/n7_5901/PROOF_5901.md` (sha256 `a674cee71b41...`); `proofs/n7_5901/table/TABLE_C16.md` (sha256 `547191cd3769...`); `proofs/n7_5901/audit/partaudit.txt` (sha256 `35e94019be65...`)
 * source: `proofs/n7_5901/README.md:7`
 * supersedes: `n7-lb-5900`
 * notes: Not a Lean theorem. K6 was being evaluated in Lean on 2026-10-24.
@@ -127,7 +127,7 @@ Lean theorem Audit5901.k10_ev (from K16.Audit.k10_native): the Lean kernel-alone
 * class: Lean search equation K10 of defect 16 (engine K16.seqSearch)
 * method: native_decide with the C code of the engine loaded; NK.lean (105 min on 1 thread together with K9, K8) and NEv.lean in proofs/n7_5901/lean/Audit5901
 * credit: Jakub Halfar (with Claude); date 2026-10-20
-* evidence: `proofs/n7_5901/lean/logs/NK.log` (sha256 `24c0af970c2f...`); `proofs/n7_5901/README.md` (sha256 `588130eb54ec...`)
+* evidence: `proofs/n7_5901/lean/logs/NK.log` (sha256 `24c0af970c2f...`); `proofs/n7_5901/README.md` (sha256 `51a515de70a9...`)
 * source: `proofs/n7_5901/README.md:40`
 * notes: Evaluated with the C code of the engines loaded (native_decide); the scripts I used are in proofs/n7_5901/lean/. The other search equations of defect 16 are listed in the trust table of proofs/n7_5901/README.md.
 
@@ -139,7 +139,7 @@ Lean theorem Audit5901.k9_ev (from K16.Audit.k9_native): the Lean kernel-alone s
 * class: Lean search equation K9 of defect 16 (engine K16.seqSearch)
 * method: native_decide with the C code of the engine loaded; NK.lean and NEv.lean in proofs/n7_5901/lean/Audit5901
 * credit: Jakub Halfar (with Claude); date 2026-10-20
-* evidence: `proofs/n7_5901/lean/logs/NK.log` (sha256 `24c0af970c2f...`); `proofs/n7_5901/README.md` (sha256 `588130eb54ec...`)
+* evidence: `proofs/n7_5901/lean/logs/NK.log` (sha256 `24c0af970c2f...`); `proofs/n7_5901/README.md` (sha256 `51a515de70a9...`)
 * source: `proofs/n7_5901/README.md:39`
 * notes: Evaluated with the C code of the engines loaded (native_decide); the scripts I used are in proofs/n7_5901/lean/. The other search equations of defect 16 are listed in the trust table of proofs/n7_5901/README.md.
 
@@ -151,7 +151,7 @@ Lean theorem Audit5901.k8_ev (from K16.Audit.k8_native): the Lean kernel-alone s
 * class: Lean search equation K8 of defect 16 (engine K16.seqSearch)
 * method: native_decide with the C code of the engine loaded; NK.lean and NEv.lean in proofs/n7_5901/lean/Audit5901
 * credit: Jakub Halfar (with Claude); date 2026-10-20
-* evidence: `proofs/n7_5901/lean/logs/NK.log` (sha256 `24c0af970c2f...`); `proofs/n7_5901/README.md` (sha256 `588130eb54ec...`)
+* evidence: `proofs/n7_5901/lean/logs/NK.log` (sha256 `24c0af970c2f...`); `proofs/n7_5901/README.md` (sha256 `51a515de70a9...`)
 * source: `proofs/n7_5901/README.md:38`
 * notes: Evaluated with the C code of the engines loaded (native_decide); the scripts I used are in proofs/n7_5901/lean/. The other search equations of defect 16 are listed in the trust table of proofs/n7_5901/README.md.
 
@@ -163,7 +163,7 @@ Lean theorem Audit5901.t8_ev (from J16.Audit.t8_native): the Lean joint search e
 * class: Lean search equation T8 of defect 16 (engine J16.jSearch)
 * method: native_decide with the C code of the engine loaded; NJ.lean and NEv.lean in proofs/n7_5901/lean/Audit5901
 * credit: Jakub Halfar (with Claude); date 2026-10-20
-* evidence: `proofs/n7_5901/lean/logs/NJ.log` (sha256 `9f40a3b94a4a...`); `proofs/n7_5901/README.md` (sha256 `588130eb54ec...`)
+* evidence: `proofs/n7_5901/lean/logs/NJ.log` (sha256 `9f40a3b94a4a...`); `proofs/n7_5901/README.md` (sha256 `51a515de70a9...`)
 * source: `proofs/n7_5901/README.md:57`
 * notes: Evaluated with the C code of the engines loaded (native_decide); the scripts I used are in proofs/n7_5901/lean/. The other search equations of defect 16 are listed in the trust table of proofs/n7_5901/README.md.
 
@@ -175,7 +175,7 @@ Lean theorem Audit5901.t9_ev (from J16.Audit.t9_native): the Lean joint search e
 * class: Lean search equation T9' of defect 16 (engine J16.jSearch; the Lean engine also tests the class of every ring)
 * method: native_decide with the C code of the engine loaded; NJ.lean (117 min on 2 threads together with T8) and NEv.lean in proofs/n7_5901/lean/Audit5901
 * credit: Jakub Halfar (with Claude); date 2026-10-20
-* evidence: `proofs/n7_5901/lean/logs/NJ.log` (sha256 `9f40a3b94a4a...`); `proofs/n7_5901/README.md` (sha256 `588130eb54ec...`)
+* evidence: `proofs/n7_5901/lean/logs/NJ.log` (sha256 `9f40a3b94a4a...`); `proofs/n7_5901/README.md` (sha256 `51a515de70a9...`)
 * source: `proofs/n7_5901/README.md:58`
 * notes: Evaluated with the C code of the engines loaded (native_decide); the scripts I used are in proofs/n7_5901/lean/. The other search equations of defect 16 are listed in the trust table of proofs/n7_5901/README.md.
 
@@ -225,7 +225,7 @@ In the model of PROOF_5901 (defect 16), statement K7 (F(7; 35, 54), 7 links, lev
 * credit: Jakub Halfar (with Claude); date 2026-10-20
 * evidence: `proofs/n7_5901/audit/k7second/summary.txt` (sha256 `debc9f653fe5...`); `proofs/n7_5901/audit/k7second/run.log` (sha256 `b87940ae6abf...`)
 * source: `proofs/n7_5901/README.md:37`
-* notes: The Lean evaluation of K7 is done as four range theorems (proofs/n7_5901/lean/Audit5901/NK7_0..3.lean); the step that assembles them into the field k7 is not compiled yet.
+* notes: The Lean evaluation of K7 is done as four range theorems (proofs/n7_5901/lean/Audit5901/NK7_0..3.lean), assembled into the field k7 by proofs/n7_5901/lean/Audit5901/NEv7.lean.
 
 #### `n7-lb-5901-t8-second`
 
@@ -287,7 +287,7 @@ Part-file audit of the 5,901 runs: for every tag of Table C all part files are p
 * credit: Jakub Halfar (with Claude); date 2026-10-20
 * reproduce: `python3 partaudit.py` in `proofs/n7_5901/audit`
 * evidence: `proofs/n7_5901/audit/partaudit.txt` (sha256 `35e94019be65...`); `proofs/n7_5901/audit/partaudit.py` (sha256 `2b458827ceb5...`)
-* source: `proofs/n7_5901/README.md:111`
+* source: `proofs/n7_5901/README.md:112`
 * notes: Command not given in the lines read; section 6.3 of PROOF_5901.md has it.
 
 

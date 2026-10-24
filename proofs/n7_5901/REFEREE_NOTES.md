@@ -58,12 +58,12 @@ found, and section C keeps the points of my earlier list of disagreements betwee
    result and were run again. I wrote this into 0.3, 0.4 and 7.2, and T7 moved from "one program" to "two
    independent programs". A summary script for these parts, like `summ_k7.py` for K7, does not exist; I added
    the parts by hand (above the gate once, plus the eight parts).
-2. K7 in Lean is four theorems, not yet the field. `NK7_0.lean` to `NK7_3.lean` prove
+2. K7 in Lean was four theorems, not yet the field. `NK7_0.lean` to `NK7_3.lean` prove
    `seqSearch 7 Utab7 7 36 54 10 16 25 false 400 8 64 pa pb = false` for the ranges 0..16, 16..32, 32..48 and
    48..64, which cover all 64 parts. No compiled file states the field `k7 : K16.Ev Utab7 7 36 54 10 16 25 false`
    (`NEv.lean` has only k10, k9, k8, t9 and t8). The missing step is a `PS.Covered` case split like
-   `f1_covered_native` of the proof of 5,899. The text now says this; a small `NEv7.lean` would close it. The same
-   step will be needed for K6 (16 ranges).
+   `f1_covered_native` of the proof of 5,899. Closed on 2026-10-24: `lean/Audit5901/NEv7.lean` states the field
+   as `k7_ev` and compiles in 16 s (`lean/logs/NEv7.log`). The same step will be needed for K6 (16 ranges).
 3. "T9' in 16 s" (0.4, the `#eval` runs). No log shows 16 s: `lean/logs/T9.log` prints "(0 ms)" for the equation
    and a wall time of 65 s for the whole script, which also ran three counts; `T9g.log` ran 47 s on 2 threads. I
    left the number as written.

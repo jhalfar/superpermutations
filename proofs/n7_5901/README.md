@@ -59,9 +59,10 @@ the number of kept prefixes of the card run (for RX of the three CPU programs). 
 | RX | `rx` | the exact ring row to 63 holes | 1,588,850,620 | three independent programs |
 
 K7 is evaluated as four `native_decide` theorems, one for each quarter of its 64 parts
-([`lean/Audit5901/NK7_0.lean`](lean/Audit5901/NK7_0.lean) to `NK7_3.lean`). The short step that puts them
-together into the field `k7` (a case split on the part number) is not yet in a compiled file. For K10, K9, K8,
-T9' and T8 that step is compiled ([`lean/Audit5901/NEv.lean`](lean/Audit5901/NEv.lean)).
+([`lean/Audit5901/NK7_0.lean`](lean/Audit5901/NK7_0.lean) to `NK7_3.lean`), and
+[`lean/Audit5901/NEv7.lean`](lean/Audit5901/NEv7.lean) puts them together into the field `k7` (a case split
+on the part number). For K10, K9, K8, T9' and T8 that step is in
+[`lean/Audit5901/NEv.lean`](lean/Audit5901/NEv.lean).
 
 The independent second programs are the second programs of defect 15, written from the texts only:
 [`programs/second/k2_s12.cpp`](programs/second/k2_s12.cpp) for K7 to K10 and
@@ -112,7 +113,7 @@ about 5.0e15 start vertices for the joint statements and 2.3e15 kept prefixes fo
 | `audit/second/` | the outputs of the second counts of K10, K9, K8, T9' and T8 |
 | `audit/k7second/`, `audit/t7second/` | the second counts of K7 and T7 in parts: scripts, part files, logs |
 | `audit/records/` | the part files of the single-part runs K7 and K10 and the stored headers of K8 and K9 |
-| `lean/Audit5901/` | the `native_decide` theorems of the evaluated equations (`NK.lean`, `NJ.lean`, `NK7_*.lean`, `NK6_*.lean`), their assembly into fields (`NEv.lean`) and the counting copy of the joint engine (`J16Count.lean`) |
+| `lean/Audit5901/` | the `native_decide` theorems of the evaluated equations (`NK.lean`, `NJ.lean`, `NK7_*.lean`, `NK6_*.lean`), their assembly into fields (`NEv.lean`, `NEv7.lean`) and the counting copy of the joint engine (`J16Count.lean`) |
 | `lean/Eval/`, `lean/logs/` | the `#eval` runs and the logs of every evaluation, with the `#print axioms` lines |
 | `lean/*.sh`, `gen_nk.py`, `nk_order*.txt`, `nk_queue.log` | the build and run scripts, the generator of the K7 and K6 files and the queue log |
 | `SHA256SUMS` | SHA-256 of every file of this folder |
@@ -150,9 +151,9 @@ the level-2 modules of 5,899 and 5,900 do; `lean/build.sh`, `nat.sh` and `nat2.s
 
 Section 7 of `PROOF_5901.md`. In short: twenty of the thirty searches (K0 to K6, T1, T3', T4', T5, T6' and eight of the
 ten runs of T2) have one program only, and T2 48..55 has a second run that shares code. Twenty-four Lean
-equations are not evaluated. K6 is running (about 60 hours from 2026-10-24 03:26); the others are out of reach
+equations are not evaluated. K6 is running since 2026-10-24 03:26 (16 files; the first took 3.8 hours on 4 threads); the others are out of reach
 of the Lean engines at their present speed, or would take up to a day each on 28 threads (T4', T6', T7 and the
-six halves of the split of T2). For K7 the step from its four theorems to the field is not yet compiled.
+six halves of the split of T2).
 
 ## Credits
 
