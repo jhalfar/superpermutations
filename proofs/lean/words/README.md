@@ -7,8 +7,9 @@ preimage-chain project proves lower bounds for that quantity, so lower and upper
 statement.
 
 New here are the checkers with their generators, the bridge, and `check_word.sh`, one command that takes any
-word file to its theorem (see "Checking your own word"). The words for n = 10 and 11 are mine; the words for
-n = 7, 8 and 9 are by Teodorescu, Pantone and rumstd. The lower bounds are Liu's, and his library and the
+word file to its theorem (see "Checking your own word"). The words for n = 10 and 11 and the eight words of
+46,174 letters for n = 8 are mine; the words of 5,905, 46,181 and 408,731 letters for n = 7, 8 and 9 are by
+Teodorescu, Pantone and rumstd. The lower bounds are Liu's, and his library and the
 Hunter-Raudvere library are used unchanged.
 
 Every computation is a kernel reduction (`by decide +kernel`). There is no `native_decide`, no `sorry` and no
@@ -32,6 +33,11 @@ theorem hasWord_ten_b  : HasWord 10 4034855
 theorem hasWord_eleven : HasWord 11 43930578
 theorem exists_word_eleven : exists w : List (Fin 11), Covers w /\ w.length = 43930578
 -- and exists_word_seven, _eight, _nine, _ten, _ten_b in the same form, with the exact length
+
+-- Superperm/Upper8k.lean: my word of 46,174 letters and its seven ties, by the second method
+theorem hasWord_eight_k : HasWord 8 46174
+theorem exists_word_eight_k : exists w : List (Fin 8), Covers w /\ w.length = 46174
+-- and hasWord_eight_k_<hash12>, exists_word_eight_k_<hash12> for each tie in words/n8/ties/
 
 -- Superperm/UpperCyc.lean: the words of hasWord_nine and hasWord_ten_b again, by the second method
 theorem hasWord_nine_cyc : HasWord 9 408731
@@ -139,7 +145,11 @@ For n = 12 the second method is changed in three places, each in a file of its o
 | `WORD10` | 10 | 4,034,855 | `09e2c807aea5f0890d257f97d5d447c0235d41df9589caff8899f01d2016f7f6` |
 | `WORD11` | 11 | 43,930,578 | `65ddf4c4a3ebaa69de7bc6be29e0b38ad010055f22ef6abeeffdb4f508176092` |
 
-`inputs.tsv` has the same table with the hash of the letters alone as well. Where the files come from:
+`inputs.tsv` has the same table with the hash of the letters alone as well. `inputs8k.tsv` lists the eight
+words of 46,174 letters in the same way: `words/superpermutation-8-46174.txt.xz` and the seven files of
+`words/n8/ties/` of this repository, each with its certificate name (`N8k`, `N8k_<hash12>`, hash12 = the first
+12 hex digits of the file name). Their generated files are in `generated/` too, and `build.sh` reads the word
+files from the repository. Where the other files come from:
 
 * `WORD10` and `WORD11` are `words/superpermutation-10-4034855.txt.xz` and
   `words/superpermutation-11-43930578.txt.xz` of github.com/jhalfar/superpermutations (this repository), my
@@ -283,6 +293,7 @@ of the checkers is included: about half a minute, and 83 s in the run for n = 12
 |---|---|---|---|
 | n = 7, 5,905 letters | first | 1 min | 1 min 8 s, one process |
 | n = 8, 46,181 letters | second | 1.6 min | 1 min 43 s, one process |
+| n = 8, 46,174 letters, eight words | second | about 5 s per module, 40 modules | one process |
 | n = 9, 408,731 letters | second | 2.4 min | 2 min 35 s, one process |
 | n = 10, 4,034,855 letters | second | 8.8 min | 5 min 33 s, two processes |
 | n = 11, 43,930,578 letters | second | about 80 min | not run through this command |

@@ -12,7 +12,7 @@ part. This directory holds Lean 4 proofs about how long such a word has to be. I
   `constant/` with the namespace renamed and a different selection inside Pantone's construction; each has its own
   README.
 * `words/` proves that explicit words for n = 7, 8, 9, 10 and 11 are superpermutations, by letting the kernel
-  check each word, and states these upper bounds together with the lower bounds of Xiaolong Liu's Lean
+  check each word (for n = 8 Pantone's 46,181 and my 46,174 with its seven ties), and states these upper bounds together with the lower bounds of Xiaolong Liu's Lean
   project.
 * `words12/` does the same for a word for n = 12. It is a part of its own because of its size.
 * `lower/` proves three lower bounds. With hpv(k) = k! + (k-1)! + (k-2)! + k - 3, a superpermutation on k
@@ -31,7 +31,7 @@ The bounds proven here for the length L(n) of the shortest superpermutation:
 | n | lower: Theorem B | lower: Theorem C; for n = 7, `n7/` | upper: a word or a construction checked here |
 |---|---|---|---|
 | 7 | 5,895 | 5,899 | 5,905 |
-| 8 | 46,129 | 46,133 | 46,181 |
+| 8 | 46,129 | 46,133 | 46,174 |
 | 9 | 408,465 | 408,469 | 408,731 |
 | 10 | 4,033,329 | 4,033,378 | 4,034,855 |
 | 11 | 43,917,793 | 43,917,903 | 43,930,578 |
@@ -127,6 +127,7 @@ for large n. `word_thirteen` and the three `hasWord_` lines are values of `finit
 ```lean
 theorem hasWord_seven  : HasWord 7 5905
 theorem hasWord_eight  : HasWord 8 46181
+theorem hasWord_eight_k : HasWord 8 46174
 theorem hasWord_nine   : HasWord 9 408731
 theorem hasWord_ten_b  : HasWord 10 4034855
 theorem hasWord_eleven : HasWord 11 43930578

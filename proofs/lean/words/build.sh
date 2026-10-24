@@ -13,10 +13,13 @@
 #        N10, N10b       gen.py     4,034,873 (rumstd's word, optional) and 4,034,855 letters
 #        N9cyc, N10cyc   gen11.py   the words of N9 and N10b again
 #        N11             gen11.py   43,930,578 letters
+#        N8k, N8k_<hash12>  gen11.py  46,174 letters: words/superpermutation-8-46174.txt.xz and the seven
+#                        ties in words/n8/ties/ (hash12 = the first 12 hex digits of the file name)
 #      Every generated file is compared with the list of hashes generated.sha256, and verify_word.py or
 #      verify_blocks.py (which share no code with the generators) checks that the number in the Lean files
 #      spells the word file.  Without a word file, the generated files that come with this directory
-#      (generated/: N7, N8, N9, N9cyc) are used; N10 is left out; N10b, N10cyc and N11 are required.
+#      (generated/: N7, N8, N9, N9cyc and the eight N8k*) are used; N10 is left out; N10b, N10cyc and N11
+#      are required.
 #   2. Lean compiles Challenge.lean (Pantone's definitions of Covers and HasWord), the checkers
 #      (Superperm/Literal.lean, Groups.lean, Cyc.lean), the certificates, and the statements
 #      (Superperm/Upper*.lean, UpperHR*.lean, PermForm.lean, Audit11.lean).
@@ -107,7 +110,7 @@ if [ "$CHECK_SOURCES" = 1 ]; then
 fi
 
 WORD_TARGETS="Superperm.Upper Superperm.UpperHR Superperm.PermForm Superperm.Upper10b Superperm.UpperCyc"
-WORD_TARGETS="$WORD_TARGETS Superperm.Upper11 Audit11"
+WORD_TARGETS="$WORD_TARGETS Superperm.Upper11 Audit11 Superperm.Upper8k"
 TWO_TARGETS="Superperm.UpperHunter Superperm.UpperHunter10b Superperm.UpperHunter11"
 TWO_TARGETS="$TWO_TARGETS Superperm.TwoSided Superperm.TwoSided10b Superperm.TwoSided11"
 
@@ -122,6 +125,12 @@ if [ "$PHASE" = all ] || [ "$PHASE" = words ]; then
   certificate N10cyc gen11.py verify_blocks.py "$WORD10"  "$SRC10"  || die "$MISSING10"
   certificate N11    gen11.py verify_blocks.py "$WORD11"  "$SRC11"  --depth 12 || die "$MISSING11"
   certificate N10b   gen.py   verify_word.py   "$WORD10"  "$SRC10"  || die "$MISSING10"
+  # the word of 46,174 letters and its seven ties: one certificate each, named after inputs8k.tsv
+  while IFS=$'\t' read -r NAME FILE _; do
+    case "$NAME" in "" | "#"*) continue ;; esac
+    certificate "$NAME" gen11.py verify_blocks.py "$REPO/$FILE" "n=8, 46174 letters: $FILE." \
+      || die "no certificate for $NAME"
+  done < "$HERE/inputs8k.tsv"
   certificate N10    gen.py   verify_word.py   "$WORD10A" "$SRC10A" \
     || echo "N10: no word file (WORD10A); the statements for rumstd's word of 4,034,873 letters are left out"
 fi

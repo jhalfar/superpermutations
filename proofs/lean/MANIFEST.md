@@ -24,9 +24,24 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 * `.gitattributes` (344 B): keeps LF line ends in text files, so that the hashes hold on every system
 * `MANIFEST.md`: this list
-* `README.md` (28.6 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
+* `README.md` (28.9 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
 * `SHA256SUMS`: SHA-256 of every other file of this directory
 * `lean-toolchain` (25 B): the Lean version, `leanprover/lean4:v4.31.0`
+
+## asym/
+
+* `asym/ConstAsym/Bridge.lean` (6.4 KB): `Covers` of Pantone stated for `Hunter.IsPermWord`, `Hunter.IsSuperperm` and
+  `Hunter.Ssuper`: `ssuper_le_length`, `ssuper_eq_sInf`
+* `asym/ConstAsym/Main.lean` (6.5 KB): `shortest_superpermutation_coefficient`, `two_sided`, `coefficient_limit_rat`,
+  `L_eq_ssuper`, `hunter_lower_L`
+* `asym/ConstAsym/Remainder.lean` (3.8 KB): `remainder_order`: for n >= 2^14 the remainder L(n) - F3(n) lies between
+  (n-4)! - 2(n-5)! and 9(n-4)!
+* `asym/ConstAsym/Remainder8.lean` (8.3 KB): `remainder_order8`, `lower2_L`, `remainder_limit8`: the bounds 2(n-4)! -
+  2(n-5)! and 41/5 (n-4)!, the constant in [2, 8]
+* `asym/README.md` (6.4 KB): the shortest superpermutation: the limit of the coefficient, the order of the remainder,
+  its constant in [2, 8]; how to build; the axiom audit
+* `asym/build.sh` (2.0 KB): builds Pantone's library, the Hunter modules, the needed part of `../constant43586371` and
+  the two files here from sources, and prints the axioms
 
 ## constant/
 
@@ -748,10 +763,10 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `constant43586371/build.sh` (5.2 KB): builds the whole development from sources and prints the axioms
 * `constant43586371/data/b73_dw_0.txt` (6.8 KB): a block (closed walks and loops without a row), lines `x T`
 * `constant43586371/data/block_7_3_enum14_0.txt` (6.8 KB): a block (closed walks and loops without a row), lines `x T`
-* `constant43586371/data/blocks.names` (69 B): the names of the blocks (or of the constants) that the generators write,
-  in order
-* `constant43586371/data/bounds.names` (17 B): the names of the blocks (or of the constants) that the generators write,
-  in order
+* `constant43586371/data/blocks.names` (68 B): the names of the blocks (or of the constants) that the generators
+  write, in order
+* `constant43586371/data/bounds.names` (16 B): the names of the blocks (or of the constants) that the generators
+  write, in order
 * `constant43586371/data/cyc_s133_0.txt` (104 B): the connector cycles of a block
 * `constant43586371/data/cyc_s163_old2_0_ref.txt` (190 B): the connector cycles of a block
 * `constant43586371/data/cyc_t_b73_dw_0_n13.txt` (165 B): the connector cycles of a block
@@ -1125,7 +1140,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 ## words/
 
 * `words/Audit11.lean` (1.2 KB): the statement for 11 symbols written out with no definition of this project
-* `words/README.md` (19.8 KB): the statements, the two checking methods, the word files, how to build
+* `words/README.md` (20.6 KB): the statements, the two checking methods, the word files, how to build
 * `words/Superperm/Bridge.lean` (1.7 KB): the restated definitions are the library's own (`rfl`); the bridge for
   `Hunter.Ssuper`
 * `words/Superperm/BridgeCore.lean` (8.4 KB): the Hunter-Raudvere definitions restated (`HR.Ssuper`) and the bridge to
@@ -1150,6 +1165,8 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `words/Superperm/Upper10.lean` (641 B): `hasWord_ten : HasWord 10 4034873` (rumstd's word)
 * `words/Superperm/Upper10b.lean` (779 B): `hasWord_ten_b : HasWord 10 4034855`
 * `words/Superperm/Upper11.lean` (1.0 KB): `hasWord_eleven : HasWord 11 43930578`
+* `words/Superperm/Upper8k.lean` (6.5 KB): `hasWord_eight_k : HasWord 8 46174` and `exists_word_eight_k`, and the same
+  with the suffix `_<hash12>` for each of the seven ties
 * `words/Superperm/UpperCyc.lean` (981 B): `hasWord_nine_cyc`, `hasWord_ten_cyc`: 9 and 10 symbols by the second
   method
 * `words/Superperm/UpperHR.lean` (1.0 KB): upper bounds for `HR.Ssuper`, 7 to 9 symbols
@@ -1158,13 +1175,13 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `words/Superperm/UpperHunter10.lean` (377 B): `Hunter.Ssuper 10 <= 4034873`
 * `words/Superperm/UpperHunter10b.lean` (394 B): `Hunter.Ssuper 10 <= 4034855`
 * `words/Superperm/UpperHunter11.lean` (430 B): `Hunter.Ssuper 11 <= 43930578`
-* `words/build.sh` (9.7 KB): generates the certificates, builds everything from sources and prints the axioms
+* `words/build.sh` (10.3 KB): generates the certificates, builds everything from sources and prints the axioms
 * `words/check_word.sh` (10.5 KB): one command from a word file to the Lean theorem for that word
 * `words/gen.py` (11.4 KB): generator of the first method: one table entry for every permutation
 * `words/gen11.py` (17.0 KB): generator of the second method: one table entry for every rotation class
 * `words/gen12.py` (20.3 KB): generator of the second method for n = 12 (blocks checked one by one, groups two levels
   deep)
-* `words/generated.sha256` (32.1 KB): SHA-256 of all 355 files that the generators write
+* `words/generated.sha256` (36.2 KB): SHA-256 of all 395 files that the generators write
 * `words/generated/Superperm/N7/Main.lean` (1.3 KB): generated by `gen.py`: `hasWord` for 7 symbols
 * `words/generated/Superperm/N7/P000.lean` (18.0 KB): generated by `gen.py`: position tables and kernel checks, 7
   symbols
@@ -1177,6 +1194,84 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `words/generated/Superperm/N8/Word.lean` (46.7 KB): generated by `gen.py`: the word on 8 symbols as a number
 * `words/generated/Superperm/N8/modules.txt` (15 B): generated by `gen.py`: the modules of this directory in build
   order
+* `words/generated/Superperm/N8k/B000.lean` (47.1 KB): generated by `gen11.py`: blocks of a word on 8 symbols of
+  46,174 letters
+* `words/generated/Superperm/N8k/Main.lean` (1.3 KB): generated by `gen11.py`: `hasWord` for 8 symbols, 46,174 letters
+* `words/generated/Superperm/N8k/P000.lean` (27.2 KB): generated by `gen11.py`: tables and kernel checks, 8 symbols
+* `words/generated/Superperm/N8k/Tree.lean` (881 B): generated by `gen11.py`: the tree of blocks, `W` and `tree_ok`, 8
+  symbols
+* `words/generated/Superperm/N8k/modules.txt` (20 B): generated by `gen11.py`: the modules of this directory in build
+  order
+* `words/generated/Superperm/N8k_1746523ff629/B000.lean` (47.2 KB): generated by `gen11.py`: blocks of a word on 8
+  symbols of 46,174 letters
+* `words/generated/Superperm/N8k_1746523ff629/Main.lean` (1.3 KB): generated by `gen11.py`: `hasWord` for 8 symbols,
+  46,174 letters
+* `words/generated/Superperm/N8k_1746523ff629/P000.lean` (27.3 KB): generated by `gen11.py`: tables and kernel checks,
+  8 symbols
+* `words/generated/Superperm/N8k_1746523ff629/Tree.lean` (941 B): generated by `gen11.py`: the tree of blocks, `W` and
+  `tree_ok`, 8 symbols
+* `words/generated/Superperm/N8k_1746523ff629/modules.txt` (20 B): generated by `gen11.py`: the modules of this
+  directory in build order
+* `words/generated/Superperm/N8k_24efc13a6b92/B000.lean` (47.2 KB): generated by `gen11.py`: blocks of a word on 8
+  symbols of 46,174 letters
+* `words/generated/Superperm/N8k_24efc13a6b92/Main.lean` (1.3 KB): generated by `gen11.py`: `hasWord` for 8 symbols,
+  46,174 letters
+* `words/generated/Superperm/N8k_24efc13a6b92/P000.lean` (27.3 KB): generated by `gen11.py`: tables and kernel checks,
+  8 symbols
+* `words/generated/Superperm/N8k_24efc13a6b92/Tree.lean` (941 B): generated by `gen11.py`: the tree of blocks, `W` and
+  `tree_ok`, 8 symbols
+* `words/generated/Superperm/N8k_24efc13a6b92/modules.txt` (20 B): generated by `gen11.py`: the modules of this
+  directory in build order
+* `words/generated/Superperm/N8k_3677542ddb4f/B000.lean` (47.2 KB): generated by `gen11.py`: blocks of a word on 8
+  symbols of 46,174 letters
+* `words/generated/Superperm/N8k_3677542ddb4f/Main.lean` (1.3 KB): generated by `gen11.py`: `hasWord` for 8 symbols,
+  46,174 letters
+* `words/generated/Superperm/N8k_3677542ddb4f/P000.lean` (27.3 KB): generated by `gen11.py`: tables and kernel checks,
+  8 symbols
+* `words/generated/Superperm/N8k_3677542ddb4f/Tree.lean` (941 B): generated by `gen11.py`: the tree of blocks, `W` and
+  `tree_ok`, 8 symbols
+* `words/generated/Superperm/N8k_3677542ddb4f/modules.txt` (20 B): generated by `gen11.py`: the modules of this
+  directory in build order
+* `words/generated/Superperm/N8k_510faf236ad6/B000.lean` (47.2 KB): generated by `gen11.py`: blocks of a word on 8
+  symbols of 46,174 letters
+* `words/generated/Superperm/N8k_510faf236ad6/Main.lean` (1.3 KB): generated by `gen11.py`: `hasWord` for 8 symbols,
+  46,174 letters
+* `words/generated/Superperm/N8k_510faf236ad6/P000.lean` (27.3 KB): generated by `gen11.py`: tables and kernel checks,
+  8 symbols
+* `words/generated/Superperm/N8k_510faf236ad6/Tree.lean` (941 B): generated by `gen11.py`: the tree of blocks, `W` and
+  `tree_ok`, 8 symbols
+* `words/generated/Superperm/N8k_510faf236ad6/modules.txt` (20 B): generated by `gen11.py`: the modules of this
+  directory in build order
+* `words/generated/Superperm/N8k_6b1c42e70199/B000.lean` (47.2 KB): generated by `gen11.py`: blocks of a word on 8
+  symbols of 46,174 letters
+* `words/generated/Superperm/N8k_6b1c42e70199/Main.lean` (1.3 KB): generated by `gen11.py`: `hasWord` for 8 symbols,
+  46,174 letters
+* `words/generated/Superperm/N8k_6b1c42e70199/P000.lean` (27.3 KB): generated by `gen11.py`: tables and kernel checks,
+  8 symbols
+* `words/generated/Superperm/N8k_6b1c42e70199/Tree.lean` (941 B): generated by `gen11.py`: the tree of blocks, `W` and
+  `tree_ok`, 8 symbols
+* `words/generated/Superperm/N8k_6b1c42e70199/modules.txt` (20 B): generated by `gen11.py`: the modules of this
+  directory in build order
+* `words/generated/Superperm/N8k_b9001a0c8fdf/B000.lean` (47.2 KB): generated by `gen11.py`: blocks of a word on 8
+  symbols of 46,174 letters
+* `words/generated/Superperm/N8k_b9001a0c8fdf/Main.lean` (1.3 KB): generated by `gen11.py`: `hasWord` for 8 symbols,
+  46,174 letters
+* `words/generated/Superperm/N8k_b9001a0c8fdf/P000.lean` (27.3 KB): generated by `gen11.py`: tables and kernel checks,
+  8 symbols
+* `words/generated/Superperm/N8k_b9001a0c8fdf/Tree.lean` (941 B): generated by `gen11.py`: the tree of blocks, `W` and
+  `tree_ok`, 8 symbols
+* `words/generated/Superperm/N8k_b9001a0c8fdf/modules.txt` (20 B): generated by `gen11.py`: the modules of this
+  directory in build order
+* `words/generated/Superperm/N8k_e45fecc9625b/B000.lean` (47.2 KB): generated by `gen11.py`: blocks of a word on 8
+  symbols of 46,174 letters
+* `words/generated/Superperm/N8k_e45fecc9625b/Main.lean` (1.3 KB): generated by `gen11.py`: `hasWord` for 8 symbols,
+  46,174 letters
+* `words/generated/Superperm/N8k_e45fecc9625b/P000.lean` (27.3 KB): generated by `gen11.py`: tables and kernel checks,
+  8 symbols
+* `words/generated/Superperm/N8k_e45fecc9625b/Tree.lean` (941 B): generated by `gen11.py`: the tree of blocks, `W` and
+  `tree_ok`, 8 symbols
+* `words/generated/Superperm/N8k_e45fecc9625b/modules.txt` (20 B): generated by `gen11.py`: the modules of this
+  directory in build order
 * `words/generated/Superperm/N9/Main.lean` (1.8 KB): generated by `gen.py`: `hasWord` for 9 symbols
 * `words/generated/Superperm/N9/P000.lean` (203.2 KB): generated by `gen.py`: position tables and kernel checks, 9
   symbols
@@ -1211,6 +1306,8 @@ them, by `python3` or by Lean, and needs mode 644 only.
   build order
 * `words/hunter-sources.sha256` (6.8 KB): SHA-256 of the 75 files of the Hunter-Raudvere library that are compiled
 * `words/inputs.tsv` (983 B): the six word files: symbols, letters, SHA-256
+* `words/inputs8k.tsv` (1.7 KB): the eight words of 46,174 letters: certificate name, word file, SHA-256 of the
+  letters and of the file
 * `words/preimage-sources.sha256` (8.0 KB): SHA-256 of the 76 files of the preimage-chain project that are compiled
 * `words/verify_blocks.py` (2.7 KB): checks that the blocks of a `gen11.py` certificate spell a word file
 * `words/verify_blocks12.py` (3.2 KB): checks that the blocks of a `gen12.py` certificate spell a word file
