@@ -1068,6 +1068,32 @@ Not covered: the 22 evaluations are not checked by the kernel; the written proof
 not in the package; the node counts of the three largest searches were counted by a C program only; at n = 6 the
 same tables alone do not reach 872, so the method has no end-to-end check there.
 
+## L(7) >= 5,900 and 5,901 (October 8 to 24)
+
+The method of 5,899 does not reach 5,900 as it stands. 5,900 needs defect 15, that is no configuration of cost
+at most 135, and I proved it with a new accounting (components cut at their dear places into pieces, a knapsack
+over the pieces) and two kinds of finite statements: the kernel alone (Theorem K, a table T') and five joint
+statements about two or three pieces. Every computation of its Table C has two complete runs by programs that
+share no code, with equal counts. The written proof was drafted on October 10 and is
+[`proofs/lean/n7_5900/PROOF_5900.md`](proofs/lean/n7_5900/PROOF_5900.md).
+
+In Lean, level 1 (`covers_5900_of_search`, kernel only) was complete on October 11. Level 2 evaluates 77 new
+search equations in 72 modules by `native_decide`; they ran from October 11 to October 23, at most 4,190
+thread-hours, the longest module 85 hours. The theorem `covers_lower_bound_7_5900_native` was assembled on
+October 24 and depends on the three standard axioms and 99 `native_decide` axioms (the 22 of 5,899 and the 77).
+It is in [`proofs/lean/n7_5900/`](proofs/lean/n7_5900/README.md).
+
+5,901 needs defect 16. The same plan with a weaker margin: the excess is at most 2, eleven kernel statements K0
+to K10 and nine joint statements T1 to T9 searched in 18 counted runs with new rules (the reversal cut on one
+piece, the order of pieces of equal kind, windows of ring holes), and the exact ring row RX. The last search,
+K1, ended on October 18 with nothing found. Here most searches have one program only: K7 to K10, T7, T8 and
+T9' have independent second counts and RX three programs, the rest one run of one card program each. Lean
+checks the whole reduction (`covers_5901_of_search`, level 1 complete on October 17) and, so far, six of the
+thirty search equations by `native_decide` (K10, K9, K8, K7, T9', T8); K6 is being evaluated since October 24.
+So 5,901 is a computer-assisted proof, not a Lean theorem. The written proof, the programs and a table with the
+trust level of every search are in [`proofs/n7_5901/`](proofs/n7_5901/README.md), the Lean reduction in
+[`proofs/lean/n7_5901/`](proofs/lean/n7_5901/README.md).
+
 # Words of record length (9 October 2026)
 
 `ties/` collects the words of the shortest known length for n = 7, 8, 9 and 10 and sorts them into classes: two

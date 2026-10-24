@@ -44,6 +44,11 @@ Lower bounds.
 * `n7/` proves that a superpermutation on 7 symbols has at least 5,899 letters. The kernel checks this
   proof down to 22 equations, each of which says that a finite search returns `false`, and compiled code
   evaluates these 22 (`native_decide`).
+* `n7_5900/` proves 5,900 on top of `n7/` in the same way: level 1 is checked by the kernel, level 2
+  evaluates 99 equations (the 22 of `n7/` and 77 new ones in 72 modules) by `native_decide`.
+* `n7_5901/` is level 1 of the computer-assisted proof of 5,901: the reduction to thirty search equations,
+  checked by the kernel. Six of the thirty are evaluated by `native_decide` in `../n7_5901/lean/`; the others
+  rest on search programs (`../n7_5901/README.md` has the trust table). So 5,901 is not a Lean theorem.
 
 Structure.
 
@@ -67,9 +72,9 @@ the other parts.
 
 ### The bounds for small n
 
-| n | lower: Theorem B | lower: Theorem C; for n = 7, `n7/` | upper: a word or a construction checked here |
+| n | lower: Theorem B | lower: Theorem C; for n = 7, `n7/` and `n7_5900/` | upper: a word or a construction checked here |
 |---|---|---|---|
-| 7 | 5,895 | 5,899 | 5,905 |
+| 7 | 5,895 | 5,900 | 5,905 |
 | 8 | 46,129 | 46,133 | 46,174 |
 | 9 | 408,465 | 408,469 | 408,731 |
 | 10 | 4,033,329 | 4,033,378 | 4,034,855 |
@@ -78,8 +83,9 @@ the other parts.
 | 13 | 6,746,615,766 | 6,746,626,957 | 6,747,849,960 |
 | 14 | 93,891,107,960 | 93,891,141,126 | 93,905,309,790 |
 
-The 5,899 for n = 7 is not a value of Theorem C. It is the result of `n7/`, and it is the one bound of this
-table whose proof trusts compiled code. For n = 8, `n8_46134/` gives 46,134 with three equations evaluated by
+The 5,900 for n = 7 is not a value of Theorem C. It is the result of `n7_5900/` (and 5,899 that of `n7/`), and it
+is the one bound of this table whose proof trusts compiled code. 5,901 has a computer-assisted proof, not a Lean
+proof (`n7_5901/`). For n = 8, `n8_46134/` gives 46,134 with three equations evaluated by
 compiled code; the table keeps the bound that the kernel checks alone. For n = 14 the value 93,891,141,126
 comes from a certificate that is a recipe of its own (`lower/certificates/C14_843_63334_16000/`, 61 hours of
 Lean time); the build levels of `lower/` stop at 93,891,141,008. The upper bounds for n = 7 to 12 are literal
@@ -465,7 +471,9 @@ The README of each part has the times per group of modules, and the costs of `as
   `n7/build.sh` builds from `PSearch.lean` and that Lean loads to run the searches. Everything else in `n7/`
   is checked by the kernel with the three axioms, and that includes the proof that a search which returns
   `false` proves its finite statement. `n8_46134/` does the same for its three equations, with a library
-  built from `DSearch.lean`. Justin Lebar's Lean proof of 5,898 has the same footing.
+  built from `DSearch.lean`, and `n7_5900/` for its 99 equations, with the libraries built from
+  `PSearch.lean`, `KSearch.lean` and `J15Search.lean`. Justin Lebar's Lean proof of 5,898 has the same
+  footing.
 * For the literal words, one link is outside Lean: that the number in the Lean files is the word in the
   public file. The theorems say that a word of that length exists. That it is the published word is checked
   by `words/verify_word.py` and `words/verify_blocks.py` and by the hashes, not by the kernel.

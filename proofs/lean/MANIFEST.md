@@ -29,7 +29,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 * `.gitattributes` (344 B): keeps LF line ends in text files, so that the hashes hold on every system
 * `MANIFEST.md`: this list
-* `README.md` (31.7 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
+* `README.md` (32.5 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
 * `SHA256SUMS`: SHA-256 of every other file of this directory
 * `lean-toolchain` (25 B): the Lean version, `leanprover/lean4:v4.31.0`
 

@@ -77,11 +77,16 @@ How the words were found, step by step, is in [`NOTES.md`](NOTES.md).
 | L(8) >= 46,132 in William Echols's framework, without his `native_decide` | kernel | [`n8/`](proofs/lean/n8/README.md) |
 | L(8) >= 46,134 (Theorem D) | kernel and 3 equations by `native_decide` | [`n8_46134/`](proofs/lean/n8_46134/README.md) |
 | L(7) >= 5,899, one more than Justin Lebar's 5,898 | kernel and 22 equations by `native_decide` | [`n7/`](proofs/lean/n7/README.md) |
+| L(7) >= 5,900 | kernel and 99 equations by `native_decide` | [`n7_5900/`](proofs/lean/n7_5900/README.md) |
+| L(7) >= 5,901: the reduction to 30 search equations, 6 of them evaluated | kernel, and 6 equations by `native_decide` | [`n7_5901/`](proofs/lean/n7_5901/README.md) |
 | the 27-walk and the packing of four copies behind the 46,174 word | kernel | [`n8struct/`](proofs/lean/n8struct/README.md) |
 
 "Kernel" means checked by the Lean kernel to the end with the axioms `propext`, `Classical.choice` and `Quot.sound`
 only. Where equations are evaluated by `native_decide`, the Lean compiler, the C compiler of the toolchain and the
-runtime are trusted for them, as in Lebar's proof. [`proofs/lean/README.md`](proofs/lean/README.md) has the
+runtime are trusted for them, as in Lebar's proof. L(7) >= 5,901 as a whole is a computer-assisted proof, not a
+Lean theorem: the 24 search equations that Lean has not evaluated rest on C, C++ and CUDA programs, most of them
+run by one program only. [`proofs/n7_5901/`](proofs/n7_5901/README.md) has the written proof, the programs and
+a table that gives the trust level of each of the 30 searches. [`proofs/lean/README.md`](proofs/lean/README.md) has the
 statements, the trust levels, the builds and what they cost.
 
 ## Checking a word
@@ -131,6 +136,7 @@ python3 words/n8/tools/n8.py rebuild words/n8/selection-46174.txt -o w46174.txt 
 | [`arrange/`](arrange/README.md) | how closed trails become a first plan: chains, their order, the lift from 12 to 13, the n = 10 construction, bounds |
 | [`tools/`](tools/README.md) | the C programs that shorten a plan, one line per program, and their tests |
 | [`ties/`](ties/README.md) | the words of the shortest known length for n = 7, 9 and 10 and of the earlier record length 46,181 for n = 8: 85 new words of 5,905 letters, which published words are the same, 1,223 rotations at n = 8 |
+| [`proofs/n7_5901/`](proofs/n7_5901/README.md) | L(7) >= 5,901: the written proof, the search programs, Table C, the trust level of every search |
 | [`proofs/n9/`](proofs/n9/README.md) | 408,731 cannot be beaten at n = 9 with Pantone's closed trails, in three families of words |
 | [`proofs/lean/`](proofs/lean/README.md) | the Lean proofs, and one command that checks a word of your own |
 | [`catalogue/`](catalogue/CATALOGUE.md) | every result with its status, evidence and the command that reruns it ([`schema.md`](catalogue/schema.md)) |
