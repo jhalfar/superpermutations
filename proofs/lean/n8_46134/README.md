@@ -107,3 +107,9 @@ with one thread and 3.2 to 3.5 GB of working set; the three evaluations 722 s wi
 threads and 3,739 s with 3 threads, about 5.4 thread-hours in all, 0.3 GB each; `DTestNative` 52 s. A build from
 an empty directory also compiles the two lower-bound libraries and the level-1 files of `../n7/` that are needed,
 as `../n7/build.sh` does.
+
+On 2026-10-24 I ran `build.sh` on the files of this repository as `git archive` writes them, in the build
+directory of a fresh `../words/build.sh` run (so the libraries were compiled there first): level 1 in 5 minutes
+with four processes, then with `JOBS=5` the evaluations `DTestNative` 29 s, `DLine1Native` 243 s,
+`DLine2Native` 1,582 s and `DZoneNative` 964 s, 49 minutes for the whole run, at most 8 GB of committed memory.
+The axiom check of step 6 passed.

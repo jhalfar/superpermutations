@@ -1166,7 +1166,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `n8_46134/LowerBounds/DTheorem.lean` (5.9 KB): Theorem D for every k >= 5: `theoremD_pathwise`, `superperm_boundD`,
   `covers_length_ge_boundD`
 * `n8_46134/LowerBounds/DZoneNative.lean` (2.0 KB): evaluation by `native_decide`: the zone statement
-* `n8_46134/README.md` (6.5 KB): L(8) >= 46,134: the two levels, the statements and axioms, the argument, the files,
+* `n8_46134/README.md` (7.0 KB): L(8) >= 46,134: the two levels, the statements and axioms, the argument, the files,
   how to build
 * `n8_46134/build.sh` (10.1 KB): builds the engine, level 1, the three evaluations, the theorem and the audit; checks
   the axioms
