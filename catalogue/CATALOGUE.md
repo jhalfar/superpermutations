@@ -74,7 +74,7 @@ Every word over 7 symbols that contains all 5,040 permutations has at least 5,90
 * method: Lean, two levels: level 1 (covers_5900_of_search, kernel only) reduces the bound to search equations; level 2 evaluates 99 of them by native_decide (the 22 of 5,899 and 77 of defect 15 in 72 modules, about 4,190 thread-hours); axioms: propext, Classical.choice, Quot.sound and one native_decide axiom per equation. Every statement of Table C of the written proof was also searched by two programs with equal counts.
 * credit: Jakub Halfar (with Claude); date 2026-10-13
 * reproduce: `JOBS=8 ./build.sh full` in `proofs/lean/n7_5900/`
-* evidence: `proofs/lean/n7_5900/README.md` (sha256 `fa2da3954149...`); `proofs/lean/n7_5900/Audit5900Native.lean` (sha256 `6f8f7f71e986...`); `proofs/lean/n7_5900/LowerBounds/F5900Native.lean` (sha256 `edad71ebf2e7...`)
+* evidence: `proofs/lean/n7_5900/README.md` (sha256 `897f521db46e...`); `proofs/lean/n7_5900/Audit5900Native.lean` (sha256 `6f8f7f71e986...`); `proofs/lean/n7_5900/LowerBounds/F5900Native.lean` (sha256 `edad71ebf2e7...`)
 * source: `proofs/lean/n7_5900/README.md:30`
 * supersedes: `n7-lb-5899`
 * superseded by: `n7-lb-5901`
@@ -89,7 +89,7 @@ Lean level 1: covers_5900_of_search states that every word over 7 symbols contai
 * method: Lean, kernel only (propext, Classical.choice, Quot.sound); proofs/lean/n7_5900 LowerBounds/K*.lean, A15*.lean, J15*.lean, F5900.lean; no native_decide in this theorem
 * credit: Jakub Halfar (with Claude); date 2026-10-11
 * reproduce: `./build.sh` in `proofs/lean/n7_5900/`
-* evidence: `proofs/lean/n7_5900/LowerBounds/F5900.lean` (sha256 `390f1484bd48...`); `proofs/lean/n7_5900/README.md` (sha256 `fa2da3954149...`)
+* evidence: `proofs/lean/n7_5900/LowerBounds/F5900.lean` (sha256 `390f1484bd48...`); `proofs/lean/n7_5900/README.md` (sha256 `897f521db46e...`)
 * source: `proofs/lean/n7_5900/README.md:27`
 * notes: A reduction, not an unconditional bound. Its level-2 sibling is n7-lb-5900.
 
