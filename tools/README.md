@@ -22,6 +22,21 @@ joined with the largest overlap of their ends. A plan is a text file that lists 
 A plan belongs to the word it was made from, the base word. Every tool reads `BASE.txt` and a plan, and writes
 `OUT.txt` and `OUT.txt.plan`.
 
+The tools keep a permutation only if it lies inside one piece. A permutation that only forms across a join is lost
+as soon as that join changes. A plan that `word2plan` writes for a word whose trails are the image of those of the
+base word under a symmetry, or for a word with tight joins, can depend on such permutations; `word2plan` then says
+that the plan rebuilds the word but is NOT safe to search from. The tools of the first release took such a plan
+without a warning. On 24 October 2026 `trailsearch` turned a 46,173 word at n = 8 into a "word" of 46,098 letters
+that missed 272 permutations; `segins`, `segins_ils` and `loopscan` also write words that miss permutations from
+such a plan. Every published word went through `delcheck`, so none of them is affected. Now every program that reads
+a plan (the eight copies below and `loopscan.c`) checks it when it loads it: if a permutation of the base word lies
+only across joins, it stops with exit code 4. Only `trailsearch` and `trailsearch_gpu` with `--time 0` and no pass
+still rebuild the word of such a plan, with a warning. Every program also checks each word while it writes it. A
+word with fewer distinct permutations than the base word is kept as `OUT.txt.rejected`, `OUT.txt` and `OUT.txt.plan`
+are not written, and the exit code is 4. The checks need n! bits (0.8 GB at n = 13) and up to three passes over the
+word on the threads of the run, 2.5 s at n = 11 on one thread. On safe plans the words and plans are byte for byte
+those of the first release.
+
 The cost of a cut is 3 minus the weight of the step. A cut at a step of weight 3 is free. A cut between two 2-cycles
 (weight 2) costs one letter. A cut inside a 1-cycle (weight 1) costs two letters, and only `recut_wide.c` and
 `word2plan.c` use it.
@@ -109,7 +124,7 @@ before this release has another SHA-256 than the same plan here. The tools read 
 The script builds the twelve programs and runs them at n = 11 on Pantone's word and on my published plans, and at
 n = 10 and n = 11 on the words of the other selections. It compares the length and the SHA-256 of every word it
 writes with the values in the script, and checks every word with `delcheck`. It takes 5 to 9 minutes on one
-thread and 0.6 GB. Tests 17 to 20 need Python 3 and are skipped without it. What it runs:
+thread and 0.6 GB. Tests 17 to 21 need Python 3 and are skipped without it. What it runs:
 
 | test | from | to | tool |
 |---|---|---|---|
@@ -133,6 +148,7 @@ thread and 0.6 GB. Tests 17 to 20 need Python 3 and are skipped without it. What
 | n = 11: selection, base word, word | `reproduce/selections/n11-selection.txt` | 43,930,578 | the same |
 | the passes on the n = 10 base word | 4,036,801 (base word) | 4,035,422 | `recut`, `segins_gpu` |
 | moves of equal length on the n = 11 word, 3 rounds | 43,930,578 | 43,930,578, another word of the same length | `segins_gpu --or3-eq` |
+| n = 8: the coverage checks on the tie 3677542ddb4f of the 46,174 word, whose plan on the base word of its selection is not safe | 46,174 | refused (exit code 4); with `--time 0` the tie again; a plan without one trail: no word | `geng.py`, `word2plan`, `trailsearch`, `recut` |
 
 In tests 17 and 18 the word that `trailsearch` rebuilds from the base word and the plan must be byte for byte the
 word that `reproduce/tools/applyplan.py` writes, with the SHA-256 given in `reproduce/REPRODUCE.md`.
@@ -141,10 +157,11 @@ With `GPU=1` it also runs the search of `trailsearch_gpu` and the two `segins_gp
 them with the CPU runs; that needs `bash tools/mkptx.sh WORK/bin` first.
 
 The script counts checks, not the steps of the table: a step that writes a word checks its length, its SHA-256 and
-`delcheck`, so the 20 steps give 30 checks, and the runs on the card with `GPU=1` bring them to 34. On the
-sources of this release the script passes all 34 with `GPU=1` on Windows 11 (MinGW gcc 13.2,
-kernels built with CUDA 13.4) and on Ubuntu 24.04 under WSL 2 (gcc 13.3, kernels built with CUDA 12.9), with the
-same lengths and hashes on both.
+`delcheck`, and test 21 has six checks of its own, so the 21 steps give 36 checks, and the runs on the card with
+`GPU=1` bring them to 40. On the sources of the first release the script passed all 34 checks it had then with
+`GPU=1` on Windows 11 (MinGW gcc 13.2, kernels built with CUDA 13.4) and on Ubuntu 24.04 under WSL 2 (gcc 13.3,
+kernels built with CUDA 12.9), with the same lengths and hashes on both. With the coverage checks it passes all 40
+with `GPU=1` on Windows 11 (kernels built with CUDA 12.9 under WSL 2), with the same lengths and hashes as before.
 
 There is no script for n = 12. I ran the tools of the first release there once, on 2 threads. `trailsearch` rebuilt
 the 522,745,464 word from `plan/history/trailsearch-12-522745464-rb.plan`, and `relocate` took it to 522,745,445.
@@ -170,7 +187,8 @@ After this release the files here are also the sources I work on. If you change 
 
 * Run `bash tools/test.sh pantone-11.txt` before and after. A change that is meant to keep the behaviour must keep
   every length and hash of the script. The searches of tests 11 and 12 repeat exactly for a seed on one thread.
-* A pass must never return a longer word, and every word a program writes should go through `delcheck`.
+* A pass must never return a longer word, and every word a program writes should go through `delcheck`. The
+  programs check the permutations of every word they write, but not the letters that could be deleted.
 * Format with `clang-format` and the `.clang-format` of the repository, and keep the comments: every file has a
   header with what it does, how to build it, its options and where its parts start, and every function that is
   not trivial says what it computes and what it assumes.
@@ -398,6 +416,15 @@ from the base word. I use it to read other people's words and to write my words 
 `--rebase` handles words with cuts inside a 1-cycle. `--rephase` is the pass of `recut_wide` in an earlier form.
 
     word2plan BASE.txt OTHER.txt PLAN
+
+Its last line says whether the plan rebuilds the other word and whether it is safe to search from. "NOT safe to
+search from" means that some permutations of the word lie only across joins of the plan: the word uses the trails
+under a symmetry of the selection, or it has tight joins. The plan still rebuilds the word with
+`trailsearch --time 0`, but the other programs refuse it. Then I either rename the letters of the word, and read it
+backwards if needed, so that it uses the trails of the base word (that keeps the length and every permutation), or
+run `word2plan` with `--rebase NEWBASE.txt` and convert the word again on the new base word. The exit code is 0 for a safe plan,
+2 for a plan that does not rebuild the word and 3 for one that is not safe (0 with `--rebase` or `--rephase`); the
+plan is written in each case.
 
 | | n = 11 | n = 12 | n = 13 |
 |---|---|---|---|
