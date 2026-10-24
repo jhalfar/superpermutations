@@ -60,6 +60,11 @@ Level 1 is of that kind too. Level 2 evaluates the search equations (22 for `n7/
 `native_decide`, that is, by compiled code. The final theorem then depends on the three axioms and on one
 axiom per equation, which `native_decide` records.
 
+The comparator (leanprover/comparator), which checks a statement against its source, and the independent
+kernel nanoda accepted the two limit theorems, `coefficient_tends_to_zero` (`constant43586371/`) and
+`shortest_superpermutation_coefficient` (`asym/`). They were not run on the rate and remainder theorems or on
+the other parts.
+
 ### The bounds for small n
 
 | n | lower: Theorem B | lower: Theorem C; for n = 7, `n7/` | upper: a word or a construction checked here |

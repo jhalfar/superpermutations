@@ -19,6 +19,60 @@ The tools are in [`tools/`](tools/README.md). Everything ran on one computer. Ti
 of threads where it matters. The passes "on the card" need a CUDA card; the one I used has 32 GB. Memory figures
 are those of the process on the host unless they say "on the card".
 
+## In short
+
+The steps, with what each gave; the sections below have the detail.
+
+Part one, on Pantone's closed trails (October 2 to 5):
+
+1. Reordering runs of pieces by a travelling salesman model: 6 letters at n = 11, 8 at n = 13.
+2. Cutting closed trails open between two 2-cycles, as rumstd's n = 10 word does, in a local search over all
+   trails and cuts: 46, 44 and 71 letters at n = 11, 12 and 13.
+3. All cuts at once for a fixed order, by dynamic programming: 3, 6 and 17 letters. Theo H. found the same pass
+   independently. Cuts inside a 1-cycle, his idea, gave one more letter at n = 12.
+4. Moves that change the order and are judged with all cuts free: relocation, loop moves and segment insertion,
+   which with three cuts is a 3-opt move without reversal. These gave the rest: in all 66, 231 and 1,409 letters
+   below Pantone's words.
+
+Part two, other closed trails (October 5 to 7):
+
+5. The closed trails come from a selection. Pantone's selection on 8 symbols leaves 48 loops without a row, and at
+   every later level each loop above them gives a small closed trail of its own. These loops form 48 blocks that
+   can be solved again on their own. A better solution of the block gives fewer closed trails: 7,200 instead of
+   25,200 at n = 12, and with rows of other lengths 3,648, and 23,808 instead of 252,000 at n = 13.
+6. The small closed trails have to be written in chains, and the order of the chains comes from integer programmes
+   where local search does not find it. The pieces of the final words with such a first plan, before any search,
+   were 5,411 letters below my best word of part one at n = 12 and 109,575 at n = 13.
+7. Segment insertion with three cuts on these plans: 1,678 and 2,195 letters.
+8. On these pieces a round of segment insertion has tens of thousands of moves that keep the length. Taking some
+   of them in every round keeps the search going: 866 and 2,325 letters. Local kicks, a small change and its
+   repair, then gave 220 more at n = 12.
+9. At n = 11 the new pieces pay off only after the same passes: 36 letters below my best word of part one, most
+   of the last ones from local kicks.
+10. For n = 10 the word is constructed: the pieces of a selection with two closed walks where Pantone's has four,
+    in the order of rumstd's word, with every cut chosen exactly. It is 18 letters below his.
+
+Part three, moves of William Echols and Theo H. (October 17 to 20):
+
+11. Cut a block of consecutive closed trails again (Echols), or move one closed trail to another place in the
+    order and choose its cut there (Theo H.), with all the cuts around the change chosen again by dynamic
+    programming. For n = 12 I started from Echols's word and alternated these moves with the local search of part
+    two: 522,736,969 letters, 206 below my 522,737,175. For n = 13 I started from my 6,747,802,393 word and added
+    segment insertion with five cuts on the card: 6,747,802,319 letters, 74 below it. Then five more cuts gave
+    310, and rounds of `tools/trailsearch.c` (30 minutes on 6 threads each) alternated with segment insertion on
+    the card: 200, 169, 941, 928, 837, 836 and, in the last check before publication, 6,747,801,835 on October
+    24, 484 below 319. The programs for the moves of Echols and Theo H. and the card program with bounded memory
+    are not in the repository yet; the plans are, and they rebuild with `tools/trailsearch.c`.
+12. For n = 14 the word is written by a generator from the selection and a plan of 72,000 units, one per closed
+    trail on 13 symbols, in the order that my n = 12 and n = 13 plans give: 93,904,804,425 letters, 91 below
+    Echols's 93,904,804,516.
+
+Part four, n = 8 (October 20):
+
+13. A set partition over closed walk types packed the 120 loops with four copies of one walk of 27 loops. Priced
+    with joins of every overlap, that packing gives 46,174 letters, four below Echols's 46,178. Theo H. then ran
+    `tools/trailsearch.c` on the same selection and found 46,173, by opening three trails at steps of weight 2.
+
 ## The model
 
 A word of Pantone's construction splits into pieces at the steps of weight 4 or more. Almost every piece is a
