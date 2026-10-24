@@ -1,0 +1,110 @@
+# On a tag words-*: encode every word of words/ that is not yet a .spra.xz in Theo H.'s SPRA format, check each
+# file with an independent decoder (the one of github.com/jhalfar/superpermutations-bot), and publish the files with a
+# SHA256SUMS as a GitHub release. The encoding is one step ("Encode"), so that the format can be swapped later.
+name: release words
+
+on:
+  push:
+    tags:
+      - "words-*"
+
+permissions:
+  contents: write
+
+env:
+  SPRA_REPO: https://github.com/Tholsh/SPRA
+  SPRA_COMMIT: b36ede21d3d94c309ec573cb0a8dca43f752b4e8
+  BOT_REPO: https://github.com/jhalfar/superpermutations-bot
+  BOT_REF: v1.0
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Theo H.'s codec at the pinned commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/bin"
+          git init -q "$RUNNER_TEMP/spra"
+          git -C "$RUNNER_TEMP/spra" fetch -q --depth 1 "$SPRA_REPO" "$SPRA_COMMIT"
+          git -C "$RUNNER_TEMP/spra" checkout -q FETCH_HEAD
+          g++ -std=c++20 -O2 "$RUNNER_TEMP/spra/tools/reduced_codec.cpp" -o "$RUNNER_TEMP/bin/reduced-codec"
+
+      - name: Build the bot's decoder
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone -q --depth 1 --branch "$BOT_REF" "$BOT_REPO" "$RUNNER_TEMP/bot"
+          SUPERPERM_SRC="$RUNNER_TEMP/bot/gens" SUPERPERM_BIN="$RUNNER_TEMP/superperm-bin" \
+            python3 -I "$RUNNER_TEMP/bot/checker/build.py"
+          test -x "$RUNNER_TEMP/superperm-bin/spra"
+
+      # ---- Encode: the only step that knows the format. It writes dist/NAME.spra.xz for every word
+      # words/**/superpermutation-*.txt.xz that has no .spra.xz yet, and one line "NAME<TAB>n<TAB>SHA-256 of the
+      # letters" per word into dist/letters.tsv (the letters without line feeds).
+      - name: Encode (SPRA 0.2, Theo H.'s codec)
+        shell: bash
+        run: |
+          set -euo pipefail
+          CODEC="$RUNNER_TEMP/bin/reduced-codec"
+          mkdir -p dist
+          : > dist/letters.tsv
+          find words -name 'superpermutation-*.txt.xz' | sort | while read -r f; do
+            base=$(basename "$f" .txt.xz)
+            [ -e "$(dirname "$f")/$base.spra.xz" ] && { echo "skip $f: there is a .spra.xz"; continue; }
+            n=$(echo "$base" | sed -E 's/^superpermutation-([0-9]+)-.*/\1/')
+            # the alphabet: the first n letters of the word are one permutation of it
+            first=$({ xz -dc "$f" 2> /dev/null || true; } | head -c "$n" | fold -w1 | LC_ALL=C sort | tr -d '\n')
+            zero=$(printf '%s' 0123456789ABCDEFGHIJKLMNOPQRSTUV | head -c "$n")
+            one=$(printf '%s' 123456789ABCDEFGHIJKLMNOPQRSTUVW | head -c "$n")
+            if [ "$first" = "$zero" ]; then Z="-z"; elif [ "$first" = "$one" ]; then Z=""; else
+              echo "unknown alphabet in $f: $first"; exit 1; fi
+            BITS=""; [ "$n" -ge 12 ] && BITS="--bits 6"
+            # shellcheck disable=SC2086
+            xz -dc "$f" | "$CODEC" encode $BITS $Z "$n" - > "dist/$base.spra"
+            xz -6e -T1 -f "dist/$base.spra"
+            letters=$(xz -dc "$f" | tr -d '\r\n' | sha256sum | cut -c1-64)
+            printf '%s\t%s\t%s\n' "$base" "$n" "$letters" >> dist/letters.tsv
+            echo "encoded $f: n = $n, $(stat -c %s "dist/$base.spra.xz") bytes"
+          done
+          test -s dist/letters.tsv || echo "no word to encode"
+
+      - name: Check every file with the bot's decoder
+        shell: bash
+        run: |
+          set -euo pipefail
+          DEC="$RUNNER_TEMP/superperm-bin/spra"
+          bad=0
+          while IFS=$'\t' read -r base n letters; do
+            got=$(xz -dc "dist/$base.spra.xz" | "$DEC" | sha256sum | cut -c1-64)
+            if [ "$got" = "$letters" ]; then echo "ok   $base"; else echo "BAD  $base: $got, expected $letters"; bad=1; fi
+          done < dist/letters.tsv
+          exit $bad
+
+      - name: SHA256SUMS
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd dist
+          {
+            echo "# SHA-256 of each .spra.xz file, and of the letters it decodes to (no line feed) as NAME.letters"
+            while IFS=$'\t' read -r base n letters; do
+              printf '%s  %s\n' "$(sha256sum < "$base.spra.xz" | cut -c1-64)" "$base.spra.xz"
+              printf '%s  %s\n' "$letters" "$base.letters"
+            done < letters.tsv
+          } > SHA256SUMS
+          cat SHA256SUMS
+
+      - name: Release
+        if: hashFiles('dist/*.spra.xz') != ''
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release create "$GITHUB_REF_NAME" dist/*.spra.xz dist/SHA256SUMS --title "$GITHUB_REF_NAME" \
+            --notes "The words of words/ in Theo H.'s SPRA format (version 0.2; fields of 6 bits for n >= 12), packed with xz. Each file was decoded by an independent decoder and compared with the word. Decode with tools/reduced_codec.cpp of $SPRA_REPO (commit $SPRA_COMMIT): xz -dk FILE.spra.xz && reduced-codec decode FILE.spra > word.txt."
