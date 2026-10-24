@@ -2,7 +2,7 @@
    (K = 10 letters, rows F / S / D) by two transports and the completion.  The construction (slices, transport,
    completion, closed trails) is Jay Pantone's; the order of the 2-lift that William Echols published on 2026-10-17
    (recipe "superperm-2lift/1") is reproduced in mode `echols`; this code is written from my own definitions
-   (opt/pieces/k10/gen12.py, publish/superpermutations/arrange/gen13.py), not copied.
+   (an earlier generator for n = 12 and arrange/gen13.py of this repository), not copied.
 
    usage:
      gen14 info   SEL                              counts and the ledger of the selection

@@ -251,7 +251,7 @@ generate as ends of a chain of walk trails. Whether a chain can end at one of th
 
 #### Passes at n = 12 that optimise the n = 13 length
 
-`tools/segins_gpu` has two options for this. `--gap3` keeps only the cuts at vertices and writes no trail in two
+`tools/segins_gpu.c` has two options for this. `--gap3` keeps only the cuts at vertices and writes no trail in two
 segments. `--gap3-list FILE` keeps of those only the vertices listed in FILE, and `mkverts.py` writes the list of
 the vertices the lift can use:
 

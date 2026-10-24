@@ -1,5 +1,5 @@
 """Python mirror of Superperm8/KCode.lean and KSearch.lean (same arithmetic, same order of children).
-Used to check the definitions against opt/lb/small/affine_check.py (node counts) and to plan the cut of the
+Used to check the definitions against an independent Python search of mine (node counts) and to plan the cut of the
 search into parts for the kernel (plan.py imports this file).
 
 usage: ksim.py A Cc Bd fuel      prints the result of fsearch, the number of calls of fsearchK and the depth profile

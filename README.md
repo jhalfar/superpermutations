@@ -1,7 +1,9 @@
-# Shorter superpermutations on 8 and 10 to 14 symbols
+# Short superpermutations on 8 and 10 to 14 symbols
 
 A superpermutation on n symbols is a word that contains every permutation of the symbols as a substring. This
-repository holds such words for n = 8, 10, 11, 12, 13 and 14 that are shorter than any other I know of. It also
+repository holds such words for n = 10, 11, 12, 13 and 14 that are shorter than any other I know of, and a word
+of 46,174 letters for n = 8. The shortest word known for n = 8 is Theo H.'s 46,173, found with a program of
+this repository on the same selection. The repository also
 holds the inputs from which the words for n = 10 to 14 can be rebuilt and the programs that made them. The word
 for n = 8 has its own page, [`words/n8/`](words/n8/README.md).
 
@@ -42,7 +44,8 @@ The word on 14 symbols would take 94 GB, so it is published as a recipe in [`rec
 a generator, a plan of 83 KB and a checker, as William Echols did with his words.
 
 For n = 8 Theo H. has since found a word of 46,173 letters on the same selection with `tools/trailsearch.c`
-([`words/n8/`](words/n8/README.md)). "Before" is the best word of someone else. Theo H.'s words for n = 11 and 12 were made from earlier words of mine.
+([`words/n8/`](words/n8/README.md)), so for n = 8 mine is no longer the shortest. "Before" is the best word of
+someone else when mine was published. Theo H.'s words for n = 11 and 12 were made from earlier words of mine.
 The word for n = 12 starts from William Echols's 522,737,174, and it and the word for n = 13 use two moves from the
 group: his re-opening of a stretch of consecutive trails and Theo H.'s moving of a trail with a new phase. Against Pantone's own words of
 4,034,889, 43,930,680, 522,745,581 and 6,747,918,066 letters the words for n = 10 to 13 are 34, 102, 8,612 and

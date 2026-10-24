@@ -22,8 +22,8 @@ bash decode.sh n14_93904804425_on_selC.uplan.xz check      # streams the word in
 bash decode.sh n14_93904804425_on_selC.uplan.xz word.txt   # writes the word (94 GB); "-" writes to standard output
 ```
 
-`check` needs gcc, xz and 11 GB of memory, and takes about an hour (56 minutes on my machine). The alphabet is `0123456789ABCD`; `--alpha`
-in `gen14` changes it. `vfast.c` is `src/verify_stream.c` without atomic operations (one thread, batched
+`check` needs gcc, xz and 11 GB of memory, and takes about an hour on one thread (56 minutes). The alphabet is `0123456789ABCD`; `--alpha`
+in `gen14` changes it. `vfast.c` is my streaming checker with the atomic operations taken out (one thread, batched
 prefetch): it marks every window of 14 distinct symbols in a table of 14! bits and exits with 0 only if all
 87,178,291,200 permutations occur.
 
