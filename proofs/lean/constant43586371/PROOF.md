@@ -1,7 +1,8 @@
 # The coefficient of (n-3)! tends to 0: paper proof
 
-2026-10-18. Every lemma below was checked numerically by `check_uniform.py`
-(m = 5..61, with d0 = 0..m-1 and with random relabelled letters; log `logs/check_17_61.log`).
+2026-10-18. Every lemma below was checked numerically by a script of mine, `check_uniform.py`
+(m = 5..61, with d0 = 0..m-1 and with random relabelled letters); the script and its log are not in this
+repository.
 
 ## 0. Statement
 

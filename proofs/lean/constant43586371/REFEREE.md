@@ -23,7 +23,7 @@ outside that folder and this file was changed. Every Lean process ran with one t
 
 ## 1. Statement
 
-* `Challenge.lean` and `external/repos2026/jaypantone_superperm-upper-43-80/Challenge.lean` have the
+* `Challenge.lean` and the `Challenge.lean` of my clone of github.com/jaypantone/superperm-upper-43-80 have the
   same sha256 `559e5613…3968`. That clone sits at commit `c8fb7ff` (2026-10-01) with a clean working tree. I did not
   compare it with GitHub (no downloads).
 * `Covers w` = every list `p : List (Fin K)` with `p.length = K` and `p.Nodup` is a contiguous factor
@@ -47,7 +47,7 @@ outside that folder and this file was changed. Every Lean process ran with one t
 
 ## 2. Kernel replay
 
-* comparator (`external/repos2026/jlebar_superperm7-ge-5898/comparator/README.md`): Lean FRO's tool builds a
+* comparator (described in `comparator/README.md` of github.com/jlebar/superperm7-ge-5898): Lean FRO's tool builds a
   trusted Challenge module and the untrusted Solution in a sandbox, exports both with `lean4export`, checks that each
   named theorem and every constant its statement mentions are identical in the two, checks that the axioms are in a
   permitted list, and replays the Solution's proofs in the Lean kernel (optionally also in `nanoda`). It needs the

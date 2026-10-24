@@ -1,7 +1,7 @@
 # Caterpillar blocks at every level: paper proof (constant43586371)
 
-2026-10-19. Checked numerically by `../constant43586371_work/checkR.py` for m = 5..100 (logs in
-`../constant43586371_work/logs/`); the values by `../constant43586371_work/vals.py`.
+2026-10-19. Checked numerically for m = 5..100 by a script of mine, `checkR.py`, and the values computed by
+another, `vals.py`; neither script nor their logs are in this repository.
 
 ## 0. The block R'(m) and why it differs from the earlier family's R(m) at even m
 
