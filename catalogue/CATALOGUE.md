@@ -132,7 +132,7 @@ Every word over 8 symbols that contains all 40,320 permutations has at least 46,
 * method: Lean theorem D (proofs/lean/n8_46134): level 1 reduces the bound to three search equations (two chain lines 4r - 9 delta <= 56 and 17r - 38 delta <= 264, one zone statement), level 2 evaluates them with native_decide (722 s, 3,431 s, 3,739 s); axioms: the three standard ones plus one named axiom per evaluation
 * credit: Jakub Halfar (with Claude); date 2026-10-07
 * reproduce: `JOBS=4 ./build.sh` in `proofs/lean/n8_46134`
-* evidence: `proofs/lean/n8_46134/README.md` (sha256 `77925865311e...`); `proofs/lean/n8_46134/AuditD.lean` (sha256 `97fdc04c7714...`); `proofs/lean/n8_46134/LowerBounds/DFinalNative.lean` (sha256 `abfeefa2ee6f...`)
+* evidence: `proofs/lean/n8_46134/README.md` (sha256 `a709ad88ae56...`); `proofs/lean/n8_46134/AuditD.lean` (sha256 `97fdc04c7714...`); `proofs/lean/n8_46134/LowerBounds/DFinalNative.lean` (sha256 `abfeefa2ee6f...`)
 * source: `proofs/lean/n8_46134/README.md:37`
 * notes: Level 1 alone (standard axioms only) reduces the theorem to the three search equations. Without native_decide the bound for n = 8 is 46,133 (n8-lb-46133).
 
