@@ -18,12 +18,13 @@
 #   4. arrange/test.sh     the arrangement scripts on the n = 10 and n = 11 pieces, without a solver
 #   5. words/n8/tools/test.sh  the n = 8 word: checked, taken apart, rebuilt from its selection with HiGHS (scipy)
 #   6. proofs/n9           with PROOFS=1: the two checkers of the n = 9 result
+#   7. catalogue/          check_catalogue.py: the catalogue of results against its schema, its files and hashes
 # Needs: bash, gcc with OpenMP, xz, sha256sum, Python 3 with numpy and scipy.  No other solver.  About 15 minutes on
 # one thread and 1 GB of RAM.  Nothing at n = 12 or n = 13 runs here: reproduce/REPRODUCE.md has those commands and
 # their hashes.
 # The script ends with "ALL PARTS PASSED" or with the list of parts that failed; each part prints its own lines.
 HERE=$(cd "$(dirname "$0")" && pwd)
-[ $# -ge 1 ] || { sed -n '2,24p' "$0"; exit 1; }
+[ $# -ge 1 ] || { sed -n '2,25p' "$0"; exit 1; }
 PR=$(cd "$1" && pwd) || exit 1; WORK=${2:-./test-all}; THR=${3:-1}
 mkdir -p "$WORK" || exit 1; WORK=$(cd "$WORK" && pwd)
 PY=${PYTHON:-$(command -v python3 || command -v python)}
@@ -73,6 +74,9 @@ if [ "${PROOFS:-0}" = 1 ]; then
     done
   fi
 fi
+
+part "7. catalogue/check_catalogue.py"
+"$PY" "$HERE/catalogue/check_catalogue.py" --quiet || fail "catalogue/check_catalogue.py"
 
 echo
 if [ -z "$failed" ]; then echo "ALL PARTS PASSED"; else echo "FAILED:$failed"; exit 1; fi

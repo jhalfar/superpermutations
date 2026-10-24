@@ -236,6 +236,7 @@ Part four, n = 8 (October 20):
 | `plan/`, `plan/history/` | plans of the words: the newest for n = 12 and 13, and the earlier words |
 | `proofs/n9/` | two scripts that check that 408,731 cannot be beaten at n = 9 with Pantone's closed trails, in three families of words |
 | `proofs/lean/` | the Lean proofs above, with their own [`README`](proofs/lean/README.md), and one command that checks a word of your own |
+| `catalogue/` | the results of this repository, one line each, with their status (Lean theorem, certificate, computed), evidence and the command that reruns them; [`CATALOGUE.md`](catalogue/CATALOGUE.md) to read, [`schema.md`](catalogue/schema.md) for the fields; part 7 of `test.sh` checks it |
 | `NOTES.md` | the account of every step |
 | `SHA256SUMS` | hashes of all archives, words and plans |
 | `test.sh` | runs the small tests of every part (needs a clone of Pantone's repository; about 15 minutes on one thread) |
