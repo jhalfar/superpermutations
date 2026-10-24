@@ -119,7 +119,7 @@ thread and 0.6 GB. Tests 17 to 20 need Python 3 and are skipped without it. What
 | segment insertion, three cuts | 43,930,660 | 43,930,653 | `segins` |
 | loop moves | 43,930,653 | 43,930,652 | `loopscan` |
 | a second cycle of relocation and segment insertion | 43,930,652 | 43,930,652, the same word | `relocate`, `segins` |
-| loop moves on Pantone's word | 43,930,680 | 43,930,678 | `loopscan` |
+| loop moves on Pantone's word (two moves that need no second cut, the two letters of the fixed-order pass) | 43,930,680 | 43,930,678 | `loopscan` |
 | fixed-order pass on my 43,930,628 word | 43,930,628 | 43,930,625, the word in `plan/history/` | `word2plan`, `recut` |
 | the same with cuts inside a 1-cycle | 43,930,628 | 43,930,624 | `recut_wide` |
 | segment insertion on the 43,930,623 plan | 43,930,623 | 43,930,622 | `segins` |
@@ -140,7 +140,9 @@ word that `reproduce/tools/applyplan.py` writes, with the SHA-256 given in `repr
 With `GPU=1` it also runs the search of `trailsearch_gpu` and the two `segins_gpu` tests on the card and compares
 them with the CPU runs; that needs `bash tools/mkptx.sh WORK/bin` first.
 
-On the sources of this release the script passes all 34 tests with `GPU=1` on Windows 11 (MinGW gcc 13.2,
+The script counts checks, not the steps of the table: a step that writes a word checks its length, its SHA-256 and
+`delcheck`, so the 20 steps give 30 checks, and the runs on the card with `GPU=1` bring them to 34. On the
+sources of this release the script passes all 34 with `GPU=1` on Windows 11 (MinGW gcc 13.2,
 kernels built with CUDA 13.4) and on Ubuntu 24.04 under WSL 2 (gcc 13.3, kernels built with CUDA 12.9), with the
 same lengths and hashes on both.
 

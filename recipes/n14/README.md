@@ -8,7 +8,7 @@ Echols's word of 93,904,804,516 letters (2026-10-19) and 131,607 shorter than hi
 
 The word would take 94 GB, so it is not stored here. `gen14.c` writes it from three things:
 
-* the selection C on 11 symbols (362,880 rows: 267,792 full, 89,040 short, 6,048 loops without a row). This is the
+* the selection C on 11 symbols (362,880 loops: 267,792 with a full row, 89,040 with a short row, 6,048 without a row). This is the
   file `arrange/data/n12t-selection.txt.xz` of this repository; `decode.sh` checks the SHA-256 of its text,
   `4f31dab69be987cb94cc993bf78f854833d861970c1f57ec290bebbe198d2a1a`.
 * `n14_93904804425_on_selC.uplan.xz`, the unit plan: 72,000 lines, one per closed trail on 13 symbols, and a line

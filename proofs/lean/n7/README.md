@@ -287,7 +287,8 @@ threads busy.
 | in all | 60 | | 3 h 21 min | |
 
 Before it, `../words/build.sh lower` compiled the 151 modules of the two libraries in 67 minutes with one
-process, and `../lower/build.sh` compiled 128 modules in 25 minutes. Of these, `build.sh` here uses 150
+process, and `../lower/build.sh` compiled 128 modules in 25 minutes (90, then 38; the table of `../lower/README.md`, from an
+earlier run of the default level, counts 127). Of these, `build.sh` here uses 150
 modules of the libraries, `Challenge`, the two files of the bridge and 17 files of `../lower`. A module of
 step 3 that loads all of Mathlib commits about 8 GB of memory. `PFinalNative` took 268 s of the 291 s
 because it was the first module to load Mathlib after the evaluations.

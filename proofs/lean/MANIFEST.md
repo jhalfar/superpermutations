@@ -1104,7 +1104,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
   statements
 * `n7/LowerBounds/PTrails.lean` (13.3 KB): the cut at heavy seams, `cutRows_spec`; at least 720 blocks; the accounting
   `acc_value`, `acc_weight`
-* `n7/README.md` (23.1 KB): 5,899 for n = 7: the statement, the two levels and what each trusts, the proof, the files,
+* `n7/README.md` (23.2 KB): 5,899 for n = 7: the statement, the two levels and what each trusts, the proof, the files,
   how to build, costs
 * `n7/build.sh` (17.7 KB): builds level 1, the engine and its shared library, runs the evaluations, builds the
   theorem, checks the axioms

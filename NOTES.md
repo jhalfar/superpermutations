@@ -728,8 +728,8 @@ openings chosen again after each, took it to 93,904,804,956 and then 93,904,804,
 model has a floor of about 93,904,786,500, so at most about 18,000 letters are left in it.
 
 The word was streamed into two checkers, `recipes/n14/vfast.c` (one thread) and a streaming checker of mine with
-three threads (14 minutes): all 87,178,291,200 permutations occur, with 19,588,800 repeated windows. Echols later
-posted 93,904,804,516 on the same selection, with the openings and joins of the groups optimised; mine is
+three threads (14 minutes): all 87,178,291,200 permutations occur, with 19,588,800 repeated windows. On October 19
+(UTC) Echols posted 93,904,804,516 on the same selection, with the openings and joins of the groups optimised; mine is
 91 letters shorter. The recipe is in [`recipes/n14/`](recipes/n14/README.md).
 
 # Part four: n = 8 (October 20 and 21)
@@ -737,7 +737,7 @@ posted 93,904,804,516 on the same selection, with the openings and joins of the 
 At n = 8 Pantone's construction is not a theorem, but its completion step works as a recipe: the 120 cyclic
 orders of 012345 are the loops, each loop gets a row of some length or none, and the rows form closed walks. The
 length of the word is 46,085 + Q + J, Q the cost of the rows and J the cost of the joins. Echols posted a word of
-46,178 letters on October 20, found with rows of every length as my selection tools allow: 46,085 + 92 + 1.
+46,178 letters on October 19 (UTC), in the same post as his word for n = 14, found with rows of every length as my selection tools allow: 46,085 + 92 + 1.
 
 * A set partition over the closed walk types with the fewest letters per loop packed the 120 loops with four
   copies of one walk of 27 loops (row lengths `266646664666466466646664666`, Q = 16, one closed trail). The
@@ -792,7 +792,8 @@ Each item says what was tried and the numbers that show the result.
   of up to 7 cuts gives a shorter word. The exchanges that gain only make loops that are detached from the word.
   That observation led to the loop moves.
 * Loop moves at n = 11. An exact scan finds no such move that shortens the 43,930,623 or 43,930,628 words, Theo
-  H.'s word or Pantone's. No join in them passes through a cut of another trail.
+  H.'s word or Pantone's, apart from two moves on Pantone's word that need no second cut and give the same two
+  letters as the fixed-order pass (step 6 of `tools/test.sh`, 43,930,680 to 43,930,678). No join in them passes through a cut of another trail.
 * Cuts inside a 1-cycle on later words. On 43,930,623, 522,745,526 and 522,745,498 the pass with these cuts gives
   the same length as the pass without. A search with them from Pantone's n = 11 word ended at a mean of 651.1 against
   654.4 without, over ten runs, which is inside the noise. Relocation and segment insertion with these cuts find
@@ -891,7 +892,9 @@ tight.
 | 10 | 4,034,873 (rumstd) | at least 4,034,860 | at least 4,034,849 | at least 4,034,835 |
 | 11 | 43,930,614 | at least 43,930,481 | | at least 43,930,373 |
 
-At n = 11 that leaves 133 letters between the word and the bound for one cut per trail: about 80 of them in the
+The plain method of `proofs/n9/` gives 4,034,835 at n = 10 in all three families; the column for one cut per
+trail uses the sharper programme for the blocks (`arrange/cert10.py`). At n = 11 that leaves 133 letters between
+the word and the bound for one cut per trail: about 80 of them in the
 two blocks of 56 big trails and about 50 in the joins between classes of small trails. The n = 10 word of part two is
 shorter than the bound in this table for one cut per trail. That is no contradiction: it is made of other closed
 trails.

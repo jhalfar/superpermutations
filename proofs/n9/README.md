@@ -72,6 +72,6 @@ n = 9 they cannot go below 408,731. A shorter n = 9 word from Pantone's construc
 together with trails written in several parts, or a different set of trails.
 
 For n = 10 and n = 11 the same method gives bounds that are not tight: at least 4,034,835 letters against rumstd's
-4,034,873, and at least 43,930,420 against my 43,930,614 for one cut per trail (43,930,373 with several). Those
+4,034,873 in all three families, and at least 43,930,420 against my 43,930,614 for one cut per trail (43,930,373 with several). Those
 computations are not in this directory. With a sharper programme for the blocks of big trails the bounds for one
 cut per trail are 4,034,860 and 43,930,481 (`cert10.py` and `cert11.py` in `arrange/`).
