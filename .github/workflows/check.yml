@@ -1,0 +1,67 @@
+# Checks the superpermutations of this repository with the checker of github.com/jhalfar/superpermutations-bot.
+# On a push or pull request that touches words/ or recipes/ it checks only the files that changed; on a manual run
+# and once a week it checks every word and recipe.
+name: check words
+
+on:
+  push:
+    paths:
+      - "words/**"
+      - "recipes/**"
+  pull_request:
+    paths:
+      - "words/**"
+      - "recipes/**"
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Files to check
+        id: files
+        shell: bash
+        env:
+          EVENT: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          ALL="superpermutation-*.txt,superpermutation-*.txt.xz,superpermutation-*.spra.xz,*.splan.json.xz"
+          case "$EVENT" in
+            push) BASE="$BEFORE" ;;
+            pull_request) BASE="$PR_BASE" ;;
+            *) BASE="" ;;
+          esac
+          if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ] \
+             || ! git cat-file -e "$BASE^{commit}" 2> /dev/null; then
+            echo "checking every word and recipe"
+            PATTERNS="$ALL"
+          else
+            CHANGED=$(git diff --name-only --diff-filter=AMR "$BASE" HEAD -- words recipes \
+              | grep -E '(^|/)(superpermutation-[^/]*\.(txt|txt\.xz|spra|spra\.xz)|[^/]*\.splan\.json\.xz)$' || true)
+            PATTERNS=$(printf '%s\n' "$CHANGED" | sed '/^$/d' | paste -sd, -)
+            echo "changed words and recipes: ${PATTERNS:-none}"
+          fi
+          echo "patterns=$PATTERNS" >> "$GITHUB_OUTPUT"
+
+      - name: Check
+        if: steps.files.outputs.patterns != ''
+        uses: jhalfar/superpermutations-bot/action@v1.0
+        with:
+          patterns: ${{ steps.files.outputs.patterns }}
+          threads: "4"
+
+      - name: Nothing to check
+        if: steps.files.outputs.patterns == ''
+        run: echo "No word or recipe changed."

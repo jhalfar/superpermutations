@@ -1,5 +1,7 @@
 # Short superpermutations on 8 and 10 to 14 symbols
 
+[![check words](https://github.com/jhalfar/superpermutations/actions/workflows/check.yml/badge.svg)](https://github.com/jhalfar/superpermutations/actions/workflows/check.yml)
+
 A superpermutation on n symbols is a word that contains every permutation of the symbols as a substring. This
 repository holds such words for n = 10 to 14 that are shorter than any other I know of, and a word of 46,174
 letters for n = 8. It also holds the inputs that rebuild them, the programs that made them, and Lean proofs of
@@ -134,6 +136,7 @@ python3 words/n8/tools/n8.py rebuild words/n8/selection-46174.txt -o w46174.txt 
 | [`catalogue/`](catalogue/CATALOGUE.md) | every result with its status, evidence and the command that reruns it ([`schema.md`](catalogue/schema.md)) |
 | [`NOTES.md`](NOTES.md) | the account of every step |
 | [`SHA256SUMS`](SHA256SUMS) | hashes of all archives, words and plans |
+| [`.github/workflows/`](.github/workflows/) | `check.yml`: the checker of [superpermutations-bot](https://github.com/jhalfar/superpermutations-bot) on every changed word and recipe, and on all of them once a week; `release.yml`: on a tag `words-*`, every word as a checked `.spra.xz` in a GitHub release |
 | `test.sh` | the small tests of every part, catalogue included: `bash test.sh PANTONE_REPO` (about 15 minutes on one thread) |
 
 Rebuilding and checking a word needs a C compiler and Python and nothing else. Finding selections and first plans
