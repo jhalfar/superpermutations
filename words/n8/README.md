@@ -33,7 +33,8 @@ trails that join almost for free. This word is 46,085 + 64 + 25: cheap rows and 
 
 The rows come from one closed walk of 27 loops with row lengths `266646664666466466646664666`. It costs Q = 16 and
 is a single trail. Four copies of it fit into the 120 loops without meeting and cover 108 of them; up to the
-symmetries of the problem there is exactly one way to do this. The Klein four-group
+symmetries of the problem there is exactly one way to do this. Both statements are proved in Lean, with the
+kernel checking every step, in [`proofs/lean/n8struct/`](../../proofs/lean/n8struct/README.md). The Klein four-group
 {id, (25)(34), (01)(34), (01)(25)} swaps the four walks in pairs and maps the 12 loops that are left without a row onto themselves, in three
 orbits of four (every element other than the identity moves all 12).
 That gives Q = 4 x 16 = 64 and 16 trails: the four walks and the twelve single loops.

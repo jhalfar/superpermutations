@@ -22,6 +22,9 @@ part. This directory holds Lean 4 proofs about how long such a word has to be. I
   kernel for k = 8 to 14.
 * `n8/` takes William Echols's Lean proof of 46,130 <= L(8) to 46,131 and 46,132 and removes `native_decide`
   from it. It is a second proof, independent of `lower/`, of what Theorem C gives for n = 8 up to 46,132.
+* `n8struct/` proves two facts about the selection of my word of 46,174 letters for n = 8: the closed walk of
+  27 loops costs 16 and is one closed trail, and four copies of it fit into the 120 loops in exactly one way
+  up to renaming and reversal. Kernel only.
 * `n7/` proves that a superpermutation on 7 symbols has at least 5,899 letters. The kernel checks this
   proof down to 22 equations, each of which says that a finite search returns `false`, and these 22 are
   evaluated by compiled code (`native_decide`).

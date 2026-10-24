@@ -16,6 +16,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `lower/build.sh`
 * `n7/build.sh`
 * `n8/build.sh`
+* `n8struct/build.sh`
 * `words/build.sh`
 * `words/check_word.sh`
 * `words12/build.sh`
@@ -24,7 +25,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 * `.gitattributes` (344 B): keeps LF line ends in text files, so that the hashes hold on every system
 * `MANIFEST.md`: this list
-* `README.md` (28.9 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
+* `README.md` (29.2 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
 * `SHA256SUMS`: SHA-256 of every other file of this directory
 * `lean-toolchain` (25 B): the Lean version, `leanprover/lean4:v4.31.0`
 
@@ -1130,6 +1131,29 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `n8/variants/v46132bk/files.sha256` (3.4 KB): SHA-256 of the 38 hand-written Lean files of the variant for 46132
   (his with the changes, and the new ones)
 * `n8/variants/v46132bk/generated.sha256` (8.7 KB): SHA-256 of the parts of the search that `plan.py` writes for 46132
+
+## n8struct/
+
+* `n8struct/N8Struct/Classify.lean` (5.8 KB): `packing_classification`: every packing is a renaming of K0 or K1
+* `n8struct/N8Struct/Definitions.lean` (8.4 KB): the definitions: states, loops, rows, walks, `Q`, ports, renaming,
+  reversal
+* `n8struct/N8Struct/Orbits.lean` (1.1 KB): `K0_not_K1`, `stab_K0`, `stab_K1`
+* `n8struct/N8Struct/PackBase.lean` (21.7 KB): placements and packings, literal tables, `placement_closed_all`,
+  `placement_injective`
+* `n8struct/N8Struct/Partners.lean` (3.5 KB): `partners_complete`: the 21 placements disjoint from the identity
+  placement
+* `n8struct/N8Struct/Published.lean` (4.0 KB): the packing of `selection-46174.txt`, its loops, the Klein group
+* `n8struct/N8Struct/Reversal.lean` (3.0 KB): reversal maps the packing to the other class
+* `n8struct/N8Struct/Symmetry.lean` (8.7 KB): renaming lemmas; facts about all 720 states through `forall_stateP`
+* `n8struct/N8Struct/Walk27.lean` (3.1 KB): the 27-walk: closed, `Q = 16`, one closed trail of 178 slices
+* `n8struct/README.md` (8.6 KB): the two facts, the definitions, the theorems with their axioms, what is not proved,
+  how to build
+* `n8struct/build.sh` (3.6 KB): checks Pantone's sources, runs `gen.py` and compares, builds the nine files, checks
+  the axioms
+* `n8struct/gen.py` (7.5 KB): recomputes the finite data with the model of `words/n8/tools` and asserts the counts
+* `n8struct/gen_out.txt` (5.2 KB): output of `gen.py`: the tables, in Lean syntax
+* `n8struct/gen_out2.txt` (11.5 KB): output of `gen.py`: the walk of the identity, the partner table, the covered
+  loops
 
 ## tools/
 
