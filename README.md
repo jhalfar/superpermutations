@@ -22,7 +22,7 @@ runs the searches and writes the code and this text.
 | 10 | 4,034,855 | 4,034,873 | rumstd | -18 |
 | 11 | 43,930,578 | 43,930,624 | Theo H. | -46 |
 | 12 | 522,736,969 | 522,737,173 | Theo H. | -204 |
-| 13 | 6,747,802,319 | 6,747,918,066 | Jay Pantone | -115,747 |
+| 13 | 6,747,801,835 | 6,747,918,066 | Jay Pantone | -116,231 |
 | 14 | 93,904,804,425 | 93,904,804,516 | William Echols | -91 |
 
 "Before" is the best word of someone else when mine was published. For n = 8 Theo H. has since found a word of
@@ -32,7 +32,7 @@ for n = 12 starts from William Echols's 522,737,174, and it and the word for n =
 his re-opening of a stretch of consecutive trails and Theo H.'s moving of a trail with a new phase.
 
 Against Pantone's own words of 4,034,889, 43,930,680, 522,745,581 and 6,747,918,066 letters the words for n = 10
-to 13 are 34, 102, 8,612 and 115,747 letters shorter. My own best words on Pantone's closed trails, before the
+to 13 are 34, 102, 8,612 and 116,231 letters shorter. My own best words on Pantone's closed trails, before the
 change of selection, had 43,930,614, 522,745,350 and 6,747,916,657 letters.
 
 The files are `words/superpermutation-N-LENGTH.txt.xz`, XZ archives with a delta filter of distance n that `xz -d`
@@ -41,17 +41,31 @@ unpacks: 2 KB for n = 8, then 65 KB, 0.4 MB, 4.1 MB and 45 MB for n = 10 to 13. 
 of the archives and of the words inside. In each word every permutation occurs and no single letter can be
 deleted. The word for n = 8 has its own page, [`words/n8/`](words/n8/README.md).
 
+New words for n >= 13 are stored in Theo H.'s SPRA format (version 0.2, fields of 6 bits;
+[github.com/Tholsh/SPRA](https://github.com/Tholsh/SPRA)) and then packed with `xz`. The word of 6,747,801,835
+letters is `words/superpermutation-13-6747801835.spra.xz`, 1.27 MB. Its decoder is `tools/reduced_codec.cpp` of
+that repository (`g++ -std=c++20 -O2 tools/reduced_codec.cpp -o reduced-codec`); it writes the letters `0`-`9`,
+`A`-`C` with no line feed:
+
+```sh
+xz -dk words/superpermutation-13-6747801835.spra.xz
+./reduced-codec decode words/superpermutation-13-6747801835.spra > superpermutation-13-6747801835.txt
+```
+
+I checked the file with this decoder and with an independent one of mine; both write the letters of the word.
+The earlier words for n = 13 stay as `.txt.xz` files.
+
 The word on 14 symbols would take 94 GB, so it is published as a recipe in [`recipes/n14/`](recipes/n14/README.md):
 a generator, a plan of 83 KB and a checker, as William Echols did with his words.
 
-SHA-256 of the words (each file is the word and one line feed; for n = 14 the word as `recipes/n14/` writes it,
-with no line feed):
+SHA-256 of the words (for n = 8 to 12 the file, which is the word and one line feed; for n = 13 the letters as
+the decoder writes them and for n = 14 as `recipes/n14/` writes them, both with no line feed):
 
     n = 8    66ec57ba428e0ac1affc5503b86821920f0def27380697317033911a6628cddd
     n = 10   09e2c807aea5f0890d257f97d5d447c0235d41df9589caff8899f01d2016f7f6
     n = 11   65ddf4c4a3ebaa69de7bc6be29e0b38ad010055f22ef6abeeffdb4f508176092
     n = 12   48c00acf991d87a396fb162bc66447d9dba90ddc0ac9dca5ffed89e46597fcba
-    n = 13   be150571be3c6dd6b0aeed2c7c394db7c1c0e5cd4e71be2c4ec9d4ec8b8bcf67
+    n = 13   8905fc686861187923accc190c67773880fcee3aa669ba63c9ca80f778879387
     n = 14   3b1470a204854ce09654b9d9a811b8455308212b29585accc29d0263e423ab6f
 
 ## The Lean proofs
@@ -131,9 +145,12 @@ xz -dk words/superpermutation-11-43930578.txt.xz
 
 `delcheck` must print `"missing_permutations":0` and `"coverage_preserving_deletions_count":0`.
 
-All three passed on each of the words for n = 8 and 10 to 13. For n = 13 `literal_check` ran under Linux: 22
-minutes and about 13 GB. The word for n = 14 was checked by `recipes/n14/vfast.c` and by a second streaming
-checker of mine with several threads; both found all 87,178,291,200 permutations. `decode.sh ... check` in
+All three passed on each of the words for n = 8 and 10 to 13. For n = 13 `literal_check` ran under Linux: 15
+minutes and about 13 GB. Before I publish a word, `tools/trailsearch.c` runs on its plan with six settings (20
+minutes each at n = 13) and the fixed-order pass; the word goes out only if neither shortens it.
+
+The word for n = 14 was checked by `recipes/n14/vfast.c` and by a second streaming checker of mine with several
+threads; both found all 87,178,291,200 permutations. `decode.sh ... check` in
 `recipes/n14/` gives the length and the SHA-256 of the plan's `# expect` line and finds all permutations (56
 minutes on one thread, 11 GB).
 
@@ -156,7 +173,8 @@ cc -O2 -mpopcnt -fopenmp -o trailsearch tools/trailsearch.c -lm
 
 The newest words for n = 12 and 13 are on the same base words as the ones in `reproduce/` (the base word of
 `REPRODUCE.md` has the same SHA-256). Their plans are `plan/trailsearch-12-522736969.plan` and
-`plan/trailsearch-13-6747802319.plan`, and they rebuild with the command above. The earlier words, on Pantone's
+`plan/trailsearch-13-6747801835.plan` (and `plan/trailsearch-13-6747802319.plan` for the word before), and they
+rebuild with the command above. The earlier words, on Pantone's
 closed trails, rebuild the same way from Pantone's words and the plans in [`plan/`](plan/) and
 [`plan/history/`](plan/history/README.md).
 
@@ -209,8 +227,11 @@ Part three, moves of William Echols and Theo H. (October 17 to 20):
     order and choose its cut there (Theo H.), with all the cuts around the change chosen again by dynamic
     programming. For n = 12 I started from Echols's word and alternated these moves with the local search of part
     two: 522,736,969 letters, 206 below my 522,737,175. For n = 13 I started from my 6,747,802,393 word and added
-    segment insertion with five cuts on the card: 6,747,802,319 letters, 74 below it. The programs for these
-    moves are not in the repository yet; the plans are, and they rebuild with `tools/trailsearch.c`.
+    segment insertion with five cuts on the card: 6,747,802,319 letters, 74 below it. Then five more cuts gave
+    310, and rounds of `tools/trailsearch.c` (30 minutes on 6 threads each) alternated with segment insertion on
+    the card: 200, 169, 941, 928, 837, 836 and, in the last check before publication, 6,747,801,835 on October
+    24, 484 below 319. The programs for the moves of Echols and Theo H. and the card program with bounded memory
+    are not in the repository yet; the plans are, and they rebuild with `tools/trailsearch.c`.
 12. For n = 14 the word is written by a generator from the selection and a plan of 72,000 units, one per closed
     trail on 13 symbols, in the order that my n = 12 and n = 13 plans give: 93,904,804,425 letters, 91 below
     Echols's 93,904,804,516.

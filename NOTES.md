@@ -704,6 +704,17 @@ Five cuts from 328 first failed at 56.9 GB, before a single candidate was judged
 billion moves into the buffer of its thread. The version that hands the moves of a thread to the shared store in
 the middle of a start gives the same words and plans as the old one at n = 12, and at n = 13 it ran in 19.4 GB.
 
+After that word was published, five cuts from 319 gave 316 and 310, and from 310 the card passes found nothing
+in 6.8 hours. `tools/trailsearch.c`, run from the plan of 310 as the last check before publication (three
+threads, 20 minutes), found 6,747,802,200. From there rounds of 30 minutes of `trailsearch` (three or six
+threads, `--kmax` 8 or 12, `--focus 0.85`) alternated with segment insertion on the card (four and five cuts):
+181, 177, 176, 173, 172, 169 by `trailsearch`; 021 by the card and 011 by `trailsearch`; 976 by the card, 968
+to 964 by `trailsearch`; 941 by the card, 935 to 928 by `trailsearch`; 6,747,801,837 by the card; and
+6,747,801,836 by `trailsearch` on October 24. The final check of that word (six settings of `trailsearch`, 20
+minutes each on three threads, and the fixed-order pass) found one letter more with `--kmax 12 --T0 0.7`:
+6,747,801,835. That word passed the three checkers and the same final check, which found nothing shorter. It
+is stored as `words/superpermutation-13-6747801835.spra.xz`, in Theo H.'s SPRA format.
+
 The block move, the events file of the local kicks and the bounded-memory version of the card program are not in
 the repository yet. The plans are, and they rebuild with `tools/trailsearch.c` (see the README).
 
