@@ -217,8 +217,7 @@ the top of the script and in `../tools/common.sh`; `../README.md` says how to fe
 ./build.sh lower    # the 151 modules of the two lower-bound libraries only
 ```
 
-Measured on my machine (Ryzen 9 5950X, 32 GB, Windows 11 with Git Bash; one thread per Lean process, other
-jobs running beside it), from an empty build directory:
+From an empty build directory, with one thread per Lean process and other jobs running beside it:
 
 | what | modules | Lean time | peak memory of a process |
 |---|---|---|---|
@@ -286,8 +285,8 @@ The limits:
   and about 11 GB of generated Lean files, and every Lean process would have to load the whole word, about
   6.7 GB of compiled blocks.
 
-What it costs, measured on the machine named above, each run into an empty build directory (so the compile
-of the checkers is included: about half a minute, and 83 s in the run for n = 12):
+What it costs, each run into an empty build directory with one thread per Lean process (so the compile of
+the checkers is included: about half a minute, and 83 s in the run for n = 12):
 
 | word | method | Lean time | time of the run |
 |---|---|---|---|
@@ -300,8 +299,8 @@ of the checkers is included: about half a minute, and 83 s in the run for n = 12
 | n = 12, 522,737,175 letters | second, with the changes for n = 12 | 7.0 h | 62 min, three and ten processes |
 
 The line for n = 11 is the time of `N11` in `build.sh`, which runs the same generator and the same modules.
-The run for n = 12 shared the machine with other jobs. It was stopped after 50 modules and continued with the
-same command, with three processes before and ten after.
+The run for n = 12 ran beside other jobs. I stopped it after 50 modules and continued it with the same
+command, with three processes before and ten after.
 With the first method a word for n = 10 takes about an hour (`N10`, `N10b` above). A Lean process needs about
 1 GB, for n = 12 up to 1.4 GB and one module 1.7 GB. The build directory takes 2 to 20 MB up to n = 10, 0.2 GB
 for n = 11 and 2.1 GB for n = 12.

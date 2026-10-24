@@ -9,17 +9,17 @@ proves, for superpermutations on n symbols,
     1771/3456 = 53/108 + 25/1152 = 0.512442...
 
 His selection gives 43/80 = 7/15 + 17/240 = 0.5375. The selection used here has 53/108 (n-3)! missed classes
-and needs 25/1152 (n-3)!/(n-3) connector cycles. The construction is his; what is new is the selection and the
-two points in which it leaves the format of his paper (see "The selection").
+and needs 25/1152 (n-3)!/(n-3) connector cycles. The construction is his. What is new is the selection and
+the two points where it leaves the format of his paper (see "The selection").
 
-Every proof is checked by the Lean kernel. There is no `native_decide` and no `sorry`. Each theorem below
-depends on the axioms `propext`, `Classical.choice` and `Quot.sound` only.
+The Lean kernel checks every proof. There is no `native_decide` and no `sorry`. Each theorem below depends on
+the axioms `propext`, `Classical.choice` and `Quot.sound` only.
 
 ## The theorems
 
 `Covers`, `HasWord` and `F3` are the definitions of his `Challenge.lean`. I import them and do not restate
-them. The statements below are copied from the Lean files, with the symbols spelled in ASCII (`forall`,
-`exists`, `<=`, `/\`, `Nat`, `Rat`, `eps`), which Lean reads as the same statements.
+them. The statements are copied from the Lean files, with the symbols spelled in ASCII (`forall`, `exists`,
+`<=`, `/\`, `Nat`, `Rat`, `eps`), which Lean reads as the same statements.
 
 ```lean
 -- SuperpermutationUpperBound1771/Main13.lean
@@ -57,11 +57,11 @@ in place of 43/80, 25/1152 in place of 17/240, and 13 symbols (m = 11) as the fi
 | 16 | `hasWord_sixteen : HasWord 16 22320908101800` | m = 14, a = 9 | 22,321,214,768,160 |
 
 In each line `a` is the parameter that makes the formula smallest. These are bounds from the general
-formula. The literal words published for 13 symbols are shorter by about 47,000 letters (see `words/` at the
-top of this repository).
+formula. The literal words published for 13 symbols are about 47,000 letters shorter (see `words/` at the top
+of this repository).
 
 `Audit1771.lean` restates all of this with the definitions of `Challenge.lean` only and asks Lean to accept the
-theorems as proofs of exactly those statements. It is the file to read first.
+theorems as proofs of exactly those statements. Read it first.
 
 ## The words of his library that I use
 
@@ -90,10 +90,10 @@ The selection lives on 11 symbols. Its 2-loops are of three kinds.
   carry rows that form three closed trails of 63, 133 and 182 rows, and 126 loops carry no row.
 * So 6,048 loops carry no row at all, and the three short trails of each group have f - t prime to 9.
 
-Two points differ from the selections of the paper. A 2-loop may carry no row, as the 48 unused bases do in
-`Certificates/NineRecipe.lean`; one transport later the loops above it form a full chart, exactly as in
-`Partition/SprintBase.lean`. And a closed trail may violate the condition that k - 2 divides f - t; I write
-such a trail k - 2 times in a row, which is again a `ClosedTrail` and satisfies the condition.
+Two points differ from the selections of the paper. First, a 2-loop may carry no row, as the 48 unused bases
+do in `Certificates/NineRecipe.lean`; one transport later the loops above it form a full chart, exactly as in
+`Partition/SprintBase.lean`. Second, a closed trail may violate the condition that k - 2 divides f - t. I
+write such a trail k - 2 times in a row, which is again a `ClosedTrail` and satisfies the condition.
 `SafeCircleCover.transport` has no divisibility hypothesis, so connector cycles are carried up as before.
 
 After one transport (12 symbols) the selection has one full or short row in every 2-loop, all closed trails
@@ -132,8 +132,8 @@ The 11 hand-written Lean files of the development have 1,909 lines; `gen_cert.py
 
 ### What each certificate file checks
 
-All certificate files except `Checks.lean` are written by `gen_cert.py`. The script follows the Lean
-definitions and checks every fact itself before it writes a file.
+`gen_cert.py` writes all certificate files except `Checks.lean`. It follows the Lean definitions and checks
+every fact itself before it writes a file.
 
 * `WalkA`, `WalkB` hold the two closed trails on 9 symbols as `List (Row Nat)`. Check `WalkOK`: `BasedOn`,
   `ClosedTrail`, 7 divides `signedExcess`; row and charge counts.
@@ -180,7 +180,7 @@ imports 95, directly or through other files: `Challenge.lean` and 94 files of `S
 `Assembly/SupportedStates.lean` in which the import of `Partition.SprintFamily` is replaced by
 `Foundation.SupportedWords` and the section that defines `stateAlphabet` (30 lines) is removed;
 `patches/SupportedStates.diff` shows the change. The reason: `SprintFamily` imports the certificate for 9
-symbols, `Certificates/NineRecipe.lean`, which did not compile within 13.6 GB on my machine, and the joining
+symbols, `Certificates/NineRecipe.lean`, which did not compile within 13.6 GB of memory, and the joining
 theorem `exists_word_of_circle_rows` does not use that section. Four files of his that import the patched one
 (`BalancedCuts/SupportedCutWords`, `Assembly/BalancedCircleWords`, `Assembly/ConnectorWords` and
 `Assembly/CircleRows`) are compiled from his unchanged sources against it, like the other 90.
@@ -227,8 +227,7 @@ the top of the script and in `../tools/common.sh`; `../README.md` says how to fe
 There is no Lake project here: his project cannot be a plain Lake dependency while one of its files is
 replaced. `build.sh` calls `lean` once per module.
 
-Measured on my machine (Ryzen 9 5950X, 32 GB, Windows 11 with Git Bash; one Lean process with one thread,
-other jobs running beside it), from an empty build directory:
+From an empty build directory, with one Lean process on one thread and other jobs running beside it:
 
 | modules | count | time each | peak memory |
 |---|---|---|---|
@@ -240,11 +239,12 @@ other jobs running beside it), from an empty build directory:
 | `Complete9_1` to `Complete9_7` | 7 | 15 s | 2.3 GB |
 | the other 17 modules and the audit file | 18 | at most 16 s | 1.9 GB |
 
-The whole build took 60 minutes (53 minutes of Lean time). Memory is the working set of the Lean process;
-the largest process committed 5.6 GB. The build directory has 0.3 GB. The generated sources have 1.6 MB.
+The whole build took 60 minutes of wall time (53 minutes of Lean time). Memory is the working set of the
+Lean process; the largest process committed 5.6 GB. The build directory has 0.3 GB. The generated sources
+have 1.6 MB.
 
 With `USE_PATCH=0` the script uses his own `SupportedStates.lean` and then compiles `NineRecipe.lean` and what
-lies between as well. I have not been able to run that on my machine (see above).
+lies between as well. I have not been able to run that (see above).
 
 ## What is not covered
 

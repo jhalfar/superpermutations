@@ -41,7 +41,7 @@ All three theorems are proven here in Lean, on top of Xiaolong Liu's preimage-ch
 (github.com/Haruhiyuki/superpermutations-preimage-chain-lower-bounds), which is built on the Hunter-Raudvere
 library (github.com/urdvr/superpermutations-hunter). Both libraries are used unchanged.
 
-Every proof is checked by the Lean kernel. There is no `native_decide` and no `sorry`. Each theorem below
+The Lean kernel checks every proof. There is no `native_decide` and no `sorry`. Each theorem below
 depends on the axioms `propext`, `Classical.choice` and `Quot.sound` only.
 
 ## Whose the parts are
@@ -379,9 +379,8 @@ if one of them is not `propext`, `Classical.choice` or `Quot.sound`. A run after
 compiles nothing again. The settings are listed at the top of the script and in `../tools/common.sh`; `../README.md`
 says how to fetch what the build needs.
 
-Measured on my machine (Ryzen 9 5950X, 32 GB, Windows 11 with Git Bash; one thread per Lean process, other
-work running beside it), after `../words/build.sh` had compiled the two libraries (68 minutes) and the
-literal words:
+With one thread per Lean process and other work running beside it, after `../words/build.sh` had compiled the
+two libraries (68 minutes) and the literal words:
 
 | what | modules | Lean time | largest working set |
 |---|---|---|---|

@@ -1,14 +1,13 @@
 # Where the selections come from
 
 The reproduction package has four selection files, for n = 10, 11, 12 and 13, and shows how a selection becomes a
-word. This directory shows where those files come from. Each of them is built again here from Jay Pantone's
-published `construction-input.txt` and a few small data files, and the searches that found the data files are
-here too.
+word. This directory shows where those files come from. It builds each of them again from Jay Pantone's published
+`construction-input.txt` and a few small data files, and it holds the searches that found the data files.
 
     bash test.sh construction-input.txt WORK SELDIR
 
 builds the four selections, compares them with the files of the reproduction package (`SELDIR`) and runs the
-checkers. It takes 2 to 3 minutes on one thread and 1.0 GB, with Python 3 and numpy.
+checkers. It takes 2 to 3 minutes on one thread and 1.0 GB of memory, with Python 3 and numpy.
 `GUROBI=1 bash test.sh ...` also runs the searches that can be repeated, which adds 4 minutes.
 
 The construction, the selection, the completion, the transport and the connector cycles are Pantone's (sections
@@ -267,24 +266,28 @@ Connector cycles:
 
 ## What was tried and is not here
 
-I left out the scripts that led nowhere or were replaced. For the whole problem they showed: selections invariant
-under a group, 11 groups on 9 to 12 symbols, gave nothing below 0.61 per loop; the selections on 8 symbols
-invariant under PSL(2,7) have the optimum 384, Pantone's, also with rows of all lengths; exchanges of a full and a
-short row do not join Pantone's 14 walks further. Around his 10-symbol selection outside the blocks: in 40 regions
-of 400 loops a change that uses a row of another length costs at least 8 more in Q + D. For n = 10: the block of
-7 loops has nothing cheaper than no rows, with rows of all lengths. For n = 11: three other block solutions with
-a lower Q + D (49, 50 and 51) and more loops without a row, and a selection with 12 connected blocks, gave longer
-or equal words; a price of a block from the real costs of its joins has the block in use as its optimum. For
-n = 12: four other block solutions, three of full and short rows and one with rows of other lengths, gave longer
-words or were not run; a model that priced every walk inside the programme did worse when the symmetry group was
-small; a model without symmetry, started from the block in use, found nothing. For n = 13: with full and short
-rows only the (7, 4) block reaches the floor 3,046 against 3,110 for the transport, but its small trails do not
-chain; a search without the rotation symmetry gained 3.5 once in eight minutes and then nothing; one more block
-with fewer chains and a higher floor was found and not used. Replaced by what is here: an earlier checker, three
-generators (the reproduction package has the generator), the other libraries for the step and the port rule, and
-the solvers these scripts grew out of. Rows of other lengths were first tried for n = 7 and 8: the best word of
-that family for n = 7 has 5,907 letters (the record is 5,905), and for n = 8 nothing below Pantone's Q = 96 was
-found.
+I left out the scripts that led nowhere or were replaced. What they showed:
+
+- For the whole problem: selections invariant under a group (11 groups on 9 to 12 symbols) gave nothing below
+  0.61 per loop. The selections on 8 symbols invariant under PSL(2,7) have the optimum 384, Pantone's, also with
+  rows of all lengths. Exchanges of a full and a short row do not join Pantone's 14 walks further.
+- Around his 10-symbol selection outside the blocks: in 40 regions of 400 loops a change that uses a row of another
+  length costs at least 8 more in Q + D.
+- n = 10: the block of 7 loops has nothing cheaper than no rows, with rows of all lengths.
+- n = 11: three other block solutions with a lower Q + D (49, 50 and 51) and more loops without a row, and a
+  selection with 12 connected blocks, gave longer or equal words. A price of a block from the real costs of its
+  joins has the block in use as its optimum.
+- n = 12: four other block solutions, three of full and short rows and one with rows of other lengths, gave longer
+  words or were not run. A model that priced every walk inside the programme did worse when the symmetry group was
+  small. A model without symmetry, started from the block in use, found nothing.
+- n = 13: with full and short rows only the (7, 4) block reaches the floor 3,046 against 3,110 for the transport,
+  but its small trails do not chain. A search without the rotation symmetry gained 3.5 once in eight minutes and
+  then nothing. One more block with fewer chains and a higher floor was found and not used.
+- n = 7 and 8, where I first tried rows of other lengths: the best word of that family for n = 7 has 5,907 letters
+  (the record is 5,905), and for n = 8 nothing below Pantone's Q = 96 was found.
+
+Replaced by what is here: an earlier checker, three generators (the reproduction package has the generator), the
+other libraries for the step and the port rule, and the solvers these scripts grew out of.
 
 ## Files
 

@@ -60,7 +60,8 @@ the connector cycles of the block are chosen on the completion one level up (fil
 * No selection (H, I, J): the proof starts on 12 symbols with no rows at all (`Stage.noSeed`, `NoSeed.lean`). The
   loops above the first letters are `a` followed by every arrangement of the others, one per cyclic order, and the
   first block goes above those. Everything after that is as before.
-* Every proof is checked by the Lean kernel. There is no `native_decide` and no `sorry`.
+
+The Lean kernel checks every proof. There is no `native_decide` and no `sorry`.
 
 ## The limit: the coefficient tends to 0
 
@@ -89,7 +90,8 @@ ones, and proves two things (`PROOF_R.md` has the proof on paper):
 ```lean
 -- UniR/RRate.lean
 theorem rate_R (n : Nat) (hn : 2 ^ 14 <= n) :
-    exists w : List (Fin n), SuperpermutationBounds.Covers w /      (w.length : Rat) <= SuperpermutationBounds.F3 n + (9 / n : Rat) * (Nat.factorial (n - 3) : Rat)
+    exists w : List (Fin n), SuperpermutationBounds.Covers w /\
+      (w.length : Rat) <= SuperpermutationBounds.F3 n + (9 / n : Rat) * (Nat.factorial (n - 3) : Rat)
 ```
 
 and `finite_boundR m0 K n a` in `UniR/RMain.lean`, an explicit bound for every n >= m0 + 3K + 3, with the

@@ -3,9 +3,9 @@
 These are the programs that shorten a word once its closed trails are given. They take a base word, which is any
 word of Jay Pantone's construction that holds every closed trail once: one of his words, or a base word that
 `reproduce/tools/geng.py` writes from another selection. They split it into its closed trails and join the trails
-again. The construction is Pantone's. Cuts between two 2-cycles come from rumstd's n = 10 word, and cuts inside a
-1-cycle from Theo H.'s n = 11 word. Where the closed trails come from and how a first plan is made is in
-[`selection/`](../selection/README.md) and [`arrange/`](../arrange/README.md).
+again. The construction is Pantone's. The idea of cuts between two 2-cycles comes from rumstd's n = 10 word, and
+that of cuts inside a 1-cycle from Theo H.'s n = 11 word. [`selection/`](../selection/README.md) and
+[`arrange/`](../arrange/README.md) say where the closed trails come from and how a first plan is made.
 
 To rebuild or check a published word you need `trailsearch.c`, `delcheck.c` and a C compiler. No solver is involved.
 
@@ -68,10 +68,10 @@ program as it was then, so the loader, the model and the search exist in three g
 one with card code inside `trailsearch_gpu.c` and `recut_wide.c`. `loopscan.c` and `word2plan.c` carry their own
 copy of the loader. Together the eight files have about 1.5 MB of source, of which roughly half is distinct.
 
-For a reader this means: the header of each file says what its own part is, and lines of equal signs mark where
-that part begins and ends. The rest can be skipped. For anyone who changes the loader it means the same change in up
-to ten files. I plan to merge them into one program with the passes behind options. Until then the copies are
-what produced the words, and I would rather publish what ran than a merge that has not.
+To read one, look at its header, which says what its own part is; lines of equal signs mark where that part begins
+and ends, and the rest can be skipped. A change to the loader has to be made in up to ten files. I plan to merge
+them into one program with the passes behind options. Until then the copies are what produced the words, and I
+would rather publish what ran than a merge that has not.
 
 ## Building
 
@@ -94,8 +94,8 @@ The kernels are compiled once to PTX with the CUDA toolkit:
 It runs `nvcc -arch=sm_120 -ptx` on `kern.cu` and on `segins_kern.cu`, and writes one line into `segins_kern.ptx`
 that nvcc does not write: `.maxnreg 56`, which keeps a block of 1024 threads inside the registers of one
 multiprocessor. With that line the file is byte for byte the one my runs loaded. The programs load the CUDA driver
-library at run time, so the toolkit is needed for this one step only. `sm_120` is the RTX 50 series, the only one I
-tested.
+library at run time, so the toolkit is needed for this one step only. `sm_120` (compute capability 12.0) is the
+only architecture I tested.
 
 Plans are written with LF line ends on every system. Earlier builds wrote CR LF on Windows, so a plan made there
 before this release has another SHA-256 than the same plan here. The tools read both.
@@ -179,10 +179,10 @@ After this release the files here are also the sources I work on. If you change 
 
 ## The tools one by one
 
-The n = 11 figures are from one run of each tool on one thread, made for this release. They include a few seconds
-of loading. The n = 12 and n = 13 figures are from the runs that made the words, on a Ryzen 9 5950X that was busy
-with other jobs; where a figure comes from a run of this release it says so. Memory is the peak of the process.
-"Not run" means that I never ran the tool at that size.
+The n = 11 figures are from one run of each tool on one thread, made for this release, and include a few seconds
+of loading. The n = 12 and n = 13 figures are from the runs that made the words, while other jobs ran; where a
+figure comes from a run of this release it says so. Times are wall time with the number of threads given. Memory
+is the peak of the process. "Not run" means that I never ran the tool at that size.
 
 ### trailsearch
 
@@ -450,7 +450,7 @@ directory named by `TOOLS`.
   the other tools read as longer words.
 * `trailsearch.c` in this version has rebuilt one n = 13 word, the newest. Its search has not run at n = 13, and
   the earlier n = 13 words in this repository were rebuilt with the first version.
-* The three driver scripts were rewritten for this release, without the paths of my machine. I tested them at
+* The three driver scripts were rewritten for this release, without my local paths. I tested them at
   n = 11 on the CPU. The runs that made the words used the earlier scripts. They drive the tools of the first
   release; the loops with moves of equal length and with local kicks were run by hand, as described above.
 * `segins_gpu.c` is a merge of three programs that each made words: the one with the card, the one with moves of

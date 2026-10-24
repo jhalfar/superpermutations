@@ -1,39 +1,66 @@
 # Lean proofs
 
 A superpermutation on n symbols is a word that contains every permutation of the symbols as a contiguous
-part. This directory holds Lean 4 proofs about how long such a word has to be. Its parts:
+part. This directory holds Lean 4 proofs about how long such a word has to be.
 
-* `constant/` proves that for every n >= 13 there is a superpermutation of length at most
-  F3(n) + (1771/3456 + o(1)) (n-3)!, where F3(n) = n! + (n-1)! + (n-2)!. Jay Pantone's theorem has 43/80 in
-  place of 1771/3456.
-* `constant61937/`, `constant305989/` and `constant43586371/` prove the same kind of bound with smaller
-  coefficients: 61937/120960 = 0.512045... for every n >= 13, 305989/604800 = 0.505934... for every n >= 16,
-  43586371/86486400 = 0.503967... for every n >= 19 and 21751799/43243200 = 0.503010... for every n >= 22. They are copies of
-  `constant/` with the namespace renamed and a different selection inside Pantone's construction; each has its own
-  README.
+## In short
+
+Upper bounds for every large n. Jay Pantone proved that there is a superpermutation of length at most
+F3(n) + (43/80 + o(1)) (n-3)!, where F3(n) = n! + (n-1)! + (n-2)!. The parts below lower the coefficient.
+
+* `constant/`: 1771/3456 in place of 43/80, for every n >= 13.
+* `constant61937/`, `constant305989/` and `constant43586371/`: 61937/120960 = 0.512045... for every n >= 13,
+  305989/604800 = 0.505934... for every n >= 16, 43586371/86486400 = 0.503967... for every n >= 19 and
+  21751799/43243200 = 0.503010... for every n >= 22. `constant43586371/` goes on to eight coefficients in all,
+  down to 11117297/27675648 = 0.401700 for every n >= 22. Each is a copy of the part before it with the namespace
+  renamed and a different selection inside Pantone's construction.
+* `constant43586371/Uniform/` proves that the coefficient can be made as small as one likes
+  (`coefficient_tends_to_zero`), and `constant43586371/UniR/` gives a rate: a superpermutation of length at most
+  F3(n) + (9/n)(n-3)! for every n >= 2^14 (`rate_R`).
+* `asym/` adds the lower bound of the Hunter-Raudvere library: for the length L(n) of the shortest
+  superpermutation, F3(n) <= L(n) for n >= 6 and (L(n) - F3(n)) / (n-3)! tends to 0. In units of (n-4)! the
+  remainder L(n) - F3(n) has limit inferior at least 2 and limit superior at most 8.
+
+Literal words.
+
 * `words/` proves that explicit words for n = 7, 8, 9, 10 and 11 are superpermutations, by letting the kernel
-  check each word (for n = 8 Pantone's 46,181 and my 46,174 with its seven ties), and states these upper bounds together with the lower bounds of Xiaolong Liu's Lean
-  project.
+  check each word (for n = 8 Pantone's 46,181 and my 46,174 with its seven ties). It states these upper bounds
+  together with the lower bounds of Xiaolong Liu's Lean project.
 * `words12/` does the same for a word for n = 12. It is a part of its own because of its size.
+
+Lower bounds.
+
 * `lower/` proves three lower bounds. With hpv(k) = k! + (k-1)! + (k-2)! + k - 3, a superpermutation on k
   symbols has at least hpv(k) + ceil(2 ((k-2)! - (k-2)) / (k (k-3))) letters for k >= 5 (Theorem A) and at
   least hpv(k) + ceil(2 ((k-2)! - (k-2)) / (k^2 - 4k + 1)) letters for k >= 7 (Theorem B). Theorem C makes
-  the denominator smaller by a term that a finite search justifies; the searches are evaluated by the Lean
-  kernel for k = 8 to 14.
+  the denominator smaller by a term that a finite search justifies. The Lean kernel evaluates the searches
+  for k = 8 to 14.
 * `n8/` takes William Echols's Lean proof of 46,130 <= L(8) to 46,131 and 46,132 and removes `native_decide`
   from it. It is a second proof, independent of `lower/`, of what Theorem C gives for n = 8 up to 46,132.
 * `n8_46134/` proves that a superpermutation on 8 symbols has at least 46,134 letters (Theorem D). Like `n7/`
   it has two levels: level 1 is checked by the kernel and proves the bound from three equations about a
   finite search; level 2 evaluates the three equations by `native_decide`. Without `native_decide` the bound
   for n = 8 stays 46,133 (Theorem C).
+* `n7/` proves that a superpermutation on 7 symbols has at least 5,899 letters. The kernel checks this
+  proof down to 22 equations, each of which says that a finite search returns `false`, and compiled code
+  evaluates these 22 (`native_decide`).
+
+Structure.
+
 * `n8struct/` proves two facts about the selection of my word of 46,174 letters for n = 8: the closed walk of
   27 loops costs 16 and is one closed trail, and four copies of it fit into the 120 loops in exactly one way
   up to renaming and reversal. Kernel only.
-* `n7/` proves that a superpermutation on 7 symbols has at least 5,899 letters. The kernel checks this
-  proof down to 22 equations, each of which says that a finite search returns `false`, and these 22 are
-  evaluated by compiled code (`native_decide`).
 
-The bounds proven here for the length L(n) of the shortest superpermutation:
+### Trust
+
+There is no `sorry` and no axiom written by hand in any part. Every part except `n7/` and `n8_46134/` is
+checked by the Lean kernel to the end: there is no `native_decide`, and every statement listed below depends
+on `propext`, `Classical.choice` and `Quot.sound` and on nothing else. `n7/` and `n8_46134/` have two levels.
+Level 1 is of that kind too. Level 2 evaluates the search equations (22 for `n7/`, three for `n8_46134/`) by
+`native_decide`, that is, by compiled code. The final theorem then depends on the three axioms and on one
+axiom per equation, which `native_decide` records.
+
+### The bounds for small n
 
 | n | lower: Theorem B | lower: Theorem C; for n = 7, `n7/` | upper: a word or a construction checked here |
 |---|---|---|---|
@@ -46,31 +73,23 @@ The bounds proven here for the length L(n) of the shortest superpermutation:
 | 13 | 6,746,615,766 | 6,746,626,957 | 6,747,849,960 |
 | 14 | 93,891,107,960 | 93,891,141,126 | 93,905,309,790 |
 
-The 5,899 for n = 7 is not a value of Theorem C. It is the result of `n7/`, and it is the one bound of
-this table whose proof trusts compiled code. For n = 14 the value 93,891,141,126 comes from a certificate
-that is a recipe of its own (`lower/certificates/C14_843_63334_16000/`, 61 hours of Lean time); the build
-levels of `lower/` stop at 93,891,141,008. For n = 8, `n8_46134/` gives 46,134 with three equations
-evaluated by compiled code; the table keeps the bound that the kernel checks alone.
+The 5,899 for n = 7 is not a value of Theorem C. It is the result of `n7/`, and it is the one bound of this
+table whose proof trusts compiled code. For n = 8, `n8_46134/` gives 46,134 with three equations evaluated by
+compiled code; the table keeps the bound that the kernel checks alone. For n = 14 the value 93,891,141,126
+comes from a certificate that is a recipe of its own (`lower/certificates/C14_843_63334_16000/`, 61 hours of
+Lean time); the build levels of `lower/` stop at 93,891,141,008. The upper bounds for n = 7 to 12 are literal
+words; those for n = 13 and 14 are values of the construction of `constant/`.
+
 Jay Pantone announced a table of lower bounds on 29 September 2026: 46,130, 408,468, 4,033,374, 43,917,903,
-522,622,378 and 6,746,626,519 for n = 8 to 13. His proof is not public. The proofs here were made without it.
-The upper bounds for n = 7 to 12 are literal words; those for n = 13 and 14 are values of the construction of
-`constant/`.
+522,622,378 and 6,746,626,519 for n = 8 to 13. His proof is not public. I made the proofs here without it.
 
 The parts state their results with the definitions of Pantone's `Challenge.lean`
 (github.com/jaypantone/superperm-upper-43-80): `Covers w` says that every list of K different letters occurs
 in the word `w` as a contiguous part, and `HasWord K n` says that such a word with at most `n` letters
-exists.
-The one exception is `n8/`, which keeps Echols's statement and adds the same statement with `Covers` written
-out.
+exists. The one exception is `n8/`, which keeps Echols's statement and adds the same statement with `Covers`
+written out.
 
-There is no `sorry` and no axiom written by hand in any part. In every part except `n7/` every proof is
-checked by the Lean kernel to the end: there is no `native_decide`, and every statement listed below depends
-on `propext`, `Classical.choice` and `Quot.sound` and on nothing else. `n7/` has two levels. Its level 1 is
-of that kind too. Its level 2, which gives the theorem for 5,899, evaluates 22 equations about a finite
-search by `native_decide`, that is, by compiled code, and that theorem depends on the three axioms and on
-the 22 axioms that `native_decide` records for the equations.
-
-What is new here, and what is not:
+### Whose the parts are
 
 * The constant. The selection that gives 1771/3456 and its Lean proof are new. The construction is Pantone's,
   and the proof is built on his Lean library, of which one file is replaced by a patched copy.
@@ -99,7 +118,8 @@ What is new here, and what is not:
 ## What is proven
 
 The statements are copied from the Lean files, with the symbols spelled in ASCII (`forall`, `exists`, `<=`,
-`/\`, `Nat`, `Rat`, `eps`), which Lean reads as the same statements.
+`/\`, `Nat`, `Rat`, `eps`), which Lean reads as the same statements. The parts not listed here
+(`constant61937/` to `constant43586371/`, `asym/`, `n8_46134/`, `n8struct/`) state theirs in their own README.
 
 ### The constant (`constant/`, namespace `SuperpermutationUpperBound1771`)
 
@@ -240,8 +260,8 @@ theorem covers_lower_bound_7_native : forall w : List (Fin 7), Covers w -> 5899 
 ```
 
 Level 1 also has `covers_5899_of_search`, the same bound with twelve equations of the form "this search
-returns `false`" as its hypotheses; the proof that such an equation gives its finite statement is checked
-by the kernel. Level 2 supplies the equations. `covers_lower_bound_7_native` depends on `propext`,
+returns `false`" as its hypotheses; the kernel checks the proof that such an equation gives its finite
+statement. Level 2 supplies the equations. `covers_lower_bound_7_native` depends on `propext`,
 `Classical.choice`, `Quot.sound` and on 22 axioms of the form
 `SuperpermLowerBounds.PS.f0_0._native.native_decide.ax_1_1`, one for each equation.
 [`n7/README.md`](n7/README.md) has the statements in full, what each level trusts and the proof in a page.
@@ -251,8 +271,10 @@ by the kernel. Level 2 supplies the equations. `covers_lower_bound_7_native` dep
 * `constant/`: the development for 1771/3456. 11 hand-written Lean files and an audit file, 38 generated
   certificate files, the generator, one patched file of Pantone's library, `build.sh`, a README.
 * `constant61937/`, `constant305989/`, `constant43586371/`: the developments for 61937/120960, 305989/604800 and
-  the last two coefficients, with generators,
-  `build.sh` and a README each. They use the patched file of Pantone's library and the hashes of `constant/`.
+  the later coefficients, with generators, `build.sh` and a README each. They use the patched file of
+  Pantone's library and the hashes of `constant/`. `constant43586371/` also holds `Uniform/` and `UniR/` with
+  the proofs on paper `PROOF.md` and `PROOF_R.md`, and `REFEREE.md`, the report of an independent check.
+* `asym/`: four Lean files about L(n) (`ConstAsym/`), `build.sh`, a README.
 * `words/`: the checkers (the two methods, and three files with the changes for n = 12), the statements for
   n = 7 to 11, the bridge, three generators, three verifiers, `check_word.sh` for a word of your own, the
   generated certificates for n = 7, 8 and 9, lists of hashes, `build.sh`, a README.
@@ -260,9 +282,13 @@ by the kernel. Level 2 supplies the equations. `covers_lower_bound_7_native` dep
   `build.sh`, a README.
 * `lower/`: the proofs of the three lower bounds (31 Lean files), the two-sided statements that use them,
   five audit files, the lists of the certificates of Theorem C, their generators, the list of hashes of the
-  generated files, `build.sh`, a README.
+  generated files, `build.sh`, a README, and in `certificates/` the recipe for 93,891,141,126.
 * `n8/`: for each of three variants a diff against Echols's repository, a new top file and lists of hashes;
   three new Lean files, the generator of the search parts, his `NOTICE`, `build.sh`, a README.
+* `n8_46134/`: Theorem D and the proof of 46,134 (its search engine is shared with `n7/`), an audit file,
+  `build.sh`, a README.
+* `n8struct/`: the nine Lean files about the selection of the word of 46,174 letters, a Python cross-check
+  with its output, `build.sh`, a README.
 * `n7/`: the proof of 5,899 (56 Lean files, of which 18 use `native_decide`), four audit files, the list of
   the evaluations, a list of hashes, `build.sh`, a README.
 * `tools/`: `common.sh` (settings and functions of the build scripts), `order.py` (build order from the
@@ -290,16 +316,15 @@ by the kernel. Level 2 supplies the equations. `covers_lower_bound_7_native` dep
 `constant/` needs Lean, Mathlib and the sources of Pantone's repository. The literal words of `words/` and
 `words12/` need Lean, Mathlib and one file of his, `Challenge.lean`. The bridge and the two-sided statements
 need the two lower-bound repositories as well. These three repositories pin the same Mathlib commit, so one
-compiled Mathlib serves everything; the scripts take it from Pantone's checkout. Of the repositories only
-sources are used: the modules of them that a statement imports are compiled here.
-
-`lower/` needs all three repositories.
+compiled Mathlib serves everything; the scripts take it from Pantone's checkout. Only the sources of the
+repositories are used: the modules that a statement imports are compiled here. `lower/` needs all three
+repositories.
 
 `n8/` needs Lean, Mathlib and Echols's sources. His project pins an older Mathlib; the diffs of `n8/` port his
 files to the one used here.
 
-`n7/` needs what `lower/` needs, and `leanc`, the C compiler of the Lean toolchain, which is installed with
-Lean.
+`n7/` and `n8_46134/` need what `lower/` needs, and `leanc`, the C compiler of the Lean toolchain, which is
+installed with Lean.
 
 ## How to build
 
@@ -320,12 +345,10 @@ cd ..
 ```
 
 Then run the scripts. Each builds its part from sources into a directory under `build/`, in dependency
-order, and prints the `#print axioms` lines at the end. `words12/build.sh` continues in the build directory of
-`words/build.sh`, so it comes after it. `constant/build.sh` stands alone.
-`lower/build.sh` continues in that build directory as well and comes between the two.
-`n8/build.sh` stands alone.
-`n7/build.sh` continues in the build directory of `words/build.sh` and `lower/build.sh` and can come at any
-point after them.
+order, and prints the `#print axioms` lines at the end. `constant/build.sh` and `n8/build.sh` stand alone.
+`lower/build.sh` continues in the build directory of `words/build.sh`, and `words12/build.sh` continues there
+after both. `n7/build.sh` uses the build directory of `words/build.sh` and `lower/build.sh` and can come at
+any point after them.
 
 ```sh
 constant/build.sh
@@ -339,8 +362,11 @@ n8/build.sh
 n7/build.sh                # or: n7/build.sh full
 ```
 
-They are shell scripts of at most 340 lines that call `lean` once per module; `tools/common.sh` (170 lines)
-holds what they share. `n7/build.sh` also calls `leanc` once. They are controlled by environment variables:
+`asym/`, `n8_46134/` and `n8struct/` have a `build.sh` each with its own build directory; their READMEs say
+what each needs.
+
+The scripts have at most 340 lines each and call `lean` once per module; `tools/common.sh` (170 lines)
+holds what they share. `n7/build.sh` also calls `leanc` once. Environment variables control them:
 
 | variable | meaning | default |
 |---|---|---|
@@ -363,19 +389,19 @@ A build can be stopped (Ctrl-C, or create the file `STOP` in the build directory
 finish) and started again with the same command. A module is compiled again only if its source or something
 it imports has changed.
 
-To check a word of your own there is one command, `words/check_word.sh WORDFILE`. It goes from a word file
-to the Lean theorem `HasWord n L` for that word without any file being edited, for words up to n = 12.
-[`words/README.md`](words/README.md) says what it does and what it costs.
-
 Before Lean starts, each script compares the sources it is about to compile with lists of hashes
 (`constant/pantone-sources.sha256`, `words/hunter-sources.sha256`, `words/preimage-sources.sha256`,
 `n8/echols-sources.sha256`, `n7/sources.sha256`), runs the generators, and compares what they write with
 the files or hashes in this directory.
 
+To check a word of your own there is one command, `words/check_word.sh WORDFILE`. It goes from a word file
+to the Lean theorem `HasWord n L` for that word without any file being edited, for words up to n = 12.
+[`words/README.md`](words/README.md) says what it does and what it costs.
+
 ## What it costs
 
-Measured on my machine (Ryzen 9 5950X with 16 cores, 32 GB, Windows 11 with Git Bash), each part from an
-empty build directory, one thread per Lean process, other jobs running beside the builds:
+Each part was built from an empty build directory, with one thread per Lean process and other jobs running
+beside the builds. I ran all builds on Windows 11 under Git Bash.
 
 | script | modules | Lean time | time of the run | peak memory of a Lean process |
 |---|---|---|---|---|
@@ -396,21 +422,22 @@ empty build directory, one thread per Lean process, other jobs running beside th
 | `n7/build.sh full` in all | 60 | | 3 h 21 min | 7.5 GB |
 
 Lean time is the sum over the Lean processes. Memory is the working set. A process that imports all of
-Mathlib (the two libraries, the bridge, the two-sided statements) commits 8 to 9 GB of virtual memory, and it
-is slow unless the Mathlib files stay in the file cache; `MINFREE_GB=6` waits for free memory before each
-start.
-Most modules of `lower/` outside the searches are of this kind. The rows of `lower/` are from several runs
-into the build directory of `words/`.
-The rows of `n7/build.sh` are from one run, after `words/build.sh lower` and `lower/build.sh` into an empty
-build directory. Its evaluations run on several threads, so their cost is given as CPU time.
-The row of `words12/build.sh` is from three runs: `words/check_word.sh` into an empty build directory, with
-three processes for the first 50 modules and ten for the rest, and then the statements with one process.
+Mathlib (the two libraries, the bridge, the two-sided statements, and most modules of `lower/` outside the
+searches) commits 8 to 9 GB of virtual memory, and it is slow unless the Mathlib files stay in the file
+cache; `MINFREE_GB=6` waits for free memory before each start.
+
+The rows of `lower/` are from several runs into the build directory of `words/`. The rows of `n7/build.sh`
+are from one run, after `words/build.sh lower` and `lower/build.sh` into an empty build directory; its
+evaluations run on several threads, so their cost is given as CPU time. The row of `words12/build.sh` is from
+three runs: `words/check_word.sh` into an empty build directory, with three processes for the first 50
+modules and ten for the rest, and then the statements with one process.
 
 Disk: the compiled Mathlib 7.4 GB; `build/constant` 0.3 GB; `build/words` 0.5 GB after `words/build.sh`,
 0.5 GB more after `lower/build.sh full` and 2.1 GB more after `words12/build.sh`; `build/n8` 0.1 GB.
 `n7/build.sh full` adds 38 MB to `build/words`.
 
-The README of each part has the times per group of modules.
+The README of each part has the times per group of modules, and the costs of `asym/`, `n8_46134/` and
+`n8struct/`.
 
 ## What is trusted and what is not
 
@@ -418,23 +445,22 @@ The README of each part has the times per group of modules.
   the definition of that quantity in the Hunter-Raudvere library; the axioms `propext`, `Classical.choice`
   and `Quot.sound`. `constant/Audit1771.lean`, `words/Audit11.lean` and `words12/Audit12.lean` restate the
   main results with those definitions written out, so that nothing else has to be read to know what is
-  claimed.
-* `lower/AuditA.lean`, `AuditB.lean`, `AuditC.lean`, `AuditCSmall.lean` and `AuditCFinal.lean` do the same for
-  the lower bounds.
-* `n7/Audit5899.lean`, `Audit5899Search.lean`, `Audit5899Native.lean` and `AuditN.lean` do the same for
-  `n7/`.
-* For `n8/` the statement is Echols's `Challenge.lean`, and `Plain.lean` writes it out.
+  claimed. `lower/AuditA.lean`, `AuditB.lean`, `AuditC.lean`, `AuditCSmall.lean` and `AuditCFinal.lean` do
+  the same for the lower bounds, `n7/Audit5899.lean`, `Audit5899Search.lean`, `Audit5899Native.lean` and
+  `AuditN.lean` for `n7/`, and `n8_46134/AuditD.lean` for `n8_46134/`. For `n8/` the statement is Echols's
+  `Challenge.lean`, and `Plain.lean` writes it out.
 * Not trusted: the generators, the certificate data, the tables. They are inputs to kernel checks, and a
   wrong entry makes a check fail.
-* The searches of Theorem C and of `n8/` are evaluated by the kernel (`decide +kernel`), with its built-in
+* The kernel evaluates the searches of Theorem C and of `n8/` (`decide +kernel`), with its built-in
   arithmetic on natural numbers. In these parts no compiled code is trusted. The Python copies of the two
   searches only decide where a search is cut into lemmas.
-* `n7/` is the exception. Its 22 search equations are evaluated by `native_decide`. For them, and for the
-  theorem `covers_lower_bound_7_native` that rests on them, four more things are trusted: the Lean compiler,
-  the C compiler of the Lean toolchain, the Lean runtime and the shared library that `n7/build.sh` builds
-  from `PSearch.lean` and that Lean loads to run the searches. Everything else in `n7/` is checked by the
-  kernel with the three axioms, and that includes the proof that a search which returns `false` proves its
-  finite statement. Justin Lebar's Lean proof of 5,898 has the same footing.
+* `n7/` and `n8_46134/` are the exceptions. `n7/` evaluates its 22 search equations by `native_decide`. For
+  them, and for the theorem `covers_lower_bound_7_native` that rests on them, four more things are trusted:
+  the Lean compiler, the C compiler of the Lean toolchain, the Lean runtime and the shared library that
+  `n7/build.sh` builds from `PSearch.lean` and that Lean loads to run the searches. Everything else in `n7/`
+  is checked by the kernel with the three axioms, and that includes the proof that a search which returns
+  `false` proves its finite statement. `n8_46134/` does the same for its three equations, with a library
+  built from `DSearch.lean`. Justin Lebar's Lean proof of 5,898 has the same footing.
 * For the literal words, one link is outside Lean: that the number in the Lean files is the word in the
   public file. The theorems say that a word of that length exists. That it is the published word is checked
   by `words/verify_word.py` and `words/verify_blocks.py` and by the hashes, not by the kernel.
@@ -442,22 +468,20 @@ The README of each part has the times per group of modules.
   turns them into the certificate that the kernel checks.
 * One file of Pantone's library is replaced by a patched copy (`constant/patches/`): one import is changed
   and a section of 30 lines that the development does not use is removed. His unchanged file would pull in
-  his certificate for 9 symbols, which needs more memory than my machine has.
+  his certificate for 9 symbols, which did not compile within 13.6 GB of memory.
 * The lower bounds of Liu's project that `words/` uses are his theorems. I compile them from his sources and
-  did not review their proofs.
-* The three lower bounds of `lower/` use lemmas of his library and of the Hunter-Raudvere library in the same
+  did not review their proofs. The three lower bounds of `lower/`, `n7/` and `n8_46134/` use lemmas of his
+  library and of the Hunter-Raudvere library in the same way, and `n8/` uses Echols's reduction in the same
   way: compiled here from the sources, their proofs not reviewed by me.
-* `n8/` uses Echols's reduction in the same way.
-* `n7/` uses lemmas of the two libraries in the same way.
 
 ## What is not covered
 
-* The constant: nothing is proven for n <= 12, and no rate for the o(1) term.
+* The constant (`constant/`): nothing is proven for n <= 12, and no rate for the o(1) term.
 * The words: n = 13. The shortest word known for n = 13 has 6.7 billion letters and is out of reach for this
   method.
 * Nothing here says that any of the words is shortest.
 * The lower bounds: Theorem B is not proven for k = 5 and 6, and Theorem C has certificates for k = 8 to 14
   only. Pantone's proofs are not here; they are not public.
 * n = 8 in Echols's framework beyond 46,132.
-* n = 7: the 22 evaluations of `n7/` are not checked by the kernel, and the build of `n7/` was run on
-  Windows only.
+* n = 7: the kernel does not check the 22 evaluations of `n7/`, and I ran the build of `n7/` on Windows
+  only.

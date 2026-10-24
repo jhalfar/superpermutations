@@ -10,16 +10,16 @@ word made from these 52 trails is shorter, in three families of words:
 | one cut per trail, cuts inside a 1-cycle allowed | at any step | at most n - 1 = 8 letters | `check9s.py --wide` | 3 min |
 | any number of cuts per trail (a trail may be written in several parts) | as in the first row | at most 6 letters | `check9m.py` | 3 s |
 
-rumstd's word belongs to all three families, so in each of them 408,731 is the optimum. The scripts call the first
-two families "single-port", narrow and wide, and the third "multi-port".
+rumstd's word is in all three families, so 408,731 is the optimum in each. The scripts call the first two families
+"single-port" (narrow and wide) and the third "multi-port".
 
-This is a statement about one construction. It says that the tools in this repository, which only cut and join
-Pantone's trails in these ways, cannot find a shorter n = 9 word. It is not a lower bound for superpermutations.
-The fourth family, several cuts per trail together with the long overlaps, is open, and so is every set of trails
-other than Pantone's.
+This is a statement about one construction. The tools in this repository only cut and join Pantone's trails in
+these ways, so they cannot find a shorter n = 9 word. It is not a lower bound for superpermutations. The fourth
+family (several cuts per trail together with the long overlaps) is open, and so is every set of trails other than
+Pantone's.
 
 The result is checked by computation and by me. Nobody else has read the argument or written the search a second
-time. Please treat it as unrefereed.
+time, so please treat it as unrefereed.
 
 ## Running the checks
 
@@ -29,11 +29,11 @@ time. Please treat it as unrefereed.
 
 The first argument is Pantone's word, `words/9/superpermutation-9-408732.txt` in his repository (SHA-256
 `6b5f22010b002373c6cc1db3ed4e3e9d10fe48a4cfca19568f87253c6e846a96`). The optional second argument is a word of the
-family, rumstd's for example. The script then checks that it is made of the same trails and that its length is the
-bound.
+family, rumstd's for example; the script then checks that it is made of the same trails and that its length is
+the bound.
 
-The scripts need Python 3 and `numpy`. They use no solver and no other file of this repository. Each prints the
-facts it verifies and ends with the line that states the bound.
+The scripts need Python 3 and `numpy`, and no solver and no other file of this repository. Each prints the facts it
+verifies and ends with the line that states the bound.
 
 ## The argument
 
@@ -49,8 +49,8 @@ The 52 trails are 48 small ones with 56 cuts each and 4 big ones. The script ver
 2. A sequence of small trails with W at most 7 between neighbours has at most 6 trails.
 3. A block of big trails between two small trails costs at least 8 in total, and at least 1 at an end of the word.
 
-So the 48 small trails fall into at least 8 runs, the joins inside runs cost at least 6 each and the joins between
-runs at least 8 each. That gives twice the cost at least 296, so the cost is at least 148 and the word has at least
+So the 48 small trails fall into at least 8 runs. The joins inside runs cost at least 6 each and the joins between
+runs at least 8 each. Twice the cost is then at least 296, so the cost is at least 148 and the word has at least
 408,730 letters.
 
 Equality would force exactly 8 runs of 6 trails with W = 6 inside, W = 8 between them, and every block of big
@@ -61,17 +61,17 @@ between them. No order exists. So the cost is at least 149 and the word has at l
 The case with several cuts per trail (`check9m.py`) needs more: joins between two parts of the same trail, and two
 potential functions on the cuts of the big trails. The script states and verifies each step.
 
-`test_b.py` compares the fast computations of `check9m.py` with plain matrices on a sample, and `test_e4.py` checks
+`test_b.py` compares the fast computations of `check9m.py` with plain matrices on a sample. `test_e4.py` checks
 that the final search does find solutions as soon as one of its conditions is dropped. Both take the base word as
 their only argument and must lie next to `check9m.py`.
 
 ## What it means for the tools
 
-Relocation, segment insertion and loop moves as they are in `tools/` produce words of the third family. At n = 9
-they cannot go below 408,731. A shorter n = 9 word from Pantone's construction needs the long overlaps together
-with trails written in several parts, or a different set of trails.
+Relocation, segment insertion and loop moves as they are in `tools/` produce words of the third family, so at
+n = 9 they cannot go below 408,731. A shorter n = 9 word from Pantone's construction needs the long overlaps
+together with trails written in several parts, or a different set of trails.
 
 For n = 10 and n = 11 the same method gives bounds that are not tight: at least 4,034,835 letters against rumstd's
 4,034,873, and at least 43,930,420 against my 43,930,614 for one cut per trail (43,930,373 with several). Those
 computations are not in this directory. With a sharper programme for the blocks of big trails the bounds for one
-cut per trail are 4,034,860 and 43,930,481; that is `cert10.py` and `cert11.py` in `arrange/`.
+cut per trail are 4,034,860 and 43,930,481 (`cert10.py` and `cert11.py` in `arrange/`).

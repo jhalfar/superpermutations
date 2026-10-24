@@ -102,7 +102,7 @@ It needs what `../n7/build.sh` needs: Lean 4.31.0, Pantone's repository with Mat
 `../words/README.md`, and `leanc`. The library engine is `DSearch.lean`, compiled to C and to a shared library
 that the evaluations load with `--load-dynlib`, as `../n7/build.sh` does with `PSearch.lean`.
 
-What it cost when I built it (2026-10-07, on a busy machine): the level-1 files of this directory 30 to 60 s each
+What it cost when I built it (2026-10-07, beside other jobs): the level-1 files of this directory 30 to 60 s each
 with one thread and 3.2 to 3.5 GB of working set; the three evaluations 722 s with 2 threads, 3,431 s with 2
 threads and 3,739 s with 3 threads, about 5.4 thread-hours in all, 0.3 GB each; `DTestNative` 52 s. A build from
 an empty directory also compiles the two lower-bound libraries and the level-1 files of `../n7/` that are needed,

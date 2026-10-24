@@ -2,9 +2,9 @@
 
 A piece set is a family of closed trails that together hold every permutation. A word is these trails written one
 after the other, each cut open at one place. This folder holds the programs that choose a first order and first
-cuts, a start plan, before any local search runs. It also holds the programs behind the statements I make about
-arrangements: which chains exist, how good a system of runs can be, what an n = 12 plan gives at n = 13, and how far
-the lower bounds lie below the words.
+cuts (a start plan) before any local search runs. It also holds the programs behind what I say about arrangements:
+which chains exist, how good a system of runs can be, what an n = 12 plan gives at n = 13, and how far the lower
+bounds lie below the words.
 
 The piece sets themselves come from the reproduction folder: `geng.py` or `gen12.py` turn a selection into a base
 word and its table, `applyplan.py` turns a plan into its word, `check_min.py` and `delcheck` check the word. The
@@ -44,11 +44,11 @@ of links is an integer programme: `chainplan.py`. It is small and solves to opti
 units of a piece set (chains and single trails together) is exact: 146 chains and 4 single trails for the 672 small
 trails at n = 11, 768 chains and 336 single trails for the 2,352 at n = 12.
 
-This comes first because of what a chain end costs. In the n = 12 start plan the 1,248 joins inside chains cost 1
-letter each, and the 1,104 joins that follow a chain or a single small trail cost 5.8 on average. A piece set pays
-for its small trails by the number of chain ends, and a search that starts from an arbitrary order does not find the
-chains. The fixed-order pass on the base word as written gives 522,744,506 letters at n = 12; the chained plan has
-522,739,939.
+This comes first because a chain end is expensive. In the n = 12 start plan the 1,248 joins inside chains cost 1
+letter each, and the 1,104 joins that follow a chain or a single small trail cost 5.8 on average. So a piece set
+pays for its small trails by the number of chain ends, and a search that starts from an arbitrary order does not
+find the chains. The fixed-order pass on the base word as written gives 522,744,506 letters at n = 12; the chained
+plan has 522,739,939.
 
 ### Trails of one walk chain at cost 0
 
@@ -131,9 +131,9 @@ export PYTHONPATH=tools
 
 Scripts that need Gurobi say so in their header: `chainplan.py`, `plan13n.py`, `gen13.py`, `liftmip.py`,
 `joins12.py`, `runs12.py`, `q12.py`, `q12b.py`, `chain10.py solve`. The size-limited licence that comes with the
-PyPI package is too small for all of them. Gurobi is not needed to rebuild or check any word: the plans are
-published. Times and memory are from runs on one machine with two threads while other jobs ran; read them as orders
-of magnitude.
+PyPI package is too small for all of them. Gurobi is not needed to rebuild or check any word, because the plans
+are published. Times are wall time on two threads while other jobs ran, and memory is the peak of the process; read
+them as orders of magnitude.
 
 ### n = 11 and n = 12: the chained plan
 
@@ -305,14 +305,17 @@ of 168; a larger value is better. `q12.py` gives the linear bound of the value, 
 A value with "status 2" in the last round, and no cycle left, is the optimum among symmetric systems: no system that
 the 168 relabellings map to itself does better with the cuts allowed. The constraints that exclude cycles hold for
 every system, so the earlier rounds need no proof. Level 8 and level 10 are settled with all cuts, and at level 10
-the cuts at steps of weight 2 add nothing. Level 12 with all cuts is not settled. The system with cuts at vertices
-(266) is a system there too. With all cuts the first round, before any cycle is excluded, ends with optimum 276,
-which is an upper bound. A first run then stopped at 3 GB of memory. A second one with 10 GB (`--time 600
+the cuts at steps of weight 2 add nothing.
+
+Level 12 with all cuts is not settled. The system with cuts at vertices (266) is a system there too. With all cuts
+the first round, before any cycle is excluded, ends with optimum 276, which is an upper bound. A first run then
+stopped at 3 GB of memory. A second one with 10 GB (`--time 600
 --prove 5400`) excluded cycles for nine rounds, came to the same system of 266 without a cycle and stopped in the
-proof phase at the solver's memory limit, with the bound still at 276. None of this says the systems are
-optimal among all systems, symmetric or not: there the linear bound is what is known, and the gap is 8, 14 and 18
-per orbit at the three levels. In the accounting of the bound, where a run end is charged 3 letters at level 12, the
-level-12 system costs 13,944 letters and the linear bound is 12,432.
+proof phase at the solver's memory limit, with the bound still at 276.
+
+None of this says the systems are optimal among all systems, symmetric or not. There only the linear bound is known,
+and the gap is 8, 14 and 18 per orbit at the three levels. In the accounting of the bound, where a run end is
+charged 3 letters at level 12, the level-12 system costs 13,944 letters and the linear bound is 12,432.
 
 #### From a run system to a plan
 
@@ -463,8 +466,8 @@ runs the scripts on the n = 10 and n = 11 pieces of the reproduction package (RE
 they print with the numbers above: about 5 minutes and 0.5 GB without a solver. `GUROBI=1` adds the steps that need
 the solver, `RECUT=FILE` the chained plan of n = 11 with its SHA-256, `SLOW=1` the 40 minutes of tables at n = 10,
 and `BIG=1` the n = 12 chain on the transported selection (20 minutes more, 2.75 GB). The header of `test.sh` lists
-what each of them covers. With `GUROBI=1`, `RECUT` and `BIG=1` it ran 61 checks on my machine and none failed, and 4
-more with the n = 10 tables in place. It runs nothing at n = 13, and not `cert11.py` or `liftmip.py`; I ran those by
+what each of them covers. With `GUROBI=1`, `RECUT` and `BIG=1` it ran 61 checks and none failed, and 4 more with
+the n = 10 tables in place. It runs nothing at n = 13, and not `cert11.py` or `liftmip.py`; I ran those by
 hand, with the results given above.
 
 These are my working scripts with headers and comments added. Each was compared with the script that produced the

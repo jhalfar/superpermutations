@@ -3,20 +3,21 @@
 The front page is [`README.md`](README.md). This file is the full account, in the order in which things happened:
 what each step did to each n, what it cost and which tool does it.
 
-Parts one and two were the work of October 2 to 7. Part one keeps the closed trails of Jay Pantone's words and changes where each one is cut and the
-order of the pieces. That took four days and gave 66 letters at n = 11, 231 at n = 12 and 1,409 at n = 13 below his
-words. Part two changes the closed trails themselves, by other selections inside his construction. That took one
-day and gave 36 more letters at n = 11, 8,175 at n = 12 and 114,264 at n = 13, and at n = 10 a word of
-4,034,855 letters, 18 below rumstd's. Part one is how I got to part two: every pass that polishes the new words
-was written for the old ones. Part three (October 17 to 20) takes two moves from William Echols and Theo H. and
-gives the words for n = 12, 13 and 14; part four (October 20 and 21) is the word for n = 8.
+Parts one and two were the work of October 2 to 7. Part one keeps the closed trails of Jay Pantone's words and
+changes where each one is cut and the order of the pieces. In four days that gave 66 letters at n = 11, 231 at
+n = 12 and 1,409 at n = 13 below his words. Part two changes the closed trails themselves, by other selections
+inside his construction. In one day that gave 36 more letters at n = 11, 8,175 at n = 12 and 114,264 at n = 13,
+and at n = 10 a word of 4,034,855 letters, 18 below rumstd's. Part one is how I got to part two: every pass that
+polishes the new words was written for the old ones. Part three (October 17 to 20) takes two moves from William
+Echols and Theo H. and gives the words for n = 12, 13 and 14. Part four (October 20 and 21) is the word for n = 8.
 
 After the four parts come the things I tried that gave nothing, with the numbers, so that nobody has to try them
-again, then what is known about how much is left and how the words were checked.
+again. Then come what is known about how much is left, the lower bounds, the words of record length and how the
+words were checked.
 
-The tools are in [`tools/`](tools/README.md). Everything ran on one desktop computer. Times are wall-clock times
-with the number of threads where it matters; the passes "on the card" need a CUDA card (the one I used has
-32 GB). Memory figures are those of the process on the computer unless they say "on the card".
+The tools are in [`tools/`](tools/README.md). Everything ran on one computer. Times are wall time, with the number
+of threads where it matters. The passes "on the card" need a CUDA card; the one I used has 32 GB. Memory figures
+are those of the process on the host unless they say "on the card".
 
 ## The model
 
@@ -89,10 +90,10 @@ Tools: `connector_splice.py` (Python, the first version) and `trailsearch.c`. Th
 times faster than the one that made these runs. With a card, `trailsearch_gpu.c` makes about 40 times the
 iterations per thread of that first version at n = 12.
 
-What it was worth: 46 letters at n = 11, 44 at n = 12 and 71 at n = 13, for about ten hours of a many-core machine
-per n. At n = 12 every improvement in the logs moved only big trails, so `--focus` skips most iterations that would
-move none. The search flattens: the last 3 hours at n = 11 gave nothing and at n = 12 one letter. At n = 9 and
-n = 10 it found nothing from rumstd's words in several hours.
+What it was worth: 46 letters at n = 11, 44 at n = 12 and 71 at n = 13, for about ten hours of wall time per n on
+the thread counts of the table. At n = 12 every improvement in the logs moved only big trails, so `--focus` skips
+most iterations that would move none. The search flattens: the last 3 hours gave nothing at n = 11 and one letter
+at n = 12. At n = 9 and n = 10 it found nothing from rumstd's words in several hours.
 
 ## Step 3: all cuts at once for a fixed order
 
@@ -301,8 +302,8 @@ The plans of the words in between are in [`plan/history/`](plan/history/README.m
 # Part two: other pieces
 
 Everything in part one rearranges the closed trails of Pantone's words. On October 5 I changed the closed trails
-themselves. The words at n = 10, 11, 12 and 13 got shorter by more than everything in part one together, and
-n = 10 fell below rumstd's word for the first time. This part gives the steps in the order in which they were made.
+themselves. The words at n = 10, 11, 12 and 13 got shorter by more than everything in part one together, and at
+n = 10 my word went below rumstd's for the first time. This part gives the steps in the order I made them.
 
 [`reproduce/REPRODUCE.md`](reproduce/REPRODUCE.md) rebuilds each of the four words of this part from its selection, with a
 generator and a checker that share no code with the tools of part one. [`selection/`](selection/README.md) holds the
@@ -716,8 +717,8 @@ openings chosen again after each, took it to 93,904,804,956 and then 93,904,804,
 model has a floor of about 93,904,786,500, so at most about 18,000 letters are left in it.
 
 The word was streamed into two checkers, `recipes/n14/vfast.c` (one thread) and a streaming checker of mine with
-three threads (14 minutes): all 87,178,291,200 permutations occur, with 19,588,800 repeated windows. On October 20
-Echols posted 93,904,804,516 on the same selection, with the openings and joins of the groups optimised; mine is
+three threads (14 minutes): all 87,178,291,200 permutations occur, with 19,588,800 repeated windows. Echols later
+posted 93,904,804,516 on the same selection, with the openings and joins of the groups optimised; mine is
 91 letters shorter. The recipe is in [`recipes/n14/`](recipes/n14/README.md).
 
 # Part four: n = 8 (October 20 and 21)
@@ -953,16 +954,21 @@ without a row. The README has the table.
 # Lower bounds
 
 The other side of the problem: how long a superpermutation has to be. `proofs/lean/lower/` proves three bounds
-in Lean, on top of Xiaolong Liu's library and the Hunter-Raudvere library. Two are formulas for every n: the
-one Zach Hunter wrote in 2019, for which the note of GPT 5.6 Sol and Marin Kisic gave a proof on paper in
-August 2026, and the one Cole Fritsch proposed in 2020. Pantone announced a Lean proof of nearly the same
-bound as Fritsch's in September 2026. The third starts from the second and replaces its fixed slope by one
-that a finite search justifies; the Lean kernel evaluates the search. For n = 8 to 14 it gives 46,133, 408,469,
-4,033,378, 43,917,903, 522,622,378, 6,746,626,957 and 93,891,141,008, and with a larger certificate, built as a
-recipe of its own on October 24 (61 hours of Lean time), 93,891,141,126 for n = 14. For n = 8 a fourth bound,
-Theorem D, gives 46,134 with three equations evaluated by `native_decide` (`proofs/lean/n8_46134/`). Pantone's announced table has 46,130,
-408,468, 4,033,374, 43,917,903, 522,622,378 and 6,746,626,519 for n = 8 to 13; his proof is not public, and
-mine was made without it. The README of that directory says how the bound arises and which part is whose.
+in Lean, on top of Xiaolong Liu's library and the Hunter-Raudvere library.
+
+Two are formulas for every n. One is the formula Zach Hunter wrote in 2019, for which the note of GPT 5.6 Sol and
+Marin Kisic gave a proof on paper in August 2026. The other is the one Cole Fritsch proposed in 2020; Pantone
+announced a Lean proof of nearly the same bound in September 2026.
+
+The third starts from the second and replaces its fixed slope by one that a finite search justifies, and the Lean
+kernel evaluates the search. For n = 8 to 14 it gives 46,133, 408,469, 4,033,378, 43,917,903, 522,622,378,
+6,746,626,957 and 93,891,141,008. With a larger certificate, built as a recipe of its own on October 24 (61 hours
+of Lean time), it gives 93,891,141,126 for n = 14. For n = 8 a fourth bound, Theorem D, gives 46,134 with three
+equations evaluated by `native_decide` (`proofs/lean/n8_46134/`).
+
+Pantone's announced table has 46,130, 408,468, 4,033,374, 43,917,903, 522,622,378 and 6,746,626,519 for n = 8 to
+13. His proof is not public, and I made mine without it. The README of that directory says how the bound arises
+and which part is whose.
 
 All these bounds exceed n! + (n - 1)! + (n - 2)! by a term of order (n - 4)!, while the words exceed it by
 about half of (n - 3)!. For n = 13 the two sides are about 1.18 million letters apart.
@@ -986,9 +992,9 @@ component at its seams of weight 4 or more; reductions that turn every component
 ring; one knapsack over tables for chains, sequences and rings. The transform is Hunter and Raudvere's and the
 chains are those of Xiaolong Liu's library, both used unchanged. Lebar's proof is not used.
 
-One run from an empty directory (Windows 11, Git Bash) with 8 threads: 3 h 21 min
-for `n7/build.sh full`, of which 2 h 52 min are the evaluations (20.2 thread-hours of CPU time), after 67
-minutes for the two libraries and 25 minutes for `lower/build.sh`. The build was run on Windows only.
+`n7/build.sh full` took 3 h 21 min of wall time on 8 threads, in one run from an empty directory (Windows 11, Git
+Bash). Of that, 2 h 52 min are the evaluations (20.2 thread-hours of CPU time). Before it came 67 minutes for the
+two libraries and 25 minutes for `lower/build.sh`. The build was run on Windows only.
 
 Not covered: the 22 evaluations are not checked by the kernel; the written proof that the Lean files follow is
 not in the package; the node counts of the three largest searches were counted by a C program only; at n = 6 the
@@ -1021,12 +1027,12 @@ Three programs that share no code:
 All three passed on each of the words for n = 8 and 10 to 13. For n = 13 `literal_check` ran under Linux: 22
 minutes and about 13 GB. The word for n = 14 was checked by two streaming checkers (part three).
 
-Since October 21 every word goes through `prepub`, a script of my working directory, before it is published:
-the three checkers, then `tools/trailsearch.c` from the word's plan with six settings and the fixed-order pass.
-The word is published only if no tool shortens it. That rule came from Theo H.'s 46,173 (part four).
+Since October 21 every word goes through `prepub`, a script of my working directory, before it is published: the
+three checkers, then `tools/trailsearch.c` from the word's plan with six settings, and the fixed-order pass. The
+word is published only if no tool shortens it. That rule came from Theo H.'s 46,173 (part four).
 
 The selections were checked before any word existed: every loop has at most one row, the selection is balanced,
 and the closed trails are found in two ways that must agree (at n = 13 in one way only, for memory). The program
-that does this for the four words of part two, `reproduce/tools/geng.py`, was written from the description of the rules alone
-and shares no code with the programs that searched for the selections. A second checker, `selection/check12.py`,
-counts loops, rows, Q and closed trails of each whole selection and agrees.
+that does this for the four words of part two, `reproduce/tools/geng.py`, was written from the description of the
+rules alone and shares no code with the programs that searched for the selections. A second checker,
+`selection/check12.py`, counts loops, rows, Q and closed trails of each whole selection and agrees.

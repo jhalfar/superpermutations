@@ -10,8 +10,8 @@ ones I know, says which of them are the same word written differently, and measu
 | 9 | 408,731 | 1 | rumstd |
 | 10 | 4,034,855 | 2 | this repository 1, Theo H. 1 |
 
-For n = 8 the table is about the record length of early October, 46,181. Shorter words have been found since:
-my 46,174 with seven ties ([`../words/n8/`](../words/n8/README.md)) and Theo H.'s 46,173. They are not in this
+For n = 8 the table is about 46,181, the record length of early October. Shorter words have been found since: my
+46,174 with seven ties ([`../words/n8/`](../words/n8/README.md)) and Theo H.'s 46,173. They are not in this
 directory.
 
 Two words count as the same if one becomes the other after renaming the symbols, reversing the word or both. I
@@ -41,7 +41,7 @@ permutations in that order, and its weight is the number of letters the second o
 symbols differ in d steps if d steps of one are not steps of the other. `neighbours.c` tries every renaming and both
 directions and reports the smallest d.
 
-`classes.tsv` also gives, for each class, the number of steps of each weight, the lengths of the runs of weight-1
+For each class `classes.tsv` also gives the number of steps of each weight, the lengths of the runs of weight-1
 steps and the number of windows that repeat a permutation.
 
 ## n = 7: 98 words in 8 groups
@@ -83,10 +83,10 @@ The last permutation of Jay Pantone's word of 46,181 letters is joined to the fi
 path is closed, and cutting it at any of its 815 steps of weight 3 gives another word of the same length. These 816
 words are 408 classes, each met twice.
 
-Theo H. published 25 further classes on 8 October 2026. Of these, 23 are rotations of Pantone's closed path. His
+Theo H. published 25 further classes on 8 October 2026. 23 of them are rotations of Pantone's closed path. His
 word 26 is another closed path, with 813 steps of weight 3 where Pantone's has 815, and its rotations are 814
-classes. His word 16 differs from Pantone's word in 3 steps and is not a rotation of it, and its own rotations are
-the 408 classes again. That makes 408 + 814 + 1 = 1,223 classes of 46,181 letters. `rotations-8-46181.tsv` lists
+classes. His word 16 differs from Pantone's word in 3 steps and is not a rotation of it; its own rotations are the
+408 classes again. That makes 408 + 814 + 1 = 1,223 classes of 46,181 letters. `rotations-8-46181.tsv` lists
 them, and `rotations.py` writes them out from the three published words.
 
 The words for n = 9 and n = 10 do not close: the closing step costs 8 and 10 letters, more than any step in them.
@@ -94,7 +94,7 @@ The words for n = 9 and n = 10 do not close: the closing step costs 8 and 10 let
 ## n = 9 and n = 10
 
 For n = 9 there is one class, rumstd's word of 2 October 2026. The corpus of Theo H. holds it twice with the symbols
-1 to 9. One of the two files has my name in its file name. It is rumstd's word.
+1 to 9. One of the two files has my name in its file name, but it is rumstd's word.
 
 For n = 10 there are two classes. Theo's second word of 4,034,855 letters is the word of this repository with three
 steps exchanged: steps of weight 3, 3 and 5 are replaced by steps of weight 3, 4 and 4. `cmp10.py` shows it.
@@ -110,4 +110,4 @@ python rotations.py 8 WORD.txt --classes            # closing step, equal cuts a
 python cmp10.py A.txt B.txt                         # the steps in which two words on 10 symbols differ
 ```
 
-`neighbours` needed 21 minutes on 4 threads for the 4,753 pairs on 7 symbols.
+`neighbours` took 21 minutes on 4 threads for the 4,753 pairs on 7 symbols.

@@ -17,7 +17,7 @@ The construction is Pantone's. The change from `../constant/` is one choice insi
 * So the cycles on 13 symbols number 7,731 where `../constant/` has 7,875, and the cost of the cycles drops from
   25/1152 to 859/40320 of (n-3)!/(n-3).
 
-Every proof is checked by the Lean kernel. There is no `native_decide` and no `sorry`. The theorems below depend on
+The Lean kernel checks every proof. There is no `native_decide` and no `sorry`. The theorems below depend on
 the axioms `propext`, `Classical.choice` and `Quot.sound` only.
 
 ## The theorems

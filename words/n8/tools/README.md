@@ -1,9 +1,8 @@
 # Tools for n = 8
 
-One program, [`n8.py`](n8.py), with commands. It needs Python 3 with numpy and scipy, and nothing else: the integer
-programmes run on HiGHS, which comes with scipy. The program uses Gurobi or OR-Tools when they are installed and
-you ask for them.
-Run the commands from the top of the repository.
+One program, [`n8.py`](n8.py), with commands. It needs Python 3 with numpy and scipy and nothing else, because the
+integer programmes run on HiGHS, which comes with scipy. It uses Gurobi or OR-Tools when they are installed and you
+ask for them. Run the commands from the top of the repository.
 
 ```sh
 # the 46,174 word from its selection: about 3 seconds
@@ -63,7 +62,7 @@ of trails minus 1. The program knows two models for the order of the slices.
 
 In both models the parts of a solution that are not joined to the start of the word are cut away in a loop: solve,
 add a cut for each such part, solve again. Every programme of the loop leaves out some cuts, so its optimum is a
-lower bound on J. When J equals the bound, no word of that model is shorter. That is all the program proves: a word
+lower bound on J. When J equals the bound, no word of that model is shorter. That is all the program proves. A word
 of another form can be shorter, and for this selection one is ([below](#trails-opened-inside-a-slice)). The two
 models overlap: a word of whole slices in which every trail is one run lies in both.
 
@@ -126,10 +125,10 @@ python3 words/n8/tools/n8.py check w46173.txt
 ```
 
 `price --min-weight 2` makes the openings variables of the programme: 5,040 openings instead of 784 for this
-selection. Both words above write every trail in one run and open it at a step of weight 3 or 2 inside a slice or
-between two (I checked their plans), so they are words of this model. With Gurobi the loop reached the lower bound J
-24 after about 15 minutes and kept it until its time limit of 50 minutes, without writing a word that short itself.
-Together: if every trail is written in one run and opened at a step of weight 2 or 3, no word of this selection is
+selection. Both words above write every trail in one run and open it at a step of weight 3 or 2, inside a slice or
+between two (I checked their plans), so they are words of this model. With Gurobi the loop reached the lower bound
+J 24 after about 15 minutes and kept it until its time limit of 50 minutes, without writing a word that short
+itself. So if every trail is written in one run and opened at a step of weight 2 or 3, no word of this selection is
 shorter than 46,173. I did not run this programme with HiGHS.
 
 ## Pricing another selection
@@ -179,9 +178,9 @@ of whole slices (one word in [`../ties/`](../ties/) is of this kind).
    shorter than `--save-below` (default 46,178) is checked and written to the output directory with its selection.
 
 `search --start SELECTION ...` skips steps 1 and 2. The packing itself gives 46,174 letters, so the search reaches
-it within a minute; the tempering then looks for shorter words near it. My run of the command at the top of this page
-(`--time 1800 --seed 1`, HiGHS) made 173 moves in each of its 3 chains and 227 pricings. It found no word shorter
-than 46,174 and wrote two words of 46,177.
+it within a minute, and the tempering then looks for shorter words near it. My run of the command at the top of
+this page (`--time 1800 --seed 1`, HiGHS) made 173 moves in each of its 3 chains and 227 pricings. It found no word
+shorter than 46,174 and wrote two words of 46,177.
 
 ## Solvers
 
@@ -194,8 +193,8 @@ programmes fits. Every backend is asked to solve to a gap of zero.
 
 ## Run times
 
-One thread, Ryzen 9 5950X under Windows, Python 3.14, scipy 1.18.1, Gurobi 14.0, OR-Tools 9.15, while other jobs
-ran on the machine.
+Wall time on one thread under Windows, with Python 3.14, scipy 1.18.1, Gurobi 14.0 and OR-Tools 9.15, while other
+jobs ran.
 
 | command | HiGHS | Gurobi |
 |---|---|---|

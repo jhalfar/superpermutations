@@ -1,8 +1,8 @@
 # Plans of earlier words
 
-Earlier words, kept as plans. A plan is a short text file that says how to
-write a word from the trails of a base word, so the published tool rebuilds each word in seconds (n=11), about a
-minute (n=12) or about ten minutes and 11 GB of RAM (n=13, with `--threads 1`):
+Earlier words, kept as plans. A plan is a short text file that says how to write a word from the trails of a base
+word. The published tool rebuilds each word in seconds (n=11), about a minute (n=12) or about ten minutes and 11 GB
+of RAM (n=13, with `--threads 1`):
 
 ```sh
 cc -O2 -fopenmp -o trailsearch tools/trailsearch.c -lm
@@ -10,7 +10,7 @@ cc -O2 -fopenmp -o trailsearch tools/trailsearch.c -lm
 sha256sum rebuilt.txt
 ```
 
-Every plan here was rebuilt this way and the word checked with `tools/delcheck.c`: all permutations present, no
+I rebuilt every plan here this way and checked the word with `tools/delcheck.c`: all permutations present, no
 single letter can be deleted. The SHA-256 is that of the rebuilt word (one line plus LF).
 
 | n | length | base word | plan | how it was reached | SHA-256 of the word |
@@ -52,10 +52,10 @@ single letter can be deleted. The SHA-256 is that of the rebuilt word (one line 
 `base-12-rebased.txt.xz` (522,993,734 letters, SHA-256 `f973097e4b81803208b4e34376ac16187e9f996edd4b9c516f80c1457cd6b4c2`)
 is not a short word. It holds the trails of Pantone's 522,745,581 word written one after another, except that two
 trails which my 522,745,530 word joins tightly (overlap of n-2 letters, after openings inside a 1-cycle) are
-written as one open piece. The search tool never moves an open piece, so plans relative to this word (`-rb`) can
-be searched from safely. The same words written as plans on Pantone's word need trimmed segments there; they
-rebuild correctly but are not safe starting points for the search.
+written as one open piece. The search tool never moves an open piece, so a search can safely start from plans on
+this word (`-rb`). The same words written as plans on Pantone's word need trimmed segments there. They rebuild
+correctly but are not safe starting points for the search.
 
 The second n=12 line (plans on Pantone's word, 522,745,516 to 522,745,474) and the second n=11 line (plans on
-Pantone's 43,930,680 word) are independent of the lines that led to my last words on his closed trails, in case someone wants a
-different starting point.
+Pantone's 43,930,680 word) are independent of the lines that led to my last words on his closed trails. They are
+here for anyone who wants a different starting point.

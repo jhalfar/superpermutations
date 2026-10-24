@@ -27,7 +27,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 * `.gitattributes` (344 B): keeps LF line ends in text files, so that the hashes hold on every system
 * `MANIFEST.md`: this list
-* `README.md` (29.9 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
+* `README.md` (31.4 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
 * `SHA256SUMS`: SHA-256 of every other file of this directory
 * `lean-toolchain` (25 B): the Lean version, `leanprover/lean4:v4.31.0`
 
@@ -49,7 +49,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 ## constant/
 
 * `constant/Audit1771.lean` (3.2 KB): the results restated with the definitions of `Challenge.lean` only
-* `constant/README.md` (15.9 KB): the theorems, the selection, the files, the patch, how to build
+* `constant/README.md` (15.8 KB): the theorems, the selection, the files, the patch, how to build
 * `constant/SuperpermutationUpperBound1771/AllSizes.lean` (9.1 KB): the level on k + 12 symbols for every k;
   `Cert.word_ledger`
 * `constant/SuperpermutationUpperBound1771/Certificate/Big00.lean` (3.5 KB): generated: cycle pointers for eight of
@@ -154,7 +154,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 ## constant305989/
 
-* `constant305989/README.md` (7.8 KB): the block step, the theorems, the files, how to build, the axiom audit
+* `constant305989/README.md` (7.7 KB): the block step, the theorems, the files, how to build, the axiom audit
 * `constant305989/SuperpermutationUpperBound305989/AllSizes.lean` (9.1 KB): the level on k + 12 symbols for every k;
   `Cert.word_ledger`
 * `constant305989/SuperpermutationUpperBound305989/AllSizesB.lean` (8.3 KB): the level on k + 16 symbols for every k;
@@ -1117,7 +1117,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 * `n8/.gitattributes` (127 B): keeps LF line ends in `NOTICE.echols`
 * `n8/NOTICE.echols` (3.5 KB): the `NOTICE` file of Echols's repository, unchanged
-* `n8/README.md` (10.1 KB): the three variants, what replaces `native_decide`, licences, how to build
+* `n8/README.md` (10.0 KB): the three variants, what replaces `native_decide`, licences, how to build
 * `n8/build.sh` (7.1 KB): puts each variant together from Echols's checkout, builds it, checks the axioms
 * `n8/echols-sources.sha256` (3.3 KB): SHA-256 of the 36 Lean files of Echols's repository at commit 893ab2d
 * `n8/kernel/Superperm8/KCode.lean` (29.2 KB): new: codes of permutations, rotation classes and insertion blocks as
@@ -1380,7 +1380,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 ## words12/
 
 * `words12/Audit12.lean` (1.8 KB): the statements for n = 12 written out with no definition of this project
-* `words12/README.md` (8.9 KB): the statements for n = 12, what differs from n = 11, how to build
+* `words12/README.md` (8.8 KB): the statements for n = 12, what differs from n = 11, how to build
 * `words12/Superperm/TwoSided12.lean` (1.1 KB): lower and upper bound in one statement for n = 12, with Liu's lower
   bound
 * `words12/Superperm/TwoSidedAB12.lean` (2.1 KB): the same with the lower bounds of Theorems A and B

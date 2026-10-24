@@ -5,7 +5,7 @@
 
 ## 0. Statement
 
-**Theorem.** For every rational ε > 0 there is N such that for every n ≥ N there is a word on n symbols that
+Theorem. For every rational ε > 0 there is N such that for every n ≥ N there is a word on n symbols that
 contains every permutation of the n symbols as a factor and has length at most
 n! + (n-1)! + (n-2)! + ε (n-3)!.
 
@@ -16,8 +16,8 @@ admissible t and K). It is proved in Lean as `coefficient_tends_to_zero` (sectio
 
 The construction is the nested block method of `the no-seed construction` (Pantone's transport, completion and cycles;
 the Lean `Stage` of `constant43586371`) with the simplest block family that still works: no seed, and above
-every loop without a row on m old letters (m odd) **one** caterpillar walk W(m) of m(m+12) rows, its trails met
-by **one** cycle; at even m the empty block.
+every loop without a row on m old letters (m odd) one caterpillar walk W(m) of m(m+12) rows, its trails met
+by one cycle; at even m the empty block.
 
 ## 1. Framework (as in constant43586371, unchanged)
 
@@ -31,7 +31,7 @@ a row; every loop of `above3T t1 t2 t3 d0` (the L = m(m+1)(m+2) loops with old l
 a row base or a loop without a row (up to rotation); the walk, written h/g times, transported from g start ports
 lists every transported row once; cycles (length h = m+2, no repeated letter, letters in 10 :: alphabet) that meet
 the completion of every walk from every port. `Stage.advance` and `Stage.close` (Lean, constant43586371) do the rest.
-Exactness needed for `Closed.word` (R = h! rows at the top): **rows + loops without a row = L in every block**,
+Exactness needed for `Closed.word` (R = h! rows at the top): rows + loops without a row = L in every block,
 which needs the loops of the walk to be pairwise distinct.
 
 ## 2. The walk W(m), m odd, m ≥ 5

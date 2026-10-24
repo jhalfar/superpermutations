@@ -34,7 +34,8 @@ the remainder L(n) - F3(n) is of the order (n-4)!:
 
 ```lean
 theorem remainder_order (n : Nat) (hn : 2 ^ 14 <= n) :
-    ((n - 4).factorial : Rat) - 2 * ((n - 5).factorial : Rat) <= (L n : Rat) - F3 n /    (L n : Rat) - F3 n <= 9 * ((n - 4).factorial : Rat)
+    ((n - 4).factorial : Rat) - 2 * ((n - 5).factorial : Rat) <= (L n : Rat) - F3 n /\
+    (L n : Rat) - F3 n <= 9 * ((n - 4).factorial : Rat)
 ```
 
 For n >= 2^14 the ratio (L(n) - F3(n)) / (n-4)! lies between 1/2 and 9 (`remainder_ratio_half`; `remainder_ratio`
@@ -48,7 +49,8 @@ the upper side from `UniR.rate_R8` of `../constant43586371/`, and proves
 
 ```lean
 theorem remainder_limit8 (eps : Rat) (heps : 0 < eps) : exists N : Nat, forall n : Nat, N <= n ->
-    2 - eps <= ((L n : Rat) - F3 n) / ((n - 4).factorial : Rat) /    ((L n : Rat) - F3 n) / ((n - 4).factorial : Rat) <= 8 + eps
+    2 - eps <= ((L n : Rat) - F3 n) / ((n - 4).factorial : Rat) /\
+    ((L n : Rat) - F3 n) / ((n - 4).factorial : Rat) <= 8 + eps
 ```
 
 so in Lean the limit inferior of (L(n) - F3(n)) / (n-4)! is at least 2 and the limit superior at most 8. The finite

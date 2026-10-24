@@ -99,9 +99,9 @@ listed at the top of the script and in `../tools/common.sh`.
 `../lower/build.sh` works in the same build directory. Without it `build.sh` here compiles what
 `TwoSidedAB12.lean` needs of `../lower` itself and leaves `TwoSidedC12.lean` out.
 
-Measured on my machine (Ryzen 9 5950X with 16 cores, 32 GB, Windows 11 with Git Bash), one thread per Lean
-process. The machine was shared with other jobs the whole time. `../words/check_word.sh` ran into an empty
-build directory, the first 50 modules with three Lean processes and the rest with ten. The statements were
+One thread per Lean process, with other jobs running beside the build the whole time.
+`../words/check_word.sh` ran into an empty build directory, the first 50 modules with three Lean processes and
+the rest with ten. The statements were
 compiled after that with one process, in a build directory that held this certificate and the other modules
 that the statements import.
 

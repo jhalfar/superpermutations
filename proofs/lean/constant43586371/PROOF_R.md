@@ -33,7 +33,7 @@ last one short):
 3 + (m + 2 - g) + 3 + (g + 4) = m + 12 rows per period, 4 short. For g = 1, s = 0 this is `PROOF.md`'s walk.
 It equals the earlier family's W(m, g, T, s) started one row later (checked for every walk of every block, m ≤ 100).
 
-**Lemma 1 (closed trail).** Inside a sweep as in `PROOF.md`. The last row rot(s, J-1) ++ [T] of a sweep is followed
+Lemma 1 (closed trail). Inside a sweep as in `PROOF.md`. The last row rot(s, J-1) ++ [T] of a sweep is followed
 by the first row of the next sweep (s', T') iff last(s') = T and take m s' = take m (rot(s, J-1)):
 w→u: rot(w, 1) = mid1 ++ [A] ++ q.dropLast ++ [C, q_last], take m = mid1 ++ [A] ++ q.dropLast = take m u;
 u→y: rot(u, m - g) = q.drop 1 ++ [B] ++ mid1 ++ [A, q0], take m = q.drop 1 ++ [B] ++ mid1 = take m y;
@@ -42,7 +42,7 @@ v→w': with O' = rot(O, 2) (offset o + 2): mid1' = mid1.drop 2 ++ q.take 2, q' 
 rot(v, g + 2) = mid1.drop 1 ++ [q0, q1, A] ++ q.drop 2 ++ [B, mid1_0]; take m of both is
 mid1.drop 1 ++ [q0, q1, A] ++ q.drop 2. After P periods O returns (2P ≡ 0 mod m).
 
-**Lemma 2.** Rows are permutations of t3 :: t2 :: t1 :: d0; P (m + 12) rows; charge 8P.
+Lemma 2. Rows are permutations of t3 :: t2 :: t1 :: d0; P (m + 12) rows; charge 8P.
 
 ## 2. C-normal forms
 

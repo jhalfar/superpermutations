@@ -6,7 +6,7 @@
     ∀ ε : ℚ, 0 < ε → ∃ N : ℕ, ∀ K : ℕ, N ≤ K → ∃ w : List (Fin K), SuperpermutationBounds.Covers w ∧
       (w.length : ℚ) ≤ SuperpermutationBounds.F3 K + ε * (Nat.factorial (K - 3) : ℚ)
 
-Everything I wrote is in `` (sources copied into `src/`, my own build in `build/lib`,
+Everything I wrote for this check is in one working folder of mine, not in this repository (sources copied into `src/`, my own build in `build/lib`,
 logs in `logs/`, scripts `closure.py`, `build_ref.py`, `run_one.sh`, `leanchecker_all.sh`, `ref_check.py`). Nothing
 outside that folder and this file was changed. Every Lean process ran with one thread, at idle priority, under
 `guard.py --gb 12`; at most two at a time.
@@ -15,11 +15,11 @@ outside that folder and this file was changed. Every Lean process ran with one t
 
 | check | verdict |
 |---|---|
-| 1. Statement | **pass** |
-| 2. Kernel replay | **pass**: leanchecker `--fresh` replays the whole import closure, Mathlib included, through the kernel without error; **comparator not runnable here** (no binary, no `lean4export`, `landrun` is Linux only); I ran its statement and axiom checks by hand |
-| 3. Clean build | **pass**: all 118 modules rebuilt from source, Pantone's included, only Mathlib precompiled; same audit |
-| 4. Paper proof | **pass**, with two small inaccuracies in the text (below); my own script confirms Lemmas 1 to 6 for every odd m = 5..41 |
-| 5. Sanity word | **not possible**: the smallest instance is far too large (below) |
+| 1. Statement | pass |
+| 2. Kernel replay | pass: leanchecker `--fresh` replays the whole import closure, Mathlib included, through the kernel without error; comparator not runnable here (no binary, no `lean4export`, `landrun` is Linux only); I ran its statement and axiom checks by hand |
+| 3. Clean build | pass: all 118 modules rebuilt from source, Pantone's included, only Mathlib precompiled; same audit |
+| 4. Paper proof | pass, with two small inaccuracies in the text (below); my own script confirms Lemmas 1 to 6 for every odd m = 5..41 |
+| 5. Sanity word | not possible: the smallest instance is far too large (below) |
 
 ## 1. Statement
 
@@ -34,7 +34,7 @@ outside that folder and this file was changed. Every Lean process ran with one t
   - The only constants in the whole environment named `*.Covers`, `*.F3` or containing `SuperpermutationBounds`
     are Challenge's ten declarations (plus the equation lemma `F3.eq_1`) and Pantone's own
     `SuperpermutationUpperBound.F3` (a different, ℕ-valued name). No shadowing.
-  - The theorem's type is **syntactically equal** (`Expr ==`) to the same statement typed by me at the root with
+  - The theorem's type is syntactically equal (`Expr ==`) to the same statement typed by me at the root with
     `_root_.` names, and to `ChallengeUniform.statement`, the statement elaborated in a separate file that imports
     nothing but `Challenge` (so no instance or coercion of the big development can have changed its meaning).
   - The constants occurring in the type are only core/Mathlib basics (`Rat`, `Rat.instLT`, `Rat.instLE`,
@@ -47,7 +47,7 @@ outside that folder and this file was changed. Every Lean process ran with one t
 
 ## 2. Kernel replay
 
-* **comparator** (`external/repos2026/jlebar_superperm7-ge-5898/comparator/README.md`): Lean FRO's tool builds a
+* comparator (`external/repos2026/jlebar_superperm7-ge-5898/comparator/README.md`): Lean FRO's tool builds a
   trusted Challenge module and the untrusted Solution in a sandbox, exports both with `lean4export`, checks that each
   named theorem and every constant its statement mentions are identical in the two, checks that the axioms are in a
   permitted list, and replays the Solution's proofs in the Lean kernel (optionally also in `nanoda`). It needs the
@@ -56,9 +56,9 @@ outside that folder and this file was changed. Every Lean process ran with one t
   statement identity (section 1: `Expr ==` against a statement elaborated from `Challenge` alone, and every constant
   of the statement resolved to `Challenge` or core/Mathlib) and the axiom list (`[propext, Classical.choice,
   Quot.sound]`, the three standard ones).
-* **leanchecker** (`leanchecker.exe` of toolchain v4.31.0, the successor of `lean4checker`, built into Lean): it
+* leanchecker (`leanchecker.exe` of toolchain v4.31.0, the successor of `lean4checker`, built into Lean): it
   loads a module's imports and re-adds each of the module's own declarations to a fresh kernel environment
-  (`Environment.replay`). With `--fresh` it does this for the module and **all** its imports from scratch, Mathlib
+  (`Environment.replay`). With `--fresh` it does this for the module and all its imports from scratch, Mathlib
   included, so no declaration is trusted from an `.olean`.
   - Per module, on all 118 modules of the closure and `ChallengeUniform`: 119/119 exit 0, 01:03:38 to 01:27:46
     (`referee/leanchecker_all.log`).
@@ -81,7 +81,7 @@ outside that folder and this file was changed. Every Lean process ran with one t
   (`SuperpermutationUpperBound.*`), 23 ours (13 base modules of constant43586371 and the 10 `Uniform/*` files that Main needs)
   and `Challenge`.
 * Sources copied into `referee/src/` (hashes in `copies.txt`): Pantone's 93 unchanged files and `Challenge.lean`
-  **straight from the upstream clone** (all 94 also equal the copies in `pantone`); the one patched file
+  straight from the upstream clone (all 94 also equal the copies in `pantone`); the one patched file
   `Assembly/SupportedStates.lean` from `patches` (the diff only replaces the import of
   `Partition.SprintFamily`, which pulls in the n = 9 certificate needing more than 13.6 GB, by
   `Foundation.SupportedWords`, and deletes the 30-line section `stateAlphabet`; deleting definitions cannot make
@@ -125,7 +125,7 @@ decay (L - N)/L ≤ a/(a+1) is L ≤ N (a+1), i.e. (a+1)(a+2) ≤ (a+12)(a+1), a
 the port sum is -m(m+8) + 4m = 4 - (m+2)^2 ≡ 4 (mod m+2), invertible since m+2 is odd; the final constants match
 Lean (r > 4/(δ/2), M > 1024 r^4/(δ/2), N = (a+1) + 22 + 8r + M).
 
-**My own numeric check** (`ref_check.py`, written from PROOF.md and Pantone's definitions of `Row.head`,
+My own numeric check (`ref_check.py`, written from PROOF.md and Pantone's definitions of `Row.head`,
 `Row.tail`, `portPath`, `portTarget`, `liftRow`, `repairRow`, `fullAt`, `completionWalk`, `SafeIncidence`,
 before I opened `check_uniform.py`): for every odd m = 5..41, with the old letters avoiding 9 and 10, plus random
 relabellings (two for m ≤ 15, one for m ≥ 17): W(m) has m(m+12) rows of length m+3 on the right alphabet, charge 8m

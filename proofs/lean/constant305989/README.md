@@ -23,7 +23,7 @@ transported up but from one block, solved once on 14 symbols and carried to ever
   winding divisible by the number of ports, rows over the alphabet, and that every 2-loop has some row. The checks
   on the canonical block (`BlockOK`) and a relabelling lemma (`Relabel.lean`) give the block above every loop.
 
-Every proof is checked by the Lean kernel. There is no `native_decide` and no `sorry`. The theorems below depend on
+The Lean kernel checks every proof. There is no `native_decide` and no `sorry`. The theorems below depend on
 the axioms `propext`, `Classical.choice` and `Quot.sound` only.
 
 ## The theorems

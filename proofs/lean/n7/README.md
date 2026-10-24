@@ -10,7 +10,7 @@ The proof has two levels, and they do not rest on the same things.
   it proves each finite statement from an equation that says "this search returns `false`". The search is a
   function defined in Lean, and the proof that its answer means what is claimed is part of level 1.
 * Level 2 evaluates the searches. They visit 1.10 * 10^11 nodes, which is out of reach for the kernel, so
-  they are run as compiled code by `native_decide`. This is the one place in this package where compiled
+  they are run as compiled code by `native_decide`. This is the one place in this proof where compiled
   code is trusted. The final theorem depends on the three axioms above and on 22 more, one for each
   evaluated equation, and `#print axioms` names them.
 
@@ -213,8 +213,8 @@ them tables lowered by one, where the search has to return `true`.
 ## The files
 
 * `LowerBounds/`: 56 Lean files, described one by one in `../MANIFEST.md`. `N*`, `J*`, `D*` are the model;
-  `P*` without `Native` in the name are level 1 and the tests; the 17 files `P*Native.lean` except
-  `PTestNative` are the evaluations, and `PFinalNative.lean` is the theorem of level 2.
+  `P*` without `Native` in the name are level 1 and the tests. Of the 19 files `P*Native.lean`, 17 are the
+  evaluations, `PTestNative.lean` is a test and `PFinalNative.lean` is the theorem of level 2.
   The final theorem also imports 17 files of `../lower/LowerBounds` and the bridge of `../words`.
 * `Audit5899.lean`, `Audit5899Search.lean`, `Audit5899Native.lean`, `AuditN.lean`: the statements written out.
 * `evaluations.txt`: the evaluation modules with their level and their equations.
@@ -266,10 +266,10 @@ it. The library is not the same file from build to build.
 
 ## What it costs
 
-Measured on my machine (Ryzen 9 5950X with 16 cores, 32 GB, Windows 11 with Git Bash) on 7 October 2026, in
-one run into an empty build directory: `../words/build.sh lower`, then `../lower/build.sh`, then
-`JOBS=8 MINFREE_GB=6 MINFREE_BIG_GB=12 ./build.sh full`, with one Lean process at a time outside the
-evaluations. In four samples taken during the run, other jobs kept 9 to 16 of the 32 threads busy.
+Measured on 7 October 2026, in one run into an empty build directory: `../words/build.sh lower`, then
+`../lower/build.sh`, then `JOBS=8 MINFREE_GB=6 MINFREE_BIG_GB=12 ./build.sh full`, with one Lean process at a
+time outside the evaluations. In four samples taken during the run, other jobs kept 9 to 16 of 32 hardware
+threads busy.
 
 | step of `build.sh full` | modules | Lean time | by the clock | largest working set |
 |---|---|---|---|---|

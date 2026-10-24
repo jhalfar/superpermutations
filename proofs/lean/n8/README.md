@@ -138,8 +138,7 @@ with `files.sha256`; then it fills in the notices, runs `plan.py` and compares t
 fails if any `#print axioms` line of the variant names an axiom other than the three. A second run compiles
 only what has changed.
 
-Measured on my machine (Ryzen 9 5950X, 32 GB, Windows 11 with Git Bash; one thread per Lean process, other
-work running beside it), each variant from an empty directory:
+Each variant from an empty directory, with one thread per Lean process and other work running beside it:
 
 | variant | modules | sum of Lean process time | of which the parts of the search | largest working set |
 |---|---|---|---|---|
