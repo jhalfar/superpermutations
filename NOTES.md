@@ -3,18 +3,20 @@
 The front page is [`README.md`](README.md). This file is the full account, in the order in which things happened:
 what each step did to each n, what it cost and which tool does it.
 
-It has two parts. Part one keeps the closed trails of Jay Pantone's words and changes where each one is cut and the
+Parts one and two were the work of October 2 to 7. Part one keeps the closed trails of Jay Pantone's words and changes where each one is cut and the
 order of the pieces. That took four days and gave 66 letters at n = 11, 231 at n = 12 and 1,409 at n = 13 below his
 words. Part two changes the closed trails themselves, by other selections inside his construction. That took one
 day and gave 36 more letters at n = 11, 8,175 at n = 12 and 114,264 at n = 13, and at n = 10 a word of
 4,034,855 letters, 18 below rumstd's. Part one is how I got to part two: every pass that polishes the new words
-was written for the old ones.
+was written for the old ones. Part three (October 17 to 20) takes two moves from William Echols and Theo H. and
+gives the words for n = 12, 13 and 14; part four (October 20 and 21) is the word for n = 8.
 
-After the two parts come the things I tried that gave nothing, with the numbers, so that nobody has to try them
+After the four parts come the things I tried that gave nothing, with the numbers, so that nobody has to try them
 again, then what is known about how much is left and how the words were checked.
 
-The tools are in [`tools/`](tools/README.md). The machine was one desktop: a Ryzen 9 5950X with 16 cores, 32 GB of
-RAM and an RTX 5090. Everything here happened between October 2 and October 7, 2026.
+The tools are in [`tools/`](tools/README.md). Everything ran on one desktop computer. Times are wall-clock times
+with the number of threads where it matters; the passes "on the card" need a CUDA card (the one I used has
+32 GB). Memory figures are those of the process on the computer unless they say "on the card".
 
 ## The model
 
@@ -302,7 +304,7 @@ Everything in part one rearranges the closed trails of Pantone's words. On Octob
 themselves. The words at n = 10, 11, 12 and 13 got shorter by more than everything in part one together, and
 n = 10 fell below rumstd's word for the first time. This part gives the steps in the order in which they were made.
 
-[`reproduce/REPRODUCE.md`](reproduce/REPRODUCE.md) rebuilds each of the four words from its selection, with a
+[`reproduce/REPRODUCE.md`](reproduce/REPRODUCE.md) rebuilds each of the four words of this part from its selection, with a
 generator and a checker that share no code with the tools of part one. [`selection/`](selection/README.md) holds the
 programs that found the selections and [`arrange/`](arrange/README.md) those that turn a set of closed trails into a
 first plan.
@@ -649,6 +651,105 @@ For n = 12 (selection E) and n = 13 (selection N) the first row is the first pla
 Pantone's pieces, and the other rows are the passes on it. At n = 10 and n = 11 the first plans are longer than the
 old records and the pieces pay off only after the passes, so only the total is given.
 
+# Part three: moves from the group (October 17 to 20)
+
+On October 17 William Echols posted a word of 522,737,174 letters for n = 12, one below my 522,737,175, and a word
+of 93,904,936,032 letters for n = 14 built from my selection C with Pantone's transport and completion. On
+October 18 Theo H. posted 522,737,173. Both words for n = 12 derive from my 175 word, and in the days after, each of
+us started from the others' words. This part says what the two moves are, how they gave the words
+of 522,736,969 and 6,747,802,319 letters, and how the word for n = 14 was made.
+
+## What the two moves are
+
+Echols's word is my 175 word with one change. Up to a renaming of the symbols, its first 28,009,612 and its last
+494,652,668 letters are mine; a middle stretch of 74,895 letters of mine is replaced by one of 74,894. The same
+68,631 permutations occur in both stretches. In the terms of this repository four consecutive closed trails are
+opened at other places, and nine permutations that my word writes inside the stretch are covered at the new
+joins instead. Dynamic programming over the openings of a stretch of consecutive trails, with the order fixed,
+turns my 175 word into 174 by itself. The move uses permutations that occur by accident at a join, which none of
+my passes counted.
+
+Theo H.'s word moves his last closed trail to another place in the order and opens it again there (he calls it
+phase-placement coupling). On Echols's word the block move below finds the same step, and one more: 172.
+
+## The block move, and n = 12
+
+The block move takes a stretch of consecutive trails, chooses their openings again by exact dynamic programming
+(with the windows that are covered elsewhere dropped, and overlaps up to n - 1), and moves one to three trails
+anywhere in the order. I alternated it with the local kicks of part two and with the fixed-order pass.
+
+* From Echols's 174 the local kicks alone reached 522,737,150 in 33 cycles of one thread. From my own 175 the
+  same program had found nothing in 25 cycles. His re-opening had put the word where moves of equal length find
+  gains again.
+* With the block move: 174, 172, and on to 522,737,091 on October 18 at noon, then 522,737,061, where it stopped.
+  Kicks of cost 2 repaired with four cuts went on: 056 and on to 522,736,969 the same evening, 206 letters
+  below my 175 and 204 below Theo H.'s 173. All three checkers and a fourth streaming checker passed; the word has
+  177,443 repeated windows.
+
+## n = 13
+
+From my 6,747,802,393 word the block move (two relocations) gave 388 and the local kicks 377, then 364. Segment
+insertion on the card took it on:
+
+| pass | from | to | notes |
+|---|---:|---:|---|
+| four cuts | 6,747,802,364 | 6,747,802,341 | several passes, 348 and 343 on the way |
+| five cuts | 6,747,802,341 | 6,747,802,332 | round 1; the pass then needed more than 43 GB and stopped |
+| four cuts | 6,747,802,332 | 6,747,802,328 | three passes, about 2 hours and 18 GB each; then nothing |
+| five cuts, bounded memory | 6,747,802,328 | 6,747,802,324 | 19.4 GB, where the old program failed at 56.9 GB |
+| five cuts, bounded memory | 6,747,802,324 | 6,747,802,319 | October 20, the published word |
+
+Five cuts from 328 first failed at 56.9 GB, before a single candidate was judged: one first cut had sent 4.5
+billion moves into the buffer of its thread. The version that hands the moves of a thread to the shared store in
+the middle of a start gives the same words and plans as the old one at n = 12, and at n = 13 it ran in 19.4 GB.
+
+The block move, the events file of the local kicks and the bounded-memory version of the card program are not in
+the repository yet. The plans are, and they rebuild with `tools/trailsearch.c` (see the README).
+
+## n = 14
+
+A word on 14 symbols has about 94 billion letters, so it is written by a generator and never stored. `gen14.c`
+builds the walks of selection C, transports them twice and writes the completion; with the option `echols` it
+writes Echols's word byte for byte. My word takes the order of the units from my n = 13 plan on C, lifted one
+level, with every opening chosen exactly: 93,904,807,731 letters. Moves of whole units and of groups, with the
+openings chosen again after each, took it to 93,904,804,956 and then 93,904,804,425 on October 18. The unit
+model has a floor of about 93,904,786,500, so at most about 18,000 letters are left in it.
+
+The word was streamed into two checkers, `recipes/n14/vfast.c` (one thread) and a streaming checker of mine with
+three threads (14 minutes): all 87,178,291,200 permutations occur, with 19,588,800 repeated windows. On October 20
+Echols posted 93,904,804,516 on the same selection, with the openings and joins of the groups optimised; mine is
+91 letters shorter. The recipe is in [`recipes/n14/`](recipes/n14/README.md).
+
+# Part four: n = 8 (October 20 and 21)
+
+At n = 8 Pantone's construction is not a theorem, but its completion step works as a recipe: the 120 cyclic
+orders of 012345 are the loops, each loop gets a row of some length or none, and the rows form closed walks. The
+length of the word is 46,085 + Q + J, Q the cost of the rows and J the cost of the joins. Echols posted a word of
+46,178 letters on October 20, found with rows of every length as my selection tools allow: 46,085 + 92 + 1.
+
+* A set partition over the closed walk types with the fewest letters per loop packed the 120 loops with four
+  copies of one walk of 27 loops (row lengths `266646664666466466646664666`, Q = 16, one closed trail). The
+  packing has Q = 64 and 16 trails.
+* My join programs of that time allowed only joins of overlap 3 or more, and priced the packing at 46,182. The
+  search went on from it with parallel tempering and found other selections of 46,178 letters. When I allowed
+  joins of every overlap, the packing itself gave 46,174: 46,085 + 64 + 25, the order [6 single loops] W W
+  [6 single loops] W W. Nine words of 46,174 letters came out, all of one selection; eight of them are different
+  up to renaming and reversal and are in `words/n8/` (the word and seven ties).
+* The next day Theo H. ran `tools/trailsearch.c` of this repository, unchanged, on the same selection, with the
+  base word of `reproduce/tools/geng.py`, for 60 seconds (`--kmax 12 --T0 0.7`); the first gain came after about a
+  second. His word of 46,173 letters opens three trails at steps of weight 2 instead of 3: the openings cost 3
+  letters more and the joins 4 less. My integer programme had kept the openings as my join program chose them.
+  Since then every word goes through all of my tools before it is published.
+
+What did not give a shorter word at n = 8: LKH-3 and tour merging over the union of known words (every merge
+returns its best input); a C program with Theo H.'s moves (it takes every 46,174 word to 46,173 in 3 to 8 seconds
+and never lower; the words of 46,173 fall into 4 classes); in 115 regions of 50 to 70 loops around the packing,
+no change of the rows inside one region with the openings fixed.
+
+In Lean (`proofs/lean/`): the word of 46,174 and its ties are checked by the kernel (`words/`), the two facts
+about the 27-walk and the packing are proved (`n8struct/`), and the lower bound for n = 8 is 46,133 with the
+kernel alone and 46,134 with three equations evaluated by compiled code (`n8_46134/`).
+
 # What gave nothing
 
 Each item says what was tried and the numbers that show the result.
@@ -844,6 +945,11 @@ rows only and transports to every n, so it has a constant of its own. What I can
 
 X, E and N have rows that do not transport. They say nothing about the constant.
 
+Since October 19 smaller coefficients are Lean theorems too, down to 11117297/27675648 = 0.4017 for n >= 22,
+and the coefficient tends to 0 (`proofs/lean/constant61937/`, `constant305989/`, `constant43586371/`). The
+steps are choosing connector cycles again one level up and putting a block of closed trails above the loops
+without a row. The README has the table.
+
 # Lower bounds
 
 The other side of the problem: how long a superpermutation has to be. `proofs/lean/lower/` proves three bounds
@@ -852,7 +958,9 @@ one Zach Hunter wrote in 2019, for which the note of GPT 5.6 Sol and Marin Kisic
 August 2026, and the one Cole Fritsch proposed in 2020. Pantone announced a Lean proof of nearly the same
 bound as Fritsch's in September 2026. The third starts from the second and replaces its fixed slope by one
 that a finite search justifies; the Lean kernel evaluates the search. For n = 8 to 14 it gives 46,133, 408,469,
-4,033,378, 43,917,903, 522,622,378, 6,746,626,957 and 93,891,141,008. Pantone's announced table has 46,130,
+4,033,378, 43,917,903, 522,622,378, 6,746,626,957 and 93,891,141,008, and with a larger certificate, built as a
+recipe of its own on October 24 (61 hours of Lean time), 93,891,141,126 for n = 14. For n = 8 a fourth bound,
+Theorem D, gives 46,134 with three equations evaluated by `native_decide` (`proofs/lean/n8_46134/`). Pantone's announced table has 46,130,
 408,468, 4,033,374, 43,917,903, 522,622,378 and 6,746,626,519 for n = 8 to 13; his proof is not public, and
 mine was made without it. The README of that directory says how the bound arises and which part is whose.
 
@@ -878,7 +986,7 @@ component at its seams of weight 4 or more; reductions that turn every component
 ring; one knapsack over tables for chains, sequences and rings. The transform is Hunter and Raudvere's and the
 chains are those of Xiaolong Liu's library, both used unchanged. Lebar's proof is not used.
 
-One run from an empty directory on my machine (Ryzen 9 5950X, Windows 11, Git Bash) with 8 threads: 3 h 21 min
+One run from an empty directory (Windows 11, Git Bash) with 8 threads: 3 h 21 min
 for `n7/build.sh full`, of which 2 h 52 min are the evaluations (20.2 thread-hours of CPU time), after 67
 minutes for the two libraries and 25 minutes for `lower/build.sh`. The build was run on Windows only.
 
@@ -890,7 +998,8 @@ same tables alone do not reach 872, so the method has no end-to-end check there.
 
 `ties/` collects the words of the shortest known length for n = 7, 8, 9 and 10 and sorts them into classes: two
 words are in one class if renaming the symbols, reversing the word or both turns one into the other. There are
-98 classes of 5,905 letters, 26 published classes of 46,181, one of 408,731 and two of 4,034,855.
+98 classes of 5,905 letters, 26 published classes of 46,181, one of 408,731 and two of 4,034,855. For n = 8
+this was the record length on October 9; the shorter words of part four are not in `ties/`.
 
 For n = 7, 12 classes are Andrei Teodorescu's (two words of 18 August 2026 and ten variants of 24 August), one
 is Theo H.'s and 85 are new here. They come from a search that replaces the first or the last chain of the
@@ -909,11 +1018,15 @@ Three programs that share no code:
 2. `tools/delcheck.c`: every permutation occurs and no single letter can be deleted.
 3. Pantone's `literal_check --deletions`: the same two statements.
 
-All three passed on each of the four words. For n = 13 `literal_check` ran under Linux: 22 minutes and about
-13 GB.
+All three passed on each of the words for n = 8 and 10 to 13. For n = 13 `literal_check` ran under Linux: 22
+minutes and about 13 GB. The word for n = 14 was checked by two streaming checkers (part three).
+
+Since October 21 every word goes through `prepub`, a script of my working directory, before it is published:
+the three checkers, then `tools/trailsearch.c` from the word's plan with six settings and the fixed-order pass.
+The word is published only if no tool shortens it. That rule came from Theo H.'s 46,173 (part four).
 
 The selections were checked before any word existed: every loop has at most one row, the selection is balanced,
 and the closed trails are found in two ways that must agree (at n = 13 in one way only, for memory). The program
-that does this for the four words, `reproduce/tools/geng.py`, was written from the description of the rules alone
+that does this for the four words of part two, `reproduce/tools/geng.py`, was written from the description of the rules alone
 and shares no code with the programs that searched for the selections. A second checker, `selection/check12.py`,
 counts loops, rows, Q and closed trails of each whole selection and agrees.
