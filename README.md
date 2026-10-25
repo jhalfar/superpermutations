@@ -75,6 +75,7 @@ How the words were found, step by step, is in [`NOTES.md`](NOTES.md).
 | the coefficient tends to 0; L(n) - F3(n) lies between 2(n-4)! - 2(n-5)! and 41/5 (n-4)! for n >= 2^14 | kernel | [`constant43586371/`](proofs/lean/constant43586371/README.md), [`asym/`](proofs/lean/asym/README.md) |
 | my words of 46,174 (and its seven ties), 4,034,855, 43,930,578 and 522,737,175 letters are superpermutations | kernel | [`words/`](proofs/lean/words/README.md), [`words12/`](proofs/lean/words12/README.md) |
 | L(n) >= 46,133, 408,469, 4,033,378, 43,917,903, 522,622,378, 6,746,626,957, 93,891,141,126 for n = 8 to 14 (Theorem C) | kernel | [`lower/`](proofs/lean/lower/README.md) |
+| L(n) exact for n <= 6: 1, 3, 9, 33, 153, 872; L(6) = 872 kernel-only, as far as I know the first such proof | kernel | [`small/`](proofs/lean/small/README.md) |
 | L(8) >= 46,132 in William Echols's framework, without his `native_decide` | kernel | [`n8/`](proofs/lean/n8/README.md) |
 | L(8) >= 46,134 (Theorem D) | kernel and 3 equations by `native_decide` | [`n8_46134/`](proofs/lean/n8_46134/README.md) |
 | L(7) >= 5,899, one more than Justin Lebar's 5,898 | kernel and 22 equations by `native_decide` | [`n7/`](proofs/lean/n7/README.md) |

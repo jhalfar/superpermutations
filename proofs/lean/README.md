@@ -50,6 +50,13 @@ Lower bounds.
   checked by the kernel. Six of the thirty are evaluated by `native_decide` in `../n7_5901/lean/`; the others
   rest on search programs (`../n7_5901/README.md` has the trust table). So 5,901 is not a Lean theorem.
 
+Exact values.
+
+* `small/` proves that the shortest superpermutation on n symbols has 1, 3, 9, 33, 153 and 872 letters for
+  n = 1 to 6, each value as one theorem with both halves. Kernel only. For n = 6 the lower bound is a search
+  evaluated by the kernel in the model of `n7/`, and the upper bound is Robin Houston's word in the kernel-only
+  version of Benjamin Grayzel's check.
+
 Structure.
 
 * `n8struct/` proves two facts about the selection of my word of 46,174 letters for n = 8: the closed walk of
@@ -260,6 +267,22 @@ His repository is not copied: `n8/` holds diffs against it, three new Lean files
 clone his repository yourself. This part stops at 46,132. [`n8/README.md`](n8/README.md) says what replaces
 each `native_decide`.
 
+### S(1) to S(6) (`small/`, namespace `SmallSuperperm`)
+
+```lean
+theorem exact_six :
+    (exists w : List (Fin 6), Covers w /\ w.length = 872) /\ forall w : List (Fin 6), Covers w -> 872 <= w.length
+theorem grayzel_six : Superperm6.IsMinimumLength 872
+theorem ssuper_values :
+    Hunter.Ssuper 1 = 1 /\ Hunter.Ssuper 2 = 3 /\ Hunter.Ssuper 3 = 9 /\ Hunter.Ssuper 4 = 33 /\
+      Hunter.Ssuper 5 = 153 /\ Hunter.Ssuper 6 = 872
+```
+
+`exact_one` to `exact_five` have the same form as `exact_six`. `grayzel_six` is Grayzel's formulation of
+s(6) = 872. The lower bounds for n = 3 and 4 are those of the Hunter-Raudvere library, for n = 5 Theorem A, and
+for n = 6 a search of 2.4 million nodes in 73 parts. [`small/README.md`](small/README.md) says which route each n
+takes and how the proof at n = 6 goes.
+
 ### 5,899 for n = 7 (`n7/`, namespace `SuperpermLowerBounds`)
 
 ```lean
@@ -300,6 +323,10 @@ statement. Level 2 supplies the equations. `covers_lower_bound_7_native` depends
   `build.sh`, a README.
 * `n8struct/`: the nine Lean files about the selection of the word of 46,174 letters, a Python cross-check
   with its output, `build.sh`, a README.
+* `small/`: S(1) to S(6): the checker and the small cases (3 Lean files), the proof at n = 6 (94 Lean files,
+  72 of them parts of the search, and four generators), two files of Grayzel's superperm6 changed to be checked
+  by the kernel alone, with his data file, licence and notice, an audit file, a list of hashes, `build.sh`, a
+  README.
 * `n7/`: the proof of 5,899 (56 Lean files, of which 18 use `native_decide`), four audit files, the list of
   the evaluations, a list of hashes, `build.sh`, a README.
 * `tools/`: `common.sh` (settings and functions of the build scripts), `order.py` (build order from the
@@ -373,8 +400,8 @@ n8/build.sh
 n7/build.sh                # or: n7/build.sh full
 ```
 
-`asym/`, `n8_46134/` and `n8struct/` have a `build.sh` each with its own build directory; their READMEs say
-what each needs.
+`asym/`, `n8_46134/`, `n8struct/` and `small/` have a `build.sh` each with its own build directory; their
+READMEs say what each needs.
 
 The scripts have at most 340 lines each and call `lean` once per module; `tools/common.sh` (170 lines)
 holds what they share. `n7/build.sh` also calls `leanc` once. Environment variables control them:
@@ -402,8 +429,8 @@ it imports has changed.
 
 Before Lean starts, each script compares the sources it is about to compile with lists of hashes
 (`constant/pantone-sources.sha256`, `words/hunter-sources.sha256`, `words/preimage-sources.sha256`,
-`n8/echols-sources.sha256`, `n7/sources.sha256`), runs the generators, and compares what they write with
-the files or hashes in this directory.
+`n8/echols-sources.sha256`, `n7/sources.sha256`, `small/sources.sha256`), runs the generators, and
+compares what they write with the files or hashes in this directory.
 
 To check a word of your own there is one command, `words/check_word.sh WORDFILE`. It goes from a word file
 to the Lean theorem `HasWord n L` for that word without any file being edited, for words up to n = 12.
@@ -431,11 +458,14 @@ beside the builds. I ran all builds on Windows 11 under Git Bash.
 | `n7/build.sh`, level 1, the engine and its tests | 41 | 23 min | | 3.5 GB, two modules 5.8 and 7.5 GB |
 | `n7/build.sh full`, the 17 evaluations | 17 | 20.2 h of CPU time | 2 h 52 min, 8 threads | 0.3 GB |
 | `n7/build.sh full` in all | 60 | | 3 h 21 min | 7.5 GB |
+| `small/build.sh` | 305 | 2.2 h | 1 h 34 min, two processes | 32.9 GB committed in one part of the search, else at most 23.0 GB committed |
 
 Lean time is the sum over the Lean processes. Memory is the working set. A process that imports all of
 Mathlib (the two libraries, the bridge, the two-sided statements, and most modules of `lower/` outside the
 searches) commits 8 to 9 GB of virtual memory, and it is slow unless the Mathlib files stay in the file
-cache; `MINFREE_GB=6` waits for free memory before each start.
+cache; `MINFREE_GB=6` waits for free memory before each start. The row of `small/build.sh` gives CPU time and
+committed memory as the operating system recorded them for each process, from one run into an empty build
+directory with `JOBS=2`.
 
 The rows of `lower/` are from several runs into the build directory of `words/`. The rows of `n7/build.sh`
 are from one run, after `words/build.sh lower` and `lower/build.sh` into an empty build directory; its
@@ -444,11 +474,12 @@ three runs: `words/check_word.sh` into an empty build directory, with three proc
 modules and ten for the rest, and then the statements with one process.
 
 Disk: the compiled Mathlib 7.4 GB; `build/constant` 0.3 GB; `build/words` 0.5 GB after `words/build.sh`,
-0.5 GB more after `lower/build.sh full` and 2.1 GB more after `words12/build.sh`; `build/n8` 0.1 GB.
+0.5 GB more after `lower/build.sh full` and 2.1 GB more after `words12/build.sh`; `build/n8` 0.1 GB;
+`build/small` 0.2 GB.
 `n7/build.sh full` adds 38 MB to `build/words`.
 
-The README of each part has the times per group of modules, and the costs of `asym/`, `n8_46134/` and
-`n8struct/`.
+The README of each part has the times per group of modules, and the costs of `asym/`, `n8_46134/`,
+`n8struct/` and `small/`.
 
 ## What is trusted and what is not
 
@@ -458,7 +489,9 @@ The README of each part has the times per group of modules, and the costs of `as
   main results with those definitions written out, so that nothing else has to be read to know what is
   claimed. `lower/AuditA.lean`, `AuditB.lean`, `AuditC.lean`, `AuditCSmall.lean` and `AuditCFinal.lean` do
   the same for the lower bounds, `n7/Audit5899.lean`, `Audit5899Search.lean`, `Audit5899Native.lean` and
-  `AuditN.lean` for `n7/`, and `n8_46134/AuditD.lean` for `n8_46134/`. For `n8/` the statement is Echols's
+  `AuditN.lean` for `n7/`, `n8_46134/AuditD.lean` for `n8_46134/`, and `small/AuditSmall.lean` for `small/`.
+  `small/` also states s(6) = 872 with Benjamin Grayzel's definitions `IsSuperpermutation` and
+  `IsMinimumLength`, which are then trusted for that statement. For `n8/` the statement is Echols's
   `Challenge.lean`, and `Plain.lean` writes it out.
 * Not trusted: the generators, the certificate data, the tables. They are inputs to kernel checks, and a
   wrong entry makes a check fail.
@@ -492,7 +525,8 @@ The README of each part has the times per group of modules, and the costs of `as
 * The constant (`constant/`): nothing is proven for n <= 12, and no rate for the o(1) term.
 * The words: n = 13. The shortest word known for n = 13 has 6.7 billion letters and is out of reach for this
   method.
-* Nothing here says that any of the words is shortest.
+* Nothing here says that any of the words of `words/` and `words12/` is shortest. Shortest words are proven
+  for n <= 6 only (`small/`).
 * The lower bounds: Theorem B is not proven for k = 5 and 6, and Theorem C has certificates for k = 8 to 14
   only. Pantone's proofs are not here; they are not public.
 * n = 8 in Echols's framework beyond 46,132.

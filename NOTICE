@@ -58,6 +58,18 @@ preimage-chain library (https://github.com/Haruhiyuki/superpermutations-preimage
 Hunter-Raudvere library (https://github.com/urdvr/superpermutations-hunter); proofs/lean/asym uses the lower bound
 of the Hunter-Raudvere library. Both libraries are used unchanged and are not included here.
 
+proofs/lean/small proves the exact values for n = 1 to 6. Its lower bounds for n = 3 and 4 are pointwise_3 and
+pointwise_4 of the Hunter-Raudvere library, for n = 5 Theorem A of proofs/lean/lower, and for n = 6 a search in the
+model of proofs/lean/n7, which rests on Liu's library and the Hunter-Raudvere library. Its statements use Jay Pantone's Covers
+(Challenge.lean of https://github.com/jaypantone/superperm-upper-43-80). proofs/lean/small/superperm6 holds two files
+of Benjamin Grayzel's superperm6 (https://github.com/BGray-wrl/superperm6, commit
+d8a932d8f61d80b0bcfc737bd0e235a8300449c4, directory formal-verification, Copyright (c) 2026 Benjamin Grayzel, MIT
+License, reproduced in proofs/lean/small/superperm6/LICENSE): Superperm6/Basic.lean and Superperm6/Witness.lean,
+changed so that the Lean kernel checks them without native_decide (each says at its top what was changed), and his
+data file data/superperm6_872_clean.txt, unchanged, which holds Robin Houston's word of 872 letters. The kernel-only
+proofs in Basic.lean follow William Echols's port of the same file to eight symbols (Apache License 2.0); his NOTICE
+is reproduced in proofs/lean/small/superperm6/NOTICE.echols.
+
 proofs/lean/n8 holds changes to William Echols's superperm8-ge-46130
 (https://github.com/williamechols/superperm8-ge-46130, commit 893ab2d92669ea56d012ceca626bf01ca631e920, Apache License
 2.0): for three variants a diff against his files (variants/*/changes.diff, which contains lines of his files), and new
