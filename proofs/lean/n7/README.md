@@ -1,7 +1,7 @@
 # A lower bound for n = 7 in Lean: 5,899
 
 A word over 7 symbols that contains every permutation of the 7 symbols as a contiguous part has at least
-5,899 letters. With the word of 5,905 letters that `../words` checks, 5,899 <= L(7) <= 5,905.
+5,899 letters. With the word of 5,905 letters that `../words` checks, $`5{,}899 \le L(7) \le 5{,}905`$.
 
 The proof has two levels, and they do not rest on the same things.
 
@@ -9,7 +9,7 @@ The proof has two levels, and they do not rest on the same things.
   `Quot.sound` only. It proves the bound from twelve finite statements about rows of blocks on 7 symbols, and
   it proves each finite statement from an equation that says "this search returns `false`". The search is a
   function defined in Lean, and the proof that its answer means what is claimed is part of level 1.
-* Level 2 evaluates the searches. They visit 1.10 * 10^11 nodes, which is out of reach for the kernel, so
+* Level 2 evaluates the searches. They visit $`1.10 \cdot 10^{11}`$ nodes, which is out of reach for the kernel, so
   they are run as compiled code by `native_decide`. This is the one place in this proof where compiled
   code is trusted. The final theorem depends on the three axioms above and on 22 more, one for each
   evaluated equation, and `#print axioms` names them.
@@ -67,7 +67,7 @@ theorem no_stdConfig_iff (hk : 5 <= k) (D : Nat) :
       forall w : List (Fin k), Covers w -> hpv k + D + 1 <= w.length
 ```
 
-`hpv k` is k! + (k-1)! + (k-2)! + k - 3, as in `../lower`; hpv 7 = 5,884. `Caps` and `Profiles` are the twelve
+`hpv k` is $`k! + (k-1)! + (k-2)! + k - 3`$, as in `../lower`; `hpv 7` is 5,884. `Caps` and `Profiles` are the twelve
 finite statements, listed below. `PS.Covered nt f` says that a search cut into `nt` parts has been evaluated
 in ranges of parts that together contain every part; the arguments `f`, `d` and `n` of a search are its
 fuel, the depth at which it is cut and the number of its parts, and the theorem holds for all of them.
@@ -114,7 +114,7 @@ their numbers and the node counts in this README. A table entry that is too smal
 ## How the proof goes
 
 A block is a permutation followed by its 6 rotations, entered at one of them. A row is a sequence of
-1 to 6 blocks joined by steps of weight 2; a row with l blocks has 6 - l holes. Rows follow each other at
+1 to 6 blocks joined by steps of weight 2; a row with $`l`$ blocks has $`6 - l`$ holes. Rows follow each other at
 seams, and a seam has weight at least 3. A chain is a sequence of rows whose seams all have weight exactly
 3 and whose blocks lie in pairwise different rotation classes. This is the model chain of `../lower`
 (`IsModelChain`), where a row is called a piece and its holes its deficit.
@@ -123,18 +123,18 @@ seams, and a seam has weight at least 3. A chain is a sequence of rows whose sea
    `NUpper`, with `JLinks`, `JEntryTree`, `JCoverage`, `DCapacity`, `DJunction` for the junctions between
    components). A standard configuration is a kernel, which is a sequence of rows, and hanging components,
    each a sequence of rows attached at one vertex. It is valid if every rotation class is a block exactly
-   once; the seams have weight at least 3; the two attachment weights w0 and w1 of every hanging component
+   once; the seams have weight at least 3; the two attachment weights $`w_0`$ and $`w_1`$ of every hanging component
    are at least 2; the attachment vertices are pairwise different and obey a slot rule; the attachments
    lead back to the kernel. Its cost is the number of rows, plus the weight less 3 for every seam, plus
-   w0 + w1 - 4 for every hanging component. For k >= 5 every word that contains all permutations gives a
-   valid configuration c with hpv(k) + cost(c) <= (k-2)! + length, and for k >= 3 a valid configuration of
-   cost (k-2)! + D gives such a word of exactly hpv(k) + D letters. So the model loses nothing
+   $`w_0 + w_1 - 4`$ for every hanging component. For $`k \ge 5`$ every word that contains all permutations gives a
+   valid configuration $`c`$ with $`\mathrm{hpv}(k) + \mathrm{cost}(c) \le (k-2)! + \mathrm{length}`$, and for $`k \ge 3`$ a valid configuration of
+   cost $`(k-2)! + D`$ gives such a word of exactly $`\mathrm{hpv}(k) + D`$ letters. So the model loses nothing
    (`no_stdConfig_iff`), and for k = 7 the theorem is: no valid configuration has cost at most
-   5! + 14 = 134.
-2. The accounting (`PTrails`). For a component with m rows, h holes, seam excess X (the weight less 3,
-   summed over its seams) and attachment cost a, put value v = m - (h + 5 (X + a)) and weight
-   w = h + 6 (X + a). The
-   blocks cover the 720 rotation classes, so 6 (rows) - (holes) >= 720, and cost <= 134 gives: the values
+   $`5! + 14 = 134`$.
+2. The accounting (`PTrails`). For a component with $`m`$ rows, $`h`$ holes, seam excess $`X`$ (the weight less 3,
+   summed over its seams) and attachment cost $`a`$, put value $`v = m - (h + 5(X + a))`$ and weight
+   $`w = h + 6(X + a)`$. The
+   blocks cover the 720 rotation classes, so $`6\,(\text{rows}) - (\text{holes}) \ge 720`$, and cost $`\le 134`$ gives: the values
    add up to at least 50 and the weights to at most 84.
 3. The cut at heavy seams (`PTrails`, `PGeom`). A seam of weight at least 4 is heavy. Cut at its heavy seams,
    a component falls into chains. The Lean files call these chains trails.
@@ -142,22 +142,22 @@ seams, and a seam has weight at least 3. A chain is a sequence of rows whose sea
    five profile statements (FF): in a configuration of cost at most 134 every heavy seam has weight exactly
    4, every attachment costs 0 or 1 and no component has more than 5 heavy seams.
 5. The reductions (`PJunction`, `PGlue`, `PShapes`, `PHanging`). Every component is turned into one object
-   of three kinds: a sequence with s links, which is s + 1 chains joined by s links of weight 4; a ring,
+   of three kinds: a sequence with $`s`$ links, which is $`s + 1`$ chains joined by $`s`$ links of weight 4; a ring,
    which is a chain of at least two rows whose last block links to its first with weight 3; or something
-   of value at most 0. The kernel with j heavy seams is a sequence with j links. A hanging component with
+   of value at most 0. The kernel with $`j`$ heavy seams is a sequence with $`j`$ links. A hanging component with
    attachment cost 1 can have its last or its first row extended by one block, the class of the attachment
    vertex: it then has one hole less and closes with weight 3, so it is a ring if it has no heavy seam, and
-   cut at one heavy seam it is a sequence with j - 1 links. In a hanging component with attachment cost 0
+   cut at one heavy seam it is a sequence with $`j - 1`$ links. In a hanging component with attachment cost 0
    the last and the first row merge through one more block into a single row, which removes one row and 7
-   holes: with j >= 1 heavy seams this gives a sequence with j - 1 links, without heavy seams and with at
+   holes: with $`j \ge 1`$ heavy seams this gives a sequence with $`j - 1`$ links, without heavy seams and with at
    least three rows a ring. What is left has value at most 0: a component with attachment cost 0, no heavy
    seam and one or two rows, and a component with attachment cost 1 and a single row.
-6. The knapsack (`PArith`, `PTheorem`). With the tables M for chains, P_1 to P_5 for sequences with 1 to 5
-   links and PR for rings, the value of every hanging component is at most the value of an item of its
-   weight. Let HB(W) be the best total value of items within weight W, and P_0 = M. One inequality between
-   table entries, for 0 <= s <= 5 and 0 <= x <= 84 - 6s,
+6. The knapsack (`PArith`, `PTheorem`). With the tables $`M`$ for chains, $`P_1`$ to $`P_5`$ for sequences with 1 to 5
+   links and $`\mathrm{PR}`$ for rings, the value of every hanging component is at most the value of an item of its
+   weight. Let $`\mathrm{HB}(W)`$ be the best total value of items within weight $`W`$, and $`P_0 = M`$. One inequality between
+   table entries, for $`0 \le s \le 5`$ and $`0 \le x \le 84 - 6s`$,
 
-       P_s(x) - (x + 5s) + HB(84 - (x + 6s)) <= 49
+   $`\displaystyle P_s(x) - (x + 5s) + \mathrm{HB}(84 - (x + 6s)) \le 49`$
 
    bounds the sum of all values by 49. That contradicts step 2. The arithmetic of steps 4 and 6 is
    checked by `decide +kernel` against helper tables that are part of `PTables.lean`.
@@ -166,13 +166,13 @@ The twelve finite statements, all about rows on 7 symbols with pairwise differen
 
 | | statement | table | kept prefixes of its search |
 |---|---|---|---|
-| F0 | a chain with x <= 84 holes has at most M(x) rows | 85 entries | 90,373,570,810 |
-| F1 | a sequence with exactly 1 link and x <= 78 holes has at most P_1(x) rows | 79 | 15,136,651,976 |
-| F2 | the same with 2 links and x <= 72 | 73 | 3,553,547,989 |
-| F3 | the same with 3 links and x <= 66 | 67 | 783,012,378 |
-| F4 | the same with 4 links and x <= 60 | 61 | 4,289,217 |
-| F5 | the same with 5 links and x <= 54 | 55 | 102,853 |
-| FR | a ring with x <= 77 holes has at most PR(x) rows | 78 | 460,113,709 |
+| F0 | a chain with $`x \le 84`$ holes has at most $`M(x)`$ rows | 85 entries | 90,373,570,810 |
+| F1 | a sequence with exactly 1 link and $`x \le 78`$ holes has at most $`P_1(x)`$ rows | 79 | 15,136,651,976 |
+| F2 | the same with 2 links and $`x \le 72`$ | 73 | 3,553,547,989 |
+| F3 | the same with 3 links and $`x \le 66`$ | 67 | 783,012,378 |
+| F4 | the same with 4 links and $`x \le 60`$ | 61 | 4,289,217 |
+| F5 | the same with 5 links and $`x \le 54`$ | 55 | 102,853 |
+| FR | a ring with $`x \le 77`$ holes has at most $`\mathrm{PR}(x)`$ rows | 78 | 460,113,709 |
 | FF | no pairwise disjoint chains with (rows at least, holes at most) = (66, 36), (66, 36) | | 108,741 |
 | | the same for (50, 26), (50, 26) | | 27,110 |
 | | (63, 34), (34, 16) | | 54,979 |
@@ -196,7 +196,7 @@ The rule is a pair of Boolean functions of the numbers of rows, holes and links 
 * `PLevels`: the three rules keep enough. For F0 to F5 take a counterexample with the fewest rows and cut
   it after any row: both parts obey the tables, which bounds the rows of the first part from below, and
   the rule keeps exactly the prefixes that pass this test. For FR a ring may be read from any of its rows,
-  and by the cycle lemma one reading has, after every i rows, at most the share i/T of the holes. For FF
+  and by the cycle lemma one reading has, after every i rows, at most the share $`i/T`$ of the holes. For FF
   each chain is cut to the required number of rows and the next one starts at any unused class.
 * `PRules`, `PFinal`: chains, sequences and rings of the model are such lists of rows, and all of them can
   be relabelled to begin at 1 2 ... 7.

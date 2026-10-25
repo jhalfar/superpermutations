@@ -117,12 +117,12 @@ The file is `Superperm/Cyc.lean`, on top of the two files of the first method; t
 The word is a literal tree of blocks here.
 
 * In the words for n = 8 to 12 named here every rotation class of permutations is visited in one stretch of
-  2K - 1 letters, which then contains all K rotations. The table entry of a class is the position of that
-  stretch and a rotation number r. The leaf test `leafCyc` compares the 2K - 1 digits at the position with
-  digits r to r + 2K - 2 of the class representative written four times. `rot_window` proves that every
+  $`2K - 1`$ letters, which then contains all $`K`$ rotations. The table entry of a class is the position of that
+  stretch and a rotation number $`r`$. The leaf test `leafCyc` compares the $`2K - 1`$ digits at the position with
+  digits $`r`$ to $`r + 2K - 2`$ of the class representative written four times. `rot_window` proves that every
   rotation is then a window of the word.
 * The word is given as block constants, generated into files `B000.lean` and so on. Neighbouring blocks share
-  2K - 1 letters. `Tree.lean` defines the tree over the blocks and `W` from the tree, and one kernel check
+  $`2K - 1`$ letters. `Tree.lean` defines the tree over the blocks and `W` from the tree, and one kernel check
   `chkT ... tree W = true` shows that the tree is the one `build` would make from `W`.
 * `covers_of_cyc` and `covers_of_cyc_groups` are the soundness theorems (for 8 to 16 symbols).
 * For n = 11 this is 3,628,800 leaf checks in 5,040 kernel checks, where the first method would need
@@ -256,7 +256,7 @@ and Python with numpy. No file has to be edited.
 2. It chooses the method (`word_info.py` looks at the word; nothing is generated before this) and says which.
    If every rotation class is visited in one stretch, it takes the second method: `gen11.py` for
    n = 8 to 11, and `gen12.py` with the three files `TreeOk.lean`, `Cyc2.lean` and `Cyc3.lean` for n = 12
-   (`../words12/README.md` says what these change). Otherwise, if n <= 10 and every permutation occurs, it
+   (`../words12/README.md` says what these change). Otherwise, if $`n \le 10`$ and every permutation occurs, it
    takes the first method. Otherwise it stops and says why.
 3. It prints an estimate of Lean time, disk and memory. A run above 30 minutes of Lean time needs `--yes`.
 4. It generates the certificate into a build directory of its own, `../build/check-n-L` (or `--out DIR`),
@@ -278,7 +278,7 @@ is the word in your file is checked by step 6 and not by the kernel.
 
 The limits:
 
-* The second method needs every rotation class of permutations in one stretch of 2n - 1 letters. The words
+* The second method needs every rotation class of permutations in one stretch of $`2n - 1`$ letters. The words
   on 8 to 12 symbols named in this directory have that; the word on 7 symbols does not.
 * Without that structure a word can be checked up to n = 10, with one table entry for every permutation.
 * n = 13 is out of reach. It would take about 60 hours of Lean time for the 479 million rotation classes

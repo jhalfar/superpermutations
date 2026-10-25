@@ -36,7 +36,7 @@ of selection, had 43,930,614, 522,745,350 and 6,747,916,657 letters.
 
 The files are `words/superpermutation-N-LENGTH.txt.xz`: XZ archives with a delta filter of distance n that `xz -d`
 unpacks (2 KB for n = 8, then 65 KB, 0.4 MB, 4.1 MB and 45 MB for n = 10 to 13), on the first n letters of
-`0123456789ABC`, one line plus a line feed, as in Pantone's repository. New words for n >= 13 are stored in Theo
+`0123456789ABC`, one line plus a line feed, as in Pantone's repository. New words for $`n \ge 13`$ are stored in Theo
 H.'s [SPRA format](https://github.com/Tholsh/SPRA) (version 0.2, fields of 6 bits) and packed with `xz`:
 `words/superpermutation-13-6747801798.spra.xz`, 1.26 MB. Its decoder is `tools/reduced_codec.cpp` of that
 repository (`g++ -std=c++20 -O2 tools/reduced_codec.cpp -o reduced-codec`), which writes the letters `0`-`9`,
@@ -67,25 +67,25 @@ How the words were found, step by step, is in [`NOTES.md`](NOTES.md).
 ## The Lean proofs
 
 [`proofs/lean/`](proofs/lean/README.md) holds proofs in Lean 4, stated with the definitions of Pantone's
-`Challenge.lean`. With F3(n) = n! + (n-1)! + (n-2)! and L(n) the length of the shortest superpermutation:
+`Challenge.lean`. With $`F_3(n) = n! + (n-1)! + (n-2)!`$ and $`L(n)`$ the length of the shortest superpermutation:
 
 | result | checked by | directory |
 |---|---|---|
-| L(n) <= F3(n) + (c + o(1)) (n-3)! with c from 1771/3456 (n >= 13) down to 11117297/27675648 (n >= 22); Pantone's c is 43/80 | kernel | [`constant/`](proofs/lean/constant/README.md), [`constant61937/`](proofs/lean/constant61937/README.md), [`constant305989/`](proofs/lean/constant305989/README.md), [`constant43586371/`](proofs/lean/constant43586371/README.md) |
-| the coefficient tends to 0; L(n) - F3(n) lies between 2(n-4)! - 2(n-5)! and 41/5 (n-4)! for n >= 2^14 | kernel | [`constant43586371/`](proofs/lean/constant43586371/README.md), [`asym/`](proofs/lean/asym/README.md) |
+| $`L(n) \le F_3(n) + (c+o(1))\,(n-3)!`$ with $`c`$ from $`\tfrac{1771}{3456}`$ ($`n \ge 13`$) down to $`\tfrac{11117297}{27675648}`$ ($`n \ge 22`$); Pantone's $`c`$ is $`\tfrac{43}{80}`$ | kernel | [`constant/`](proofs/lean/constant/README.md), [`constant61937/`](proofs/lean/constant61937/README.md), [`constant305989/`](proofs/lean/constant305989/README.md), [`constant43586371/`](proofs/lean/constant43586371/README.md) |
+| the coefficient tends to 0; $`L(n) - F_3(n)`$ lies between $`2(n-4)! - 2(n-5)!`$ and $`\tfrac{41}{5}(n-4)!`$ for $`n \ge 2^{14}`$ | kernel | [`constant43586371/`](proofs/lean/constant43586371/README.md), [`asym/`](proofs/lean/asym/README.md) |
 | my words of 46,174 (and its seven ties), 4,034,855, 43,930,578 and 522,737,175 letters are superpermutations | kernel | [`words/`](proofs/lean/words/README.md), [`words12/`](proofs/lean/words12/README.md) |
-| L(n) >= 46,133, 408,469, 4,033,378, 43,917,903, 522,622,378, 6,746,626,957, 93,891,141,126 for n = 8 to 14 (Theorem C) | kernel | [`lower/`](proofs/lean/lower/README.md) |
-| L(n) exact for n <= 6: 1, 3, 9, 33, 153, 872; L(6) = 872 kernel-only, as far as I know the first such proof | kernel | [`small/`](proofs/lean/small/README.md) |
-| L(8) >= 46,132 in William Echols's framework, without his `native_decide` | kernel | [`n8/`](proofs/lean/n8/README.md) |
-| L(8) >= 46,134 (Theorem D) | kernel and 3 equations by `native_decide` | [`n8_46134/`](proofs/lean/n8_46134/README.md) |
-| L(7) >= 5,899, one more than Justin Lebar's 5,898 | kernel and 22 equations by `native_decide` | [`n7/`](proofs/lean/n7/README.md) |
-| L(7) >= 5,900 | kernel and 99 equations by `native_decide` | [`n7_5900/`](proofs/lean/n7_5900/README.md) |
-| L(7) >= 5,901: the reduction to 30 search equations, 6 of them evaluated | kernel, and 6 equations by `native_decide` | [`n7_5901/`](proofs/lean/n7_5901/README.md) |
+| $`L(n) \ge`$ 46,133, 408,469, 4,033,378, 43,917,903, 522,622,378, 6,746,626,957, 93,891,141,126 for $`n = 8`$ to $`14`$ (Theorem C) | kernel | [`lower/`](proofs/lean/lower/README.md) |
+| $`L(n)`$ exact for $`n \le 6`$: 1, 3, 9, 33, 153, 872; $`L(6) = 872`$ kernel-only, as far as I know the first such proof | kernel | [`small/`](proofs/lean/small/README.md) |
+| $`L(8) \ge 46{,}132`$ in William Echols's framework, without his `native_decide` | kernel | [`n8/`](proofs/lean/n8/README.md) |
+| $`L(8) \ge 46{,}134`$ (Theorem D) | kernel and 3 equations by `native_decide` | [`n8_46134/`](proofs/lean/n8_46134/README.md) |
+| $`L(7) \ge 5{,}899`$, one more than Justin Lebar's 5,898 | kernel and 22 equations by `native_decide` | [`n7/`](proofs/lean/n7/README.md) |
+| $`L(7) \ge 5{,}900`$ | kernel and 99 equations by `native_decide` | [`n7_5900/`](proofs/lean/n7_5900/README.md) |
+| $`L(7) \ge 5{,}901`$: the reduction to 30 search equations, 6 of them evaluated | kernel, and 6 equations by `native_decide` | [`n7_5901/`](proofs/lean/n7_5901/README.md) |
 | the 27-walk and the packing of four copies behind the 46,174 word | kernel | [`n8struct/`](proofs/lean/n8struct/README.md) |
 
 "Kernel" means checked by the Lean kernel to the end with the axioms `propext`, `Classical.choice` and `Quot.sound`
 only. Where equations are evaluated by `native_decide`, the Lean compiler, the C compiler of the toolchain and the
-runtime are trusted for them, as in Lebar's proof. L(7) >= 5,901 as a whole is a computer-assisted proof, not a
+runtime are trusted for them, as in Lebar's proof. $`L(7) \ge 5{,}901`$ as a whole is a computer-assisted proof, not a
 Lean theorem: the 24 search equations that Lean has not evaluated rest on C, C++ and CUDA programs, most of them
 run by one program only. [`proofs/n7_5901/`](proofs/n7_5901/README.md) has the written proof, the programs and
 a table that gives the trust level of each of the 30 searches. [`proofs/lean/README.md`](proofs/lean/README.md) has the
@@ -139,7 +139,7 @@ python3 words/n8/tools/n8.py rebuild words/n8/selection-46174.txt -o w46174.txt 
 | [`arrange/`](arrange/README.md) | how closed trails become a first plan: chains, their order, the lift from 12 to 13, the n = 10 construction, bounds |
 | [`tools/`](tools/README.md) | the C programs that shorten a plan, one line per program, and their tests |
 | [`ties/`](ties/README.md) | the words of the shortest known length for n = 7, 9 and 10 and of the earlier record length 46,181 for n = 8: 85 new words of 5,905 letters, which published words are the same, 1,223 rotations at n = 8 |
-| [`proofs/n7_5901/`](proofs/n7_5901/README.md) | L(7) >= 5,901: the written proof, the search programs, Table C, the trust level of every search |
+| [`proofs/n7_5901/`](proofs/n7_5901/README.md) | $`L(7) \ge 5{,}901`$: the written proof, the search programs, Table C, the trust level of every search |
 | [`proofs/n9/`](proofs/n9/README.md) | 408,731 cannot be beaten at n = 9 with Pantone's closed trails, in three families of words |
 | [`proofs/lean/`](proofs/lean/README.md) | the Lean proofs, and one command that checks a word of your own |
 | [`catalogue/`](catalogue/CATALOGUE.md) | every result with its status, evidence and the command that reruns it ([`schema.md`](catalogue/schema.md)) |

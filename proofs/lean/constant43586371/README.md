@@ -1,11 +1,13 @@
 # Nested block levels in Lean: the coefficients down to 11117297/27675648, and the limit 0
 
 This directory builds on [`../constant305989/`](../constant305989/README.md). It proves, for superpermutations on
-n symbols,
+$`n`$ symbols,
 
-    S(n) <= F3(n) + (c + o(1)) (n-3)!        F3(n) = n! + (n-1)! + (n-2)!
+```math
+S(n) \le F_3(n) + \left(c + o(1)\right)(n-3)!, \qquad F_3(n) = n! + (n-1)! + (n-2)!
+```
 
-for eight coefficients c, and in `Uniform/` that the best coefficient tends to 0. The construction is Pantone's.
+for eight coefficients $`c`$, and in `Uniform/` that the best coefficient tends to 0. The construction is Pantone's.
 The change from `../constant305989/` is the block step applied again, one level up, and in the last three
 constants also the removal of the selection on 11 symbols.
 
@@ -15,40 +17,40 @@ The coefficients that the Lean proofs in this repository reach, with the first n
 
 | c | decimal | from n | directory |
 |---|---:|---:|---|
-| 43/80, Pantone | 0.537500 | 11 | his repository |
-| 1771/3456 | 0.512442 | 13 | [`../constant/`](../constant/README.md) |
-| 61937/120960 | 0.512045 | 13 | [`../constant61937/`](../constant61937/README.md) |
-| 305989/604800 | 0.505934 | 16 | [`../constant305989/`](../constant305989/README.md) |
-| 43586371/86486400 | 0.503968 | 19 | here |
-| 3961457/7862400 | 0.503848 | 19 | here |
-| 8711159/17297280 | 0.503614 | 19 | here |
-| 21751799/43243200 | 0.503011 | 22 | here |
-| 21736511/43243200 | 0.502657 | 22 | here |
-| 629507/1441440 | 0.436721 | 22 | here |
-| 3853/8736 | 0.441049 | 19 | here |
-| 11117297/27675648 | 0.401700 | 22 | here |
+| $`\tfrac{43}{80}`$, Pantone | 0.537500 | 11 | his repository |
+| $`\tfrac{1771}{3456}`$ | 0.512442 | 13 | [`../constant/`](../constant/README.md) |
+| $`\tfrac{61937}{120960}`$ | 0.512045 | 13 | [`../constant61937/`](../constant61937/README.md) |
+| $`\tfrac{305989}{604800}`$ | 0.505934 | 16 | [`../constant305989/`](../constant305989/README.md) |
+| $`\tfrac{43586371}{86486400}`$ | 0.503968 | 19 | here |
+| $`\tfrac{3961457}{7862400}`$ | 0.503848 | 19 | here |
+| $`\tfrac{8711159}{17297280}`$ | 0.503614 | 19 | here |
+| $`\tfrac{21751799}{43243200}`$ | 0.503011 | 22 | here |
+| $`\tfrac{21736511}{43243200}`$ | 0.502657 | 22 | here |
+| $`\tfrac{629507}{1441440}`$ | 0.436721 | 22 | here |
+| $`\tfrac{3853}{8736}`$ | 0.441049 | 19 | here |
+| $`\tfrac{11117297}{27675648}`$ | 0.401700 | 22 | here |
 
-Each row proves the same four things, with the first n written n0 (19 or 22) and m = n - 2: a `finite_bound` for
-every m >= n0 - 2 and every 2 <= a <= m (a word on m + 2 symbols of length at most
-(m+2)! + (m+1)! + m! + c (m-1)! + (a-2) d + (m-a) min(d, (m+1)!/(a+1)!), with d a multiple of (m-1)!/(m-1)); an
-`eventual_bound` (for every rational eps > 0 there is an N >= n0 such that every K >= N has a covering word of
-length at most F3 K + (c + eps)(K-3)!); the same in the shape of Pantone's `Finite` and `FiniteInteger`; and two
+Each row proves the same four things, with the first $`n`$ written $`n_0`$ (19 or 22) and $`m = n - 2`$: a `finite_bound` for
+every $`m \ge n_0 - 2`$ and every $`2 \le a \le m`$ (a word on $`m + 2`$ symbols of length at most
+$`(m+2)! + (m+1)! + m! + c\,(m-1)! + (a-2)\,d + (m-a)\min\bigl(d, (m+1)!/(a+1)!\bigr)`$, with $`d`$ a multiple of $`(m-1)!/(m-1)`$); an
+`eventual_bound` (for every rational $`\varepsilon \gt 0`$ there is an $`N \ge n_0`$ such that every $`K \ge N`$ has a covering word of
+length at most $`F_3(K) + (c + \varepsilon)(K-3)!`$); the same in the shape of Pantone's `Finite` and `FiniteInteger`; and two
 `HasWord` values of the finite bound. They are values of a formula, not words.
 
-| name | selection and blocks | c | d / ((m-1)!/(m-1)) | n0 | names in the Lean files |
+| name | selection and blocks | c | $`d / ((m-1)!/(m-1))`$ | n0 | names in the Lean files |
 |---|---|---|---|---:|---|
-| C | selection on 11 symbols; blocks W103, S133 | 43586371/86486400 | 654131/86486400 | 19 | `finite_bound19`, `finite_43586371` |
-| E | same; S103 with cycles chosen on 16 symbols, S133 | 3961457/7862400 | 121207/17297280 | 19 | `finite_bound19_3961457` |
-| F | same; W103 with cycles on 16 symbols, S133 | 8711159/17297280 | 124711/17297280 | 19 | `finite_bound19_8711159` |
-| D | same; X103, W133, S163 | 21751799/43243200 | 297743/43243200 | 22 | `finite_bound22`, `finite_21751799` |
-| G | same; X103 with cycles on 16 symbols, W133, S163 | 21736511/43243200 | 56491/8648640 | 22 | `finite_bound22_21736511` |
-| H | no selection; X103 on 16 symbols, W133, S163 | 629507/1441440 | 32759/288288 | 22 | `finite_bound22_629507` |
-| I | no selection; D73, W103, S133 | 3853/8736 | 6113/96096 | 19 | `finite_bound19_3853` |
-| J | no selection; B73, X103, W133, S163 | 11117297/27675648 | 1769507/19768320 | 22 | `finite_bound22_11117297` |
+| C | selection on 11 symbols; blocks W103, S133 | $`\tfrac{43586371}{86486400}`$ | $`\tfrac{654131}{86486400}`$ | 19 | `finite_bound19`, `finite_43586371` |
+| E | same; S103 with cycles chosen on 16 symbols, S133 | $`\tfrac{3961457}{7862400}`$ | $`\tfrac{121207}{17297280}`$ | 19 | `finite_bound19_3961457` |
+| F | same; W103 with cycles on 16 symbols, S133 | $`\tfrac{8711159}{17297280}`$ | $`\tfrac{124711}{17297280}`$ | 19 | `finite_bound19_8711159` |
+| D | same; X103, W133, S163 | $`\tfrac{21751799}{43243200}`$ | $`\tfrac{297743}{43243200}`$ | 22 | `finite_bound22`, `finite_21751799` |
+| G | same; X103 with cycles on 16 symbols, W133, S163 | $`\tfrac{21736511}{43243200}`$ | $`\tfrac{56491}{8648640}`$ | 22 | `finite_bound22_21736511` |
+| H | no selection; X103 on 16 symbols, W133, S163 | $`\tfrac{629507}{1441440}`$ | $`\tfrac{32759}{288288}`$ | 22 | `finite_bound22_629507` |
+| I | no selection; D73, W103, S133 | $`\tfrac{3853}{8736}`$ | $`\tfrac{6113}{96096}`$ | 19 | `finite_bound19_3853` |
+| J | no selection; B73, X103, W133, S163 | $`\tfrac{11117297}{27675648}`$ | $`\tfrac{1769507}{19768320}`$ | 22 | `finite_bound22_11117297` |
 
 The block names are those of the files in `data/`: W103 = `w103_0.6245_1`, X103 = `w103_0.4795_0`,
 S103 = `s103_old2_0`, S133 = `s133_0`, W133 = `w133_0`, S163 = `s163_old2_0`, D73 = `block_7_3_enum14_0`,
-B73 = `b73_dw_0`. A block (p, 3) sits above the loops without a row, on p + 4 symbols. "Cycles on 16 symbols" means
+B73 = `b73_dw_0`. A block (p, 3) sits above the loops without a row, on $`p + 4`$ symbols. "Cycles on 16 symbols" means
 the connector cycles of the block are chosen on the completion one level up (files `cyc_t_*` and `cyc_up_*` in
 `data/`) instead of on its own level.
 
@@ -75,10 +77,10 @@ theorem coefficient_tends_to_zero :
 ```
 
 (copied from `Uniform/Main.lean` with the symbols spelled in ASCII). It depends on `propext`, `Classical.choice` and
-`Quot.sound` only; every block property is proved for all odd m >= 5, with no `decide` on anything that depends on
-m. The family is the simplest one that works: no selection, and above every loop without a row on m old letters (m
-odd) one walk of m(m+12) rows, a "caterpillar", met by one connector cycle; at even levels the empty block. The
-proof gives N of the order of 2 * 10^6 / eps^7, so this is a statement about the limit, far from the best finite
+`Quot.sound` only; every block property is proved for all odd $`m \ge 5`$, with no `decide` on anything that depends on
+$`m`$. The family is the simplest one that works: no selection, and above every loop without a row on $`m`$ old letters ($`m`$
+odd) one walk of $`m(m+12)`$ rows, a "caterpillar", met by one connector cycle; at even levels the empty block. The
+proof gives $`N`$ of the order of $`2 \cdot 10^6 / \varepsilon^7`$, so this is a statement about the limit, far from the best finite
 constants above. `PROOF.md` is the proof on paper, `REFEREE.md` the report of an independent check of it (a build
 of the 23 files it needs straight from Pantone's sources).
 
@@ -94,17 +96,17 @@ theorem rate_R (n : Nat) (hn : 2 ^ 14 <= n) :
       (w.length : Rat) <= SuperpermutationBounds.F3 n + (9 / n : Rat) * (Nat.factorial (n - 3) : Rat)
 ```
 
-and `finite_boundR m0 K n a` in `UniR/RMain.lean`, an explicit bound for every n >= m0 + 3K + 3, with the
-parameters m0 >= 11, K levels and 2 <= a <= n - 2. `python bound_R.py N` prints its exact value at N, minimised over
-m0, K and a. In units of (N-3)! above F3(N) it is 0.3059 at N = 40, 0.2015 at N = 60, 0.1103 at N = 100 and 0.1031
-at N = 106. The constant 9 in `rate_R` is not sharp (the proof gives 8.69; numerically about 8.6).
+and `finite_boundR m0 K n a` in `UniR/RMain.lean`, an explicit bound for every $`n \ge m_0 + 3K + 3`$, with the
+parameters $`m_0 \ge 11`$, $`K`$ levels and $`2 \le a \le n - 2`$. `python bound_R.py N` prints its exact value at $`N`$, minimised over
+$`m_0`$, $`K`$ and $`a`$. In units of $`(N-3)!`$ above $`F_3(N)`$ it is 0.3059 at N = 40, 0.2015 at N = 60, 0.1103 at N = 100 and 0.1031
+at $`N = 106`$. The constant 9 in `rate_R` is not sharp (the proof gives 8.69; numerically about 8.6).
 
-`UniR/RRate8.lean` states the rate in units of (n-4)!: `rate_R8` gives F3(n) + (41/5)(n-4)! for n >= 2^14 and
-`rate_R8_eventually` gives F3(n) + (8 + eps)(n-4)! for every eps > 0 from some n on. Both print the three axioms;
+`UniR/RRate8.lean` states the rate in units of $`(n-4)!`$: `rate_R8` gives $`F_3(n) + \tfrac{41}{5}(n-4)!`$ for $`n \ge 2^{14}`$ and
+`rate_R8_eventually` gives $`F_3(n) + (8 + \varepsilon)(n-4)!`$ for every $`\varepsilon \gt 0`$ from some $`n`$ on. Both print the three axioms;
 the comparator was not run on them.
 
 Together with the lower bound of the Hunter-Raudvere library, [`../asym/`](../asym/README.md) concludes that
-(L(n) - F3(n)) / (n-3)! tends to 0, where L(n) is the length of the shortest superpermutation on n symbols.
+$`(L(n) - F_3(n)) / (n-3)!`$ tends to 0, where $`L(n)`$ is the length of the shortest superpermutation on $`n`$ symbols.
 
 ## The files
 

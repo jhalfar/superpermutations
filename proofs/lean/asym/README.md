@@ -1,6 +1,6 @@
 # The shortest superpermutation: (L(n) - F3(n)) / (n-3)! tends to 0
 
-Let L(n) be the length of the shortest superpermutation on n symbols and F3(n) = n! + (n-1)! + (n-2)!. This
+Let $`L(n)`$ be the length of the shortest superpermutation on $`n`$ symbols and $`F_3(n) = n! + (n-1)! + (n-2)!`$. This
 directory proves in Lean, in namespace `ConstAsym`:
 
 ```lean
@@ -15,11 +15,11 @@ theorem two_sided : forall eps : Rat, 0 < eps -> exists N : Nat, forall n : Nat,
 
 (copied from `ConstAsym/Main.lean` with the symbols spelled in ASCII; `L n` is the least length of a word over
 `Fin n` that `Covers` every permutation). The same file has `coefficient_limit_rat`, `L_eq_ssuper` and
-`hunter_lower_L`. In words: the shortest superpermutation is at least F3(n) for n >= 6, and for every eps > 0 it is
-at most F3(n) + eps (n-3)! from some n on.
+`hunter_lower_L`. In words: the shortest superpermutation is at least $`F_3(n)`$ for $`n \ge 6`$, and for every $`\varepsilon \gt 0`$ it is
+at most $`F_3(n) + \varepsilon\,(n-3)!`$ from some $`n`$ on.
 
-* The lower side is `Hunter.Paper.factorial_clean` of the Hunter-Raudvere library: for n >= 6 the shortest
-  superpermutation has at least n! + (n-1)! + (n-2)! + (n-4)! - 2 (n-5)! letters.
+* The lower side is `Hunter.Paper.factorial_clean` of the Hunter-Raudvere library: for $`n \ge 6`$ the shortest
+  superpermutation has at least $`n! + (n-1)! + (n-2)! + (n-4)! - 2\,(n-5)!`$ letters.
 * The upper side is `Uniform.coefficient_tends_to_zero` of [`../constant43586371/`](../constant43586371/README.md).
 * `Bridge.lean` states `Covers` (Pantone's definition) for `Hunter.IsPermWord`, `Hunter.IsSuperperm` and
   `Hunter.Ssuper` by shifting letters by one each way: `ssuper_le_length`, `ssuper_eq_sInf`.
@@ -30,7 +30,7 @@ Every statement depends on `propext`, `Classical.choice` and `Quot.sound` only. 
 ## The order of the remainder
 
 `ConstAsym/Remainder.lean` combines the lower bound with `UniR.rate_R` of `../constant43586371/` and shows that
-the remainder L(n) - F3(n) is of the order (n-4)!:
+the remainder $`L(n) - F_3(n)`$ is of the order $`(n-4)!`$:
 
 ```lean
 theorem remainder_order (n : Nat) (hn : 2 ^ 14 <= n) :
@@ -38,13 +38,13 @@ theorem remainder_order (n : Nat) (hn : 2 ^ 14 <= n) :
     (L n : Rat) - F3 n <= 9 * ((n - 4).factorial : Rat)
 ```
 
-For n >= 2^14 the ratio (L(n) - F3(n)) / (n-4)! lies between 1/2 and 9 (`remainder_ratio_half`; `remainder_ratio`
-has the lower end 1 - 2/(n-4)). The comparator that checks a statement against its source was run on the first two
+For $`n \ge 2^{14}`$ the ratio $`(L(n) - F_3(n)) / (n-4)!`$ lies between $`\tfrac{1}{2}`$ and 9 (`remainder_ratio_half`; `remainder_ratio`
+has the lower end $`1 - \tfrac{2}{n-4}`$). The comparator that checks a statement against its source was run on the first two
 theorems of this directory, not on the theorems of `Remainder.lean`.
 
 ### The constant lies in [2, 8]
 
-`ConstAsym/Remainder8.lean` takes the lower side from Theorem B of [`../lower/`](../lower/README.md) (n >= 7) and
+`ConstAsym/Remainder8.lean` takes the lower side from Theorem B of [`../lower/`](../lower/README.md) ($`n \ge 7`$) and
 the upper side from `UniR.rate_R8` of `../constant43586371/`, and proves
 
 ```lean
@@ -53,10 +53,10 @@ theorem remainder_limit8 (eps : Rat) (heps : 0 < eps) : exists N : Nat, forall n
     ((L n : Rat) - F3 n) / ((n - 4).factorial : Rat) <= 8 + eps
 ```
 
-so in Lean the limit inferior of (L(n) - F3(n)) / (n-4)! is at least 2 and the limit superior at most 8. The finite
-forms are `lower2_L` (2 (n-4)! - 2 (n-5)! <= L(n) - F3(n) for n >= 7), `remainder_order8` and `remainder_ratio8` (for
-n >= 2^14 the remainder is at most 41/5 (n-4)!). `UniR.rate_R8` gives F3(n) + (41/5)(n-4)! for n >= 2^14 and
-`rate_R8_eventually` gives F3(n) + (8 + eps)(n-4)!. The comparator was not run on these theorems.
+so in Lean the limit inferior of $`(L(n) - F_3(n)) / (n-4)!`$ is at least 2 and the limit superior at most 8. The finite
+forms are `lower2_L` ($`2\,(n-4)! - 2\,(n-5)! \le L(n) - F_3(n)`$ for $`n \ge 7`$), `remainder_order8` and `remainder_ratio8` (for
+$`n \ge 2^{14}`$ the remainder is at most $`\tfrac{41}{5}(n-4)!`$). `UniR.rate_R8` gives $`F_3(n) + \tfrac{41}{5}(n-4)!`$ for $`n \ge 2^{14}`$ and
+`rate_R8_eventually` gives $`F_3(n) + (8 + \varepsilon)(n-4)!`$. The comparator was not run on these theorems.
 
 `Remainder8` also needs Theorem B of `../lower/` and `Superperm.Bridge` of `../words/` (both in this directory
 tree) and Liu's preimage-chain library, github.com/Haruhiyuki/superpermutations-preimage-chain-lower-bounds, used

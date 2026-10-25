@@ -1,16 +1,24 @@
 # Three lower bounds in Lean: Theorems A, B and C
 
-Write hpv(k) = k! + (k-1)! + (k-2)! + k - 3. A word over k symbols that contains every permutation has at
+Write $`\mathrm{hpv}(k) = k! + (k-1)! + (k-2)! + k - 3`$. A word over $`k`$ symbols that contains every permutation has at
 least
 
-    hpv(k) + ceil( 2 ((k-2)! - (k-2)) / (k (k-3)) )         letters, for k >= 5        (Theorem A)
-    hpv(k) + ceil( 2 ((k-2)! - (k-2)) / (k^2 - 4k + 1) )    letters, for k >= 7        (Theorem B)
-    hpv(k) + ceil( (2 (k-2)! - 2 (k-2) - b) / (k^2 - 4k + 1 - c (k-1)) )   letters     (Theorem C)
+```math
+\mathrm{hpv}(k) + \left\lceil \frac{2\,((k-2)! - (k-2))}{k\,(k-3)} \right\rceil \quad \text{letters, for } k \ge 5 \quad \text{(Theorem A)}
+```
 
-Theorem C holds for k >= 5 and for every pair of rational numbers c and b that passes two tests: three
-inequalities between c, b and k, and one statement about pieces of paths, the window bound, which a finite
-search proves. With c = 0 and b = 0 its formula is that of Theorem B. For k = 8 to 14 this directory has
-searches, checked by the Lean kernel, for 27 pairs (c, b). The best of them give
+```math
+\mathrm{hpv}(k) + \left\lceil \frac{2\,((k-2)! - (k-2))}{k^2 - 4k + 1} \right\rceil \quad \text{letters, for } k \ge 7 \quad \text{(Theorem B)}
+```
+
+```math
+\mathrm{hpv}(k) + \left\lceil \frac{2\,(k-2)! - 2\,(k-2) - b}{k^2 - 4k + 1 - c\,(k-1)} \right\rceil \quad \text{letters} \quad \text{(Theorem C)}
+```
+
+Theorem C holds for $`k \ge 5`$ and for every pair of rational numbers $`c`$ and $`b`$ that passes two tests: three
+inequalities between $`c`$, $`b`$ and $`k`$, and one statement about pieces of paths, the window bound, which a finite
+search proves. With $`c = 0`$ and $`b = 0`$ its formula is that of Theorem B. For k = 8 to 14 this directory has
+searches, checked by the Lean kernel, for 27 pairs $`(c, b)`$. The best of them give
 
 | k | Theorem A | Theorem B | Theorem C | Liu's Lean value | shortest word proven in `../words` |
 |---|---|---|---|---|---|
@@ -48,8 +56,8 @@ depends on the axioms `propext`, `Classical.choice` and `Quot.sound` only.
 
 * Theorem A. Zach Hunter wrote this formula on 21 October 2019 in the group thread "New Lower Bound"
   (https://groups.google.com/g/superpermutators/c/M-1yQC0Aj44), as a bound he expected to prove. His
-  expression, (k! - k(k-1)(k-2)) (k^3 - 2k^2 - 2k - 2) / (k(k-1)(k-2) - 2k) + k^3 - 2k^2 + k - 3, is the same
-  number for every k. The note "Defect Budgets, Run Separators, and a Stronger Lower Bound for
+  expression, $`(k! - k(k-1)(k-2))\,(k^3 - 2k^2 - 2k - 2) / (k(k-1)(k-2) - 2k) + k^3 - 2k^2 + k - 3`$, is the same
+  number for every $`k`$. The note "Defect Budgets, Run Separators, and a Stronger Lower Bound for
   Superpermutations" by GPT 5.6 Sol and Marin Kisic (7 August 2026, github.com/mkisic/superpermutations) has a
   proof on paper, which Kisic posted as unverified. Uku Raudvere answered the next day that he had an
   unpublished independent proof based on an idea of Hunter's. The Lean proof is new. It needs no new lemma
@@ -57,12 +65,12 @@ depends on the axioms `propext`, `Classical.choice` and `Quot.sound` only.
 * Theorem B. The formula is Cole Fritsch's. He posted it on 20 January 2020 in the same thread with an
   argument that he himself called far from rigorous and that Zach Hunter disputed the same day. The Lean proof
   is new. Besides Liu's library it uses the deficit-one lemma of the note of GPT 5.6 Sol and Kisic, which is
-  proven here in Lean, a capacity bound for chains with slope k - 3, and one new lemma about junctions of cost
-  zero. It is stated for k >= 7: for k = 6 the arithmetic of the capacity lemma is false from the five facts it
+  proven here in Lean, a capacity bound for chains with slope $`k - 3`$, and one new lemma about junctions of cost
+  zero. It is stated for $`k \ge 7`$: for k = 6 the arithmetic of the capacity lemma is false from the five facts it
   uses (n = 3, g = (3,3,3,3), d = (2,3,2)).
 * Theorem C, the window search and its proof are new.
-* Jay Pantone announced on 29 September 2026 a Lean proof of the bound of Theorem B with n - 1 in place of
-  n - 2 in the numerator, which gives the same integers for n <= 14, and a table that goes further: 46,130,
+* Jay Pantone announced on 29 September 2026 a Lean proof of the bound of Theorem B with $`n - 1`$ in place of
+  $`n - 2`$ in the numerator, which gives the same integers for $`n \le 14`$, and a table that goes further: 46,130,
   408,468, 4,033,374, 43,917,903, 522,622,378 and 6,746,626,519 for n = 8 to 13. He announced his table
   first. His proof is not public, and the proofs here were made without it. He announced no value for
   n = 14.
@@ -95,7 +103,7 @@ theorem covers_length_ge_boundB {k : Nat} (hk : 7 <= k) :
     forall w : List (Fin k), Covers w -> boundB k <= w.length
 ```
 
-The division is that of natural numbers, and (a + d - 1) / d is the ceiling of a / d.
+The division is that of natural numbers, and $`(a + d - 1) / d`$ is the ceiling of $`a / d`$.
 `superperm_kisic_numerical_bounds` and `superperm_boundB_numerical_bounds` state the values of the table for
 `Ssuper`, and `covers_kisic_numerical_bounds` and `covers_boundB_numerical_bounds` state them in the form
 `forall w : List (Fin 9), Covers w -> 408465 <= w.length`. `AuditA.lean` and `AuditB.lean` write the general
@@ -103,7 +111,7 @@ statements and the values out with no definition of this project.
 
 ### Theorem C
 
-The numbers c and b are written over one denominator: c = cn / q and b = bn / q.
+The numbers $`c`$ and $`b`$ are written over one denominator: $`c = \mathit{cn} / q`$ and $`b = \mathit{bn} / q`$.
 
 ```lean
 -- LowerBounds/TheoremCCore.lean                                (namespace SuperpermLowerBounds)
@@ -178,7 +186,7 @@ names `covers_length_ge_N` and `ssuper_ge_N` with the number N written out, for 
 for n = 8, 9, 10 and 11. `Superperm/TwoSidedB.lean` and `TwoSidedA.lean` do the same with the values of
 Theorems B and A for n = 9, 10 and 11. The statements of `../words/Superperm/TwoSided*.lean`, which use Liu's
 values, stay as they are. For n = 12 the three statements are in `../words12/Superperm/`:
-522,622,378 <= L(12) <= 522,737,175 with the value of Theorem C.
+$`522{,}622{,}378 \le L(12) \le 522{,}737{,}175`$ with the value of Theorem C.
 
 ```lean
 -- Superperm/TwoSidedC.lean                                     (namespace SuperpermBridge)
@@ -217,14 +225,14 @@ as mine.
    the baseline of the bound as a sum over the components.
 2. `actualBaseline_add_actualPathPaymentCore_le` adds the root gap, the terminal indicator and the chain
    costs.
-3. `actual_component_capacity` bounds the pieces of every component: 2r <= (k-2)(deficit + 2x + a + b).
-4. `aBit_le` (mine): a full first piece of a component other than the root is paid by mu - 2 of that
+3. `actual_component_capacity` bounds the pieces of every component: $`2r \le (k-2)(\mathrm{deficit} + 2x + a + b)`$.
+4. `aBit_le` (mine): a full first piece of a component other than the root is paid by $`\mu - 2`$ of that
    component.
 5. `bBit_le` (mine): a full last piece is paid by the cost of the chain that leaves the component or by
-   mu - 2 of the component the chain enters. `target_injective` (mine) shows that no component is entered
+   $`\mu - 2`$ of the component the chain enters. `target_injective` (mine) shows that no component is entered
    twice, and `unpaid_le_one` (mine) that only one component is left unpaid.
-6. `reduced_pathwise` (mine) adds this up: the sum of a + b is at most 2 + 2 (sum of mu - 2 over the
-   components other than the root) + chain cost. The rest is linear arithmetic.
+6. `reduced_pathwise` (mine) adds this up: the sum of $`a + b`$ is at most $`2 + 2\,\sum (\mu - 2) + \text{chain cost}`$, the sum over the
+   components other than the root. The rest is linear arithmetic.
 7. `sigma2_reduced_normal_form` and `Hunter.bridge_Lstar_eq_Ssuper` carry the bound from reduced paths to
    `Ssuper`.
 
@@ -233,8 +241,8 @@ modules).
 
 ## How the proof of Theorem B goes
 
-Steps 1, 2 and 7 are those of Theorem A. Step 3 is replaced by a capacity bound with slope k - 3 in place of
-k - 2, and the accounting of steps 4 to 6 is done again with the end terms of that bound, where the junction
+Steps 1, 2 and 7 are those of Theorem A. Step 3 is replaced by a capacity bound with slope $`k - 3`$ in place of
+$`k - 2`$, and the accounting of steps 4 to 6 is done again with the end terms of that bound, where the junction
 lemma is used. Six files, 2,258 lines:
 
 * `DeficitOne.lean` (371 lines): the deficit-one lemma of that note. `deficitOne_path` is the lemma in block
@@ -263,30 +271,30 @@ statements about covering words with `SuperpermBridge.hunter_le_ssuper_iff` of
 ## How the bound of Theorem C arises
 
 The words of Liu's library first. A path through all permutations is cut into blocks: a block is a
-permutation followed by its k - 1 rotations. The step from a block to the next costs at least 2, and
-consecutive blocks joined by steps of cost 2 form a piece. A piece has at most k - 1 blocks; one with k - 1
+permutation followed by its $`k - 1`$ rotations. The step from a block to the next costs at least 2, and
+consecutive blocks joined by steps of cost 2 form a piece. A piece has at most $`k - 1`$ blocks; one with $`k - 1`$
 blocks is full, a shorter one is partial, and its deficit is the number of blocks it lacks. A chain is a
 sequence of pieces in which each step from a piece to the next costs exactly 3.
 
 Theorems A and B bound the number of pieces of a chain by its total deficit with a slope that holds for
-every chain: k - 2 pieces for two units of deficit in Theorem A, k - 3 in Theorem B. Theorem C lowers the
+every chain: $`k - 2`$ pieces for two units of deficit in Theorem A, $`k - 3`$ in Theorem B. Theorem C lowers the
 slope of Theorem B by a number c and lets a search say which c holds.
 
 1. A window is a chain that starts and ends with a partial piece and in which every maximal run of partial
    pieces has a piece of deficit at least 2 (`ChainC.IsWindow`, a property of the list of deficits). The
-   window bound with the constants c and b says that a window with r pieces and total deficit d satisfies
-   2r + 2(k-4) + c d <= (k-3) d + b (`ChainC.WindowBound`). The hypothesis `HStatement k cn bn q` says that
+   window bound with the constants c and b says that a window with $`r`$ pieces and total deficit $`d`$ satisfies
+   $`2r + 2(k-4) + c\,d \le (k-3)\,d + b`$ (`ChainC.WindowBound`). The hypothesis `HStatement k cn bn q` says that
    every window of every chain of Liu's library satisfies it.
 2. The deduction (`ChainCapacityC`, `WindowSlackC`, `ComponentCapacityC`, `LemmaZC`, `TheoremCCore`,
    `TheoremC`, `TheoremCWords`; 2,266 lines). From the hypothesis and the three conditions `ConditionsC` the
    accounting of Theorem B is done again with the better slope. The result is `superperm_boundC` and
-   `covers_length_ge_boundC`: the bound for every k >= 5 and every (c, b), with the hypothesis as its one
+   `covers_length_ge_boundC`: the bound for every $`k \ge 5`$ and every $`(c, b)`$, with the hypothesis as its one
    assumption. A larger c makes the denominator of the formula smaller and so the bound larger; the search
    decides which c can be had.
 3. The model (`SModelDef`, 85 lines). A model chain is a list of pieces, each a list of permutations, with
-   five properties that mention only words: no piece is empty, a piece has at most k - 1 blocks, consecutive
-   blocks of a piece overlap in k - 2 symbols, the last block of a piece and the first block of the next
-   overlap in k - 3 symbols, and all blocks lie in different rotation classes. `ModelStatement k cn bn q` is
+   five properties that mention only words: no piece is empty, a piece has at most $`k - 1`$ blocks, consecutive
+   blocks of a piece overlap in $`k - 2`$ symbols, the last block of a piece and the first block of the next
+   overlap in $`k - 3`$ symbols, and all blocks lie in different rotation classes. `ModelStatement k cn bn q` is
    the window bound for all model chains.
 4. The bridge (`SBridgePath`, `SBridgeChain`, `SBridgeRelabel`, `SBridge`, `SBridgeTheoremC`, `SBridgeModel`;
    1,155 lines). Every chain of Liu's library is a model chain with the same list of deficits, so
@@ -298,8 +306,8 @@ slope of Theorem B by a number c and lets a search say which c holds.
    classes is a search tree of such numbers, and the two sides of the inequality are two running sums. If it
    returns `false`, there is no such window.
 6. Soundness (`SWord`, `SSound`, `SRun`, `SModel`; 1,598 lines). `modelStatement_of_search`: if the search
-   returns `false`, and so does the small search `S.runSearch k` (one block cannot be followed by k - 2 full
-   pieces), then `ModelStatement k cn bn q` holds, for 5 <= k <= 15. The proof takes a violating window with
+   returns `false`, and so does the small search `S.runSearch k` (one block cannot be followed by $`k - 2`$ full
+   pieces), then `ModelStatement k cn bn q` holds, for $`5 \le k \le 15`$. The proof takes a violating window with
    the fewest pieces, relabels the symbols so that it begins with the word 1 2 ... k, and shows that the
    search would have followed it piece by piece.
 7. The certificates. That a given search returns `false` is proven by evaluation in the Lean kernel:
@@ -317,19 +325,19 @@ more). The best ones for each k, with the Lean process time of their search in m
 
 | k | bound | c | b | states of the search | generated files | Lean time | level |
 |---|---|---|---|---|---|---|---|
-| 8 | 46,132 | 3/10 | 64/10 | 2,915 | 3 | 44 s | default |
-| 8 | 46,133 | 41/100 | 1188/100 | 827,022 | 192 | 2.9 h | full |
-| 9 | 408,469 | 21/250 | 630/250 | 886 | 3 | 28 s | default |
-| 10 | 4,033,378 | 6/25 | 92/25 | 10,774 | 9 | 5 min | default |
-| 11 | 43,917,901 | 9/100 | 392/100 | 2,509 | 6 | 98 s | default |
-| 11 | 43,917,903 | 91/1000 | 4016/1000 | 14,992 | 29 | 11 min | full |
-| 12 | 522,622,378 | 51/1250 | 2956/1250 | 2,361 | 7 | 130 s | default |
-| 13 | 6,746,626,601 | 31/200 | 632/200 | 3,897 | 7 | 3 min | default |
-| 13 | 6,746,626,957 | 4/25 | 88/25 | 26,721 | 47 | 25 min | full |
-| 14 | 93,891,140,217 | 41/800 | 2952/800 | 1,407 | 4 | 68 s | default |
-| 14 | 93,891,141,008 | 21/400 | 1550/400 | 15,284 | 57 | 26 min | full |
+| 8 | 46,132 | $`\tfrac{3}{10}`$ | $`\tfrac{64}{10}`$ | 2,915 | 3 | 44 s | default |
+| 8 | 46,133 | $`\tfrac{41}{100}`$ | $`\tfrac{1188}{100}`$ | 827,022 | 192 | 2.9 h | full |
+| 9 | 408,469 | $`\tfrac{21}{250}`$ | $`\tfrac{630}{250}`$ | 886 | 3 | 28 s | default |
+| 10 | 4,033,378 | $`\tfrac{6}{25}`$ | $`\tfrac{92}{25}`$ | 10,774 | 9 | 5 min | default |
+| 11 | 43,917,901 | $`\tfrac{9}{100}`$ | $`\tfrac{392}{100}`$ | 2,509 | 6 | 98 s | default |
+| 11 | 43,917,903 | $`\tfrac{91}{1000}`$ | $`\tfrac{4016}{1000}`$ | 14,992 | 29 | 11 min | full |
+| 12 | 522,622,378 | $`\tfrac{51}{1250}`$ | $`\tfrac{2956}{1250}`$ | 2,361 | 7 | 130 s | default |
+| 13 | 6,746,626,601 | $`\tfrac{31}{200}`$ | $`\tfrac{632}{200}`$ | 3,897 | 7 | 3 min | default |
+| 13 | 6,746,626,957 | $`\tfrac{4}{25}`$ | $`\tfrac{88}{25}`$ | 26,721 | 47 | 25 min | full |
+| 14 | 93,891,140,217 | $`\tfrac{41}{800}`$ | $`\tfrac{2952}{800}`$ | 1,407 | 4 | 68 s | default |
+| 14 | 93,891,141,008 | $`\tfrac{21}{400}`$ | $`\tfrac{1550}{400}`$ | 15,284 | 57 | 26 min | full |
 
-The fractions are written as in the names of the certificates (`8 41 1188 100` is c = 41/100, b = 1188/100).
+The fractions are written as in the names of the certificates (`8 41 1188 100` is $`c = \tfrac{41}{100}`$, $`b = \tfrac{1188}{100}`$).
 The other certificates give smaller bounds from smaller searches; 46,130 and 46,131 for k = 8 need 99 and
 244 states. The fifth large certificate, `9 1 38 10`, is a second search for 408,469 with 50,100 states. It
 takes 34 minutes and adds no bound. The cost of a search in the kernel is 7.5 ms for a state at k = 8, 12 to
@@ -417,7 +425,7 @@ copy of the search and the list of hashes are not trusted: Lean checks the files
 
 * Pantone's proofs. They are not public.
 * Theorem B for k = 5 and 6, and certificates of Theorem C for k = 5, 6, 7 and k = 15. Theorem A covers
-  k = 5 and 6; the soundness theorem of the search holds for 5 <= k <= 15.
+  k = 5 and 6; the soundness theorem of the search holds for $`5 \le k \le 15`$.
 * Later certificates. Certificates for 522,622,398 (k = 12) and 6,746,627,046 (k = 13) have been built since
   this version was put together and are not in it. The one for 93,891,141,126 (k = 14) is here as a recipe
   (`certificates/C14_843_63334_16000/`). Higher values are known by computation only, with no Lean

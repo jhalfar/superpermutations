@@ -53,11 +53,11 @@ theorem ssuper_lower_bound_8_native : 46134 <= Hunter.Ssuper 8
 
 ## The argument
 
-Theorem D (`LowerBounds/DTheorem.lean`, for every k >= 5) bounds a Hamiltonian path in the overlap graph by
+Theorem D (`LowerBounds/DTheorem.lean`, for every $`k \ge 5`$) bounds a Hamiltonian path in the overlap graph by
 lines that the exact weight-three chains of a strongly exitless path must satisfy: if every such chain with r
-pieces and total deficit δ has a r <= b δ + c for each line (a, b, c) of a list, and the lines exclude every
-excess below m, then the shortest superpermutation has at least hpv(k) + m letters. For k = 8, `D8.lean` uses
-the two lines 4 r <= 9 δ + 56 and 17 r <= 38 δ + 264 and one statement about the zone where both are tight,
+pieces and total deficit $`\delta`$ has $`a\,r \le b\,\delta + c`$ for each line $`(a, b, c)`$ of a list, and the lines exclude every
+excess below $`m`$, then the shortest superpermutation has at least $`\mathrm{hpv}(k) + m`$ letters. For k = 8, `D8.lean` uses
+the two lines $`4r \le 9\delta + 56`$ and $`17r \le 38\delta + 264`$ and one statement about the zone where both are tight,
 and gets 46,134.
 
 The three hypotheses are statements about all chains. `DModel.lean` reduces them to chains of a finite model,
@@ -76,7 +76,7 @@ them. The second line (5,807,830,513 chains by the C program) was not counted a 
 
 | file | what |
 |---|---|
-| `LowerBounds/DTheorem.lean` | Theorem D for every k >= 5 (`theoremD_pathwise`, `superperm_boundD`, `covers_length_ge_boundD`) |
+| `LowerBounds/DTheorem.lean` | Theorem D for every $`k \ge 5`$ (`theoremD_pathwise`, `superperm_boundD`, `covers_length_ge_boundD`) |
 | `LowerBounds/D8.lean` | k = 8: `covers_boundD_8` from the three hypotheses about chains |
 | `LowerBounds/DModel.lean` | the hypotheses for model chains, and from them for the chains of the preimage-chain library |
 | `LowerBounds/DFinal.lean` | `covers_boundD_8_of_search`: the bound from the three equations |

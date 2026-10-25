@@ -6,20 +6,21 @@ part. This directory holds Lean 4 proofs about how long such a word has to be.
 ## In short
 
 Upper bounds for every large n. Jay Pantone proved that there is a superpermutation of length at most
-F3(n) + (43/80 + o(1)) (n-3)!, where F3(n) = n! + (n-1)! + (n-2)!. The parts below lower the coefficient.
+$`F_3(n) + (\tfrac{43}{80} + o(1))\,(n-3)!`$, where $`F_3(n) = n! + (n-1)! + (n-2)!`$. The parts below lower the coefficient.
 
-* `constant/`: 1771/3456 in place of 43/80, for every n >= 13.
-* `constant61937/`, `constant305989/` and `constant43586371/`: 61937/120960 = 0.512045... for every n >= 13,
-  305989/604800 = 0.505934... for every n >= 16, 43586371/86486400 = 0.503967... for every n >= 19 and
-  21751799/43243200 = 0.503010... for every n >= 22. `constant43586371/` goes on to eight coefficients in all,
-  down to 11117297/27675648 = 0.401700 for every n >= 22. Each is a copy of the part before it with the namespace
+* `constant/`: $`\tfrac{1771}{3456}`$ in place of $`\tfrac{43}{80}`$, for every $`n \ge 13`$.
+* `constant61937/`, `constant305989/` and `constant43586371/`: $`\tfrac{61937}{120960} = 0.512045\ldots`$ for every
+  $`n \ge 13`$, $`\tfrac{305989}{604800} = 0.505934\ldots`$ for every $`n \ge 16`$,
+  $`\tfrac{43586371}{86486400} = 0.503967\ldots`$ for every $`n \ge 19`$ and
+  $`\tfrac{21751799}{43243200} = 0.503010\ldots`$ for every $`n \ge 22`$. `constant43586371/` goes on to eight
+  coefficients in all, down to $`\tfrac{11117297}{27675648} = 0.401700`$ for every $`n \ge 22`$. Each is a copy of the part before it with the namespace
   renamed and a different selection inside Pantone's construction.
 * `constant43586371/Uniform/` proves that the coefficient can be made as small as one likes
   (`coefficient_tends_to_zero`), and `constant43586371/UniR/` gives a rate: a superpermutation of length at most
-  F3(n) + (9/n)(n-3)! for every n >= 2^14 (`rate_R`).
-* `asym/` adds the lower bound of the Hunter-Raudvere library: for the length L(n) of the shortest
-  superpermutation, F3(n) <= L(n) for n >= 6 and (L(n) - F3(n)) / (n-3)! tends to 0. In units of (n-4)! the
-  remainder L(n) - F3(n) has limit inferior at least 2 and limit superior at most 8.
+  $`F_3(n) + \tfrac{9}{n}(n-3)!`$ for every $`n \ge 2^{14}`$ (`rate_R`).
+* `asym/` adds the lower bound of the Hunter-Raudvere library: for the length $`L(n)`$ of the shortest
+  superpermutation, $`F_3(n) \le L(n)`$ for $`n \ge 6`$ and $`(L(n) - F_3(n)) / (n-3)!`$ tends to 0. In units of $`(n-4)!`$ the
+  remainder $`L(n) - F_3(n)`$ has limit inferior at least 2 and limit superior at most 8.
 
 Literal words.
 
@@ -30,12 +31,14 @@ Literal words.
 
 Lower bounds.
 
-* `lower/` proves three lower bounds. With hpv(k) = k! + (k-1)! + (k-2)! + k - 3, a superpermutation on k
-  symbols has at least hpv(k) + ceil(2 ((k-2)! - (k-2)) / (k (k-3))) letters for k >= 5 (Theorem A) and at
-  least hpv(k) + ceil(2 ((k-2)! - (k-2)) / (k^2 - 4k + 1)) letters for k >= 7 (Theorem B). Theorem C makes
-  the denominator smaller by a term that a finite search justifies. The Lean kernel evaluates the searches
-  for k = 8 to 14.
-* `n8/` takes William Echols's Lean proof of 46,130 <= L(8) to 46,131 and 46,132 and removes `native_decide`
+* `lower/` proves three lower bounds. With $`\mathrm{hpv}(k) = k! + (k-1)! + (k-2)! + k - 3`$, a superpermutation
+  on $`k`$ symbols has at least
+  $`\mathrm{hpv}(k) + \left\lceil \dfrac{2\,((k-2)! - (k-2))}{k\,(k-3)} \right\rceil`$ letters for $`k \ge 5`$
+  (Theorem A) and at least
+  $`\mathrm{hpv}(k) + \left\lceil \dfrac{2\,((k-2)! - (k-2))}{k^2 - 4k + 1} \right\rceil`$ letters for $`k \ge 7`$
+  (Theorem B). Theorem C makes the denominator smaller by a term that a finite search justifies. The Lean kernel
+  evaluates the searches for k = 8 to 14.
+* `n8/` takes William Echols's Lean proof of $`46{,}130 \le L(8)`$ to 46,131 and 46,132 and removes `native_decide`
   from it. It is a second proof, independent of `lower/`, of what Theorem C gives for n = 8 up to 46,132.
 * `n8_46134/` proves that a superpermutation on 8 symbols has at least 46,134 letters (Theorem D). Like `n7/`
   it has two levels: level 1 is checked by the kernel and proves the bound from three equations about a
@@ -109,7 +112,7 @@ written out.
 
 ### Whose the parts are
 
-* The constant. The selection that gives 1771/3456 and its Lean proof are new. The construction is Pantone's,
+* The constant. The selection that gives $`\tfrac{1771}{3456}`$ and its Lean proof are new. The construction is Pantone's,
   and the proof is built on his Lean library, of which one file is replaced by a patched copy.
 * The words. The kernel checkers are new, and the words for n = 10, 11 and 12 are mine (they are in `words/`
   at the top of this repository). The words for n = 7, 8 and 9 are by Teodorescu, Pantone and rumstd.
@@ -241,7 +244,7 @@ theorem words_twelve_boundC : (exists w : List (Fin 12), Covers w /\ w.length = 
 ```
 
 `Ssuper` is `Hunter.Ssuper`. The division is that of natural numbers, so the last summands of `kisicBound`,
-`boundB` and `boundC` are the ceilings in the formulas. `piC k cn q` is q (k^2 - 4k + 1) - cn (k - 1), and
+`boundB` and `boundC` are the ceilings in the formulas. `piC k cn q` is $`q\,(k^2 - 4k + 1) - \mathit{cn}\,(k - 1)`$, and
 `ConditionsC` is three inequalities between the constants. The seven `covers_lower_bound_` lines also hold in
 the form `46133 <= Ssuper 8` (`ssuper_lower_bound_8` and so on).
 
@@ -302,13 +305,13 @@ statement. Level 2 supplies the equations. `covers_lower_bound_7_native` depends
 
 ## What is in this directory
 
-* `constant/`: the development for 1771/3456. 11 hand-written Lean files and an audit file, 38 generated
+* `constant/`: the development for $`\tfrac{1771}{3456}`$. 11 hand-written Lean files and an audit file, 38 generated
   certificate files, the generator, one patched file of Pantone's library, `build.sh`, a README.
-* `constant61937/`, `constant305989/`, `constant43586371/`: the developments for 61937/120960, 305989/604800 and
+* `constant61937/`, `constant305989/`, `constant43586371/`: the developments for $`\tfrac{61937}{120960}`$, $`\tfrac{305989}{604800}`$ and
   the later coefficients, with generators, `build.sh` and a README each. They use the patched file of
   Pantone's library and the hashes of `constant/`. `constant43586371/` also holds `Uniform/` and `UniR/` with
   the proofs on paper `PROOF.md` and `PROOF_R.md`, and `REFEREE.md`, the report of an independent check.
-* `asym/`: four Lean files about L(n) (`ConstAsym/`), `build.sh`, a README.
+* `asym/`: four Lean files about $`L(n)`$ (`ConstAsym/`), `build.sh`, a README.
 * `words/`: the checkers (the two methods, and three files with the changes for n = 12), the statements for
   n = 7 to 11, the bridge, three generators, three verifiers, `check_word.sh` for a word of your own, the
   generated certificates for n = 7, 8 and 9, lists of hashes, `build.sh`, a README.
@@ -522,11 +525,11 @@ The README of each part has the times per group of modules, and the costs of `as
 
 ## What is not covered
 
-* The constant (`constant/`): nothing is proven for n <= 12, and no rate for the o(1) term.
+* The constant (`constant/`): nothing is proven for $`n \le 12`$, and no rate for the $`o(1)`$ term.
 * The words: n = 13. The shortest word known for n = 13 has 6.7 billion letters and is out of reach for this
   method.
 * Nothing here says that any of the words of `words/` and `words12/` is shortest. Shortest words are proven
-  for n <= 6 only (`small/`).
+  for $`n \le 6`$ only (`small/`).
 * The lower bounds: Theorem B is not proven for k = 5 and 6, and Theorem C has certificates for k = 8 to 14
   only. Pantone's proofs are not here; they are not public.
 * n = 8 in Echols's framework beyond 46,132.

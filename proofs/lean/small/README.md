@@ -8,7 +8,7 @@ and no compiled code, and every finite search is evaluated by the kernel (`decid
 everything from sources into an empty build directory.
 
 For n = 6 this is, as far as I know, the first proof of 872 that the kernel checks alone. Benjamin Grayzel's Lean
-proof of s(6) = 872 (github.com/BGray-wrl/superperm6) uses `native_decide` in its finite searches. The lower bound
+proof of $`s(6) = 872`$ (github.com/BGray-wrl/superperm6) uses `native_decide` in its finite searches. The lower bound
 here is proven in the model of standard configurations of the proof of 5,899 in `../n7`, not in Grayzel's framework;
 his word and his statement are used for the upper bound and for the second form of the theorem.
 
@@ -73,18 +73,17 @@ The axioms, as `build.sh` prints them:
 | 5 | 153 letters | Theorem A of `../lower` at k = 5 |
 | 6 | Robin Houston's word of 872 letters, from Grayzel's repository | `K6.covers_872`, the search of `K6/` in the model of `../n7` |
 
-The words for n <= 5 are those of the recursive construction (the word on k symbols is built from the word on
-k - 1 symbols, and has 1! + 2! + ... + k! letters); they are written out in `Small/Words.lean`. `check K w` runs
+The words for $`n \le 5`$ are those of the recursive construction (the word on k symbols is built from the word on
+k - 1 symbols, and has $`1! + 2! + \cdots + k!`$ letters); they are written out in `Small/Words.lean`. `check K w` runs
 through Mathlib's list `permutations'` of `0, ..., K-1` and asks whether each occurs in `w`, and `covers_of_check`
 proves that a word that passes has `Covers`. For n = 6 the word and its check are Grayzel's `Witness.lean` in the
 kernel-only version of `superperm6/`.
 
 The lower bounds do not all take the same route. The model of `../n7` (Theorems W and N,
-`covers_length_gt_of_no_stdConfig`) is stated for k >= 5, so it does not reach n = 3 and 4. Zach Hunter and Uku
+`covers_length_gt_of_no_stdConfig`) is stated for $`k \ge 5`$, so it does not reach n = 3 and 4. Zach Hunter and Uku
 Raudvere's library proves `9 <= Ssuper 3` and `33 <= Ssuper 4` (Corollary 28 of their paper, kernel-only), and the
 bridge of `../words` (`hunter_le_ssuper_iff`) turns them into statements about `Covers`. At n = 5 Theorem A of
-`../lower` already gives 153: hpv(5) + ceil(2 (3! - 3) / (5 * 2)) = 152 + 1, with hpv(k) = k! + (k-1)! + (k-2)! +
-k - 3. So no search is needed below n = 6; the Hunter-Raudvere library gives 153 at n = 5 as well
+`../lower` already gives 153: $`\mathrm{hpv}(5) + \lceil 2\,(3! - 3) / (5 \cdot 2) \rceil = 152 + 1`$, with $`\mathrm{hpv}(k) = k! + (k-1)! + (k-2)! + k - 3`$. So no search is needed below n = 6; the Hunter-Raudvere library gives 153 at n = 5 as well
 (`superperm_length_ge_5_153`). At n = 6 Theorem A gives 870 and the Hunter-Raudvere bound 869, and the last two
 letters need the search.
 
@@ -93,23 +92,23 @@ letters need the search.
 1. The model (`../n7`, reused unchanged). A standard configuration on k symbols is a kernel (a list of rows)
    and hanging components (lists of rows attached at one vertex); its cost is rows + seam excess + attachment
    costs. Theorems W and N (`covers_length_gt_of_no_stdConfig`, `../n7/LowerBounds/NTheorem.lean`): if no valid
-   configuration has cost at most (k-2)! + D, every superpermutation has at least hpv(k) + D + 1 letters,
-   hpv(6) = 867. So 871 is "no configuration of cost <= 27" and 872 "of cost <= 28".
+   configuration has cost at most $`(k-2)! + D`$, every superpermutation has at least $`\mathrm{hpv}(k) + D + 1`$ letters,
+   $`\mathrm{hpv}(6) = 867`$. So 871 is "no configuration of cost $`\le 27`$" and 872 "of cost $`\le 28`$".
 2. The family (`K6/Family.lean`, `K6/FamilyC.lean`). A valid configuration on 6 symbols falls into open trails
    (the kernel cut at its seams of weight other than 3; hanging components with a paid attachment cut the same
    way; hanging components with a free attachment and a heavy seam, cut and read cyclically), closed trails (free
    attachment, no heavy seam, at least two rows) and loops (free attachment, one row, which has 4 blocks).
    Counting blocks (at least 120, one per rotation class) against the cost gives, for t open trails and defect D:
-   the sum over open and closed trails of (rows - holes) is at least 24 - 4D + 4(t-1), and the sum of their holes
-   plus the loops is at most 5D - 5(t-1).
+   the sum over open and closed trails of (rows - holes) is at least $`24 - 4D + 4(t-1)`$, and the sum of their holes
+   plus the loops is at most $`5D - 5(t-1)`$.
 3. Chain caps (`K6/Cap*.lean`). A chain (rows joined by seams of weight 3, blocks in pairwise different classes)
-   with x <= 20 holes has at most W6[x] rows, W6 = 4 4 7 7 10 10 11 13 14 15 16 17 19 19 22 23 24 25 26 27 28. Up
+   with $`x \le 20`$ holes has at most $`W_6[x]`$ rows, $`W_6 =`$ 4 4 7 7 10 10 11 13 14 15 16 17 19 19 22 23 24 25 26 27 28. Up
    to 14 holes these are the true caps; from 15 holes on h + 8 is enough, and the search for these caps has 52,386
    nodes instead of 3.2 million. That the answer of the search proves the caps is the argument of
    `PLevels.lean` and `PRules.lean` of `../n7`, reused unchanged.
-4. 871 (`K6/Knap.lean`, `K6/Final871.lean`). An open trail has value rows - holes <= W6[h] - h; a closed trail
+4. 871 (`K6/Knap.lean`, `K6/Final871.lean`). An open trail has value $`\text{rows} - \text{holes} \le W_6[h] - h`$; a closed trail
    glues through the class it skips into a trail with one row and 6 holes fewer, so its value is at most
-   1 + W6[h - 6] - h. Knapsack tables computed by Lean and one check by the kernel (`chk3`) show that no numbers
+   $`1 + W_6[h - 6] - h`$. Knapsack tables computed by Lean and one check by the kernel (`chk3`) show that no numbers
    of open and closed trails reach the bound of step 2 at defect 3.
 5. The tight case, defect 4 (`K6/Tight*.lean`, `K6/TE/`). The same check (`chk4`) leaves only families with no
    closed trail and 1, 2 or 3 open trails. Every class outside the open trails then lies in a loop that avoids
@@ -263,4 +262,4 @@ of `../n7`, `../lower` and `../words` and the two libraries keep their licences 
 ## What is not here
 
 * Nothing about n = 7.
-* The engine of `K6/` is written for 6 symbols. The values for n <= 5 do not use it.
+* The engine of `K6/` is written for 6 symbols. The values for $`n \le 5`$ do not use it.

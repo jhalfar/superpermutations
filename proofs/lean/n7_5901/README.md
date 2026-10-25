@@ -1,6 +1,6 @@
 # L(7) >= 5,901: the Lean reduction (level 1)
 
-L(7) >= 5,901 is a computer-assisted proof, not a Lean theorem. Its written proof, its programs, its tables and
+$`L(7) \ge 5{,}901`$ is a computer-assisted proof, not a Lean theorem. Its written proof, its programs, its tables and
 the state of every search are in [`../../n7_5901/`](../../n7_5901/README.md). This directory holds the part of it
 that Lean checks completely: the reduction of the bound to thirty search equations.
 

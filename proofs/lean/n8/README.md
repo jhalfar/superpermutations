@@ -9,9 +9,9 @@ This directory holds what turns his project into three variants that need no `na
 
 | variant | bound | inequality for every trail of marked rows | whose |
 |---|---|---|---|
-| `v46130k` | 46,130 <= L(8) | 20 rows - 49 charge <= 136 | his bound and his inequality |
-| `v46131k` | 46,131 <= L(8) | 5 rows - 12 charge <= 38 | new |
-| `v46132bk` | 46,132 <= L(8) | 20 rows - 47 charge <= 172 | new |
+| `v46130k` | $`46{,}130 \le L(8)`$ | $`20\,\text{rows} - 49\,\text{charge} \le 136`$ | his bound and his inequality |
+| `v46131k` | $`46{,}131 \le L(8)`$ | $`5\,\text{rows} - 12\,\text{charge} \le 38`$ | new |
+| `v46132bk` | $`46{,}132 \le L(8)`$ | $`20\,\text{rows} - 47\,\text{charge} \le 172`$ | new |
 
 His reduction from words to trails of marked rows is used as it is, with the defect budget raised from 44 to
 45 and 46 for the two new bounds. What is new: the two inequalities, and the way all three are proven. The

@@ -3,13 +3,18 @@
 This directory is a Lean 4 development on top of Jay Pantone's library `SuperpermutationUpperBound`
 (github.com/jaypantone/superperm-upper-43-80, commit `c8fb7ffdd69be1375580710ae11b47a295b1f0f6`, Lean 4.31.0,
 Mathlib at `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`). It applies his construction to another selection and
-proves, for superpermutations on n symbols,
+proves, for superpermutations on $`n`$ symbols,
 
-    S(n) <= F3(n) + (1771/3456 + o(1)) (n-3)!        F3(n) = n! + (n-1)! + (n-2)!
-    1771/3456 = 53/108 + 25/1152 = 0.512442...
+```math
+S(n) \le F_3(n) + \left(\tfrac{1771}{3456} + o(1)\right)(n-3)!, \qquad F_3(n) = n! + (n-1)! + (n-2)!
+```
 
-His selection gives 43/80 = 7/15 + 17/240 = 0.5375. The selection used here has 53/108 (n-3)! missed classes
-and needs 25/1152 (n-3)!/(n-3) connector cycles. The construction is his. What is new is the selection and
+```math
+\tfrac{1771}{3456} = \tfrac{53}{108} + \tfrac{25}{1152} = 0.512442\ldots
+```
+
+His selection gives $`\tfrac{43}{80} = \tfrac{7}{15} + \tfrac{17}{240} = 0.5375`$. The selection used here has
+$`\tfrac{53}{108}(n-3)!`$ missed classes and needs $`\tfrac{25}{1152}\,(n-3)!/(n-3)`$ connector cycles. The construction is his. What is new is the selection and
 the two points where it leaves the format of his paper (see "The selection").
 
 The Lean kernel checks every proof. There is no `native_decide` and no `sorry`. Each theorem below depends on
@@ -43,8 +48,8 @@ theorem eventual_bound :
           ((1771 / 3456 : Rat) + eps) * (Nat.factorial (K - 3) : Rat)
 ```
 
-`finite_bound` and `eventual_bound` have the shape of his `finite_bound` and `eventual_bound`, with 1771/3456
-in place of 43/80, 25/1152 in place of 17/240, and 13 symbols (m = 11) as the first size.
+`finite_bound` and `eventual_bound` have the shape of his `finite_bound` and `eventual_bound`, with $`\tfrac{1771}{3456}`$
+in place of $`\tfrac{43}{80}`$, $`\tfrac{25}{1152}`$ in place of $`\tfrac{17}{240}`$, and 13 symbols (m = 11) as the first size.
 
 `SuperpermutationUpperBound1771/Corollaries.lean` adds the same bound in the shape of his `Finite` and
 `FiniteInteger` (`Cost1771`, `finite_1771`, `finiteInteger_1771`) and three values of `finite_bound`:
@@ -71,13 +76,13 @@ theorems as proofs of exactly those statements. Read it first.
   satellite, and the number of consecutive classes it covers (`visible`). A row is full if it covers the whole
   2-loop and short if it leaves out one class.
 * A closed trail (`ClosedTrail`) is a cyclic list of rows in which the tail of each row is the head of the
-  next. For a closed trail with f full and t short rows, f - t is its signed excess.
+  next. For a closed trail with f full and t short rows, $`f - t`$ is its signed excess.
 * Transport (`Transport.rows`, `transportWalk`) carries a row to rows on one more symbol, and completion
-  makes the rows whose words are spelled out. A closed trail whose signed excess is divisible by k - 2 (k the
-  number of symbols) is carried to k - 2 closed trails.
+  makes the rows whose words are spelled out. A closed trail whose signed excess is divisible by $`k - 2`$ ($`k`$ the
+  number of symbols) is carried to $`k - 2`$ closed trails.
 * A full chart (`Partition.fullChart`) is the closed trail of full rows above one 2-loop of the level below,
   with the new letter put into each gap in turn.
-* A connector cycle is the cycle of the rotations of one endpoint word. It costs n - 3 letters and joins all
+* A connector cycle is the cycle of the rotations of one endpoint word. It costs $`n - 3`$ letters and joins all
   closed trails it meets into one.
 
 ## The selection
@@ -85,15 +90,15 @@ theorems as proofs of exactly those statements. Read it first.
 The selection lives on 11 symbols. Its 2-loops are of three kinds.
 
 * 338,688 loops carry the rows of a selection on 9 symbols transported twice. That selection has two
-  closed trails (2,280 and 2,424 rows, both with 7 dividing f - t) and 336 2-loops without a row.
+  closed trails (2,280 and 2,424 rows, both with 7 dividing $`f - t`$) and 336 2-loops without a row.
 * The other 24,192 loops lie above those 336 loops. They come in 48 groups of 504. In each group 378 loops
   carry rows that form three closed trails of 63, 133 and 182 rows, and 126 loops carry no row.
-* So 6,048 loops carry no row at all, and the three short trails of each group have f - t prime to 9.
+* So 6,048 loops carry no row at all, and the three short trails of each group have $`f - t`$ prime to 9.
 
 Two points differ from the selections of the paper. First, a 2-loop may carry no row, as the 48 unused bases
 do in `Certificates/NineRecipe.lean`; one transport later the loops above it form a full chart, exactly as in
-`Partition/SprintBase.lean`. Second, a closed trail may violate the condition that k - 2 divides f - t. I
-write such a trail k - 2 times in a row, which is again a `ClosedTrail` and satisfies the condition.
+`Partition/SprintBase.lean`. Second, a closed trail may violate the condition that $`k - 2`$ divides $`f - t`$. I
+write such a trail $`k - 2`$ times in a row, which is again a `ClosedTrail` and satisfies the condition.
 `SafeCircleCover.transport` has no divisibility hypothesis, so connector cycles are carried up as before.
 
 After one transport (12 symbols) the selection has one full or short row in every 2-loop, all closed trails
@@ -113,7 +118,7 @@ In `SuperpermutationUpperBound1771/`:
 * `Hybrid.lean`: the certificate as a structure (`Cert`, `GroupFacts`); the levels on 10, 11 and 12 symbols;
   `complete12`.
 * `Thirteen.lean`: the counts, the 7,875 cycles, the word on 13 symbols.
-* `AllSizes.lean`: the level on k + 12 symbols for every k; `Cert.word_ledger`.
+* `AllSizes.lean`: the level on $`k + 12`$ symbols for every k; `Cert.word_ledger`.
 * `GenericBounds.lean`: the rational bound and the epsilon argument.
 * `Certificate/Checks.lean`: the statements the kernel evaluates, and what they imply.
 * The other files of `Certificate/`: generated data with one `decide +kernel` per check.
@@ -171,7 +176,7 @@ every fact itself before it writes a file.
 * The epsilon argument: `Bounds.floor_parameter_bounds`, `Bounds.factorial_error_le`.
 
 I do not use `SuperpermutationUpperBound43/` or `CircleTransport/Iterated.lean`. They are written for a
-base on 10 symbols with the constants 7/15 and 357. Of the 335 Lean files of his repository the development
+base on 10 symbols with the constants $`\tfrac{7}{15}`$ and 357. Of the 335 Lean files of his repository the development
 imports 95, directly or through other files: `Challenge.lean` and 94 files of `SuperpermutationUpperBound/`.
 
 ## One patched file, and four passages that follow his text
@@ -257,4 +262,4 @@ lies between as well. I have not been able to run that (see above).
 * The selection is not known to be optimal. The rows inside a group are one of 6 optimal solutions among
   those that are invariant under rotation of the seven old letters; without that symmetry 308 missed
   classes and loops per group is the best found, with a lower bound of 270.
-* The error term o(1) is the one of his proof. I did not formalise a rate.
+* The error term $`o(1)`$ is the one of his proof. I did not formalise a rate.

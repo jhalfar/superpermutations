@@ -36,7 +36,7 @@ The shortest words over n symbols that contain all permutations have 1, 3, 9, 33
 * method: Lean theorems SmallSuperperm.exact_one to exact_five, kernel only, no native_decide: proofs/lean/small/Small. Upper bounds: the words of the recursive construction, checked by the kernel. Lower bounds: n = 1, 2 direct; n = 3, 4 pointwise_3, pointwise_4 of the Hunter-Raudvere library through the bridge of proofs/lean/words; n = 5 Theorem A of proofs/lean/lower.
 * credit: The values are classical. Lean: Jakub Halfar (with Claude); the lower bounds for n = 3 and 4 are Zach Hunter and Uku Raudvere's (their library, Corollary 28).; date 2026-10-25
 * reproduce: `./build.sh 5` in `proofs/lean/small`
-* evidence: `proofs/lean/small/README.md` (sha256 `ac60fa933343...`); `proofs/lean/small/Small/Upto5.lean` (sha256 `166f467bd7fa...`)
+* evidence: `proofs/lean/small/README.md` (sha256 `e8b15f6eaef1...`); `proofs/lean/small/Small/Upto5.lean` (sha256 `166f467bd7fa...`)
 * source: `proofs/lean/small/README.md:3`
 
 
@@ -53,7 +53,7 @@ Every word over 6 symbols that contains all 720 permutations has at least 872 le
 * method: Lean theorem SmallSuperperm.exact_six (also grayzel_six : Superperm6.IsMinimumLength 872), kernel only, no native_decide: proofs/lean/small. Lower bound K6.covers_872: a kernel search (one part of 52,386 nodes for the chain caps, 72 parts for the tight case at defect 4) in the model of standard configurations with Theorems W and N of proofs/lean/n7. Upper bound: Robin Houston's word in the kernel-only version of Benjamin Grayzel's Witness.lean. Axioms propext, Classical.choice, Quot.sound.
 * credit: Jakub Halfar (with Claude). The value 872 was known: the word is Robin Houston's (2014), and Benjamin Grayzel's Lean proof of s(6) = 872 uses native_decide; his definitions and his check of the word are used here.; date 2026-10-25
 * reproduce: `JOBS=2 ./build.sh` in `proofs/lean/small`
-* evidence: `proofs/lean/small/README.md` (sha256 `ac60fa933343...`); `proofs/lean/small/Small/Exact.lean` (sha256 `facc80dc14e7...`); `proofs/lean/small/K6/Final872.lean` (sha256 `fe08a1bd0087...`)
+* evidence: `proofs/lean/small/README.md` (sha256 `e8b15f6eaef1...`); `proofs/lean/small/Small/Exact.lean` (sha256 `facc80dc14e7...`); `proofs/lean/small/K6/Final872.lean` (sha256 `fe08a1bd0087...`)
 * source: `proofs/lean/small/README.md:10`
 * notes: Before this, the best kernel-only bound at n = 6 was 870 (Theorem A of proofs/lean/lower). The README of proofs/lean/small gives the cost of a build from an empty directory.
 
@@ -71,7 +71,7 @@ Every word over 7 symbols that contains all 5,040 permutations has at least 5,89
 * method: Lean theorem covers_lower_bound_7_native, level 2: level 1 (model, kernel-checked) plus 22 search equations evaluated by compiled code with native_decide; proofs/lean/n7
 * credit: Jakub Halfar (with Claude); date 2026-10-07
 * reproduce: `JOBS=8 ./build.sh full` in `proofs/lean/n7`
-* evidence: `proofs/lean/n7/README.md` (sha256 `c3a64e9055fa...`)
+* evidence: `proofs/lean/n7/README.md` (sha256 `44b7ef9e4665...`)
 * source: `proofs/lean/n7/README.md:1`
 * superseded by: `n7-lb-5900`
 * notes: Level 1 alone depends on propext, Classical.choice, Quot.sound; the 22 search equations rest on native_decide (one axiom each).
@@ -85,8 +85,8 @@ Theorem A (Lean) gives, for 7 symbols, a lower bound of 5,893 letters for every 
 * method: Lean theorem A of proofs/lean/lower (LowerBounds/TheoremA.lean), formula hpv(k) + ceil(2((k-2)! - (k-2)) / (k(k-3))), kernel-checked, no native_decide
 * credit: Formula: Zach Hunter (21 Oct 2019); Lean proof: Jakub Halfar (with Claude); date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `497fde301d0d...`)
-* source: `proofs/lean/lower/README.md:19`
+* evidence: `proofs/lean/lower/README.md` (sha256 `e9529840839c...`)
+* source: `proofs/lean/lower/README.md:27`
 * notes: Weaker than n7-lb-5899, which is the best Lean bound for n = 7.
 
 #### `n7-lb-theoremB-5895`
@@ -98,8 +98,8 @@ Theorem B (Lean) gives, for 7 symbols, a lower bound of 5,895 letters for every 
 * method: Lean theorem B of proofs/lean/lower (TheoremBCore.lean, TheoremB.lean), formula hpv(k) + ceil(2((k-2)! - (k-2)) / (k^2 - 4k + 1)), k >= 7, kernel-checked
 * credit: Formula: Cole Fritsch (20 Jan 2020); Lean proof: Jakub Halfar (with Claude); date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `497fde301d0d...`)
-* source: `proofs/lean/lower/README.md:19`
+* evidence: `proofs/lean/lower/README.md` (sha256 `e9529840839c...`)
+* source: `proofs/lean/lower/README.md:27`
 * notes: Theorem C has no value in the n = 7 row of the table (cell empty), so there is no Theorem C entry for n = 7. Weaker than n7-lb-5899.
 
 #### `n7-lb-5900`
@@ -138,7 +138,7 @@ Every word over 7 symbols that contains all 5,040 permutations has at least 5,90
 * class: all words
 * method: computer-assisted: Lean checks the reduction to thirty search equations (n7-lb-5901-lean-l1) and six of them by native_decide; the others rest on searches by C, C++ and CUDA programs (trust table in proofs/n7_5901/README.md)
 * credit: Jakub Halfar (with Claude); date 2026-10-20
-* evidence: `proofs/n7_5901/README.md` (sha256 `51a515de70a9...`); `proofs/n7_5901/PROOF_5901.md` (sha256 `a674cee71b41...`); `proofs/n7_5901/table/TABLE_C16.md` (sha256 `547191cd3769...`); `proofs/n7_5901/audit/partaudit.txt` (sha256 `35e94019be65...`)
+* evidence: `proofs/n7_5901/README.md` (sha256 `ea1c32551a48...`); `proofs/n7_5901/PROOF_5901.md` (sha256 `99b1db80fbe1...`); `proofs/n7_5901/table/TABLE_C16.md` (sha256 `547191cd3769...`); `proofs/n7_5901/audit/partaudit.txt` (sha256 `35e94019be65...`)
 * source: `proofs/n7_5901/README.md:7`
 * supersedes: `n7-lb-5900`
 * notes: Not a Lean theorem. K6 was being evaluated in Lean on 2026-10-24.
@@ -152,7 +152,7 @@ Lean level 1: covers_5901_of_search states that every word over 7 symbols contai
 * method: Lean, kernel only (propext, Classical.choice, Quot.sound); proofs/lean/n7_5901 LowerBounds/F5901Search.lean; proves the accounting, Lemma CUT16, Rule JS, PREV, ORD, VS, the ring classes and the completeness of the engines
 * credit: Jakub Halfar (with Claude); date 2026-10-17
 * reproduce: `./build.sh` in `proofs/lean/n7_5901/`
-* evidence: `proofs/lean/n7_5901/LowerBounds/F5901Search.lean` (sha256 `58bd2fc38f1d...`); `proofs/lean/n7_5901/README.md` (sha256 `774a84ac2de9...`)
+* evidence: `proofs/lean/n7_5901/LowerBounds/F5901Search.lean` (sha256 `58bd2fc38f1d...`); `proofs/lean/n7_5901/README.md` (sha256 `5359e1c7a465...`)
 * source: `proofs/lean/n7_5901/README.md:9`
 * notes: A reduction, not a proof of 5,901: six of the thirty equations are evaluated (see proofs/n7_5901/README.md).
 
@@ -164,7 +164,7 @@ Lean theorem Audit5901.k10_ev (from K16.Audit.k10_native): the Lean kernel-alone
 * class: Lean search equation K10 of defect 16 (engine K16.seqSearch)
 * method: native_decide with the C code of the engine loaded; NK.lean (105 min on 1 thread together with K9, K8) and NEv.lean in proofs/n7_5901/lean/Audit5901
 * credit: Jakub Halfar (with Claude); date 2026-10-20
-* evidence: `proofs/n7_5901/lean/logs/NK.log` (sha256 `24c0af970c2f...`); `proofs/n7_5901/README.md` (sha256 `51a515de70a9...`)
+* evidence: `proofs/n7_5901/lean/logs/NK.log` (sha256 `24c0af970c2f...`); `proofs/n7_5901/README.md` (sha256 `ea1c32551a48...`)
 * source: `proofs/n7_5901/README.md:40`
 * notes: Evaluated with the C code of the engines loaded (native_decide); the scripts I used are in proofs/n7_5901/lean/. The other search equations of defect 16 are listed in the trust table of proofs/n7_5901/README.md.
 
@@ -176,7 +176,7 @@ Lean theorem Audit5901.k9_ev (from K16.Audit.k9_native): the Lean kernel-alone s
 * class: Lean search equation K9 of defect 16 (engine K16.seqSearch)
 * method: native_decide with the C code of the engine loaded; NK.lean and NEv.lean in proofs/n7_5901/lean/Audit5901
 * credit: Jakub Halfar (with Claude); date 2026-10-20
-* evidence: `proofs/n7_5901/lean/logs/NK.log` (sha256 `24c0af970c2f...`); `proofs/n7_5901/README.md` (sha256 `51a515de70a9...`)
+* evidence: `proofs/n7_5901/lean/logs/NK.log` (sha256 `24c0af970c2f...`); `proofs/n7_5901/README.md` (sha256 `ea1c32551a48...`)
 * source: `proofs/n7_5901/README.md:39`
 * notes: Evaluated with the C code of the engines loaded (native_decide); the scripts I used are in proofs/n7_5901/lean/. The other search equations of defect 16 are listed in the trust table of proofs/n7_5901/README.md.
 
@@ -188,7 +188,7 @@ Lean theorem Audit5901.k8_ev (from K16.Audit.k8_native): the Lean kernel-alone s
 * class: Lean search equation K8 of defect 16 (engine K16.seqSearch)
 * method: native_decide with the C code of the engine loaded; NK.lean and NEv.lean in proofs/n7_5901/lean/Audit5901
 * credit: Jakub Halfar (with Claude); date 2026-10-20
-* evidence: `proofs/n7_5901/lean/logs/NK.log` (sha256 `24c0af970c2f...`); `proofs/n7_5901/README.md` (sha256 `51a515de70a9...`)
+* evidence: `proofs/n7_5901/lean/logs/NK.log` (sha256 `24c0af970c2f...`); `proofs/n7_5901/README.md` (sha256 `ea1c32551a48...`)
 * source: `proofs/n7_5901/README.md:38`
 * notes: Evaluated with the C code of the engines loaded (native_decide); the scripts I used are in proofs/n7_5901/lean/. The other search equations of defect 16 are listed in the trust table of proofs/n7_5901/README.md.
 
@@ -200,7 +200,7 @@ Lean theorem Audit5901.t8_ev (from J16.Audit.t8_native): the Lean joint search e
 * class: Lean search equation T8 of defect 16 (engine J16.jSearch)
 * method: native_decide with the C code of the engine loaded; NJ.lean and NEv.lean in proofs/n7_5901/lean/Audit5901
 * credit: Jakub Halfar (with Claude); date 2026-10-20
-* evidence: `proofs/n7_5901/lean/logs/NJ.log` (sha256 `9f40a3b94a4a...`); `proofs/n7_5901/README.md` (sha256 `51a515de70a9...`)
+* evidence: `proofs/n7_5901/lean/logs/NJ.log` (sha256 `9f40a3b94a4a...`); `proofs/n7_5901/README.md` (sha256 `ea1c32551a48...`)
 * source: `proofs/n7_5901/README.md:57`
 * notes: Evaluated with the C code of the engines loaded (native_decide); the scripts I used are in proofs/n7_5901/lean/. The other search equations of defect 16 are listed in the trust table of proofs/n7_5901/README.md.
 
@@ -212,7 +212,7 @@ Lean theorem Audit5901.t9_ev (from J16.Audit.t9_native): the Lean joint search e
 * class: Lean search equation T9' of defect 16 (engine J16.jSearch; the Lean engine also tests the class of every ring)
 * method: native_decide with the C code of the engine loaded; NJ.lean (117 min on 2 threads together with T8) and NEv.lean in proofs/n7_5901/lean/Audit5901
 * credit: Jakub Halfar (with Claude); date 2026-10-20
-* evidence: `proofs/n7_5901/lean/logs/NJ.log` (sha256 `9f40a3b94a4a...`); `proofs/n7_5901/README.md` (sha256 `51a515de70a9...`)
+* evidence: `proofs/n7_5901/lean/logs/NJ.log` (sha256 `9f40a3b94a4a...`); `proofs/n7_5901/README.md` (sha256 `ea1c32551a48...`)
 * source: `proofs/n7_5901/README.md:58`
 * notes: Evaluated with the C code of the engines loaded (native_decide); the scripts I used are in proofs/n7_5901/lean/. The other search equations of defect 16 are listed in the trust table of proofs/n7_5901/README.md.
 
@@ -341,8 +341,8 @@ Theorem A (Lean) gives, for 8 symbols, a lower bound of 46,121 letters for every
 * method: Lean theorem A of proofs/lean/lower (LowerBounds/TheoremA.lean), kernel-checked, no native_decide
 * credit: Formula: Zach Hunter (21 Oct 2019); Lean proof: Jakub Halfar (with Claude); date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `497fde301d0d...`)
-* source: `proofs/lean/lower/README.md:20`
+* evidence: `proofs/lean/lower/README.md` (sha256 `e9529840839c...`)
+* source: `proofs/lean/lower/README.md:28`
 * notes: Weaker than n8-lb-46133, which is the best kernel-level Lean bound for n = 8.
 
 #### `n8-lb-theoremB-46129`
@@ -354,8 +354,8 @@ Theorem B (Lean) gives, for 8 symbols, a lower bound of 46,129 letters for every
 * method: Lean theorem B of proofs/lean/lower (TheoremBCore.lean, TheoremB.lean), kernel-checked, no native_decide
 * credit: Formula: Cole Fritsch (20 Jan 2020); Lean proof: Jakub Halfar (with Claude); date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `497fde301d0d...`)
-* source: `proofs/lean/lower/README.md:20`
+* evidence: `proofs/lean/lower/README.md` (sha256 `e9529840839c...`)
+* source: `proofs/lean/lower/README.md:28`
 * notes: Weaker than n8-lb-46133.
 
 #### `n8-lb-46132-theoremC-default`
@@ -367,8 +367,8 @@ Theorem C (Lean, default build level, 22 of 27 searches) gives, for 8 symbols, a
 * method: Lean theorem C of proofs/lean/lower with the certificate c = 3/10, b = 64/10 (search of 2,915 states, evaluated by the kernel), no native_decide
 * credit: Jakub Halfar (with Claude), on Xiaolong Liu's preimage-chain library; date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `497fde301d0d...`)
-* source: `proofs/lean/lower/README.md:320`
+* evidence: `proofs/lean/lower/README.md` (sha256 `e9529840839c...`)
+* source: `proofs/lean/lower/README.md:328`
 * superseded by: `n8-lb-46133`
 * notes: Replaced as the best value by the full build level (46,133).
 
@@ -381,8 +381,8 @@ Theorem C (Lean, full build level) gives, for 8 symbols, a lower bound of 46,133
 * method: Lean theorem C of proofs/lean/lower with the certificate c = 41/100, b = 1188/100 (search of 827,022 states in 192 generated files, kernel evaluation, about 2.9 h), no native_decide, axioms propext, Classical.choice, Quot.sound only
 * credit: Jakub Halfar (with Claude), on Xiaolong Liu's preimage-chain library; date 2026-10-07
 * reproduce: `./build.sh full` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `497fde301d0d...`)
-* source: `proofs/lean/lower/README.md:321`
+* evidence: `proofs/lean/lower/README.md` (sha256 `e9529840839c...`)
+* source: `proofs/lean/lower/README.md:329`
 * supersedes: `n8-lb-46132-theoremC-default`
 * notes: Best bound for n = 8 without native_decide. With native_decide the best is n8-lb-46134-native.
 
@@ -395,7 +395,7 @@ Every word over 8 symbols that contains all 40,320 permutations has at least 46,
 * method: Lean theorem D (proofs/lean/n8_46134): level 1 reduces the bound to three search equations (two chain lines 4r - 9 delta <= 56 and 17r - 38 delta <= 264, one zone statement), level 2 evaluates them with native_decide (722 s, 3,431 s, 3,739 s); axioms: the three standard ones plus one named axiom per evaluation
 * credit: Jakub Halfar (with Claude); date 2026-10-07
 * reproduce: `JOBS=4 ./build.sh` in `proofs/lean/n8_46134`
-* evidence: `proofs/lean/n8_46134/README.md` (sha256 `a709ad88ae56...`); `proofs/lean/n8_46134/AuditD.lean` (sha256 `97fdc04c7714...`); `proofs/lean/n8_46134/LowerBounds/DFinalNative.lean` (sha256 `abfeefa2ee6f...`)
+* evidence: `proofs/lean/n8_46134/README.md` (sha256 `2cda21fcf3e7...`); `proofs/lean/n8_46134/AuditD.lean` (sha256 `97fdc04c7714...`); `proofs/lean/n8_46134/LowerBounds/DFinalNative.lean` (sha256 `abfeefa2ee6f...`)
 * source: `proofs/lean/n8_46134/README.md:37`
 * notes: Level 1 alone (standard axioms only) reduces the theorem to the three search equations. Without native_decide the bound for n = 8 is 46,133 (n8-lb-46133).
 
@@ -408,7 +408,7 @@ Every word over 8 symbols that contains all permutations has at least 46,130 let
 * method: Echols's Lean framework (his reduction to trails of marked rows, inequality 20 rows - 49 charge <= 136), the search written on natural numbers, cut into parts and evaluated by the kernel (decide +kernel); public proofs/lean/n8, built by build.sh from his repository
 * credit: William Echols (bound, framework, reduction); variant without native_decide: Jakub Halfar (with Claude); date 2026-10-06
 * reproduce: `./build.sh` in `proofs/lean/n8`
-* evidence: `proofs/lean/n8/README.md` (sha256 `e96928d83522...`)
+* evidence: `proofs/lean/n8/README.md` (sha256 `b178ee5ef381...`)
 * source: `proofs/lean/n8/README.md:5`
 * notes: The 46,130 itself is Echols's result; our part is the variant without his six native_decide axioms.
 
@@ -421,8 +421,8 @@ Every word over 8 symbols that contains all permutations has at least 46,131 let
 * method: Echols's framework with the defect budget raised from 44 to 45 and the new inequality 5 rows - 12 charge <= 38, found by a search of mine; search evaluated by the kernel; proofs/lean/n8
 * credit: Jakub Halfar (with Claude), in the framework of William Echols; date 2026-10-06
 * reproduce: `./build.sh` in `proofs/lean/n8`
-* evidence: `proofs/lean/n8/README.md` (sha256 `e96928d83522...`)
-* source: `proofs/lean/n8/README.md:13`
+* evidence: `proofs/lean/n8/README.md` (sha256 `b178ee5ef381...`)
+* source: `proofs/lean/n8/README.md:21`
 * superseded by: `n8-lb-46133`
 * notes: A second, independent proof of 46,131 (the route of proofs/lean/lower shares only Mathlib).
 
@@ -435,8 +435,8 @@ Every word over 8 symbols that contains all permutations has at least 46,132 let
 * method: Echols's framework with defect budget 46 and the new inequality 20 rows - 47 charge <= 172; 133 modules, kernel evaluation, about 119 minutes; public proofs/lean/n8
 * credit: Jakub Halfar (with Claude), in the framework of William Echols; date 2026-10-06
 * reproduce: `./build.sh` in `proofs/lean/n8`
-* evidence: `proofs/lean/n8/README.md` (sha256 `e96928d83522...`)
-* source: `proofs/lean/n8/README.md:14`
+* evidence: `proofs/lean/n8/README.md` (sha256 `b178ee5ef381...`)
+* source: `proofs/lean/n8/README.md:21`
 * superseded by: `n8-lb-46133`
 * notes: This part stops at 46,132; 46,133 in this framework was not built.
 
@@ -451,7 +451,7 @@ The closed walk of 27 loops with row lengths 266646664666466466646664666 has Q =
 * method: Lean, kernel only (decide +kernel, no native_decide): proofs/lean/n8struct/N8Struct/Walk27.lean (walk27_closed, walk27_Q = 16, walk27_portTrails = 1, walk27_single_trail: the 178 slices form one closed trail in the sense of Pantone's ClosedTrail); axioms at most propext, Classical.choice, Quot.sound. Rows, slices and ClosedTrail are Pantone's definitions; states, canon, gstep, walks, Q, ports and renaming are own definitions, each matched in a comment to a function of the n = 8 tool (words/n8/tools/n8lib/model.py).
 * credit: Jakub Halfar (with Claude); the walk was found by probsearch; Lean check of the 27-walk: Theo H. (his bundle is at external/repos2026/Tholsh_superpermutation_study/LEAN); date 2026-10-21
 * reproduce: `./build.sh` in `proofs/lean/n8struct`
-* evidence: `proofs/lean/n8struct/README.md` (sha256 `8b14e7cc672f...`); `proofs/lean/n8struct/N8Struct/Walk27.lean` (sha256 `19b0f7261c52...`)
+* evidence: `proofs/lean/n8struct/README.md` (sha256 `0429c563919a...`); `proofs/lean/n8struct/N8Struct/Walk27.lean` (sha256 `19b0f7261c52...`)
 * source: `proofs/lean/n8struct/README.md:48`
 * notes: words/n8/README.md states the same fact. Theo H. has his own Lean statement of it (his work, not used for this one). The own definitions are matched to the tool by comments, not proved equal to the word-level construction.
 
@@ -464,7 +464,7 @@ At most 108 of the 120 loops can be covered by 27-walks: exactly four copies fit
 * method: Lean, kernel only (decide +kernel, no native_decide): proofs/lean/n8struct/N8Struct/ PackBase (720 placements of the 27-walk), Partners (partners_complete), Classify (packing_classification: every packing of four is a renaming of K0 or K1, and conversely), Orbits (K0 and K1 not renamings of each other; stabilisers of order 4), Published (the packing of words/n8/selection-46174.txt: 108 rows, 108 + 12 loops; the Klein group {id, (25)(34), (01)(34), (01)(25)} swaps the four walks in pairs and maps the 12 rowless loops onto themselves in three orbits of four, no non-identity element fixing any of them), Reversal (reversal maps the K1 class onto the K0 class, at the slice level). Axioms at most propext, Classical.choice, Quot.sound; build from an empty directory 3 minutes on one thread, 4.2 GB.
 * credit: Jakub Halfar (with Claude); date 2026-10-21
 * reproduce: `./build.sh` in `proofs/lean/n8struct`
-* evidence: `proofs/lean/n8struct/README.md` (sha256 `8b14e7cc672f...`); `proofs/lean/n8struct/N8Struct/Classify.lean` (sha256 `671ccbeef768...`); `proofs/lean/n8struct/N8Struct/Published.lean` (sha256 `20b52a3358e5...`)
+* evidence: `proofs/lean/n8struct/README.md` (sha256 `0429c563919a...`); `proofs/lean/n8struct/N8Struct/Classify.lean` (sha256 `671ccbeef768...`); `proofs/lean/n8struct/N8Struct/Published.lean` (sha256 `20b52a3358e5...`)
 * source: `proofs/lean/n8struct/README.md:58`
 * notes: The counts 7,560 (compatible pairs) and 360 (packings) of the claim are not proved as counts in Lean; they follow by arithmetic from the proved facts (720 x 21 / 2 and orbit-stabiliser: 2 x 720 / 4). Reversal is tied to reading the word backwards at the slice level only. proofs/lean/n8struct/gen.py confirms both counts by enumeration.
 
@@ -495,8 +495,8 @@ Theorem C (Lean, default build level) gives, for 9 symbols, a lower bound of 408
 * method: Lean theorem C of proofs/lean/lower with the certificate c = 21/250, b = 630/250 (a search of 886 states evaluated by the kernel with decide +kernel), no native_decide; run ../words/build.sh first
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; Pantone announced a table of his own on 29 September 2026 whose proof is not public; date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `497fde301d0d...`)
-* source: `proofs/lean/lower/README.md:322`
+* evidence: `proofs/lean/lower/README.md` (sha256 `e9529840839c...`)
+* source: `proofs/lean/lower/README.md:330`
 * notes: A search of the same model gives 408,470 by computation only, with no Lean certificate (proofs/lean/lower/README.md).
 
 
@@ -513,8 +513,8 @@ Theorem C (Lean, default build level) gives, for 10 symbols, a lower bound of 4,
 * method: Lean theorem C of proofs/lean/lower with c = 6/25, b = 92/25 (a search of 10,774 states evaluated by the kernel with decide +kernel), no native_decide
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; Pantone announced 4,033,374 first (proof not public); date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `497fde301d0d...`)
-* source: `proofs/lean/lower/README.md:323`
+* evidence: `proofs/lean/lower/README.md` (sha256 `e9529840839c...`)
+* source: `proofs/lean/lower/README.md:331`
 
 
 ## n = 11
@@ -530,8 +530,8 @@ Theorem C (Lean, full build level) gives, for 11 symbols, a lower bound of 43,91
 * method: Lean theorem C of proofs/lean/lower with c = 91/1000, b = 4016/1000 (a search of 14,992 states evaluated by the kernel with decide +kernel, build level 'full'; the default level gives 43,917,901), no native_decide
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; Pantone announced 43,917,903 first (proof not public); date 2026-10-07
 * reproduce: `./build.sh full` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `497fde301d0d...`)
-* source: `proofs/lean/lower/README.md:325`
+* evidence: `proofs/lean/lower/README.md` (sha256 `e9529840839c...`)
+* source: `proofs/lean/lower/README.md:333`
 
 
 ## n = 12
@@ -547,8 +547,8 @@ Theorem C (Lean, default build level) gives, for 12 symbols, a lower bound of 52
 * method: Lean theorem C of proofs/lean/lower with c = 51/1250, b = 2956/1250 (a search of 2,361 states evaluated by the kernel with decide +kernel), no native_decide
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; Pantone announced 522,622,378 first (proof not public); date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `497fde301d0d...`)
-* source: `proofs/lean/lower/README.md:326`
+* evidence: `proofs/lean/lower/README.md` (sha256 `e9529840839c...`)
+* source: `proofs/lean/lower/README.md:334`
 
 
 ## n = 13
@@ -564,8 +564,8 @@ Theorem C (Lean, full build level) gives, for 13 symbols, a lower bound of 6,746
 * method: Lean theorem C of proofs/lean/lower with c = 4/25, b = 88/25 (a search of 26,721 states evaluated by the kernel with decide +kernel, build level 'full'; the default level gives 6,746,626,601), no native_decide
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; Pantone announced 6,746,626,519 first (proof not public); date 2026-10-07
 * reproduce: `./build.sh full` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `497fde301d0d...`)
-* source: `proofs/lean/lower/README.md:328`
+* evidence: `proofs/lean/lower/README.md` (sha256 `e9529840839c...`)
+* source: `proofs/lean/lower/README.md:336`
 
 
 ## n = 14
@@ -581,8 +581,8 @@ Theorem C (Lean, full build level) gives, for 14 symbols, a lower bound of 93,89
 * method: Lean theorem C of proofs/lean/lower with c = 21/400, b = 1550/400 (a search of 15,284 states evaluated by the kernel with decide +kernel, build level 'full'; the default level gives 93,891,140,217), no native_decide
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; date 2026-10-07
 * reproduce: `./build.sh full` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `497fde301d0d...`)
-* source: `proofs/lean/lower/README.md:330`
+* evidence: `proofs/lean/lower/README.md` (sha256 `e9529840839c...`)
+* source: `proofs/lean/lower/README.md:338`
 
 #### `n14-lb-computed-93891141126`
 
@@ -611,7 +611,7 @@ Lean proves that for every rational eps > 0 there is an N >= 13 such that every 
 * method: Lean theorems finite_bound and eventual_bound of proofs/lean/constant on Pantone's library; decide +kernel, no native_decide, axioms propext, Classical.choice, Quot.sound
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's (his theorem has 43/80); date 2026-10-06
 * reproduce: `./build.sh` in `proofs/lean/constant`
-* evidence: `proofs/lean/constant/README.md` (sha256 `845e7a80ba3b...`)
+* evidence: `proofs/lean/constant/README.md` (sha256 `25d35610db91...`)
 * source: `proofs/lean/constant/README.md:1`
 * superseded by: `all-const-61937`
 * notes: Module directory proofs/lean/constant/SuperpermutationUpperBound1771; 1771/3456 = 0.51244.
@@ -625,7 +625,7 @@ Lean proves that for every rational eps > 0 there is an N >= 13 such that every 
 * method: Lean theorems SuperpermutationUpperBound61937.finite_bound, eventual_bound (Main.lean), word_thirteen (Main13.lean); every certificate check decide +kernel, no sorry, no native_decide, axioms propext, Classical.choice, Quot.sound; proofs/lean/constant61937
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's; date 2026-10-18
 * reproduce: `./build.sh` in `proofs/lean/constant61937`
-* evidence: `proofs/lean/constant61937/README.md` (sha256 `562c535b250a...`)
+* evidence: `proofs/lean/constant61937/README.md` (sha256 `dc7379b28683...`)
 * source: `proofs/lean/constant61937/README.md:1`
 * supersedes: `all-const-1771`
 * superseded by: `all-const-305989`
@@ -640,7 +640,7 @@ Lean proves that for every rational eps > 0 there is an N >= 16 such that every 
 * method: Lean theorems SuperpermutationUpperBound305989.finite_bound16 and eventual_bound16 (MainB.lean); decide +kernel for certificates, no sorry, no native_decide, axioms propext, Classical.choice, Quot.sound; proofs/lean/constant305989
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's; date 2026-10-18
 * reproduce: `./build.sh` in `proofs/lean/constant305989`
-* evidence: `proofs/lean/constant305989/README.md` (sha256 `408a4e67478e...`)
+* evidence: `proofs/lean/constant305989/README.md` (sha256 `550a5910fde3...`)
 * source: `proofs/lean/constant305989/README.md:1`
 * supersedes: `all-const-61937`
 * superseded by: `all-const-8711159`
@@ -655,8 +655,8 @@ Lean proves (finite_bound19_8711159 and eventual_bound for the nested blocks C; 
 * method: Lean theorem finite_bound19_8711159 of namespace SuperpermutationUpperBound43586371, decide +kernel for certificates, no sorry, no native_decide; axioms propext, Classical.choice, Quot.sound audited for all 48 main theorems; proofs/lean/constant43586371
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's; date 2026-10-18
 * reproduce: `./build.sh` in `proofs/lean/constant43586371`
-* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a287ccff2a8b...`)
-* source: `proofs/lean/constant43586371/README.md:24`
+* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a3e8a2894751...`)
+* source: `proofs/lean/constant43586371/README.md:26`
 * supersedes: `all-const-305989`
 * notes: Module directory proofs/lean/constant43586371/SuperpermutationUpperBound43586371; HasWord 19 128413775108545920. Coefficient 0.5036144.
 
@@ -669,8 +669,8 @@ Lean proves (finite_bound22_21736511 and the matching eventual bound) that every
 * method: Lean theorem finite_bound22_21736511 of namespace SuperpermutationUpperBound43586371, decide +kernel for certificates, no sorry, no native_decide; proofs/lean/constant43586371
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's; date 2026-10-18
 * reproduce: `./build.sh` in `proofs/lean/constant43586371`
-* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a287ccff2a8b...`)
-* source: `proofs/lean/constant43586371/README.md:26`
+* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a3e8a2894751...`)
+* source: `proofs/lean/constant43586371/README.md:28`
 * notes: Module directory proofs/lean/constant43586371/SuperpermutationUpperBound43586371; HasWord 22 1177586065108048296960. Coefficient 0.5026573.
 
 #### `all-const-3853`
@@ -682,8 +682,8 @@ Lean proves (finite_bound19_3853 and the matching eventual bound) that every K >
 * method: Lean theorem finite_bound19_3853 of namespace SuperpermutationUpperBound43586371, decide +kernel for certificates, no sorry, no native_decide; proofs/lean/constant43586371
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's; date 2026-10-18
 * reproduce: `./build.sh` in `proofs/lean/constant43586371`
-* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a287ccff2a8b...`)
-* source: `proofs/lean/constant43586371/README.md:28`
+* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a3e8a2894751...`)
+* source: `proofs/lean/constant43586371/README.md:30`
 * superseded by: `all-const-11117297`
 * notes: Module directory proofs/lean/constant43586371/SuperpermutationUpperBound43586371; HasWord 19 128412985922988480. proofs/lean/constant43586371/REFEREE.md covers the method.
 
@@ -696,8 +696,8 @@ Lean proves (finite_bound22_11117297 and the matching eventual bound) that every
 * method: Lean theorem finite_bound22_11117297 of namespace SuperpermutationUpperBound43586371, decide +kernel for certificates, no sorry, no native_decide; proofs/lean/constant43586371
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's; date 2026-10-18
 * reproduce: `./build.sh` in `proofs/lean/constant43586371`
-* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a287ccff2a8b...`)
-* source: `proofs/lean/constant43586371/README.md:1`
+* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a3e8a2894751...`)
+* source: `proofs/lean/constant43586371/README.md:31`
 * supersedes: `all-const-3853`
 * notes: Module directory proofs/lean/constant43586371/SuperpermutationUpperBound43586371; HasWord 22 1177577603255664374400. The best finite constant proved here.
 
@@ -710,8 +710,8 @@ Lean proves coefficient_tends_to_zero: for every rational eps > 0 there is N suc
 * method: Lean theorem SuperpermutationUpperBound43586371.Uniform.coefficient_tends_to_zero (Uniform/Main.lean, 2,489 lines), axioms propext, Classical.choice, Quot.sound, no sorry, no native_decide, no decide on anything that depends on m; a referee pass found no error (REFEREE.md); leanchecker --fresh passes on all 118 modules of the limit theorem; the comparator and nanoda accepted it
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's; date 2026-10-19
 * reproduce: `./build.sh` in `proofs/lean/constant43586371`
-* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a287ccff2a8b...`)
-* source: `proofs/lean/constant43586371/README.md:71`
+* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a3e8a2894751...`)
+* source: `proofs/lean/constant43586371/README.md:73`
 * notes: rate_R is in proofs/lean/constant43586371/SuperpermutationUpperBound43586371/UniR/RRate.lean.
 
 #### `all-const-rate-R8`
@@ -723,8 +723,8 @@ Lean proves UniR.rate_R8: for every n >= 2^14 a covering word of length at most 
 * method: Lean theorems in proofs/lean/constant43586371/SuperpermutationUpperBound43586371/UniR/RRate8.lean (word_bound8, rate_R8, rate_R8_eventually), axioms propext, Classical.choice, Quot.sound, no sorry, no native_decide; RRate8 builds in 20 s
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's; date 2026-10-19
 * reproduce: `./build.sh` in `proofs/lean/constant43586371`
-* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a287ccff2a8b...`)
-* source: `proofs/lean/constant43586371/README.md:102`
+* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a3e8a2894751...`)
+* source: `proofs/lean/constant43586371/README.md:104`
 
 #### `all-const-asym`
 
@@ -735,7 +735,7 @@ Lean proves ConstAsym.shortest_superpermutation_coefficient: with L(n) the least
 * method: Lean theorem in proofs/lean/asym/ConstAsym/Main.lean (namespace ConstAsym), axioms propext, Classical.choice, Quot.sound, no sorry, no native_decide; clean independent compile verify.sh (111 modules)
 * credit: Jakub Halfar (with Claude); built on Hunter and Raudvere's library and Pantone's Challenge.lean; date 2026-10-19
 * reproduce: `./build.sh` in `proofs/lean/asym`
-* evidence: `proofs/lean/asym/README.md` (sha256 `16fe0bb52e92...`)
+* evidence: `proofs/lean/asym/README.md` (sha256 `b20bd025e383...`)
 * source: `proofs/lean/asym/README.md:7`
 * notes: The next order (n-4)! is the content of all-const-n4. Module directory proofs/lean/asym/ConstAsym.
 
@@ -748,6 +748,6 @@ Lean proves ConstAsym.remainder_limit8: for every eps > 0, eventually 2 - eps <=
 * method: Lean theorems proofs/lean/asym/ConstAsym/Remainder8.lean (remainder_limit8, remainder_order8, lower2_L), axioms propext, Classical.choice, Quot.sound, no sorry, no native_decide; verify8.sh compiled 199 modules from sources into an empty lib, all exit 0
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries and Pantone's Challenge.lean; date 2026-10-19
 * reproduce: `./build.sh` in `proofs/lean/asym`
-* evidence: `proofs/lean/asym/README.md` (sha256 `16fe0bb52e92...`)
+* evidence: `proofs/lean/asym/README.md` (sha256 `b20bd025e383...`)
 * source: `proofs/lean/asym/README.md:51`
 * notes: Module directories proofs/lean/asym/ConstAsym and proofs/lean/constant43586371.

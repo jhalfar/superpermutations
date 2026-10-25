@@ -77,11 +77,13 @@ Part four, n = 8 (October 20):
 ## The model
 
 A word of Pantone's construction splits into pieces at the steps of weight 4 or more. Almost every piece is a
-closed trail written out once: the cyclic word of the trail followed by its first h = n - 3 letters. Consecutive
-pieces overlap in at most h - 1 letters, and pieces joined with that overlap form runs. In part one I keep the
+closed trail written out once: the cyclic word of the trail followed by its first $`h = n - 3`$ letters. Consecutive
+pieces overlap in at most $`h - 1`$ letters, and pieces joined with that overlap form runs. In part one I keep the
 trails and change where each one is cut and the order of the pieces. The length of a word is
 
-    L = h + sum of the cyclic lengths + sum of the cut costs + sum over the joins of (h - overlap).
+```math
+L = h + \sum (\text{cyclic lengths}) + \sum (\text{cut costs}) + \sum_{\text{joins}} (h - \text{overlap}).
+```
 
 A cut at a step of weight 3 is free. A cut between two 2-cycles, at a step of weight 2, costs one letter. A cut
 inside a 1-cycle costs two letters.
@@ -174,7 +176,7 @@ rumstd's n = 9 and n = 10 words are already optimal for their order.
 
 This is Theo H.'s idea. His 43,930,624 word, made from my 43,930,628, has exactly the order of mine with 101 trails
 cut elsewhere. Four of them are cut inside a 1-cycle. Such a piece costs two letters but lets two neighbouring
-pieces overlap in n - 2 letters, more than the model above allows.
+pieces overlap in $`n - 2`$ letters, more than the model above allows.
 
 | n | before | fixed-order pass | the same pass with these cuts |
 |---|---:|---:|---:|
@@ -368,16 +370,16 @@ first plan.
 ## Selections
 
 In Pantone's construction a selection decides which slices are taken from the 2-loops. I use his terms with the
-shorthand of `reproduce/REPRODUCE.md`. A loop is a 2-loop on the K = n - 2 letters of the selection. A row is the
-slice a selection takes from a loop: a full row has all K classes, a short row K - 2. A loop without a row is a loop
+shorthand of `reproduce/REPRODUCE.md`. A loop is a 2-loop on the $`K = n - 2`$ letters of the selection. A row is the
+slice a selection takes from a loop: a full row has all K classes, a short row $`K - 2`$. A loop without a row is a loop
 from which nothing is taken. Completion adds the last letter: the rows of a closed walk become a few long closed
 trails, and every loop without a row becomes one small closed trail of its own. Transport carries a selection from
-K to K + 1 letters.
+K to $`K + 1`$ letters.
 
 Two numbers describe what a selection costs. Q is the number of classes its rows miss, and the cyclic words of
-all closed trails together have F3(n) + Q letters, with F3(n) = n! + (n - 1)! + (n - 2)!. The second number is the
+all closed trails together have $`F_3(n) + Q`$ letters, with $`F_3(n) = n! + (n - 1)! + (n - 2)!`$. The second number is the
 number of closed trails, because every closed trail has to be joined to the next and a join costs at least one
-letter. So Q plus the number of closed trails is a floor for what a word pays above F3(n). A real word pays more,
+letter. So Q plus the number of closed trails is a floor for what a word pays above $`F_3(n)`$. A real word pays more,
 and that payment, the cuts and joins, is what part one worked on for one fixed selection. Here the selection
 changes. The trade is always the same: fewer closed trails for a larger Q.
 
@@ -394,7 +396,7 @@ changes. The trade is always the same: fewer closed trails for a larger Q.
 | 13 | C transported once | 72,000 | 1,780,800 | 88,844 | 6,747,808,844 |
 | 13 | blocks solved on 12 symbols (N) | 23,808 | 1,818,768 | 44,425 | 6,747,802,393 |
 
-"Cuts and joins" is the length of the word minus F3(n) and minus Q. The letters C, E, X and N are my names for
+"Cuts and joins" is the length of the word minus $`F_3(n)`$ and minus Q. The letters C, E, X and N are my names for
 the selections in this file. Pantone's n = 13 word has one open path besides its closed trails, which is the odd 1 in
 its Q.
 
@@ -411,7 +413,7 @@ old letters keep the cyclic order of the left-over loop. They give nearly all th
 The loops above one left-over loop form a closed problem, which I call a block. Closed walks inside a block whose
 steps never exchange two old letters can take the place of "no rows", and the selection stays balanced. A block
 depends only on the number of added letters, so one solution serves all 48 blocks. What a block solution is
-measured by is Q + D, with D the number of its loops without a row, and later by a price that also counts the chains
+measured by is $`Q + D`$, with D the number of its loops without a row, and later by a price that also counts the chains
 its small trails fall into (see "Chains" below).
 
 With full and short rows only:
@@ -433,28 +435,28 @@ which was 96,092 under.
 
 ## Rows of other lengths
 
-Pantone's rules still work when a row shows any number v of classes, and not only K or K - 2. Such a row costs
-K - v, and completion still covers every class exactly once (`reproduce/REPRODUCE.md` gives the rules for general
+Pantone's rules still work when a row shows any number v of classes, and not only K or $`K - 2`$. Such a row costs
+$`K - v`$, and completion still covers every class exactly once (`reproduce/REPRODUCE.md` gives the rules for general
 v). The idea came from my work on n = 7 and n = 8, where it gave no shorter word: the best word of that family at
 n = 7 has 5,907 letters against the record of 5,905.
 
 In the blocks it does help, from two added letters on:
 
 * n = 10 (block of 7 loops): the optimum is 7, no rows. Nothing.
-* n = 11 (block of 56 loops): the optimum of Q + D is 49 against 56, exact and without any symmetry imposed. The
+* n = 11 (block of 56 loops): the optimum of $`Q + D`$ is 49 against 56, exact and without any symmetry imposed. The
   solution I use is the optimum when every chain of small trails costs 2 to 3 more: a walk of 42 rows in each
   block and 14 loops without a row, in three chains. With it the first word under 43,930,614 came out, 43,930,605.
   Then, in 10 of the 48 blocks, the block was rebuilt together with the 350 loops around it so that its rows lie on
   one of Pantone's big walks, and that walk then gives 2 closed trails instead of 8. This is selection X: 800
   closed trails.
-* n = 12 (block of 504 loops): the optimum of Q + D with all row lengths is 301 against 308, again in the class
+* n = 12 (block of 504 loops): the optimum of $`Q + D`$ with all row lengths is 301 against 308, again in the class
   invariant under rotation. The better words came from a solution chosen by price: selection E, 3,648 closed
   trails, whose 2,352 small trails make 1,104 units (768 chains and 336 single trails) where the 6,048 of C make
   2,544.
 * n = 13 (block of 5,040 loops): selection N, found by neighbourhood search in the same symmetric class. Its
   first version has 24,000 closed trails where C transported has 72,000. The version of the final word has the
   same Q and the same number of loops without a row, and four walk trails fewer in every block: 23,808 closed
-  trails. Neither is proved optimal. The only bound I have is a linear programme at 1,376 for Q + D per block,
+  trails. Neither is proved optimal. The only bound I have is a linear programme at 1,376 for $`Q + D`$ per block,
   against 2,877 for N, and that bound is weak (see "How much is left").
 
 Outside the blocks I found nothing. Pantone's walks are rigid there also with all row lengths: in 40 regions of
@@ -537,10 +539,12 @@ afterwards. That took the first plan from 6,747,808,751 to 6,747,807,339, before
 For C the n = 13 problem is the n = 12 problem again, on cuts at vertices. Every small trail of n = 12 is one
 chain of ten small trails at n = 13, and every walk trail is one chain of ten walk trails. A cut of the n = 12
 trail at a vertex fixes the first and the last word of the whole chain. A join of cost c between two such cuts at
-n = 12 is a join of cost c + 1 between the two chains at n = 13. So an n = 12 plan can be lifted
+n = 12 is a join of cost $`c + 1`$ between the two chains at n = 13. So an n = 12 plan can be lifted
 (`arrange/lift13.py`), and its n = 13 length is known before the word is written:
 
-    10 + 6,747,720,000 + 9 x 6,048 + 10 x 1,152 + 7,199 + (the joins of the n = 12 order, cut at vertices).
+```math
+10 + 6{,}747{,}720{,}000 + 9 \times 6{,}048 + 10 \times 1{,}152 + 7{,}199 + (\text{the joins of the } n = 12 \text{ order, cut at vertices}).
+```
 
 I checked the rule by assertions on the words, for every unit. What does not lift is what an n = 12 plan gains from
 cuts between two 2-cycles and from dropped duplicates: 1,463 letters of the plan I lifted.
@@ -731,7 +735,7 @@ phase-placement coupling). On Echols's word the block move below finds the same 
 ## The block move, and n = 12
 
 The block move takes a stretch of consecutive trails, chooses their openings again by exact dynamic programming
-(with the windows that are covered elsewhere dropped, and overlaps up to n - 1), and moves one to three trails
+(with the windows that are covered elsewhere dropped, and overlaps up to $`n - 1`$), and moves one to three trails
 anywhere in the order. I alternated it with the local kicks of part two and with the fixed-order pass.
 
 * From Echols's 174 the local kicks alone reached 522,737,150 in 33 cycles of one thread. From my own 175 the
@@ -800,15 +804,15 @@ three threads (14 minutes): all 87,178,291,200 permutations occur, with 19,588,8
 
 At n = 8 Pantone's construction is not a theorem, but its completion step works as a recipe: the 120 cyclic
 orders of 012345 are the loops, each loop gets a row of some length or none, and the rows form closed walks. The
-length of the word is 46,085 + Q + J, Q the cost of the rows and J the cost of the joins. Echols posted a word of
-46,178 letters on October 19 (UTC), in the same post as his word for n = 14, found with rows of every length as my selection tools allow: 46,085 + 92 + 1.
+length of the word is $`46{,}085 + Q + J`$, Q the cost of the rows and J the cost of the joins. Echols posted a word of
+46,178 letters on October 19 (UTC), in the same post as his word for n = 14, found with rows of every length as my selection tools allow: $`46{,}085 + 92 + 1`$.
 
 * A set partition over the closed walk types with the fewest letters per loop packed the 120 loops with four
   copies of one walk of 27 loops (row lengths `266646664666466466646664666`, Q = 16, one closed trail). The
   packing has Q = 64 and 16 trails.
 * My join programs of that time allowed only joins of overlap 3 or more, and priced the packing at 46,182. The
   search went on from it with parallel tempering and found other selections of 46,178 letters. When I allowed
-  joins of every overlap, the packing itself gave 46,174: 46,085 + 64 + 25, the order [6 single loops] W W
+  joins of every overlap, the packing itself gave 46,174: $`46{,}085 + 64 + 25`$, the order [6 single loops] W W
   [6 single loops] W W. Nine words of 46,174 letters came out, all of one selection; eight of them are different
   up to renaming and reversal and are in `words/n8/` (the word and seven ties).
 * The next day Theo H. ran `tools/trailsearch.c` of this repository, unchanged, on the same selection, with the
@@ -943,7 +947,7 @@ a lower bound for superpermutations, and nobody has refereed any of it.
 
 For n = 9 the answer is nothing, inside the families of words that these tools produce. rumstd's 408,731 is
 optimal among all words made from the 52 closed trails of Pantone's n = 9 word with one cut per trail, with or
-without cuts inside a 1-cycle, and among all words with any number of cuts per trail and overlaps of at most n - 3
+without cuts inside a 1-cycle, and among all words with any number of cuts per trail and overlaps of at most $`n - 3`$
 letters. The proof is a counting argument whose finite facts are checked by exhaustive computation. The scripts are
 in [`proofs/n9/`](proofs/n9/README.md).
 
@@ -993,38 +997,38 @@ For N at n = 13 the only figure is for the start plan: the joins between its 5,2
 an assignment bound for them is 27,712 (`arrange/plan13n.py`). So more can only come from cutting inside the chains
 again, which is what the passes then did.
 
-The selections themselves are not known to be optimal. For the block of 504 loops the best Q + D is somewhere
+The selections themselves are not known to be optimal. For the block of 504 loops the best $`Q + D`$ is somewhere
 between 224 and 300 when rows of all lengths are allowed and no symmetry is imposed, and 301 is the optimum under
 rotation. The blocks in use cost more: 308 for C, the optimum with full and short rows under rotation, and 315 for
-E, which was chosen by price. For the block of 5,040 loops the block in use costs Q + D = 2,611 + 266 = 2,877, the
-best I found for Q + D alone is 2,849, and the only bound is 1,376. That bound is a linear relaxation. It holds
+E, which was chosen by price. For the block of 5,040 loops the block in use costs $`Q + D = 2{,}611 + 266 = 2{,}877`$, the
+best I found for $`Q + D`$ alone is 2,849, and the only bound is 1,376. That bound is a linear relaxation. It holds
 for every solution, symmetric or not, and it is weak: the same relaxation gives 182 for the block of 504 loops,
 where the optimum under rotation is 301. So it does not say how much a better block could give.
 
 ## The constant
 
-Pantone's bound is S(n) <= n! + (n - 1)! + (n - 2)! + (43/80 + o(1)) (n - 3)!. Selection C has full and short
+Pantone's bound is $`S(n) \le n! + (n - 1)! + (n - 2)! + (\tfrac{43}{80} + o(1))\,(n - 3)!`$. Selection C has full and short
 rows only and transports to every n, so it has a constant of its own. What I can say about it:
 
-* Its floor, Q plus the number of closed trails, is 193/378 = 0.510582 times (n - 3)! at n = 12 and n = 13. For
-  Pantone's selection the same count gives 193/360 = 0.536111. The count is made by a checker that shares no code
+* Its floor, Q plus the number of closed trails, is $`\tfrac{193}{378} = 0.510582`$ times $`(n - 3)!`$ at n = 12 and n = 13. For
+  Pantone's selection the same count gives $`\tfrac{193}{360} = 0.536111`$. The count is made by a checker that shares no code
   with the program that builds the selection (`selection/check12.py`). That a transport keeps this ratio at every
   larger n rests on a short argument that is not written out here and that nobody else has checked.
 * With connector cycles chosen explicitly at n = 12 (203 cycles that meet the 1,152 walk trails, checked by two
   programs), sections 4 and 5 of Pantone's summary applied to this selection give
 
-      S(n) <= n! + (n - 1)! + (n - 2)! + (1771/3456 + o(1)) (n - 3)!,     1771/3456 = 0.512442.
+  $`\displaystyle S(n) \le n! + (n-1)! + (n-2)! + \left(\tfrac{1771}{3456} + o(1)\right)(n-3)!, \qquad \tfrac{1771}{3456} = 0.512442.`$
 
-  Since October 6 this is a theorem in Lean, for every n >= 13, built on Pantone's Lean library and stated with
+  Since October 6 this is a theorem in Lean, for every $`n \ge 13`$, built on Pantone's Lean library and stated with
   his definitions (`proofs/lean/constant/`). His lemma carries the 203 cycles to n = 13, where they become
   7,875. Two things had to be handled that his selections do not have: loops without a row, and closed
-  trails whose count of full minus short rows is not divisible by k - 2. 203 is not known to be the least
+  trails whose count of full minus short rows is not divisible by $`k - 2`$. 203 is not known to be the least
   number of cycles (the bound is 201), and choosing the cycles again at n = 13 would lower the second
   constant of the bound for a given n, 25/1152.
 
 X, E and N have rows that do not transport. They say nothing about the constant.
 
-Since October 19 smaller coefficients are Lean theorems too, down to 11117297/27675648 = 0.4017 for n >= 22,
+Since October 19 smaller coefficients are Lean theorems too, down to $`\tfrac{11117297}{27675648} = 0.4017`$ for $`n \ge 22`$,
 and the coefficient tends to 0 (`proofs/lean/constant61937/`, `constant305989/`, `constant43586371/`). The
 steps are choosing connector cycles again one level up and putting a block of closed trails above the loops
 without a row. The README has the table.
@@ -1048,8 +1052,8 @@ Pantone's announced table has 46,130, 408,468, 4,033,374, 43,917,903, 522,622,37
 13. His proof is not public, and I made mine without it. The README of that directory says how the bound arises
 and which part is whose.
 
-All these bounds exceed n! + (n - 1)! + (n - 2)! by a term of order (n - 4)!, while the words exceed it by
-about half of (n - 3)!. For n = 13 the two sides are about 1.18 million letters apart.
+All these bounds exceed $`n! + (n - 1)! + (n - 2)!`$ by a term of order $`(n - 4)!`$, while the words exceed it by
+about half of $`(n - 3)!`$. For n = 13 the two sides are about 1.18 million letters apart.
 
 ## L(7) >= 5,899 in Lean (7 October 2026)
 
@@ -1059,13 +1063,13 @@ The bound before was Justin Lebar's 5,898, and the shortest word known has 5,905
 The proof has two levels. Level 1 is checked by the Lean kernel with the axioms `propext`, `Classical.choice`
 and `Quot.sound`. It derives the bound from twelve finite statements about rows of blocks, and each finite
 statement from an equation that says that a search defined in Lean returns `false`. Level 2 evaluates the
-searches by `native_decide`, in 22 equations and 17 files. They visit 1.10 * 10^11 nodes, which is too much for
+searches by `native_decide`, in 22 equations and 17 files. They visit $`1.10 \cdot 10^{11}`$ nodes, which is too much for
 the kernel. So the final theorem `covers_lower_bound_7_native` depends on the three axioms and on 22 axioms that
 `native_decide` records, and for those the Lean compiler, the C compiler of the Lean toolchain, the Lean runtime
 and the library built from `PSearch.lean` are trusted. Lebar's proof has the same footing.
 
 How it goes: a model of standard configurations (one main sequence of rows and components that hang off it),
-proven exact for every k >= 5; an accounting that gives every component a value and a weight; a cut of every
+proven exact for every $`k \ge 5`$; an accounting that gives every component a value and a weight; a cut of every
 component at its seams of weight 4 or more; reductions that turn every component into a sequence of chains or a
 ring; one knapsack over tables for chains, sequences and rings. The transform is Hunter and Raudvere's and the
 chains are those of Xiaolong Liu's library, both used unchanged. Lebar's proof is not used.
@@ -1082,7 +1086,7 @@ same tables alone do not reach 872, so the method has no end-to-end check there.
 
 The method of 5,899 does not reach 5,900 as it stands. 5,900 needs defect 15, that is no configuration of cost
 at most 135, and I proved it with a new accounting (components cut at their dear places into pieces, a knapsack
-over the pieces) and two kinds of finite statements: the kernel alone (Theorem K, a table T') and five joint
+over the pieces) and two kinds of finite statements: the kernel alone (Theorem K, a table $`T'`$) and five joint
 statements about two or three pieces. Every computation of its Table C has two complete runs by programs that
 share no code, with equal counts. The written proof was drafted on October 10 and is
 [`proofs/lean/n7_5900/PROOF_5900.md`](proofs/lean/n7_5900/PROOF_5900.md).

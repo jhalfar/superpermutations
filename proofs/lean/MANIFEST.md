@@ -30,7 +30,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 * `.gitattributes` (344 B): keeps LF line ends in text files, so that the hashes hold on every system
 * `MANIFEST.md`: this list
-* `README.md` (34.7 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
+* `README.md` (35.1 KB): what is proven, what a build needs, how to build, what it costs, what is trusted
 * `SHA256SUMS`: SHA-256 of every other file of this directory
 * `lean-toolchain` (25 B): the Lean version, `leanprover/lean4:v4.31.0`
 
@@ -44,7 +44,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
   (n-4)! - 2(n-5)! and 9(n-4)!
 * `asym/ConstAsym/Remainder8.lean` (8.3 KB): `remainder_order8`, `lower2_L`, `remainder_limit8`: the bounds 2(n-4)! -
   2(n-5)! and 41/5 (n-4)!, the constant in [2, 8]
-* `asym/README.md` (6.7 KB): the shortest superpermutation: the limit of the coefficient, the order of the remainder,
+* `asym/README.md` (6.9 KB): the shortest superpermutation: the limit of the coefficient, the order of the remainder,
   its constant in [2, 8]; how to build; the axiom audit
 * `asym/build.sh` (2.0 KB): builds Pantone's library, the Hunter modules, the needed part of `../constant43586371` and
   the two files here from sources, and prints the axioms
@@ -52,7 +52,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 ## constant/
 
 * `constant/Audit1771.lean` (3.2 KB): the results restated with the definitions of `Challenge.lean` only
-* `constant/README.md` (15.8 KB): the theorems, the selection, the files, the patch, how to build
+* `constant/README.md` (16.0 KB): the theorems, the selection, the files, the patch, how to build
 * `constant/SuperpermutationUpperBound1771/AllSizes.lean` (9.1 KB): the level on k + 12 symbols for every k;
   `Cert.word_ledger`
 * `constant/SuperpermutationUpperBound1771/Certificate/Big00.lean` (3.5 KB): generated: cycle pointers for eight of
@@ -157,7 +157,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 ## constant305989/
 
-* `constant305989/README.md` (7.9 KB): the block step, the theorems, the files, how to build, the axiom audit
+* `constant305989/README.md` (8.0 KB): the block step, the theorems, the files, how to build, the axiom audit
 * `constant305989/SuperpermutationUpperBound305989/AllSizes.lean` (9.1 KB): the level on k + 12 symbols for every k;
   `Cert.word_ledger`
 * `constant305989/SuperpermutationUpperBound305989/AllSizesB.lean` (8.3 KB): the level on k + 16 symbols for every k;
@@ -307,7 +307,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 * `constant43586371/PROOF.md` (11.7 KB): the limit theorem on paper: construction, lemmas, bounds
 * `constant43586371/PROOF_R.md` (8.6 KB): the family R'(m) of blocks at every level, on paper
-* `constant43586371/README.md` (17.3 KB): the nested block levels, the theorems, the files, how to build, the axiom
+* `constant43586371/README.md` (17.9 KB): the nested block levels, the theorems, the files, how to build, the axiom
   audit
 * `constant43586371/REFEREE.md` (13.6 KB): report of an independent check of the limit theorem
 * `constant43586371/SuperpermutationUpperBound43586371/AllSizes.lean` (9.1 KB): the level on k + 12 symbols for every k;
@@ -803,7 +803,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 ## constant61937/
 
-* `constant61937/README.md` (7.7 KB): the cycle re-choice, the theorems, the files, how to build, the axiom audit
+* `constant61937/README.md` (7.9 KB): the cycle re-choice, the theorems, the files, how to build, the axiom audit
 * `constant61937/SuperpermutationUpperBound61937/AllSizes.lean` (9.1 KB): the level on k + 12 symbols for every k;
   `Cert.word_ledger`
 * `constant61937/SuperpermutationUpperBound61937/Certificate/Big00.lean` (3.5 KB): generated: cycle pointers for eight
@@ -977,7 +977,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
   k`
 * `lower/LowerBounds/WindowSlackC.lean` (3.5 KB): Theorem C: the window bound in the form with the slack of intervals
   and runs
-* `lower/README.md` (29.1 KB): the three lower bounds, their values, whose the parts are, the steps of the proofs, how
+* `lower/README.md` (29.8 KB): the three lower bounds, their values, whose the parts are, the steps of the proofs, how
   to build
 * `lower/Superperm/TwoSidedA.lean` (2.9 KB): Theorem A and the literal words in one statement, n = 9, 10, 11
 * `lower/Superperm/TwoSidedB.lean` (2.9 KB): Theorem B and the literal words in one statement, n = 9, 10, 11
@@ -1107,7 +1107,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
   statements
 * `n7/LowerBounds/PTrails.lean` (13.3 KB): the cut at heavy seams, `cutRows_spec`; at least 720 blocks; the accounting
   `acc_value`, `acc_weight`
-* `n7/README.md` (23.2 KB): 5,899 for n = 7: the statement, the two levels and what each trusts, the proof, the files,
+* `n7/README.md` (23.5 KB): 5,899 for n = 7: the statement, the two levels and what each trusts, the proof, the files,
   how to build, costs
 * `n7/build.sh` (17.7 KB): builds level 1, the engine and its shared library, runs the evaluations, builds the
   theorem, checks the axioms
@@ -1241,7 +1241,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `n7_5900/LowerBounds/KTestNative.lean` (4.3 KB): Tests of the compiled search of `KSearch.lean` (not part of any
   proof)
 * `n7_5900/LowerBounds/KTestTables.lean` (5.4 KB): Reference tables for tests (generated; do not edit)
-* `n7_5900/PROOF_5900.md` (75.0 KB): L(7) >= 5,900: the written proof
+* `n7_5900/PROOF_5900.md` (81.1 KB): L(7) >= 5,900: the written proof
 * `n7_5900/README.md` (6.7 KB): what is proven, the parts, how to build, what it cost, what is trusted
 * `n7_5900/build.sh` (12.3 KB): Build the proof that a superpermutation on 7 symbols has at least 5,900 letters.
 * `n7_5900/evaluations.txt` (1.4 KB): the evaluation modules of level 2 with the library each one loads, in the order
@@ -1334,7 +1334,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 
 * `n8/.gitattributes` (127 B): keeps LF line ends in `NOTICE.echols`
 * `n8/NOTICE.echols` (3.5 KB): the `NOTICE` file of Echols's repository, unchanged
-* `n8/README.md` (10.0 KB): the three variants, what replaces `native_decide`, licences, how to build
+* `n8/README.md` (10.1 KB): the three variants, what replaces `native_decide`, licences, how to build
 * `n8/build.sh` (7.1 KB): puts each variant together from Echols's checkout, builds it, checks the axioms
 * `n8/echols-sources.sha256` (3.3 KB): SHA-256 of the 36 Lean files of Echols's repository at commit 893ab2d
 * `n8/kernel/Superperm8/KCode.lean` (29.2 KB): new: codes of permutations, rotation classes and insertion blocks as
@@ -1517,7 +1517,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
 * `small/K6/TightRules.lean` (3.7 KB): the rules of the search of the tight case (`famRules`) and the dead-class test
 * `small/K6/TightSem.lean` (9.5 KB): what the counters of the tight case mean along a list of rows
 * `small/K6/TightTab.lean` (281 B): generated by `gen_tight.py`: the knapsack table of the tight case
-* `small/README.md` (19.1 KB): S(1) to S(6): the statements, where each value comes from, the proof at n = 6, whose
+* `small/README.md` (19.2 KB): S(1) to S(6): the statements, where each value comes from, the proof at n = 6, whose
   the parts are, how to build, what it costs
 * `small/Small/Exact.lean` (1.6 KB): `exact_six`, `grayzel_six`, `ssuper_values`
 * `small/Small/Upto5.lean` (3.5 KB): `exact_one` to `exact_five`, `ssuper_upto5`; lower bounds for n = 3, 4, 5 from

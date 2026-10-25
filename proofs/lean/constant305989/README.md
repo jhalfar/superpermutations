@@ -1,12 +1,17 @@
 # The coefficient 305989/604800 in Lean
 
-This directory builds on [`../constant61937/`](../constant61937/README.md) (the coefficient 61937/120960) and
-proves, for superpermutations on n symbols,
+This directory builds on [`../constant61937/`](../constant61937/README.md) (the coefficient $`\tfrac{61937}{120960}`$) and
+proves, for superpermutations on $`n`$ symbols,
 
-    S(n) <= F3(n) + (305989/604800 + o(1)) (n-3)!        F3(n) = n! + (n-1)! + (n-2)!
-    305989/604800 = 0.505934...
+```math
+S(n) \le F_3(n) + \left(\tfrac{305989}{604800} + o(1)\right)(n-3)!, \qquad F_3(n) = n! + (n-1)! + (n-2)!
+```
 
-for every n >= 16. The coefficient of `../constant61937/` is 0.512045..., the one of `../constant/` is 0.512442...
+```math
+\tfrac{305989}{604800} = 0.505934\ldots
+```
+
+for every $`n \ge 16`$. The coefficient of `../constant61937/` is $`0.512045\ldots`$, the one of `../constant/` is $`0.512442\ldots`$
 and Pantone's is 0.5375. The construction is Pantone's. The change from `../constant61937/` is the block step: from
 15 symbols on, the loops above each of the 6,048 loops without a row on 11 symbols are not taken from the selection
 transported up but from one block, solved once on 14 symbols and carried to every position by a relabelling.
@@ -15,10 +20,10 @@ transported up but from one block, solved once on 14 symbols and carried to ever
   loops without a row. On 15 symbols the six walks are written 3, 6, 6, 6, 6 and 6 times and transported from
   their start ports, which gives 14 closed trails (1,235 / 715 / 385 / 395 rows). The 440 loops become full
   charts. Over all 6,048 positions this gives 13! = 6,227,020,800 rows with charge 3,084,943,680
-  (= 11771/23760 of 13!) and 5,039,928 connector cycles on 15 symbols.
+  ($`= \tfrac{11771}{23760}`$ of $`13!`$) and 5,039,928 connector cycles on 15 symbols.
 * The connector cycles of the block are chosen again for 16 symbols: 26 cycles (`data/cyc_t_s103_old2_0_n16.txt`),
-  each with a pointer certificate on the canonical trails. The cost of the cycles is 23333/2217600 of
-  (n-3)!/(n-3), against 859/40320 in `../constant61937/`.
+  each with a pointer certificate on the canonical trails. The cost of the cycles is $`\tfrac{23333}{2217600}`$ of
+  $`(n-3)!/(n-3)`$, against $`\tfrac{859}{40320}`$ in `../constant61937/`.
 * The block lemma needs no hypothesis about "old letters". The construction in Lean needs only closed trails, a
   winding divisible by the number of ports, rows over the alphabet, and that every 2-loop has some row. The checks
   on the canonical block (`BlockOK`) and a relabelling lemma (`Relabel.lean`) give the block above every loop.
@@ -70,7 +75,7 @@ namespace renamed and no other change, and these new files:
 | `Relabel.lean` | a relabelling lemma for transport, completion, ports, charts and cycle covers; `relab d0 d` sends the letters of one loop to those of another and fixes the rest. Builds on Pantone's `Foundation/RowRelabeling.lean` |
 | `BlockB.lean` | `above3 d` (the 1,320 loops on 14 symbols above `d`); an inventory lemma for a walk written several times and transported from several start ports; `BlockData` and `BlockOK` (the decidable checks); the block on every loop `d` by relabelling |
 | `Fifteen.lean` | the level on 15 symbols: the long and short walks transported, plus the block above each of the 6,048 loops; the counts (13! rows, charge 3,084,943,680, 5,039,928 cycles) |
-| `AllSizesB.lean`, `GenericBoundsB.lean` | the level on k + 16 symbols for every k, and the rational bound with the new constants |
+| `AllSizesB.lean`, `GenericBoundsB.lean` | the level on $`k + 16`$ symbols for every k, and the rational bound with the new constants |
 | `MainB.lean`, `CorollariesB.lean` | the statements above |
 | `Certificate/Block*.lean` (generated) | `BlockData` (the block, 1,320 pointers, 26 cycles), `BlockChecks` (`BlockOK`, four `decide +kernel`), `BlockPorts16a/b` (182 pointers), `BlockCert` |
 

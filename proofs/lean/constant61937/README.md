@@ -1,12 +1,17 @@
 # The coefficient 61937/120960 in Lean
 
 This directory is a second development in the style of [`../constant/`](../constant/README.md). It proves, for
-superpermutations on n symbols,
+superpermutations on $`n`$ symbols,
 
-    S(n) <= F3(n) + (61937/120960 + o(1)) (n-3)!        F3(n) = n! + (n-1)! + (n-2)!
-    61937/120960 = 1771/3456 - 1/2520 = 0.512045...
+```math
+S(n) \le F_3(n) + \left(\tfrac{61937}{120960} + o(1)\right)(n-3)!, \qquad F_3(n) = n! + (n-1)! + (n-2)!
+```
 
-for every n >= 13. The coefficient of `../constant/` is 1771/3456 = 0.512442..., and Pantone's is 43/80 = 0.5375.
+```math
+\tfrac{61937}{120960} = \tfrac{1771}{3456} - \tfrac{1}{2520} = 0.512045\ldots
+```
+
+for every $`n \ge 13`$. The coefficient of `../constant/` is $`\tfrac{1771}{3456} = 0.512442\ldots`$, and Pantone's is $`\tfrac{43}{80} = 0.5375`$.
 The construction is Pantone's. The change from `../constant/` is one choice inside it, the cycle re-choice:
 
 * In `../constant/` the short walks of the 48 groups on 12 symbols are covered by 48 of the 203 connector cycles
@@ -15,7 +20,7 @@ The construction is Pantone's. The change from `../constant/` is one choice insi
   288 in all (`gen_cert.py` finds it with an integer programme and writes the pointers). The 155 cycles on 12
   symbols that the long walks use stay.
 * So the cycles on 13 symbols number 7,731 where `../constant/` has 7,875, and the cost of the cycles drops from
-  25/1152 to 859/40320 of (n-3)!/(n-3).
+  $`\tfrac{25}{1152}`$ to $`\tfrac{859}{40320}`$ of $`(n-3)!/(n-3)`$.
 
 The Lean kernel checks every proof. There is no `native_decide` and no `sorry`. The theorems below depend on
 the axioms `propext`, `Classical.choice` and `Quot.sound` only.
@@ -69,7 +74,7 @@ that the two cannot be confused, and these changes:
 |---|---|
 | `Hybrid.lean` | `GroupFacts` has no field `safe` (the cover of the short walks by the 48 group cycles). `Cert.circles` holds the 155 long-walk cycles. New fields: `gcircles` (288 cycles on 13 symbols) and `smallPorts` (a `PortsCovered` certificate of the transported short walks) |
 | `Thirteen.lean` | the cycles on 13 symbols are three parts (155 extended, 288 group cycles, 6,048 loop words), 7,731 in all; in `safe12` the short walks come from `smallPorts` |
-| `AllSizes.lean`, `GenericBounds.lean` | 7875 -> 7731, 25/1152 -> 859/40320, 1771/3456 -> 61937/120960 |
+| `AllSizes.lean`, `GenericBounds.lean` | 7875 -> 7731, $`\tfrac{25}{1152} \to \tfrac{859}{40320}`$, $`\tfrac{1771}{3456} \to \tfrac{61937}{120960}`$ |
 | `Main13.lean`, `Main.lean`, `Corollaries.lean` | the statements with the new constants and values |
 | `Certificate/Checks.lean` | `GroupOK` has no cycle pointers; new `smallPortsB` and `smallPortsB_sound` |
 | `Certificate/` (generated) | `Circles` (155 cycles), `GCircles13` (288), `Small00` to `Small07` (1,440 pointers), `Groups00` to `Groups07` without cycle pointers, the others as in `../constant/` |

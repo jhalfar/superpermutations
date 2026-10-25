@@ -1,7 +1,7 @@
 # L(7) >= 5,901, a computer-assisted proof
 
-A superpermutation on 7 symbols has at least 5,901 letters. The best bound before was L(7) >= 5,900, whose
-written proof is [`../lean/n7_5900/PROOF_5900.md`](../lean/n7_5900/PROOF_5900.md); Lean proves L(7) >= 5,899 in
+A superpermutation on 7 symbols has at least 5,901 letters. The best bound before was $`L(7) \ge 5{,}900`$, whose
+written proof is [`../lean/n7_5900/PROOF_5900.md`](../lean/n7_5900/PROOF_5900.md); Lean proves $`L(7) \ge 5{,}899`$ in
 [`../lean/n7/`](../lean/n7/README.md).
 
 This is a computer-assisted proof. It is not a Lean theorem. The written proof is
@@ -42,20 +42,20 @@ the number of kept prefixes of the card run (for RX of the three CPU programs). 
 | T2 8..15 | `t2a` | J(R S7; 46, 89; 1), rings 8..15 | 101,123,384,635,543 | one program |
 | T2 16..23 | `t2b` | rings 16..23 | 129,493,336,379,997 | one program |
 | T2 24..31 | `t2c` | rings 24..31 | 135,483,427,600,468 | one program |
-| T2 32..39 upper | `t2d` | rings 32..39, value >= 17 | 151,457,803,584 | one program |
-| T2 32..39 lower | `t2e` | rings 32..39, value <= 16 | 817,008,248,719 | one program |
-| T2 40..47 upper | `t2f` | rings 40..47, value >= 20 | 91,979,996,005 | one program |
-| T2 40..47 lower | `t2g` | rings 40..47, value <= 19 | 284,267,038,527 | one program |
-| T2 48..55 upper | `t2h` | rings 48..55, value >= 23 | 71,260,814,984 | one program, repeated by a program that shares code |
-| T2 48..55 lower | `t2i` | rings 48..55, value <= 22 | 174,112,070,351 | one program, repeated by a program that shares code |
+| T2 32..39 upper | `t2d` | rings 32..39, value $`\ge 17`$ | 151,457,803,584 | one program |
+| T2 32..39 lower | `t2e` | rings 32..39, value $`\le 16`$ | 817,008,248,719 | one program |
+| T2 40..47 upper | `t2f` | rings 40..47, value $`\ge 20`$ | 91,979,996,005 | one program |
+| T2 40..47 lower | `t2g` | rings 40..47, value $`\le 19`$ | 284,267,038,527 | one program |
+| T2 48..55 upper | `t2h` | rings 48..55, value $`\ge 23`$ | 71,260,814,984 | one program, repeated by a program that shares code |
+| T2 48..55 lower | `t2i` | rings 48..55, value $`\le 22`$ | 174,112,070,351 | one program, repeated by a program that shares code |
 | T2 56..89 | `t2j` | rings 56..89 | 28,953,480,015,964 | one program |
-| T3' | `t3` | J(R S5 R; 52, 82; 2), rings >= 8 holes | 40,196,474,735,125 | one program |
-| T4' | `t4` | J(R S4 S4; 56, 77; 2), rings >= 8 holes | 1,479,145,818,172 | one program |
+| T3' | `t3` | J(R S5 R; 52, 82; 2), rings $`\ge 8`$ holes | 40,196,474,735,125 | one program |
+| T4' | `t4` | J(R S4 S4; 56, 77; 2), rings $`\ge 8`$ holes | 1,479,145,818,172 | one program |
 | T5 | `t5` | J(S3 S3 S3; 60, 72; 2) | 52,379,362,069,149 | one program |
-| T6' | `t6` | J(S2 R R R; 58, 75; 3), rings >= 8 holes | 112,728,682,360 | one program (a run of the same program with the rule ORDS, not counted, also found nothing) |
+| T6' | `t6` | J(S2 R R R; 58, 75; 3), rings $`\ge 8`$ holes | 112,728,682,360 | one program (a run of the same program with the rule ORDS, not counted, also found nothing) |
 | T7 | `t7` | J(S1 S1 R R; 62, 70; 3) | 1,432,335,917,907 | two independent programs |
 | T8 | `t8` | J(S0 S0 S0 R; 66, 65; 2) | 7,126,584,865 | Lean + two independent programs |
-| T9' | `t9` | J(S0 R R R R; 64, 68; 4), rings >= 8 holes | 11,105,597 | Lean + two independent programs |
+| T9' | `t9` | J(S0 R R R R; 64, 68; 4), rings $`\ge 8`$ holes | 11,105,597 | Lean + two independent programs |
 | RX | `rx` | the exact ring row to 63 holes | 1,588,850,620 | three independent programs |
 
 K7 is evaluated as four `native_decide` theorems, one for each quarter of its 64 parts

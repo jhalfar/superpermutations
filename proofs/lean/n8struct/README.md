@@ -3,7 +3,7 @@
 [`words/n8/README.md`](../../../words/n8/README.md) says two things about the selection of the word of 46,174
 letters:
 
-* the closed walk of 27 loops with row lengths `266646664666466466646664666` costs Q = 16 and is a single trail;
+* the closed walk of 27 loops with row lengths `266646664666466466646664666` costs $`Q = 16`$ and is a single trail;
 * four copies of it fit into the 120 loops without meeting, and up to renaming the symbols and reversal there is
   exactly one way to do this.
 
@@ -15,7 +15,7 @@ It uses Pantone's library for rows, slices and closed trails and does not import
 `N8Struct/Definitions.lean` mixes Pantone's definitions with my own. Its header lists every definition next to
 the function of `words/n8/tools/n8lib/model.py` that it mirrors.
 
-Pantone's definitions, where they hold at 8 symbols without his hypotheses (his construction needs m >= 9):
+Pantone's definitions, where they hold at 8 symbols without his hypotheses (his construction needs $`m \ge 9`$):
 
 * A row (x, v) is his `Row` `⟨x, 6, v⟩`, and its cost is `Row.charge`.
 * The slices of a row are `Completion.completeRows ⟨x,6,v⟩ 7`. These are exactly model.py `option_slices`:
@@ -77,13 +77,13 @@ the decidability of `List.Perm` and `simp`. There is no `sorryAx` and no `Lean.o
 ## What is not proved
 
 * The counts 7,560 and 360 are not proved as counts. They follow from the proved facts by arithmetic that is not
-  formalised: 720 placements, each disjoint from exactly 21 others, give 720·21/2 = 7,560 pairs; two classes,
-  each with a stabiliser of order 4, give 2·720/4 = 360 packings. `gen.py` confirms both numbers by direct
+  formalised: 720 placements, each disjoint from exactly 21 others, give $`720 \cdot 21/2 = 7{,}560`$ pairs; two classes,
+  each with a stabiliser of order 4, give $`2 \cdot 720/4 = 360`$ packings. `gen.py` confirms both numbers by direct
   enumeration.
 * The link between `revRow` and reading a whole word backwards is checked at the level of slices (each slice set
   is reversed exactly), and only for the 120 options of this selection. That the order and the joins of a word
   reverse as well is clear, but it is not formalised.
-* Only the finite facts are formalised. The length formula 46,085 + Q + J and the word itself are not; the word
+* Only the finite facts are formalised. The length formula $`46{,}085 + Q + J`$ and the word itself are not; the word
   is checked by the kernel in [`../words/`](../words/README.md) (`hasWord_eight_k`).
 
 ## Files
