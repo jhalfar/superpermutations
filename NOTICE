@@ -71,7 +71,8 @@ with rows of every length read from his rules as in reproduce/REPRODUCE.md. It c
 word of 46,178 letters (https://github.com/WilliamEchols/superpermutations) when a user supplies it; the word is
 not included here.
 
-words/superpermutation-13-6747801835.spra.xz is stored in Theo H.'s SPRA format, version 0.2
+words/superpermutation-13-6747801798.spra.xz and words/superpermutation-13-6747801835.spra.xz are stored in
+Theo H.'s SPRA format, version 0.2
 (https://github.com/Tholsh/SPRA, tools/reduced_codec.cpp, which decodes it). The format is his; the file was
 written with an encoder built from his source, and no code of his repository is included here.
 

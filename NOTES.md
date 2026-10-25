@@ -61,8 +61,9 @@ Part three, moves of William Echols and Theo H. (October 17 to 20):
     segment insertion with five cuts on the card: 6,747,802,319 letters, 74 below it. Then five more cuts gave
     310, and rounds of `tools/trailsearch.c` (30 minutes on 6 threads each) alternated with segment insertion on
     the card: 200, 169, 941, 928, 837, 836 and, in the last check before publication, 6,747,801,835 on October
-    24, 484 below 319. The programs for the moves of Echols and Theo H. and the card program with bounded memory
-    are not in the repository yet; the plans are, and they rebuild with `tools/trailsearch.c`.
+    24, 484 below 319. Three cuts on the card with the default lists then gave 6,747,801,799, and four cuts
+    6,747,801,798, 521 below 319. The programs for the moves of Echols and Theo H. and the card program with
+    bounded memory are not in the repository yet; the plans are, and they rebuild with `tools/trailsearch.c`.
 12. For n = 14 the word is written by a generator from the selection and a plan of 72,000 units, one per closed
     trail on 13 symbols, in the order that my n = 12 and n = 13 plans give: 93,904,804,425 letters, 91 below
     Echols's 93,904,804,516.
@@ -768,6 +769,15 @@ to 964 by `trailsearch`; 941 by the card, 935 to 928 by `trailsearch`; 6,747,801
 minutes each on three threads, and the fixed-order pass) found one letter more with `--kmax 12 --T0 0.7`:
 6,747,801,835. That word passed the three checkers and the same final check, which found nothing shorter. It
 is stored as `words/superpermutation-13-6747801835.spra.xz`, in Theo H.'s SPRA format.
+
+From the plan of 835 the card program ran on the GPU in rounds, each restarting from the best plan so far.
+Three cuts with the default candidate lists (`--or3 3`) gave 6,747,801,799; a round with slack 1 found
+nothing; four cuts (`--or3 4 --or3-v 5 --or3-x 4`, six hours allowed, 3.9 hours used on four threads, 18 GB)
+gave 6,747,801,798; three more rounds (default lists, slack 1, four cuts) found nothing. The word passed the
+three checkers (`literal_check --deletions` under Linux: 0 missing, no deletion) and the final check of six
+settings of `trailsearch` (20 minutes each, two threads) and the fixed-order pass, which found nothing
+shorter. It is stored as `words/superpermutation-13-6747801798.spra.xz`; the word of 835 stays in the
+repository.
 
 The block move, the events file of the local kicks and the bounded-memory version of the card program are not in
 the repository yet. The plans are, and they rebuild with `tools/trailsearch.c` (see the README).

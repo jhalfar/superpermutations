@@ -22,7 +22,7 @@ runs the searches and writes the code and this text.
 | 10 | 4,034,855 | 4,034,873 | rumstd | -18 |
 | 11 | 43,930,578 | 43,930,624 | Theo H. | -46 |
 | 12 | 522,736,969 | 522,737,173 | Theo H. | -204 |
-| 13 | 6,747,801,835 | 6,747,918,066 | Jay Pantone | -116,231 |
+| 13 | 6,747,801,798 | 6,747,918,066 | Jay Pantone | -116,268 |
 | 14 | 93,904,804,425 | 93,904,804,516 | William Echols | -91 |
 
 "Before" is the best word of someone else when mine was published. For n = 8 the shortest word known is now
@@ -31,23 +31,24 @@ Theo H.'s 46,173, which he found with `tools/trailsearch.c` of this repository o
 word for n = 12 starts from William Echols's 522,737,174, and it and the word for n = 13 use two moves from the
 group: his re-opening of a stretch of consecutive trails and Theo H.'s moving of a trail with a new phase.
 Against Pantone's own words of 4,034,889, 43,930,680, 522,745,581 and 6,747,918,066 letters the words for n = 10 to
-13 are 34, 102, 8,612 and 116,231 letters shorter. My own best words on Pantone's closed trails, before the change
+13 are 34, 102, 8,612 and 116,268 letters shorter. My own best words on Pantone's closed trails, before the change
 of selection, had 43,930,614, 522,745,350 and 6,747,916,657 letters.
 
 The files are `words/superpermutation-N-LENGTH.txt.xz`: XZ archives with a delta filter of distance n that `xz -d`
 unpacks (2 KB for n = 8, then 65 KB, 0.4 MB, 4.1 MB and 45 MB for n = 10 to 13), on the first n letters of
 `0123456789ABC`, one line plus a line feed, as in Pantone's repository. New words for n >= 13 are stored in Theo
 H.'s [SPRA format](https://github.com/Tholsh/SPRA) (version 0.2, fields of 6 bits) and packed with `xz`:
-`words/superpermutation-13-6747801835.spra.xz`, 1.27 MB. Its decoder is `tools/reduced_codec.cpp` of that
+`words/superpermutation-13-6747801798.spra.xz`, 1.26 MB. Its decoder is `tools/reduced_codec.cpp` of that
 repository (`g++ -std=c++20 -O2 tools/reduced_codec.cpp -o reduced-codec`), which writes the letters `0`-`9`,
-`A`-`C` with no line feed; I checked the file with it and with an independent decoder of mine. The earlier words
-for n = 13 stay as `.txt.xz` files. The word on 14 symbols would take 94 GB, so it is a recipe in
+`A`-`C` with no line feed; I checked the file with it and with an independent decoder of mine. The word of
+6,747,801,835 letters before it is stored the same way, and the earlier words for n = 13 stay as `.txt.xz`
+files. The word on 14 symbols would take 94 GB, so it is a recipe in
 [`recipes/n14/`](recipes/n14/README.md): a generator, a plan of 83 KB and a checker, as William Echols did with his
 words.
 
 ```sh
-xz -dk words/superpermutation-13-6747801835.spra.xz
-./reduced-codec decode words/superpermutation-13-6747801835.spra > superpermutation-13-6747801835.txt
+xz -dk words/superpermutation-13-6747801798.spra.xz
+./reduced-codec decode words/superpermutation-13-6747801798.spra > superpermutation-13-6747801798.txt
 ```
 
 SHA-256 of the words (for n = 8 to 12 the file, which is the word and one line feed; for n = 13 the letters as the
@@ -58,7 +59,7 @@ has the hashes of every archive, word and plan.
     n = 10   09e2c807aea5f0890d257f97d5d447c0235d41df9589caff8899f01d2016f7f6
     n = 11   65ddf4c4a3ebaa69de7bc6be29e0b38ad010055f22ef6abeeffdb4f508176092
     n = 12   48c00acf991d87a396fb162bc66447d9dba90ddc0ac9dca5ffed89e46597fcba
-    n = 13   8905fc686861187923accc190c67773880fcee3aa669ba63c9ca80f778879387
+    n = 13   272680a7668ae245a16a9b0e6bd8e4bdd90cb7bf67922a2d534deeff70c68232
     n = 14   3b1470a204854ce09654b9d9a811b8455308212b29585accc29d0263e423ab6f
 
 How the words were found, step by step, is in [`NOTES.md`](NOTES.md).
@@ -113,7 +114,8 @@ Each word rebuilds from a selection (what the closed trails are) and a plan (the
 [`reproduce/`](reproduce/REPRODUCE.md) holds both for the words of 4,034,855, 43,930,578, 522,737,175 and
 6,747,802,393 letters, with a generator and the hashes to expect: Python 3 and a C compiler, no solver. The newest
 words for n = 12 and 13 are on the same base words; their plans are `plan/trailsearch-12-522736969.plan` and
-`plan/trailsearch-13-6747801835.plan` (and `plan/trailsearch-13-6747802319.plan` for the word before), and the
+`plan/trailsearch-13-6747801798.plan` (and `plan/trailsearch-13-6747801835.plan` and
+`plan/trailsearch-13-6747802319.plan` for the words before), and the
 earlier words on Pantone's closed trails rebuild from his words and the plans in [`plan/`](plan/) and
 [`plan/history/`](plan/history/README.md):
 
