@@ -20,7 +20,7 @@ if [ "$MODE" = pass ]; then I=${2:?pass needs a number}; shift; fi
 TH=${2:-5}; K=${3:-4}
 PLAN=nB16a_22320795912621.uplan.xz
 EXP_LEN=22320795912621
-EXP_SHA=SHA256_PENDING
+EXP_SHA=e16a7e7f92119f4713e0255cd2856a66dc63efd8e8f9c3c2b89dbd129cf4a61f
 EXP_TREE=51e40627c9c9e378cc13256b71e2d730327b7f6e325a87decb4cf5727a32dd91
 SEL_SHA=4f31dab69be987cb94cc993bf78f854833d861970c1f57ec290bebbe198d2a1a
 BLOCK_SHA=6dbc820dfa9702a2114b64d2b0f71342bec166ebbc61b8a13682834dbeba6618
@@ -40,7 +40,6 @@ gcc -O3 -march=native -o "$W/genBt" "$D/genBt.c"
 if [ "$MODE" = sha ]; then
   "$W/genBt" plan 4 "$W/sel.txt" "$W/plan.uplan" --count 2> "$W/sha.json"; cat "$W/sha.json"
   grep -q "\"length\":$EXP_LEN," "$W/sha.json" || { echo "MISMATCH (length)"; exit 1; }
-  if [ "$EXP_SHA" = SHA256_PENDING ]; then echo "length OK; the expected SHA-256 is not filled in yet"; exit 0; fi
   grep -q "\"sha256\":\"$EXP_SHA\"" "$W/sha.json" && echo "OK: length and SHA-256 as expected" || { echo "MISMATCH (SHA-256)"; exit 1; }
   exit 0
 fi

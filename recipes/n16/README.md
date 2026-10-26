@@ -1,7 +1,8 @@
 # A superpermutation on 16 symbols from selection C and a block (a recipe)
 
 A word of 22,320,795,912,621 letters on the alphabet `0123456789ABCDEF` that contains all 20,922,789,888,000
-permutations of 16 symbols, checked on a graphics card. SHA-256 of the word (no line feed): SHA256_PENDING.
+permutations of 16 symbols, checked on a graphics card. SHA-256 of the word (no line feed):
+`e16a7e7f92119f4713e0255cd2856a66dc63efd8e8f9c3c2b89dbd129cf4a61f`.
 
 It is 34,178,619 letters below the value of the Lean theorem `hasWord_sixteen_B : HasWord 16 22320830091240`
 (`proofs/lean/constant305989/SuperpermutationUpperBound305989/CorollariesB.lean`, described in
@@ -67,8 +68,8 @@ pass reported the word invalid, with 509,520 permutations missing. `genBp` also 
 unit of the construction exactly once.
 
 Limits: I have checked this word with one program only (the group check above, on the card, tested on smaller
-words), and the plain SHA-256 of the letters is computed by a separate run of
-`genBt` and was not part of the card passes. I have no second checker for it yet.
+words). The plain SHA-256 above comes from a separate run of `genBt plan 4 ... --count` (one thread, 25,962 seconds,
+the same length), not from the card passes. I have no second checker for it yet.
 
 | file | what |
 |---|---|

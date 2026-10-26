@@ -64,7 +64,7 @@ has the hashes of every archive, word and plan.
     n = 12   48c00acf991d87a396fb162bc66447d9dba90ddc0ac9dca5ffed89e46597fcba
     n = 13   272680a7668ae245a16a9b0e6bd8e4bdd90cb7bf67922a2d534deeff70c68232
     n = 14   5eebd12aa5f4fcf1851bfbcfb0aa0ffeb860b68d265fb1be9c3321a121357a92
-    n = 16   SHA256_PENDING
+    n = 16   e16a7e7f92119f4713e0255cd2856a66dc63efd8e8f9c3c2b89dbd129cf4a61f
 
 How the words were found, step by step, is in [`NOTES.md`](NOTES.md).
 
