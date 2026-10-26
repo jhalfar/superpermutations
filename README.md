@@ -1,9 +1,9 @@
-# Short superpermutations on 8 and 10 to 14 symbols
+# Short superpermutations on 8 and 10 to 16 symbols
 
 [![check words](https://github.com/jhalfar/superpermutations/actions/workflows/check.yml/badge.svg)](https://github.com/jhalfar/superpermutations/actions/workflows/check.yml)
 
 A superpermutation on n symbols is a word that contains every permutation of the symbols as a substring. This
-repository holds such words for n = 10 to 14 that are shorter than any other I know of, and a word of 46,174
+repository holds such words for n = 10 to 16 that are shorter than any other I know of, and a word of 46,174
 letters for n = 8. It also holds the inputs that rebuild them, the programs that made them, and Lean proofs of
 upper and lower bounds.
 
@@ -23,7 +23,8 @@ runs the searches and writes the code and this text.
 | 11 | 43,930,578 | 43,930,624 | Theo H. | -46 |
 | 12 | 522,736,969 | 522,737,173 | Theo H. | -204 |
 | 13 | 6,747,801,798 | 6,747,918,066 | Jay Pantone | -116,268 |
-| 14 | 93,904,804,425 | 93,904,804,516 | William Echols | -91 |
+| 14 | 93,904,804,405 | 93,904,804,516 | William Echols | -111 |
+| 16 | 22,320,795,912,621 | - | - | - |
 
 "Before" is the best word of someone else when mine was published. For n = 8 the shortest word known is now
 Theo H.'s 46,173, which he found with `tools/trailsearch.c` of this repository on the same selection
@@ -43,8 +44,10 @@ repository (`g++ -std=c++20 -O2 tools/reduced_codec.cpp -o reduced-codec`), whic
 `A`-`C` with no line feed; I checked the file with it and with an independent decoder of mine. The word of
 6,747,801,835 letters before it is stored the same way, and the earlier words for n = 13 stay as `.txt.xz`
 files. The word on 14 symbols would take 94 GB, so it is a recipe in
-[`recipes/n14/`](recipes/n14/README.md): a generator, a plan of 83 KB and a checker, as William Echols did with his
-words.
+[`recipes/n14/`](recipes/n14/README.md): a generator, a plan of 94 KB and a checker, as William Echols did with his
+words. The word for n = 16 is a recipe too, in [`recipes/n16/`](recipes/n16/README.md). It is the first word I know
+of that is below the value of my Lean theorem `hasWord_sixteen_B`, 22,320,830,091,240, by 34,178,619; for n = 16 there
+is no earlier word in the table to compare with.
 
 ```sh
 xz -dk words/superpermutation-13-6747801798.spra.xz
@@ -52,7 +55,7 @@ xz -dk words/superpermutation-13-6747801798.spra.xz
 ```
 
 SHA-256 of the words (for n = 8 to 12 the file, which is the word and one line feed; for n = 13 the letters as the
-decoder writes them and for n = 14 as `recipes/n14/` writes them, both with no line feed). [`SHA256SUMS`](SHA256SUMS)
+decoder writes them and for n = 14 to 16 as the recipes write them, both with no line feed). [`SHA256SUMS`](SHA256SUMS)
 has the hashes of every archive, word and plan.
 
     n = 8    66ec57ba428e0ac1affc5503b86821920f0def27380697317033911a6628cddd
@@ -60,7 +63,8 @@ has the hashes of every archive, word and plan.
     n = 11   65ddf4c4a3ebaa69de7bc6be29e0b38ad010055f22ef6abeeffdb4f508176092
     n = 12   48c00acf991d87a396fb162bc66447d9dba90ddc0ac9dca5ffed89e46597fcba
     n = 13   272680a7668ae245a16a9b0e6bd8e4bdd90cb7bf67922a2d534deeff70c68232
-    n = 14   3b1470a204854ce09654b9d9a811b8455308212b29585accc29d0263e423ab6f
+    n = 14   5eebd12aa5f4fcf1851bfbcfb0aa0ffeb860b68d265fb1be9c3321a121357a92
+    n = 16   SHA256_PENDING
 
 How the words were found, step by step, is in [`NOTES.md`](NOTES.md).
 
@@ -106,8 +110,8 @@ with numpy) and Pantone's `literal_check --deletions` (about 13 GB at n = 13). A
 n = 8 and 10 to 13; for n = 13 `literal_check` ran under Linux in 15 minutes. Before I publish a word,
 `tools/trailsearch.c` runs on its plan with six settings (20 minutes each at n = 13) and the fixed-order pass; the
 word goes out only if neither shortens it. The word for n = 14 is checked by `recipes/n14/decode.sh ... check`
-(56 minutes on one thread, 11 GB) and was checked by a second streaming checker of mine with several threads;
-both found all 87,178,291,200 permutations.
+(66 minutes on one thread, 11 GB); it found all 87,178,291,200 permutations. The word for n = 16 is checked by
+`recipes/n16/check.sh` on a graphics card (four passes of 19 minutes).
 
 ## Rebuilding a word
 
@@ -133,6 +137,7 @@ python3 words/n8/tools/n8.py rebuild words/n8/selection-46174.txt -o w46174.txt 
 | [`words/`](words/) | the words, and the earlier ones I published |
 | [`words/n8/`](words/n8/README.md) | the word on 8 symbols: construction, selection, slice order, seven ties, and in [`tools/`](words/n8/tools/README.md) the program that rebuilds, prices and searches |
 | [`recipes/n14/`](recipes/n14/README.md) | the word on 14 symbols as a recipe: generator, plan, checker |
+| [`recipes/n16/`](recipes/n16/README.md) | the word on 16 symbols as a recipe: generator with the block, plan, card check |
 | [`reproduce/`](reproduce/REPRODUCE.md) | selection, plan, generator and checker for four words |
 | [`plan/`](plan/), [`plan/history/`](plan/history/README.md) | plans of the newest and of the earlier words |
 | [`selection/`](selection/README.md) | how the selections were found: block searches and their checkers |

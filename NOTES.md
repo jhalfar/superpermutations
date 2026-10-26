@@ -9,7 +9,7 @@ n = 12 and 1,409 at n = 13 below his words. Part two changes the closed trails t
 inside his construction. In one day that gave 36 more letters at n = 11, 8,175 at n = 12 and 114,264 at n = 13,
 and at n = 10 a word of 4,034,855 letters, 18 below rumstd's. Part one is how I got to part two: every pass that
 polishes the new words was written for the old ones. Part three (October 17 to 20) takes two moves from William
-Echols and Theo H. and gives the words for n = 12, 13 and 14. Part four (October 20 and 21) is the word for n = 8.
+Echols and Theo H. and gives the words for n = 12, 13 and 14. Part four (October 20 and 21) is the word for n = 8. Part five (October 25 and 26) is the word for n = 16.
 
 After the four parts come the things I tried that gave nothing, with the numbers, so that nobody has to try them
 again. Then come what is known about how much is left, the lower bounds, the words of record length and how the
@@ -66,13 +66,20 @@ Part three, moves of William Echols and Theo H. (October 17 to 20):
     bounded memory are not in the repository yet; the plans are, and they rebuild with `tools/trailsearch.c`.
 12. For n = 14 the word is written by a generator from the selection and a plan of 72,000 units, one per closed
     trail on 13 symbols, in the order that my n = 12 and n = 13 plans give: 93,904,804,425 letters, 91 below
-    Echols's 93,904,804,516.
+    Echols's 93,904,804,516. A relocation search on the units took 20 more letters on October 25:
+    93,904,804,405.
 
 Part four, n = 8 (October 20):
 
 13. A set partition over closed walk types packed the 120 loops with four copies of one walk of 27 loops. Priced
     with joins of every overlap, that packing gives 46,174 letters, four below Echols's 46,178. Theo H. then ran
     `tools/trailsearch.c` on the same selection and found 46,173, by opening three trails at steps of weight 2.
+
+Part five, n = 16 (October 25 and 26):
+
+14. The generator for n = 14 became one for n = 12 + L. For n = 16 the block of `proofs/lean/constant305989/` replaces
+    the loops above the 6,048 loops without a row: 22,320,795,912,621 letters, checked on the card, 34,178,619 below
+    the value of `hasWord_sixteen_B`.
 
 ## The model
 
@@ -800,6 +807,11 @@ three threads (14 minutes): all 87,178,291,200 permutations occur, with 19,588,8
 (UTC) Echols posted 93,904,804,516 on the same selection, with the openings and joins of the groups optimised; mine is
 91 letters shorter. The recipe is in [`recipes/n14/`](recipes/n14/README.md).
 
+On October 25 I ran a relocation search on the units of the plan (the block move of Echols and Theo H., with the
+openings chosen again by the exact dynamic programme). It took 20 letters in 48 seconds: 93,904,804,405, 111 below
+Echols's word. `recipes/n14/decode.sh check` found all permutations again (66 minutes on one thread), and this is the
+recipe in the folder now.
+
 # Part four: n = 8 (October 20 and 21)
 
 At n = 8 Pantone's construction is not a theorem, but its completion step works as a recipe: the 120 cyclic
@@ -829,6 +841,28 @@ no change of the rows inside one region with the openings fixed.
 In Lean (`proofs/lean/`): the word of 46,174 and its ties are checked by the kernel (`words/`), the two facts
 about the 27-walk and the packing are proved (`n8struct/`), and the lower bound for n = 8 is 46,133 with the
 kernel alone and 46,134 with three equations evaluated by compiled code (`n8_46134/`).
+
+# Part five: n = 16 (October 25 and 26)
+
+`gen14.c` became a generator for n = 12 + L with L up to 5. Its plans for higher n come by lifting: the order in which
+a plan for n - 1 writes its closed trails becomes the order of the new units, and every opening is chosen again by an
+exact dynamic programme. My plan for n = 15 was made this way from the n = 14 plan, with a relocation search on top;
+I will publish that word separately.
+
+**n = 16.** The Lean proof of `proofs/lean/constant305989/` replaces, from 15 symbols on, the loops above each of the
+6,048 loops without a row by one block, solved once on 14 symbols. The generator does the same: the block is
+relabelled onto each of those loops, which gives 36,288 stored walks, and the units of the plan are the 440 small and
+14 walk units of the block at each position, in a fixed order, with the openings chosen by the exact programme
+(`genBt.c`). Without the block the lifted plan has 22,320,835,819,119 letters; with it 22,320,795,912,621, which is
+34,178,619 below `hasWord_sixteen_B` (22,320,830,091,240). The joins cost 15,619,232 letters, 3.66 per unit against
+2.30 in the plan without the block; the order inside the block's segment is not optimised, and I estimate that at
+most a few million letters are left in it.
+
+The check is a group check on the graphics card, in four passes of 19 minutes each, each recording a quarter of the
+14! groups. All four passes were valid with the same length and tree hash. Removing one block walk unit from the
+plan made pass 0 report 509,520 missing permutations. Only this one program has checked the word, and I did not run
+`tools/trailsearch.c` on the plan of n = 16, which it does not read. [`recipes/n16/`](recipes/n16/README.md)
+has the recipe.
 
 # What gave nothing
 
