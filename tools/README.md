@@ -9,6 +9,8 @@ that of cuts inside a 1-cycle from Theo H.'s n = 11 word. [`selection/`](../sele
 
 To rebuild or check a published word you need `trailsearch.c`, `delcheck.c` and a C compiler. No solver is involved.
 
+The plans of the recipes for n = 14 to 17 are made by other programs, in [`plans/`](plans/README.md).
+
 ## How a word is described
 
 A word is a sequence of pieces. Each piece is one closed trail, cut open at one place, and consecutive pieces are

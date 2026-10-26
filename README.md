@@ -51,6 +51,9 @@ words. The words for n = 15 and n = 16 are recipes too, in [`recipes/n15/`](reci
 mine lifts the same plan with more choices for the openings. The word for n = 16 is the first word I know of that is
 below the value of my Lean theorem `hasWord_sixteen_B`, 22,320,830,091,240, by 34,178,619; for n = 16 there
 is no earlier word in the table to compare with.
+The word for n = 17 is a recipe as well, in [`recipes/n17/`](recipes/n17/README.md): 377,961,971,839,096 letters,
+520,219,328 below the value of `hasWord_seventeen_B`, checked on the card in one pass of 3.8 hours. Its plain SHA-256
+is still being computed. The plans of the recipes are made by the programs in [`tools/plans/`](tools/plans/README.md).
 
 ```sh
 xz -dk words/superpermutation-13-6747801798.spra.xz
@@ -116,7 +119,8 @@ n = 8 and 10 to 13; for n = 13 `literal_check` ran under Linux in 15 minutes. Be
 word goes out only if neither shortens it. The word for n = 14 is checked by `recipes/n14/decode.sh ... check`
 (66 minutes on one thread, 11 GB); it found all 87,178,291,200 permutations. The word for n = 15 is checked by
 `recipes/n15/check.sh` (a group check, 15 to 22 minutes on 4 threads) and the word for n = 16 by
-`recipes/n16/check.sh` on a graphics card (four passes of 19 minutes).
+`recipes/n16/check.sh` on a graphics card (four passes of 19 minutes, or one pass with `core` in 25 minutes); the word for
+n = 17 by `recipes/n17/check.sh core` (3.8 hours).
 
 ## Rebuilding a word
 
@@ -144,6 +148,8 @@ python3 words/n8/tools/n8.py rebuild words/n8/selection-46174.txt -o w46174.txt 
 | [`recipes/n14/`](recipes/n14/README.md) | the word on 14 symbols as a recipe: generator, plan, checker |
 | [`recipes/n15/`](recipes/n15/README.md) | the word on 15 symbols as a recipe: generator, plan, group check |
 | [`recipes/n16/`](recipes/n16/README.md) | the word on 16 symbols as a recipe: generator with the block, plan, card check |
+| [`recipes/n17/`](recipes/n17/README.md) | the word on 17 symbols as a recipe: generator with the block, plan, one-pass card check |
+| [`tools/plans/`](tools/plans/README.md) | the programs that make the plans of the recipes |
 | [`reproduce/`](reproduce/REPRODUCE.md) | selection, plan, generator and checker for four words |
 | [`plan/`](plan/), [`plan/history/`](plan/history/README.md) | plans of the newest and of the earlier words |
 | [`selection/`](selection/README.md) | how the selections were found: block searches and their checkers |
