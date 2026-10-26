@@ -9,7 +9,7 @@ n = 12 and 1,409 at n = 13 below his words. Part two changes the closed trails t
 inside his construction. In one day that gave 36 more letters at n = 11, 8,175 at n = 12 and 114,264 at n = 13,
 and at n = 10 a word of 4,034,855 letters, 18 below rumstd's. Part one is how I got to part two: every pass that
 polishes the new words was written for the old ones. Part three (October 17 to 20) takes two moves from William
-Echols and Theo H. and gives the words for n = 12, 13 and 14. Part four (October 20 and 21) is the word for n = 8. Part five (October 25 and 26) is the word for n = 16.
+Echols and Theo H. and gives the words for n = 12, 13 and 14. Part four (October 20 and 21) is the word for n = 8. Part five (October 25 and 26) is the words for n = 15 and 16.
 
 After the four parts come the things I tried that gave nothing, with the numbers, so that nobody has to try them
 again. Then come what is known about how much is left, the lower bounds, the words of record length and how the
@@ -75,9 +75,11 @@ Part four, n = 8 (October 20):
     with joins of every overlap, that packing gives 46,174 letters, four below Echols's 46,178. Theo H. then ran
     `tools/trailsearch.c` on the same selection and found 46,173, by opening three trails at steps of weight 2.
 
-Part five, n = 16 (October 25 and 26):
+Part five, n = 15 and 16 (October 25 and 26):
 
-14. The generator for n = 14 became one for n = 12 + L. For n = 16 the block of `proofs/lean/constant305989/` replaces
+14. The generator for n = 14 became one for n = 12 + L. Lifting the order of my n = 14 plan to n = 15, with every
+    opening chosen exactly and a relocation search on top, gives 1,401,325,413,744 letters, 1,083,578 below Theo H.'s
+    first recipe for n = 15, which lifts the same plan. For n = 16 the block of `proofs/lean/constant305989/` replaces
     the loops above the 6,048 loops without a row: 22,320,795,912,621 letters, checked on the card, 34,178,619 below
     the value of `hasWord_sixteen_B`.
 
@@ -842,12 +844,15 @@ In Lean (`proofs/lean/`): the word of 46,174 and its ties are checked by the ker
 about the 27-walk and the packing are proved (`n8struct/`), and the lower bound for n = 8 is 46,133 with the
 kernel alone and 46,134 with three equations evaluated by compiled code (`n8_46134/`).
 
-# Part five: n = 16 (October 25 and 26)
+# Part five: n = 15 and 16 (October 25 and 26)
 
-`gen14.c` became a generator for n = 12 + L with L up to 5. Its plans for higher n come by lifting: the order in which
-a plan for n - 1 writes its closed trails becomes the order of the new units, and every opening is chosen again by an
-exact dynamic programme. My plan for n = 15 was made this way from the n = 14 plan, with a relocation search on top;
-I will publish that word separately.
+**n = 15.** `gen14.c` became `gen16.c`, a generator for n = 12 + L with L up to 4. For n = 15 I took the order in
+which my n = 14 plan writes its 792,000 closed trails as the order of the units and chose every opening by the exact
+dynamic programme: 1,401,325,415,636 letters. Theo H. had published the first recipe for n = 15 the same day, by
+lifting the same plan with fewer choices for the openings (1,401,326,497,322). The relocation search of n = 14, run
+for 40 minutes on the lifted plan, took 1,892 letters: 1,401,325,413,744. The word is not stored. `gen16c` hands it
+block by block to a check over groups, which needs a table of 13! bits instead of 15!: all permutations occur, in
+1,302 seconds on 4 threads. [`recipes/n15/`](recipes/n15/README.md) has the recipe.
 
 **n = 16.** The Lean proof of `proofs/lean/constant305989/` replaces, from 15 symbols on, the loops above each of the
 6,048 loops without a row by one block, solved once on 14 symbols. The generator does the same: the block is
@@ -861,7 +866,7 @@ most a few million letters are left in it.
 The check is a group check on the graphics card, in four passes of 19 minutes each, each recording a quarter of the
 14! groups. All four passes were valid with the same length and tree hash. Removing one block walk unit from the
 plan made pass 0 report 509,520 missing permutations. Only this one program has checked the word, and I did not run
-`tools/trailsearch.c` on the plan of n = 16, which it does not read. [`recipes/n16/`](recipes/n16/README.md)
+`tools/trailsearch.c` on the plans of n = 15 and 16, which it does not read. [`recipes/n16/`](recipes/n16/README.md)
 has the recipe.
 
 # What gave nothing

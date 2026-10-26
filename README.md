@@ -24,6 +24,7 @@ runs the searches and writes the code and this text.
 | 12 | 522,736,969 | 522,737,173 | Theo H. | -204 |
 | 13 | 6,747,801,798 | 6,747,918,066 | Jay Pantone | -116,268 |
 | 14 | 93,904,804,405 | 93,904,804,516 | William Echols | -111 |
+| 15 | 1,401,325,413,744 | 1,401,326,497,322 | Theo H. | -1,083,578 |
 | 16 | 22,320,795,912,621 | - | - | - |
 
 "Before" is the best word of someone else when mine was published. For n = 8 the shortest word known is now
@@ -45,8 +46,10 @@ repository (`g++ -std=c++20 -O2 tools/reduced_codec.cpp -o reduced-codec`), whic
 6,747,801,835 letters before it is stored the same way, and the earlier words for n = 13 stay as `.txt.xz`
 files. The word on 14 symbols would take 94 GB, so it is a recipe in
 [`recipes/n14/`](recipes/n14/README.md): a generator, a plan of 94 KB and a checker, as William Echols did with his
-words. The word for n = 16 is a recipe too, in [`recipes/n16/`](recipes/n16/README.md). It is the first word I know
-of that is below the value of my Lean theorem `hasWord_sixteen_B`, 22,320,830,091,240, by 34,178,619; for n = 16 there
+words. The words for n = 15 and n = 16 are recipes too, in [`recipes/n15/`](recipes/n15/README.md) and
+[`recipes/n16/`](recipes/n16/README.md). Theo H. published the first recipe for n = 15 by lifting my n = 14 plan;
+mine lifts the same plan with more choices for the openings. The word for n = 16 is the first word I know of that is
+below the value of my Lean theorem `hasWord_sixteen_B`, 22,320,830,091,240, by 34,178,619; for n = 16 there
 is no earlier word in the table to compare with.
 
 ```sh
@@ -64,6 +67,7 @@ has the hashes of every archive, word and plan.
     n = 12   48c00acf991d87a396fb162bc66447d9dba90ddc0ac9dca5ffed89e46597fcba
     n = 13   272680a7668ae245a16a9b0e6bd8e4bdd90cb7bf67922a2d534deeff70c68232
     n = 14   5eebd12aa5f4fcf1851bfbcfb0aa0ffeb860b68d265fb1be9c3321a121357a92
+    n = 15   63cc507edaf413cfe3cda781be892688a33127b961aa22958b6bc740e9e82eaf
     n = 16   e16a7e7f92119f4713e0255cd2856a66dc63efd8e8f9c3c2b89dbd129cf4a61f
 
 How the words were found, step by step, is in [`NOTES.md`](NOTES.md).
@@ -110,7 +114,8 @@ with numpy) and Pantone's `literal_check --deletions` (about 13 GB at n = 13). A
 n = 8 and 10 to 13; for n = 13 `literal_check` ran under Linux in 15 minutes. Before I publish a word,
 `tools/trailsearch.c` runs on its plan with six settings (20 minutes each at n = 13) and the fixed-order pass; the
 word goes out only if neither shortens it. The word for n = 14 is checked by `recipes/n14/decode.sh ... check`
-(66 minutes on one thread, 11 GB); it found all 87,178,291,200 permutations. The word for n = 16 is checked by
+(66 minutes on one thread, 11 GB); it found all 87,178,291,200 permutations. The word for n = 15 is checked by
+`recipes/n15/check.sh` (a group check, 15 to 22 minutes on 4 threads) and the word for n = 16 by
 `recipes/n16/check.sh` on a graphics card (four passes of 19 minutes).
 
 ## Rebuilding a word
@@ -137,6 +142,7 @@ python3 words/n8/tools/n8.py rebuild words/n8/selection-46174.txt -o w46174.txt 
 | [`words/`](words/) | the words, and the earlier ones I published |
 | [`words/n8/`](words/n8/README.md) | the word on 8 symbols: construction, selection, slice order, seven ties, and in [`tools/`](words/n8/tools/README.md) the program that rebuilds, prices and searches |
 | [`recipes/n14/`](recipes/n14/README.md) | the word on 14 symbols as a recipe: generator, plan, checker |
+| [`recipes/n15/`](recipes/n15/README.md) | the word on 15 symbols as a recipe: generator, plan, group check |
 | [`recipes/n16/`](recipes/n16/README.md) | the word on 16 symbols as a recipe: generator with the block, plan, card check |
 | [`reproduce/`](reproduce/REPRODUCE.md) | selection, plan, generator and checker for four words |
 | [`plan/`](plan/), [`plan/history/`](plan/history/README.md) | plans of the newest and of the earlier words |

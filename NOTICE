@@ -34,8 +34,9 @@ recipes/n14 publishes the word on 14 symbols as a generator and a plan, the form
 his words on 14 symbols. gen14.c can also write the order of his 2-lift (recipe "superperm-2lift/1", mode echols);
 it is written from my own definitions, and no code of his repository is used.
 
-recipes/n16 publishes the word on 16 symbols in the same form, with a generator that is my own extension of gen14.c.
-The block in recipes/n16 is the one of proofs/lean/constant305989 and is my addition; the construction around it is
+recipes/n15 and recipes/n16 publish the words on 15 and 16 symbols in the same form, with generators that are my own
+extension of gen14.c. Theo H. published the first recipe for n = 15 (https://github.com/Tholsh, 2026-10-25) by lifting
+my n = 14 plan; the word in recipes/n15 lifts the same plan, and no code of his is used. The block in recipes/n16 is the one of proofs/lean/constant305989 and is my addition; the construction around it is
 Pantone's.
 
 Theo H.'s word of 46,173 letters on 8 symbols (https://github.com/Tholsh/superpermutation_study, data/n8/46173) was
