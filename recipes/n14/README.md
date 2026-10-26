@@ -29,8 +29,12 @@ bash decode.sh n14_93904804405_on_selC.uplan.xz word.txt   # writes the word (94
 taken out (one thread, batched prefetch). It marks every window of 14 distinct symbols in a table of 14! bits and
 exits with 0 only if all 87,178,291,200 permutations occur.
 
-I no longer ship the `splan/1` file of my checker bot (github.com/jhalfar/superpermutations-bot) for this word; I have
-not made one for it. The unit plan above is the recipe.
+`n14_93904804405.splan.json.xz` (613 KB) is the same recipe in the `splan/1` format of my checker bot
+(github.com/jhalfar/superpermutations-bot): one JSON file that holds the unit plan, the expected length and SHA-256
+and the name and source hash of the generator. The bot regenerates the word from it and checks every permutation:
+`python -I checker/check_any.py n14_93904804405.splan.json.xz` in a checkout of the bot, about an hour and 12 GB of
+memory. My run gave length 93,904,804,405, the SHA-256 above, all permutations and no foreign byte. The unit plan
+above stays the reference.
 
 Plan lines: `D d g j` is a small unit (loop d without a row, in file order; letter 10 inserted before its letter g;
 its 11 small trails cut at the rotations j to j+10). `W w i0 way` is a walk unit (walk w of the two transports, in
