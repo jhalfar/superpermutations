@@ -6,16 +6,19 @@
 #               it trusts the construction, so it is a consistency check, not a proof
 #     pass I    pass I (0 <= I < K) of the group check on the card: the word is spelled on the card and only the
 #               groups g with g mod K = I are recorded (K = 4: about 19 minutes on an RTX 5090 with 5 host threads)
+#     core      ONE pass of the core-table check (coreBp from ../n17: (n-3)! = 6,227,020,800 core bits instead of the
+#               (n-2)! group bits; the same length and tree hash as the K passes; about 25 minutes on an RTX 5090,
+#               2.5 GB on the card); the word is a superpermutation exactly when the pass is valid
 #     all       the K passes one after the other; the word is a superpermutation exactly when every pass is valid
 #               and all passes report the same length and tree hash
 #     sha       the plain SHA-256 of the letters (genBt --count: one thread, spelled on the CPU, nothing stored;
 #               several hours)
 #   THREADS = host threads (default 5), K = number of group shards (default 4).
-#   Needs gcc, xz, sha256sum; for pass/all an NVIDIA card with its driver (libcuda.so.1 or nvcuda.dll, no CUDA
+#   Needs gcc, xz, sha256sum; for pass/core/all an NVIDIA card with its driver (libcuda.so.1 or nvcuda.dll, no CUDA
 #   toolkit: gcheck17.ptx is loaded at run time) and about 9 GB of memory with K = 4. The word is never stored.
 set -eu
 D=$(cd "$(dirname "$0")" && pwd)
-MODE=${1:?usage: check.sh predict|pass I|all|sha [THREADS] [K]}
+MODE=${1:?usage: check.sh predict|pass I|core|all|sha [THREADS] [K]}
 if [ "$MODE" = pass ]; then I=${2:?pass needs a number}; shift; fi
 TH=${2:-5}; K=${3:-4}
 PLAN=nB16a_22320795912621.uplan.xz
@@ -41,6 +44,20 @@ if [ "$MODE" = sha ]; then
   "$W/genBt" plan 4 "$W/sel.txt" "$W/plan.uplan" --count 2> "$W/sha.json"; cat "$W/sha.json"
   grep -q "\"length\":$EXP_LEN," "$W/sha.json" || { echo "MISMATCH (length)"; exit 1; }
   grep -q "\"sha256\":\"$EXP_SHA\"" "$W/sha.json" && echo "OK: length and SHA-256 as expected" || { echo "MISMATCH (SHA-256)"; exit 1; }
+  exit 0
+fi
+if [ "$MODE" = core ]; then
+  N17="$D/../n17"
+  gcc -O3 -march=native -pthread -o "$W/coreBp" "$N17/coreBp.c" -ldl 2>/dev/null || gcc -O3 -march=native -pthread -o "$W/coreBp" "$N17/coreBp.c"
+  cp "$N17/gcheckc.ptx" "$W/"
+  "$W/coreBp" 4 "$W/sel.txt" "$W/plan.uplan" --threads "$TH" --seg 29 --table 22 > "$W/core.json" 2> "$W/core.err" || true
+  cat "$W/core.json"
+  grep -q "\"length\":$EXP_LEN," "$W/core.json" && grep -q "\"tree_sha256\":\"$EXP_TREE\"" "$W/core.json" \
+    && grep -q '"cores":6227020800,' "$W/core.json" && grep -q '"core_bits":6227020800,' "$W/core.json" \
+    && grep -q '"missing_permutations":0' "$W/core.json" && grep -q '"shard_complete":true' "$W/core.json" \
+    && grep -q '"overflow":0' "$W/core.json" && grep -q '"valid":true' "$W/core.json" \
+    && echo "OK: core pass valid, length $EXP_LEN, tree hash $EXP_TREE: every permutation of 16 symbols occurs" \
+    || { echo "core pass: MISMATCH or invalid"; exit 1; }
   exit 0
 fi
 gcc -O3 -march=native -pthread -o "$W/genBp" "$D/genBp.c" -ldl 2>/dev/null || gcc -O3 -march=native -pthread -o "$W/genBp" "$D/genBp.c"

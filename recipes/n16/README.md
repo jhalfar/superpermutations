@@ -27,7 +27,7 @@ The word would take 22 TB, so it is not stored. `genBt.c` writes it from four th
 
 The construction (slices, transport, completion, closed trails) is Jay Pantone's. The block step on top of it is
 mine, proved in Lean in `proofs/lean/constant305989/`. The plan comes from my plan for n = 15 (lifted from the n = 14
-plan of `recipes/n14/`; not published yet): for each of the 6,048 positions, its 110 small units are replaced by the 440 small and 14 walk units of the block, in one fixed order, and
+plan of `recipes/n14/`; it is the plan of `recipes/n15/`, see [`tools/plans/`](../../tools/plans/README.md)): for each of the 6,048 positions, its 110 small units are replaced by the 440 small and 14 walk units of the block, in one fixed order, and
 the openings are chosen again by an exact dynamic programme. The same plan lifted without the block has
 22,320,835,819,119 letters, so the block saves 39,906,498. The plan has 15,619,232 letters in joins.
 
@@ -41,6 +41,7 @@ walk; cut at its full row i0, way 0 or 1).
 ```sh
 bash check.sh predict      # the length from the plan and the construction, no card; 4 threads, about 7 minutes
 bash check.sh pass 0       # one of the four passes of the check on the card
+bash check.sh core         # the whole check in one pass (builds coreBp from ../n17); about 25 minutes
 bash check.sh all          # all four passes one after the other; about 80 minutes
 bash check.sh sha          # the plain SHA-256 of the letters: one thread, several hours, no card
 ```
@@ -62,6 +63,9 @@ The word is a superpermutation exactly when all four passes are valid, complete 
 to 14! groups), and report the same length and tree hash. My run (2026-10-26, RTX 5090, 5 host threads) gave for
 all four passes: valid, length 22,320,795,912,621, 20,925,874,831,680 permutation windows, no overflow, no missing
 permutation, tree hash `51e40627c9c9e378cc13256b71e2d730327b7f6e325a87decb4cf5727a32dd91`. `check.sh` compares these.
+
+`check.sh core` runs the core-table check of [`recipes/n17/`](../n17/README.md) on the same word in one pass: valid, the same
+length and tree hash, 6,227,020,800 cores complete, 1,477 seconds on the RTX 5090 with 5 host threads while another job used the card, 2.5 GB on the card.
 
 As a negative test I removed one walk unit of the block from the plan (`W 1591470 143 1`) and ran pass 0 of 4: the
 pass reported the word invalid, with 509,520 permutations missing. `genBp` also checks that the plan contains every
