@@ -38,28 +38,33 @@ here). From that plan on, everything below is rebuilt from files of this reposit
 It stops when a whole pass finds nothing (45 seconds, 1.2 GB) and prints `LENGTH 93904804405`. The unit lines
 are those of the published plan.
 
-**n = 15, 1,401,325,413,744** (`recipes/n15/`): lift the 425 plan, then run `uopt15` for 40 minutes.
+**n = 15, 1,401,325,411,491** (`recipes/n15/`): lift the 425 plan, run `uopt15` for 40 minutes, then for 3 hours
+more with another seed.
 
-    lift16 lift 3 sel.txt n14_425.uplan n15_lift.uplan                      # LENGTH 1401325415636, 3 minutes
-    uopt15 3 sel.txt n15_lift.uplan n15_uopt.uplan --time 2400 --qmin 8 --seed 1
+    lift16 lift 3 sel.txt n14_425.uplan n15_lift.uplan                                # LENGTH 1401325415636, 3 minutes
+    uopt15 3 sel.txt n15_lift.uplan n15_654.uplan --time 2400 --qmin 8 --seed 1      # my run: 1401325413654
+    uopt15 3 sel.txt n15_654.uplan n15_491.uplan --time 10800 --qmin 8 --seed 2      # my run: 1401325411491
 
-`uopt15` stops by the clock, in the middle of a pass, so another run ends at another length: mine on 2026-10-26 gave 1,401,325,413,654, which is 90
-letters shorter than the published plan, whose length is the result of my first run.
+`uopt15` stops by the clock, in the middle of a pass, so another run ends at another length. The plan of
+`recipes/n15/` is the result of my two runs on 2026-10-26 and 27 (44 passes in the second, 5.8 GB). The n = 15 plan
+published first, 1,401,325,413,744 letters from an earlier 40-minute run, is in the git history; the n = 16 and 17
+plans below were lifted from it:
 
-**n = 16, 22,320,795,912,621** (`recipes/n16/`): block order, then `liftB` from the published n = 15 plan.
+    git show df98259:recipes/n15/n15_1401325413744_on_selC.uplan.xz | xz -dc > n15.uplan
+
+**n = 16, 22,320,795,912,621** (`recipes/n16/`): block order, then `liftB` from that n = 15 plan.
 
     GENB_BLOCK=block.txt blockord sel.txt n15.uplan seg1.order --run 4 --sweeps 1     # cost 1719, 6.5 minutes
     GENB_BLOCK=block.txt LIFTB_ORDER=seg1.order LIFT17_BACK=back liftB liftB 4 sel.txt n15.uplan nB16a.uplan
 
-`n15.uplan` is the unpacked plan of `recipes/n15/`. `seg1.order` here is the file my run wrote. The second command prints
-`LENGTH 22320795912621`.
+`seg1.order` here is the file my run wrote. The second command prints `LENGTH 22320795912621`.
 
 **n = 17, 377,961,971,839,096** (`recipes/n17/`): one more lift, from the n = 16 plan.
 
     GENB_BLOCK=block.txt GEN17_LAZY=2 LIFT17_BACK=back liftB lift 5 sel.txt nB16a.uplan nB17a.uplan
 
 It prints `LENGTH 377961971839096`. My run took 5.1 hours on one thread (18,403 seconds, 55,463,616 units) and 5.1 GB of
-memory; I did not repeat it for the tests below. `check.sh predict` in `recipes/n17/` recomputes the length of the
+memory; the rebuild in the tests below took about as long. `check.sh predict` in `recipes/n17/` recomputes the length of the
 result from the plan and the construction.
 
 The C words for n = 16 and n = 17 (no block) come from the same programs without `GENB_BLOCK`:
@@ -67,7 +72,7 @@ The C words for n = 16 and n = 17 (no block) come from the same programs without
 
 ## Tests of this folder
 
-Run on 2026-10-26 under WSL (Ubuntu, gcc 13.3), one thread each, from files of this repository (`recipes/`,
+Run on 2026-10-26 and 27 under WSL (Ubuntu, gcc 13.3), one thread each, from files of this repository (`recipes/`,
 `arrange/`, `proofs/lean/constant305989/data/`) and the 425 plan from the git history. "Units identical" means the
 unit lines are the same after the CRs and the `#` lines are removed.
 
@@ -75,12 +80,13 @@ unit lines are the same after the CRs and the `#` lines are removed.
 |---|---|
 | `uopt15 2` on the 425 plan, `--qmin 8 --seed 1` | `LENGTH 93904804405`, 45 s; units identical to `recipes/n14/` |
 | `lift16 lift 3` on the 425 plan | `LENGTH 1401325415636`, units identical to the plan my n = 15 search started from |
-| `uopt15 3 --time 2400` on that | `LENGTH 1401325413654` (not the published 744, see above) |
-| `lift16 lift 4` on the plan of `recipes/n15/` | `LENGTH 22320835819119` (C without the block), 3,511 s, units identical to my earlier n = 16 plan |
+| `uopt15 3 --time 2400` on that | `LENGTH 1401325413654` (the start of the second run, see above) |
+| `lift16 lift 4` on the 744 plan | `LENGTH 22320835819119` (C without the block), 3,511 s, units identical to my earlier n = 16 plan |
 | `lift17 lift 4` on the same, no block | same length and units as `lift16`, 1,268 s |
 | `blockord --run 4 --sweeps 1` | cost 1719, 399 s; `seg1.order` identical |
 | `liftB liftB 4` with `seg1.order` | `LENGTH 22320795912621`, 1,643 s; **units identical to the plan of `recipes/n16/`** |
-| `check.sh predict` of `recipes/n17/` | 377,961,971,839,096, the length `liftB lift 5` printed in my run, 35 minutes |
+| `liftB lift 5` on the plan of `recipes/n16/` | `LENGTH 377961971839096`, 18,531 s, 5.1 GB; **units identical to the plan of `recipes/n17/`** |
+| `check.sh predict` of `recipes/n17/` | 377,961,971,839,096, the same length, 35 minutes |
 
 The programs also built and ran on Windows (mingw) for the runs that made the published plans; the Linux build needed
 the two small compatibility lines at the top of `lift16.c`, `lift17.c` and `liftB.c` (`fseeko64`, `_putenv`) and nothing else.

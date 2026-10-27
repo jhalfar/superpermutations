@@ -79,7 +79,8 @@ Part five, n = 15 and 16 (October 25 and 26):
 
 14. The generator for n = 14 became one for n = 12 + L. Lifting the order of my n = 14 plan to n = 15, with every
     opening chosen exactly and a relocation search on top, gives 1,401,325,413,744 letters, 1,083,578 below Theo H.'s
-    first recipe for n = 15, which lifts the same plan. For n = 16 the block of `proofs/lean/constant305989/` replaces
+    first recipe for n = 15, which lifts the same plan (three more hours of the search on October 27 gave
+    1,401,325,411,491, now the plan of the recipe). For n = 16 the block of `proofs/lean/constant305989/` replaces
     the loops above the 6,048 loops without a row: 22,320,795,912,621 letters, checked on the card, 34,178,619 below
     the value of `hasWord_sixteen_B`.
 
@@ -850,7 +851,9 @@ kernel alone and 46,134 with three equations evaluated by compiled code (`n8_461
 which my n = 14 plan writes its 792,000 closed trails as the order of the units and chose every opening by the exact
 dynamic programme: 1,401,325,415,636 letters. Theo H. had published the first recipe for n = 15 the same day, by
 lifting the same plan with fewer choices for the openings (1,401,326,497,322). The relocation search of n = 14, run
-for 40 minutes on the lifted plan, took 1,892 letters: 1,401,325,413,744. The word is not stored. `gen16c` hands it
+for 40 minutes on the lifted plan, took 1,892 letters: 1,401,325,413,744. A rerun of 40 minutes and then 3 hours with
+another seed (October 26 and 27) took 2,253 more: 1,401,325,411,491, which replaced it in the recipe; the 744 plan, from
+which the n = 16 and 17 plans were lifted, is in the git history. The word is not stored. `gen16c` hands it
 block by block to a check over groups, which needs a table of 13! bits instead of 15!: all permutations occur, in
 1,302 seconds on 4 threads. [`recipes/n15/`](recipes/n15/README.md) has the recipe.
 

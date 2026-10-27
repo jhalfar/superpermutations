@@ -9,11 +9,11 @@
 set -eu
 D=$(cd "$(dirname "$0")" && pwd)
 MODE=${1:-check}; T=${2:-2}
-PLAN=n15_1401325413744_on_selC.uplan.xz
-EXP_LEN=1401325413744
-EXP_SHA=63cc507edaf413cfe3cda781be892688a33127b961aa22958b6bc740e9e82eaf
+PLAN=n15_1401325411491_on_selC.uplan.xz
+EXP_LEN=1401325411491
+EXP_SHA=d91b875a151480dbac864005bf7bdcd1d9aaeab2d5f5a0bffabfdb1e18cbe21c
 SEL_SHA=4f31dab69be987cb94cc993bf78f854833d861970c1f57ec290bebbe198d2a1a
-PLAN_SHA=dec5081dc99e37c316fcad828e3ae6a273e47a6d7f16f7491ec75ff01fd3047f
+PLAN_SHA=8a9ed8988f18f42885dd72a026c93ddd9a36aa863b9b51c081ee60afa0b371d0
 W=$(mktemp -d); trap 'rm -rf "$W"' EXIT
 SELXZ="$D/../../arrange/data/n12t-selection.txt.xz"   # the selection of the repository
 [ -f "$SELXZ" ] || SELXZ="$D/n12t-selection.txt.xz"
