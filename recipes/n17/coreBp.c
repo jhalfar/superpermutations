@@ -2,6 +2,8 @@
    (n-3)! core bits on the card, one pass for any n <= 17), --mode group (as genBp; --gshard I/K), --mode both (debug:
    both tables in one run, verdicts and counts compared; --gshard I/K then restricts the group table only).
    --ctable LOG2: active-core table entries (default 22: 4M, more than the groups of a 2^29-letter segment).  --selftest N: g <-> (core, child) is a bijection at n = N.
+   --blake3: also the standard BLAKE3 hash (default mode, 32 bytes, as b3sum prints it) of the letters as written, on the
+   card next to the tree hash ("blake3" in the JSON).  The check itself is unchanged.
    build: gcc -O3 -march=native -pthread -o coreBp.exe coreBp.c ; kernels: build_ptxc.bat -> gcheckc.ptx */
 /* genBp.c - opt/n17/gen17p.c on top of genBt.c (construction (B), agent constB): the same host threads, card check and
    --predict; the plan's units are checked against the construction (check_units; GENB_NOUNITCHECK=1 skips it, for
@@ -29,6 +31,7 @@
 #define GEN15_NO_MAIN
 #include <pthread.h>
 #include "genBt.c"
+#include "blake3.h"
 #include "gcardc.h"
 
 /* a unit of the plan in 16 bytes: D: dw = d, wj = j, x = g[0..3] (one byte each); W: dw = w, wj = way, x = i0 */
@@ -195,6 +198,7 @@ int main(int argc, char **argv) {
     const char *selp = argv[2], *planp = argv[3];
     int T = 2, segl = 30, tbits = 24, sat = -1, plain = 0, jobl = 26; u64 rI = 0, rK = 0, gI = 0, gK = 1, flipp = ~0ULL, cutp = 0;
     int tmode = 2, ctbits = 22;   /* coretab: --mode core (default) | group | both; --ctable LOG2 */
+    int blake3 = 0;               /* --blake3: also the standard BLAKE3 hash of the letters, on the card (blake3.h, gcardc.h) */
     L = atoi(argv[1]); if (L < 1 || L > 5) DIE("L must be 1..5");
     NN = 12 + L; K = 10 + L; HH = NN - 3; SL = K; ZL = K + 1;
     for (int ai = 4; ai < argc; ai++) {
@@ -208,6 +212,7 @@ int main(int argc, char **argv) {
         else if (!strcmp(argv[ai], "--mode") && ai + 1 < argc) { ai++; tmode = !strcmp(argv[ai], "group") ? 1 : !strcmp(argv[ai], "core") ? 2 : !strcmp(argv[ai], "both") ? 3 : 0; if (!tmode) DIE("bad --mode"); }
         else if (!strcmp(argv[ai], "--ctable") && ai + 1 < argc) ctbits = atoi(argv[++ai]);
         else if (!strcmp(argv[ai], "--plain")) plain = 1;
+        else if (!strcmp(argv[ai], "--blake3")) blake3 = 1;
         else if (!strcmp(argv[ai], "--predict")) PREDICT = 1;
         else if (!strcmp(argv[ai], "--nocard")) NOCARD = 1;
         else if (!strcmp(argv[ai], "--flip") && ai + 1 < argc) flipp = strtoull(argv[++ai], NULL, 10);
@@ -232,7 +237,7 @@ int main(int argc, char **argv) {
     fprintf(stderr, "n = %d (L = %d, %d lazy levels): %d lifted walks, %llu units, %llu jobs, %d host threads, group shard %llu/%llu (%.1fs)\n", NN, L, LAZY, nwl,
             (unsigned long long)NU, (unsigned long long)NJ, T, (unsigned long long)gI, (unsigned long long)gK, wall() - t0);
     if (!PREDICT && !NOCARD) {
-        g2_init(argv[0], NN, sat, tbits, 1ULL << segl, plain, rI, rK, gI, gK, tmode, ctbits); G2.flip_at = flipp; G2.cut_at = cutp;
+        g2_init(argv[0], NN, sat, tbits, 1ULL << segl, plain, rI, rK, gI, gK, tmode, ctbits); G2.flip_at = flipp; G2.cut_at = cutp; if (blake3) g2_blake3_on();
         pool = calloc(NPOOL, sizeof(CSpan *)); poolev = calloc(NPOOL, sizeof(void *)); poolused = calloc(NPOOL, sizeof(int));
         for (int i = 0; i < NPOOL; i++) { CCK(cuMemHostAlloc_((void **)&pool[i], (size_t)POOLCAP * sizeof(CSpan), 0)); CCK(cuEventCreate_(&poolev[i], 2)); }
     }

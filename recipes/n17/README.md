@@ -3,7 +3,9 @@
 A word of 377,961,971,839,096 letters on the alphabet `0123456789ABCDEFG` that contains all
 355,687,428,096,000 permutations of 17 symbols, checked on a graphics card in one pass. Tree hash of the word (the
 SHA-256 of the SHA-256 digests of its 64 KiB leaves):
-`a17d292c31673102f3c18fa152317e81119320fb89d11815f9be6a59bdf425b2`. The plain SHA-256 of the letters is not known
+`a17d292c31673102f3c18fa152317e81119320fb89d11815f9be6a59bdf425b2`. BLAKE3 of the letters (the value `b3sum`
+prints for the word with no line feed), computed on the card in the same pass:
+`5d64909d4fd6420e9e5549367e2907ea13fc15d6e2fd1ea419e0b4caa48d8555`. The plain SHA-256 of the letters is not known
 yet: the run that computes it takes about 4.4 days, and I will add it here when it has finished.
 
 It is 520,219,328 letters below the value of the Lean theorem `hasWord_seventeen_B : HasWord 17 377962492058424`
@@ -55,7 +57,15 @@ never exist anywhere. The tree hash is the same for every thread count, so it na
 
 My run (2026-10-26, WSL, 12 host threads, RTX 5090, 13,701 seconds): valid, length 377,961,971,839,096,
 355,730,617,307,520 permutation windows, 1,307,674,368,000 groups complete, 87,178,291,200 cores done, no
-overflow, no missing permutation, tree hash as above. `check.sh core` compares these. The same program gave for the
+overflow, no missing permutation, tree hash as above. A second run with `--blake3` (2026-10-27/28, Windows, 7 host
+threads, 13,402 seconds) gave the same values and the BLAKE3 above. `check.sh core` compares all of these.
+
+The card computes BLAKE3 from the same 64 KiB leaves as the tree hash: each leaf is 64 BLAKE3 chunks, the card
+hashes the chunks and merges them into subtrees, and the host joins the subtrees in order (`blake3.h`, a C version of
+BLAKE3 written from the specification). I compared it with the official `b3sum` 1.8.7 on the empty input, "abc", a
+random 100,000,001-letter word and the words for n = 10 to 13, and with the same code on the CPU for n = 15
+(1,401,325,411,491 letters, `1cd0698e832bf3d35173e89f092932667f1f27667d6dc6e673946c3d95955fa4`). For n = 15 the card
+time of the pass went from 41.7 to 44.7 seconds with BLAKE3. The same program gave for the
 n = 16 word of `recipes/n16/`, in one pass, the same length and tree hash as the four shard passes there. I tested the core check against the older one on the words for n = 13 to 16, and with words
 that miss permutations on purpose; both gave the same missing counts.
 
@@ -65,13 +75,17 @@ plan of the construction (eight passes, 2.7 to 3.3 hours each), not on this word
 Limits: I have checked this word with one program only (the group check on the card, in its core form, tested on
 smaller words). I have no second checker for it, and no plain SHA-256 yet.
 
+The BLAKE3 of the n = 16 word of `recipes/n16/`, from this program with L = 4 and the n = 16 plan, is
+`e576707ec1f5bff740a3528dbc35160be1d41035e871f32c8d3d00f2f8c1d504`.
+
 | file | what |
 |---|---|
 | `check.sh` | builds, checks the hashes, and runs `predict`, `core`, `pass`, `all` or `sha` |
 | `nB17a_377961971839096.uplan.xz` | the unit plan |
 | `genBt.c` | the streaming generator with the block (`genBt plan 5 SEL PLAN --block FILE [--count]`) |
-| `coreBp.c`, `gcardc.h` | the host threads and the card check with the core table (`coreBp 5 SEL PLAN --threads T --seg 29 --table 22`) |
-| `gcheckc.cu`, `gcheckc.ptx` | the kernels and their PTX; `nvcc -arch=compute_75 -O3 -ptx -o gcheckc.ptx gcheckc.cu` |
+| `coreBp.c`, `gcardc.h` | the host threads and the card check with the core table (`coreBp 5 SEL PLAN --threads T --seg 29 --table 22 [--blake3]`) |
+| `blake3.h` | BLAKE3 in C (default mode, 32-byte output), used by `coreBp.c` with `--blake3` |
+| `gcheckc.cu`, `gcheckc.ptx` | the kernels and their PTX (the check, and `b3leaf`, `b3up`, `b3pick` for BLAKE3); `nvcc -arch=compute_75 -O3 -ptx -o gcheckc.ptx gcheckc.cu` |
 | `SHA256SUMS` | hashes of the files above |
 
 How the plan was made from the plan for n = 16 is in [`tools/plans/`](../../tools/plans/README.md). The construction is Jay

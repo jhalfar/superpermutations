@@ -57,7 +57,8 @@ below the value of my Lean theorem `hasWord_sixteen_B`, 22,320,830,091,240, by 3
 is no earlier word in the table to compare with.
 The word for n = 17 is a recipe as well, in [`recipes/n17/`](recipes/n17/README.md): 377,961,971,839,096 letters,
 520,219,328 below the value of `hasWord_seventeen_B`, checked on the card in one pass of 3.6 to 3.8 hours. Its plain SHA-256
-is still being computed; the recipe prints a tree hash of the word (SHA-256 over segments of 2^29 letters) instead. The plans of the recipes are made by the programs in [`tools/plans/`](tools/plans/README.md).
+is still being computed; the recipe prints a tree hash of the word (the SHA-256 of the SHA-256 digests of its 64 KiB
+leaves) and the BLAKE3 of the letters, both computed on the card in the same pass. The plans of the recipes are made by the programs in [`tools/plans/`](tools/plans/README.md).
 
 ```sh
 xz -dk words/superpermutation-13-6747801798.spra.xz
@@ -77,6 +78,13 @@ has the hashes of every archive, word and plan.
     n = 15   d91b875a151480dbac864005bf7bdcd1d9aaeab2d5f5a0bffabfdb1e18cbe21c
     n = 16   e16a7e7f92119f4713e0255cd2856a66dc63efd8e8f9c3c2b89dbd129cf4a61f
     n = 17   (plain SHA-256 not done yet; tree hash a17d292c31673102f3c18fa152317e81119320fb89d11815f9be6a59bdf425b2)
+
+BLAKE3 of the same letters (the value `b3sum` prints, no line feed), from the card check of
+[`recipes/n17/`](recipes/n17/README.md):
+
+    n = 15   1cd0698e832bf3d35173e89f092932667f1f27667d6dc6e673946c3d95955fa4
+    n = 16   e576707ec1f5bff740a3528dbc35160be1d41035e871f32c8d3d00f2f8c1d504
+    n = 17   5d64909d4fd6420e9e5549367e2907ea13fc15d6e2fd1ea419e0b4caa48d8555
 
 How the words were found, step by step, is in [`NOTES.md`](NOTES.md).
 

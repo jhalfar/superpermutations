@@ -897,7 +897,10 @@ table would need 163 GB. As a candidate for that I tested a check by hashes: eve
 value modulo 2^61 - 1 under four keys, and the sums are compared with those of the full set. It agreed with the exact
 check on n = 16 and n = 17 and reported an n = 16 word with one group missing as incomplete. It is not in the
 repository yet. Plain SHA-256 of a word this long is sequential (about 4 days for n = 17), so the recipes print a
-tree hash, SHA-256 over segments of 2^29 letters, which the card computes during the check.
+tree hash (the SHA-256 of the SHA-256 digests of the word's 64 KiB leaves), which the card computes during the
+check. Since 28.10 the n = 17 recipe also prints the BLAKE3 of the letters, which the card computes from the same
+leaves in the same pass (5d64909d... for n = 17; values for n = 15 and 16 in the README). I checked the card's
+BLAKE3 against the official b3sum on test inputs and on the words for n = 10 to 13.
 
 **n = 6.** I enumerated all minimal superpermutations for n = 6: a minimal word spells a Hamiltonian path of weight
 866, which gives a standard configuration of defect at most 5 with the same entries and rows; a first stage lists

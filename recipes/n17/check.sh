@@ -6,7 +6,8 @@
 #               it trusts the construction, so it is a consistency check, not a proof
 #     core      ONE pass of the core-table check on the card: (n-3)! = 87,178,291,200 core bits instead of the
 #               (n-2)! group bits, so the word is spelled and scanned once (about 3.8 hours on an RTX 5090 with
-#               12 host threads); the word is a superpermutation exactly when the pass is valid
+#               12 host threads); the word is a superpermutation exactly when the pass is valid. The same pass
+#               computes the BLAKE3 hash of the letters on the card (blake3.h) and compares it with EXP_BLAKE3
 #     pass I    pass I (0 <= I < K) of the older group check: only the groups g with g mod K = I are recorded
 #               (K = 8: 21.7 GB on the card, about 3 hours per pass with 12 host threads)
 #     all       the K passes one after the other; valid exactly when every pass is valid and all report the same
@@ -27,6 +28,7 @@ PLAN=nB17a_377961971839096.uplan.xz
 EXP_LEN=377961971839096
 EXP_SHA=                  # the plain SHA-256 of the letters: not known yet (the run takes days); sha mode prints it
 EXP_TREE=a17d292c31673102f3c18fa152317e81119320fb89d11815f9be6a59bdf425b2
+EXP_BLAKE3=5d64909d4fd6420e9e5549367e2907ea13fc15d6e2fd1ea419e0b4caa48d8555   # BLAKE3 of the letters, as b3sum prints it
 SEL_SHA=4f31dab69be987cb94cc993bf78f854833d861970c1f57ec290bebbe198d2a1a
 BLOCK_SHA=6dbc820dfa9702a2114b64d2b0f71342bec166ebbc61b8a13682834dbeba6618
 PLAN_SHA=5253c2c6877bea60        # first 16 hex digits of the SHA-256 of the unpacked plan
@@ -59,13 +61,14 @@ if [ "$MODE" = predict ] || [ "$MODE" = core ]; then
     exit 0
   fi
   echo "core pass ..."
-  "$W/coreBp" 5 "$W/sel.txt" "$W/plan.uplan" --threads "$TH" --seg 29 --table 22 > "$W/core.json" 2> "$W/core.err" || true
+  "$W/coreBp" 5 "$W/sel.txt" "$W/plan.uplan" --threads "$TH" --seg 29 --table 22 --blake3 > "$W/core.json" 2> "$W/core.err" || true
   cat "$W/core.json"
   grep -q "\"length\":$EXP_LEN," "$W/core.json" && grep -q "\"tree_sha256\":\"$EXP_TREE\"" "$W/core.json" \
+    && grep -q "\"blake3\":\"$EXP_BLAKE3\"" "$W/core.json" \
     && grep -q '"cores":87178291200,' "$W/core.json" && grep -q '"core_bits":87178291200,' "$W/core.json" \
     && grep -q '"missing_permutations":0' "$W/core.json" && grep -q '"shard_complete":true' "$W/core.json" \
     && grep -q '"overflow":0' "$W/core.json" && grep -q '"valid":true' "$W/core.json" \
-    && echo "OK: core pass valid, length $EXP_LEN, tree hash $EXP_TREE: every permutation of 17 symbols occurs" \
+    && echo "OK: core pass valid, length $EXP_LEN, tree hash $EXP_TREE, BLAKE3 $EXP_BLAKE3: every permutation of 17 symbols occurs" \
     || { echo "core pass: MISMATCH or invalid"; exit 1; }
   exit 0
 fi

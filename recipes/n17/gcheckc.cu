@@ -385,3 +385,84 @@ extern "C" __global__ void rankmark(const u8 *__restrict__ w, u64 nwin, u64 lo, 
     }
     if (marked) atomicAdd(&stats[3], (u64)marked);
 }
+
+/* ------------------------------------------------------------------ BLAKE3 (agent blake3; see opt/blake3/NOTES.txt)
+   The standard BLAKE3 hash (default mode, no key, 32 bytes) of the letters spelled 0-9A-G, the same bytes as the
+   tree hash.  A 64 KiB leaf of the tree hash is 64 BLAKE3 chunks, an aligned subtree of the BLAKE3 tree.
+   b3leaf:  one thread per chunk (16 compressions, chunk counter = global chunk index, 64 bits), then the 64 chunk
+            chaining values of the leaf are merged in shared memory into the CVs of its two halves (32 chunks each):
+            out[2i], out[2i+1] for leaf i (unit = 32 chunks).
+   b3up:    one level of parents: node m of level j (units m*2^j .. (m+1)*2^j - 1) from nodes 2m, 2m+1 of level j-1.
+   b3pick:  one thread: the units [U0, U1) of this flush split into maximal aligned blocks of 2^k units (k >= 1,
+            U0 and U1 even), and for each block the CVs of its two halves are copied to out in order (the host pushes
+            them onto its BLAKE3 stack; it never needs the ROOT flag from the card). */
+__device__ __constant__ u32 B3IV[8] = { 0x6A09E667u, 0xBB67AE85u, 0x3C6EF372u, 0xA54FF53Au, 0x510E527Fu, 0x9B05688Cu, 0x1F83D9ABu, 0x5BE0CD19u };
+__device__ __forceinline__ u32 b3r(u32 x, int r) { return __funnelshift_r(x, x, r); }
+#define B3G(a, b, c, d, x, y) { a = a + b + (x); d = b3r(d ^ a, 16); c = c + d; b = b3r(b ^ c, 12); a = a + b + (y); d = b3r(d ^ a, 8); c = c + d; b = b3r(b ^ c, 7); }
+#define B3ROUND { B3G(s0, s4, s8, s12, m[0], m[1]); B3G(s1, s5, s9, s13, m[2], m[3]); B3G(s2, s6, s10, s14, m[4], m[5]); B3G(s3, s7, s11, s15, m[6], m[7]); \
+                  B3G(s0, s5, s10, s15, m[8], m[9]); B3G(s1, s6, s11, s12, m[10], m[11]); B3G(s2, s7, s8, s13, m[12], m[13]); B3G(s3, s4, s9, s14, m[14], m[15]); }
+#define B3PERM { u32 t0 = m[2], t1 = m[6], t2 = m[3], t3 = m[10], t4 = m[7], t5 = m[0], t6 = m[4], t7 = m[13], t8 = m[1], t9 = m[11], t10 = m[12], t11 = m[5], t12 = m[9], t13 = m[14], t14 = m[15], t15 = m[8]; \
+                 m[0] = t0; m[1] = t1; m[2] = t2; m[3] = t3; m[4] = t4; m[5] = t5; m[6] = t6; m[7] = t7; m[8] = t8; m[9] = t9; m[10] = t10; m[11] = t11; m[12] = t12; m[13] = t13; m[14] = t14; m[15] = t15; }
+/* cv = first 8 words of compress(cv, m, counter, 64, flags) (block length 64 everywhere on the card) */
+__device__ __forceinline__ void b3c(u32 cv[8], u32 m[16], u64 ctr, u32 flags) {
+    u32 s0 = cv[0], s1 = cv[1], s2 = cv[2], s3 = cv[3], s4 = cv[4], s5 = cv[5], s6 = cv[6], s7 = cv[7];
+    u32 s8 = B3IV[0], s9 = B3IV[1], s10 = B3IV[2], s11 = B3IV[3], s12 = (u32)ctr, s13 = (u32)(ctr >> 32), s14 = 64, s15 = flags;
+    B3ROUND B3PERM B3ROUND B3PERM B3ROUND B3PERM B3ROUND B3PERM B3ROUND B3PERM B3ROUND B3PERM B3ROUND
+    cv[0] = s0 ^ s8; cv[1] = s1 ^ s9; cv[2] = s2 ^ s10; cv[3] = s3 ^ s11; cv[4] = s4 ^ s12; cv[5] = s5 ^ s13; cv[6] = s6 ^ s14; cv[7] = s7 ^ s15;
+}
+__device__ __forceinline__ void b3parent(const u32 *l, const u32 *r, u32 *o) {
+    u32 m[16], cv[8];
+    for (int k = 0; k < 8; k++) { m[k] = l[k]; m[k + 8] = r[k]; cv[k] = B3IV[k]; }
+    b3c(cv, m, 0, 4u);                                   /* PARENT */
+    for (int k = 0; k < 8; k++) o[k] = cv[k];
+}
+/* four letters (bytes 0..16) -> their ASCII bytes 0-9A-G, in one word: v + '0', plus 7 where v >= 10 */
+__device__ __forceinline__ u32 asc4(u32 x) { return x + 0x30303030u + ((((x + 0x76767676u) >> 7) & 0x01010101u) * 7u); }
+extern "C" __global__ void __launch_bounds__(128) b3leaf(const u8 *__restrict__ d, u64 nleaf, u64 leaf0, u32 *__restrict__ out) {
+    __shared__ u32 sc[128][9];
+    const int t = threadIdx.x & 63, base = threadIdx.x & 64;
+    const u64 li = (u64)blockIdx.x * 2 + (threadIdx.x >> 6);
+    u32 cv[8]; for (int k = 0; k < 8; k++) cv[k] = B3IV[k];
+    if (li < nleaf) {
+        const uint4 *q = (const uint4 *)(d + li * 65536 + (u64)t * 1024);
+        const u64 ctr = (leaf0 + li) * 64 + t;
+        for (int b = 0; b < 16; b++) {
+            u32 m[16];
+            for (int k = 0; k < 4; k++) { uint4 v = q[b * 4 + k]; m[4*k] = asc4(v.x); m[4*k+1] = asc4(v.y); m[4*k+2] = asc4(v.z); m[4*k+3] = asc4(v.w); }
+            b3c(cv, m, ctr, (b == 0 ? 1u : 0u) | (b == 15 ? 2u : 0u));    /* CHUNK_START, CHUNK_END */
+        }
+    }
+    for (int k = 0; k < 8; k++) sc[threadIdx.x][k] = cv[k];
+    __syncthreads();
+    for (int w = 32; w >= 2; w >>= 1) {                  /* 64 -> 32 -> ... -> 2 CVs per leaf */
+        u32 o[8];
+        if (t < w) b3parent(sc[base + 2 * t], sc[base + 2 * t + 1], o);
+        __syncthreads();
+        if (t < w) for (int k = 0; k < 8; k++) sc[base + t][k] = o[k];
+        __syncthreads();
+    }
+    if (li < nleaf && t < 2) for (int k = 0; k < 8; k++) out[(li * 2 + t) * 8 + k] = sc[base + t][k];
+}
+extern "C" __global__ void b3up(const u32 *__restrict__ src, u64 srclo, u32 *__restrict__ dst, u64 dstlo, u64 cnt) {
+    u64 i = (u64)blockIdx.x * blockDim.x + threadIdx.x; if (i >= cnt) return;
+    u64 m = dstlo + i, a = 2 * m - srclo;
+    b3parent(src + a * 8, src + (a + 1) * 8, dst + i * 8);
+}
+/* level j of [U0, U1): nodes ceil(U0/2^j) .. floor(U1/2^j)-1, stored one level after the other from buf on */
+extern "C" __global__ void b3pick(const u32 *__restrict__ buf, u64 U0, u64 U1, u32 *__restrict__ out, u32 *__restrict__ nout) {
+    if (blockIdx.x || threadIdx.x) return;
+    u64 lbase[64], llo[64]; u64 acc = 0;
+    for (int j = 0; j < 64; j++) {
+        u64 lo = (U0 + (1ULL << j) - 1) >> j, hi = U1 >> j; llo[j] = lo; lbase[j] = acc;
+        if (hi <= lo) break;
+        acc += hi - lo;
+    }
+    u64 p = U0; u32 no = 0;
+    while (p < U1) {
+        int k = 1; while (k < 62 && (p & ((2ULL << k) - 1)) == 0 && p + (2ULL << k) <= U1) k++;
+        int j = k - 1; u64 node = p >> j, at = lbase[j] + (node - llo[j]);
+        for (int h = 0; h < 2; h++) { for (int q = 0; q < 8; q++) out[no * 8 + q] = buf[(at + h) * 8 + q]; no++; }
+        p += 1ULL << k;
+    }
+    *nout = no;
+}

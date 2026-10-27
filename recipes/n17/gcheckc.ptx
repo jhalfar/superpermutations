@@ -14,6 +14,8 @@
 .const .align 8 .b8 P[272];
 // _ZZ5scan2E2sm has been demoted
 .const .align 4 .b8 SK[256] = {152, 47, 138, 66, 145, 68, 55, 113, 207, 251, 192, 181, 165, 219, 181, 233, 91, 194, 86, 57, 241, 17, 241, 89, 164, 130, 63, 146, 213, 94, 28, 171, 152, 170, 7, 216, 1, 91, 131, 18, 190, 133, 49, 36, 195, 125, 12, 85, 116, 93, 190, 114, 254, 177, 222, 128, 167, 6, 220, 155, 116, 241, 155, 193, 193, 105, 155, 228, 134, 71, 190, 239, 198, 157, 193, 15, 204, 161, 12, 36, 111, 44, 233, 45, 170, 132, 116, 74, 220, 169, 176, 92, 218, 136, 249, 118, 82, 81, 62, 152, 109, 198, 49, 168, 200, 39, 3, 176, 199, 127, 89, 191, 243, 11, 224, 198, 71, 145, 167, 213, 81, 99, 202, 6, 103, 41, 41, 20, 133, 10, 183, 39, 56, 33, 27, 46, 252, 109, 44, 77, 19, 13, 56, 83, 84, 115, 10, 101, 187, 10, 106, 118, 46, 201, 194, 129, 133, 44, 114, 146, 161, 232, 191, 162, 75, 102, 26, 168, 112, 139, 75, 194, 163, 81, 108, 199, 25, 232, 146, 209, 36, 6, 153, 214, 133, 53, 14, 244, 112, 160, 106, 16, 22, 193, 164, 25, 8, 108, 55, 30, 76, 119, 72, 39, 181, 188, 176, 52, 179, 12, 28, 57, 74, 170, 216, 78, 79, 202, 156, 91, 243, 111, 46, 104, 238, 130, 143, 116, 111, 99, 165, 120, 20, 120, 200, 132, 8, 2, 199, 140, 250, 255, 190, 144, 235, 108, 80, 164, 247, 163, 249, 190, 242, 120, 113, 198};
+.const .align 4 .b8 B3IV[32] = {103, 230, 9, 106, 133, 174, 103, 187, 114, 243, 110, 60, 58, 245, 79, 165, 127, 82, 14, 81, 140, 104, 5, 155, 171, 217, 131, 31, 25, 205, 224, 91};
+// _ZZ6b3leafE2sc has been demoted
 
 .visible .entry scan(
 	.param .u64 scan_param_0,
@@ -9704,6 +9706,4832 @@ $L__BB9_26:
 	atom.global.add.u64 	%rd78, [%rd76], %rd77;
 
 $L__BB9_28:
+	ret;
+
+}
+	// .globl	b3leaf
+.visible .entry b3leaf(
+	.param .u64 b3leaf_param_0,
+	.param .u64 b3leaf_param_1,
+	.param .u64 b3leaf_param_2,
+	.param .u64 b3leaf_param_3
+)
+.maxntid 128, 1, 1
+{
+	.reg .pred 	%p<12>;
+	.reg .b32 	%r<2736>;
+	.reg .b64 	%rd<33>;
+	// demoted variable
+	.shared .align 4 .b8 _ZZ6b3leafE2sc[4608];
+
+	ld.param.u64 	%rd4, [b3leaf_param_0];
+	ld.param.u64 	%rd5, [b3leaf_param_1];
+	ld.param.u64 	%rd6, [b3leaf_param_2];
+	mov.u32 	%r1, %tid.x;
+	and.b32  	%r2, %r1, 63;
+	shr.u32 	%r71, %r1, 6;
+	cvt.u64.u32 	%rd8, %r71;
+	mov.u32 	%r72, %ctaid.x;
+	mul.wide.u32 	%rd9, %r72, 2;
+	ld.const.u32 	%r3, [B3IV];
+	ld.const.u32 	%r4, [B3IV+4];
+	ld.const.u32 	%r5, [B3IV+8];
+	ld.const.u32 	%r6, [B3IV+12];
+	ld.const.u32 	%r2715, [B3IV+16];
+	ld.const.u32 	%r2716, [B3IV+20];
+	ld.const.u32 	%r2717, [B3IV+24];
+	ld.const.u32 	%r2718, [B3IV+28];
+	add.s64 	%rd1, %rd9, %rd8;
+	setp.ge.u64 	%p1, %rd1, %rd5;
+	mov.u32 	%r2711, %r3;
+	mov.u32 	%r2712, %r4;
+	mov.u32 	%r2713, %r5;
+	mov.u32 	%r2714, %r6;
+	@%p1 bra 	$L__BB10_3;
+
+	cvta.to.global.u64 	%rd10, %rd4;
+	shl.b32 	%r74, %r2, 10;
+	cvt.u64.u32 	%rd11, %r74;
+	shl.b64 	%rd12, %rd1, 16;
+	or.b64  	%rd13, %rd12, %rd11;
+	add.s64 	%rd2, %rd10, %rd13;
+	add.s64 	%rd14, %rd1, %rd6;
+	cvt.u32.u64 	%r75, %rd14;
+	shl.b32 	%r76, %r75, 6;
+	or.b32  	%r11, %r76, %r2;
+	shr.u64 	%rd15, %rd14, 26;
+	cvt.u32.u64 	%r12, %rd15;
+	mov.u32 	%r2710, 0;
+	mov.u32 	%r2714, %r6;
+	mov.u32 	%r2713, %r5;
+	mov.u32 	%r2712, %r4;
+	mov.u32 	%r2711, %r3;
+
+$L__BB10_2:
+	shl.b32 	%r973, %r2710, 2;
+	mul.wide.s32 	%rd16, %r973, 16;
+	add.s64 	%rd17, %rd2, %rd16;
+	ld.global.nc.v4.u32 	{%r974, %r975, %r976, %r977}, [%rd17];
+	add.s32 	%r982, %r974, 1987475062;
+	shr.u32 	%r983, %r982, 7;
+	and.b32  	%r984, %r983, 16843009;
+	mad.lo.s32 	%r985, %r984, 7, %r974;
+	mov.u32 	%r972, 7;
+	add.s32 	%r986, %r985, 808464432;
+	add.s32 	%r987, %r975, 1987475062;
+	shr.u32 	%r988, %r987, 7;
+	and.b32  	%r989, %r988, 16843009;
+	mad.lo.s32 	%r990, %r989, 7, %r975;
+	add.s32 	%r991, %r990, 808464432;
+	add.s32 	%r992, %r976, 1987475062;
+	shr.u32 	%r993, %r992, 7;
+	and.b32  	%r994, %r993, 16843009;
+	mad.lo.s32 	%r995, %r994, 7, %r976;
+	add.s32 	%r996, %r995, 808464432;
+	add.s32 	%r997, %r977, 1987475062;
+	shr.u32 	%r998, %r997, 7;
+	and.b32  	%r999, %r998, 16843009;
+	mad.lo.s32 	%r1000, %r999, 7, %r977;
+	add.s32 	%r1001, %r1000, 808464432;
+	ld.global.nc.v4.u32 	{%r1002, %r1003, %r1004, %r1005}, [%rd17+16];
+	add.s32 	%r1010, %r1002, 1987475062;
+	shr.u32 	%r1011, %r1010, 7;
+	and.b32  	%r1012, %r1011, 16843009;
+	mad.lo.s32 	%r1013, %r1012, 7, %r1002;
+	add.s32 	%r1014, %r1013, 808464432;
+	add.s32 	%r1015, %r1003, 1987475062;
+	shr.u32 	%r1016, %r1015, 7;
+	and.b32  	%r1017, %r1016, 16843009;
+	mad.lo.s32 	%r1018, %r1017, 7, %r1003;
+	add.s32 	%r1019, %r1018, 808464432;
+	add.s32 	%r1020, %r1004, 1987475062;
+	shr.u32 	%r1021, %r1020, 7;
+	and.b32  	%r1022, %r1021, 16843009;
+	mad.lo.s32 	%r1023, %r1022, 7, %r1004;
+	add.s32 	%r1024, %r1023, 808464432;
+	add.s32 	%r1025, %r1005, 1987475062;
+	shr.u32 	%r1026, %r1025, 7;
+	and.b32  	%r1027, %r1026, 16843009;
+	mad.lo.s32 	%r1028, %r1027, 7, %r1005;
+	add.s32 	%r1029, %r1028, 808464432;
+	ld.global.nc.v4.u32 	{%r1030, %r1031, %r1032, %r1033}, [%rd17+32];
+	add.s32 	%r1038, %r1030, 1987475062;
+	shr.u32 	%r1039, %r1038, 7;
+	and.b32  	%r1040, %r1039, 16843009;
+	mad.lo.s32 	%r1041, %r1040, 7, %r1030;
+	add.s32 	%r1042, %r1041, 808464432;
+	add.s32 	%r1043, %r1031, 1987475062;
+	shr.u32 	%r1044, %r1043, 7;
+	and.b32  	%r1045, %r1044, 16843009;
+	mad.lo.s32 	%r1046, %r1045, 7, %r1031;
+	add.s32 	%r1047, %r1046, 808464432;
+	add.s32 	%r1048, %r1032, 1987475062;
+	shr.u32 	%r1049, %r1048, 7;
+	and.b32  	%r1050, %r1049, 16843009;
+	mad.lo.s32 	%r1051, %r1050, 7, %r1032;
+	add.s32 	%r1052, %r1051, 808464432;
+	add.s32 	%r1053, %r1033, 1987475062;
+	shr.u32 	%r1054, %r1053, 7;
+	and.b32  	%r1055, %r1054, 16843009;
+	mad.lo.s32 	%r1056, %r1055, 7, %r1033;
+	add.s32 	%r1057, %r1056, 808464432;
+	ld.global.nc.v4.u32 	{%r1058, %r1059, %r1060, %r1061}, [%rd17+48];
+	add.s32 	%r1066, %r1058, 1987475062;
+	shr.u32 	%r1067, %r1066, 7;
+	and.b32  	%r1068, %r1067, 16843009;
+	mad.lo.s32 	%r1069, %r1068, 7, %r1058;
+	add.s32 	%r1070, %r1069, 808464432;
+	add.s32 	%r1071, %r1059, 1987475062;
+	shr.u32 	%r1072, %r1071, 7;
+	and.b32  	%r1073, %r1072, 16843009;
+	mad.lo.s32 	%r1074, %r1073, 7, %r1059;
+	add.s32 	%r1075, %r1074, 808464432;
+	add.s32 	%r1076, %r1060, 1987475062;
+	shr.u32 	%r1077, %r1076, 7;
+	and.b32  	%r1078, %r1077, 16843009;
+	mad.lo.s32 	%r1079, %r1078, 7, %r1060;
+	add.s32 	%r1080, %r1079, 808464432;
+	add.s32 	%r1081, %r1061, 1987475062;
+	shr.u32 	%r1082, %r1081, 7;
+	and.b32  	%r1083, %r1082, 16843009;
+	mad.lo.s32 	%r1084, %r1083, 7, %r1061;
+	add.s32 	%r1085, %r1084, 808464432;
+	setp.eq.s32 	%p2, %r2710, 0;
+	selp.u32 	%r1086, 1, 0, %p2;
+	setp.eq.s32 	%p3, %r2710, 15;
+	selp.b32 	%r1087, 2, 0, %p3;
+	or.b32  	%r1088, %r1087, %r1086;
+	add.s32 	%r1089, %r2715, %r2711;
+	add.s32 	%r1090, %r1089, %r986;
+	xor.b32  	%r79, %r1090, %r11;
+	mov.u32 	%r960, 16;
+	// begin inline asm
+	shf.r.wrap.b32 %r77, %r79, %r79, %r960;
+	// end inline asm
+	add.s32 	%r1091, %r77, %r3;
+	xor.b32  	%r83, %r1091, %r2715;
+	mov.u32 	%r964, 12;
+	// begin inline asm
+	shf.r.wrap.b32 %r81, %r83, %r83, %r964;
+	// end inline asm
+	add.s32 	%r1092, %r81, %r1090;
+	add.s32 	%r1093, %r1092, %r991;
+	xor.b32  	%r87, %r1093, %r77;
+	mov.u32 	%r968, 8;
+	// begin inline asm
+	shf.r.wrap.b32 %r85, %r87, %r87, %r968;
+	// end inline asm
+	add.s32 	%r1094, %r85, %r1091;
+	xor.b32  	%r91, %r1094, %r81;
+	// begin inline asm
+	shf.r.wrap.b32 %r89, %r91, %r91, %r972;
+	// end inline asm
+	add.s32 	%r1095, %r2716, %r2712;
+	add.s32 	%r1096, %r1095, %r996;
+	xor.b32  	%r95, %r1096, %r12;
+	// begin inline asm
+	shf.r.wrap.b32 %r93, %r95, %r95, %r960;
+	// end inline asm
+	add.s32 	%r1097, %r93, %r4;
+	xor.b32  	%r99, %r1097, %r2716;
+	// begin inline asm
+	shf.r.wrap.b32 %r97, %r99, %r99, %r964;
+	// end inline asm
+	add.s32 	%r1098, %r97, %r1096;
+	add.s32 	%r1099, %r1098, %r1001;
+	xor.b32  	%r103, %r1099, %r93;
+	// begin inline asm
+	shf.r.wrap.b32 %r101, %r103, %r103, %r968;
+	// end inline asm
+	add.s32 	%r1100, %r101, %r1097;
+	xor.b32  	%r107, %r1100, %r97;
+	// begin inline asm
+	shf.r.wrap.b32 %r105, %r107, %r107, %r972;
+	// end inline asm
+	add.s32 	%r1101, %r2717, %r2713;
+	add.s32 	%r1102, %r1101, %r1014;
+	xor.b32  	%r111, %r1102, 64;
+	// begin inline asm
+	shf.r.wrap.b32 %r109, %r111, %r111, %r960;
+	// end inline asm
+	add.s32 	%r1103, %r109, %r5;
+	xor.b32  	%r115, %r1103, %r2717;
+	// begin inline asm
+	shf.r.wrap.b32 %r113, %r115, %r115, %r964;
+	// end inline asm
+	add.s32 	%r1104, %r113, %r1102;
+	add.s32 	%r1105, %r1104, %r1019;
+	xor.b32  	%r119, %r1105, %r109;
+	// begin inline asm
+	shf.r.wrap.b32 %r117, %r119, %r119, %r968;
+	// end inline asm
+	add.s32 	%r1106, %r117, %r1103;
+	xor.b32  	%r123, %r1106, %r113;
+	// begin inline asm
+	shf.r.wrap.b32 %r121, %r123, %r123, %r972;
+	// end inline asm
+	add.s32 	%r1107, %r2718, %r2714;
+	add.s32 	%r1108, %r1107, %r1024;
+	xor.b32  	%r127, %r1108, %r1088;
+	// begin inline asm
+	shf.r.wrap.b32 %r125, %r127, %r127, %r960;
+	// end inline asm
+	add.s32 	%r1109, %r125, %r6;
+	xor.b32  	%r131, %r1109, %r2718;
+	// begin inline asm
+	shf.r.wrap.b32 %r129, %r131, %r131, %r964;
+	// end inline asm
+	add.s32 	%r1110, %r129, %r1108;
+	add.s32 	%r1111, %r1110, %r1029;
+	xor.b32  	%r135, %r1111, %r125;
+	// begin inline asm
+	shf.r.wrap.b32 %r133, %r135, %r135, %r968;
+	// end inline asm
+	add.s32 	%r1112, %r133, %r1109;
+	xor.b32  	%r139, %r1112, %r129;
+	// begin inline asm
+	shf.r.wrap.b32 %r137, %r139, %r139, %r972;
+	// end inline asm
+	add.s32 	%r1113, %r105, %r1093;
+	add.s32 	%r1114, %r1113, %r1042;
+	xor.b32  	%r143, %r1114, %r133;
+	// begin inline asm
+	shf.r.wrap.b32 %r141, %r143, %r143, %r960;
+	// end inline asm
+	add.s32 	%r1115, %r141, %r1106;
+	xor.b32  	%r147, %r1115, %r105;
+	// begin inline asm
+	shf.r.wrap.b32 %r145, %r147, %r147, %r964;
+	// end inline asm
+	add.s32 	%r1116, %r145, %r1114;
+	add.s32 	%r1117, %r1116, %r1047;
+	xor.b32  	%r151, %r1117, %r141;
+	// begin inline asm
+	shf.r.wrap.b32 %r149, %r151, %r151, %r968;
+	// end inline asm
+	add.s32 	%r1118, %r149, %r1115;
+	xor.b32  	%r155, %r1118, %r145;
+	// begin inline asm
+	shf.r.wrap.b32 %r153, %r155, %r155, %r972;
+	// end inline asm
+	add.s32 	%r1119, %r121, %r1099;
+	add.s32 	%r1120, %r1119, %r1052;
+	xor.b32  	%r159, %r1120, %r85;
+	// begin inline asm
+	shf.r.wrap.b32 %r157, %r159, %r159, %r960;
+	// end inline asm
+	add.s32 	%r1121, %r157, %r1112;
+	xor.b32  	%r163, %r1121, %r121;
+	// begin inline asm
+	shf.r.wrap.b32 %r161, %r163, %r163, %r964;
+	// end inline asm
+	add.s32 	%r1122, %r161, %r1120;
+	add.s32 	%r1123, %r1122, %r1057;
+	xor.b32  	%r167, %r1123, %r157;
+	// begin inline asm
+	shf.r.wrap.b32 %r165, %r167, %r167, %r968;
+	// end inline asm
+	add.s32 	%r1124, %r165, %r1121;
+	xor.b32  	%r171, %r1124, %r161;
+	// begin inline asm
+	shf.r.wrap.b32 %r169, %r171, %r171, %r972;
+	// end inline asm
+	add.s32 	%r1125, %r137, %r1105;
+	add.s32 	%r1126, %r1125, %r1070;
+	xor.b32  	%r175, %r1126, %r101;
+	// begin inline asm
+	shf.r.wrap.b32 %r173, %r175, %r175, %r960;
+	// end inline asm
+	add.s32 	%r1127, %r173, %r1094;
+	xor.b32  	%r179, %r1127, %r137;
+	// begin inline asm
+	shf.r.wrap.b32 %r177, %r179, %r179, %r964;
+	// end inline asm
+	add.s32 	%r1128, %r177, %r1126;
+	add.s32 	%r1129, %r1128, %r1075;
+	xor.b32  	%r183, %r1129, %r173;
+	// begin inline asm
+	shf.r.wrap.b32 %r181, %r183, %r183, %r968;
+	// end inline asm
+	add.s32 	%r1130, %r181, %r1127;
+	xor.b32  	%r187, %r1130, %r177;
+	// begin inline asm
+	shf.r.wrap.b32 %r185, %r187, %r187, %r972;
+	// end inline asm
+	add.s32 	%r1131, %r1111, %r89;
+	add.s32 	%r1132, %r1131, %r1080;
+	xor.b32  	%r191, %r1132, %r117;
+	// begin inline asm
+	shf.r.wrap.b32 %r189, %r191, %r191, %r960;
+	// end inline asm
+	add.s32 	%r1133, %r189, %r1100;
+	xor.b32  	%r195, %r1133, %r89;
+	// begin inline asm
+	shf.r.wrap.b32 %r193, %r195, %r195, %r964;
+	// end inline asm
+	add.s32 	%r1134, %r193, %r1132;
+	add.s32 	%r1135, %r1134, %r1085;
+	xor.b32  	%r199, %r1135, %r189;
+	// begin inline asm
+	shf.r.wrap.b32 %r197, %r199, %r199, %r968;
+	// end inline asm
+	add.s32 	%r1136, %r197, %r1133;
+	xor.b32  	%r203, %r1136, %r193;
+	// begin inline asm
+	shf.r.wrap.b32 %r201, %r203, %r203, %r972;
+	// end inline asm
+	add.s32 	%r1137, %r201, %r1117;
+	add.s32 	%r1138, %r1137, %r996;
+	xor.b32  	%r207, %r1138, %r165;
+	// begin inline asm
+	shf.r.wrap.b32 %r205, %r207, %r207, %r960;
+	// end inline asm
+	add.s32 	%r1139, %r205, %r1130;
+	xor.b32  	%r211, %r1139, %r201;
+	// begin inline asm
+	shf.r.wrap.b32 %r209, %r211, %r211, %r964;
+	// end inline asm
+	add.s32 	%r1140, %r209, %r1138;
+	add.s32 	%r1141, %r1140, %r1024;
+	xor.b32  	%r215, %r1141, %r205;
+	// begin inline asm
+	shf.r.wrap.b32 %r213, %r215, %r215, %r968;
+	// end inline asm
+	add.s32 	%r1142, %r213, %r1139;
+	xor.b32  	%r219, %r1142, %r209;
+	// begin inline asm
+	shf.r.wrap.b32 %r217, %r219, %r219, %r972;
+	// end inline asm
+	add.s32 	%r1143, %r1123, %r153;
+	add.s32 	%r1144, %r1143, %r1001;
+	xor.b32  	%r223, %r1144, %r181;
+	// begin inline asm
+	shf.r.wrap.b32 %r221, %r223, %r223, %r960;
+	// end inline asm
+	add.s32 	%r1145, %r221, %r1136;
+	xor.b32  	%r227, %r1145, %r153;
+	// begin inline asm
+	shf.r.wrap.b32 %r225, %r227, %r227, %r964;
+	// end inline asm
+	add.s32 	%r1146, %r225, %r1144;
+	add.s32 	%r1147, %r1146, %r1052;
+	xor.b32  	%r231, %r1147, %r221;
+	// begin inline asm
+	shf.r.wrap.b32 %r229, %r231, %r231, %r968;
+	// end inline asm
+	add.s32 	%r1148, %r229, %r1145;
+	xor.b32  	%r235, %r1148, %r225;
+	// begin inline asm
+	shf.r.wrap.b32 %r233, %r235, %r235, %r972;
+	// end inline asm
+	add.s32 	%r1149, %r1129, %r169;
+	add.s32 	%r1150, %r1149, %r1029;
+	xor.b32  	%r239, %r1150, %r197;
+	// begin inline asm
+	shf.r.wrap.b32 %r237, %r239, %r239, %r960;
+	// end inline asm
+	add.s32 	%r1151, %r237, %r1118;
+	xor.b32  	%r243, %r1151, %r169;
+	// begin inline asm
+	shf.r.wrap.b32 %r241, %r243, %r243, %r964;
+	// end inline asm
+	add.s32 	%r1152, %r241, %r1150;
+	add.s32 	%r1153, %r1152, %r986;
+	xor.b32  	%r247, %r1153, %r237;
+	// begin inline asm
+	shf.r.wrap.b32 %r245, %r247, %r247, %r968;
+	// end inline asm
+	add.s32 	%r1154, %r245, %r1151;
+	xor.b32  	%r251, %r1154, %r241;
+	// begin inline asm
+	shf.r.wrap.b32 %r249, %r251, %r251, %r972;
+	// end inline asm
+	add.s32 	%r1155, %r1135, %r185;
+	add.s32 	%r1156, %r1155, %r1014;
+	xor.b32  	%r255, %r1156, %r149;
+	// begin inline asm
+	shf.r.wrap.b32 %r253, %r255, %r255, %r960;
+	// end inline asm
+	add.s32 	%r1157, %r253, %r1124;
+	xor.b32  	%r259, %r1157, %r185;
+	// begin inline asm
+	shf.r.wrap.b32 %r257, %r259, %r259, %r964;
+	// end inline asm
+	add.s32 	%r1158, %r257, %r1156;
+	add.s32 	%r1159, %r1158, %r1075;
+	xor.b32  	%r263, %r1159, %r253;
+	// begin inline asm
+	shf.r.wrap.b32 %r261, %r263, %r263, %r968;
+	// end inline asm
+	add.s32 	%r1160, %r261, %r1157;
+	xor.b32  	%r267, %r1160, %r257;
+	// begin inline asm
+	shf.r.wrap.b32 %r265, %r267, %r267, %r972;
+	// end inline asm
+	add.s32 	%r1161, %r233, %r1141;
+	add.s32 	%r1162, %r1161, %r991;
+	xor.b32  	%r271, %r1162, %r261;
+	// begin inline asm
+	shf.r.wrap.b32 %r269, %r271, %r271, %r960;
+	// end inline asm
+	add.s32 	%r1163, %r269, %r1154;
+	xor.b32  	%r275, %r1163, %r233;
+	// begin inline asm
+	shf.r.wrap.b32 %r273, %r275, %r275, %r964;
+	// end inline asm
+	add.s32 	%r1164, %r273, %r1162;
+	add.s32 	%r1165, %r1164, %r1057;
+	xor.b32  	%r279, %r1165, %r269;
+	// begin inline asm
+	shf.r.wrap.b32 %r277, %r279, %r279, %r968;
+	// end inline asm
+	add.s32 	%r1166, %r277, %r1163;
+	xor.b32  	%r283, %r1166, %r273;
+	// begin inline asm
+	shf.r.wrap.b32 %r281, %r283, %r283, %r972;
+	// end inline asm
+	add.s32 	%r1167, %r249, %r1147;
+	add.s32 	%r1168, %r1167, %r1070;
+	xor.b32  	%r287, %r1168, %r213;
+	// begin inline asm
+	shf.r.wrap.b32 %r285, %r287, %r287, %r960;
+	// end inline asm
+	add.s32 	%r1169, %r285, %r1160;
+	xor.b32  	%r291, %r1169, %r249;
+	// begin inline asm
+	shf.r.wrap.b32 %r289, %r291, %r291, %r964;
+	// end inline asm
+	add.s32 	%r1170, %r289, %r1168;
+	add.s32 	%r1171, %r1170, %r1019;
+	xor.b32  	%r295, %r1171, %r285;
+	// begin inline asm
+	shf.r.wrap.b32 %r293, %r295, %r295, %r968;
+	// end inline asm
+	add.s32 	%r1172, %r293, %r1169;
+	xor.b32  	%r299, %r1172, %r289;
+	// begin inline asm
+	shf.r.wrap.b32 %r297, %r299, %r299, %r972;
+	// end inline asm
+	add.s32 	%r1173, %r265, %r1153;
+	add.s32 	%r1174, %r1173, %r1047;
+	xor.b32  	%r303, %r1174, %r229;
+	// begin inline asm
+	shf.r.wrap.b32 %r301, %r303, %r303, %r960;
+	// end inline asm
+	add.s32 	%r1175, %r301, %r1142;
+	xor.b32  	%r307, %r1175, %r265;
+	// begin inline asm
+	shf.r.wrap.b32 %r305, %r307, %r307, %r964;
+	// end inline asm
+	add.s32 	%r1176, %r305, %r1174;
+	add.s32 	%r1177, %r1176, %r1080;
+	xor.b32  	%r311, %r1177, %r301;
+	// begin inline asm
+	shf.r.wrap.b32 %r309, %r311, %r311, %r968;
+	// end inline asm
+	add.s32 	%r1178, %r309, %r1175;
+	xor.b32  	%r315, %r1178, %r305;
+	// begin inline asm
+	shf.r.wrap.b32 %r313, %r315, %r315, %r972;
+	// end inline asm
+	add.s32 	%r1179, %r1159, %r217;
+	add.s32 	%r1180, %r1179, %r1085;
+	xor.b32  	%r319, %r1180, %r245;
+	// begin inline asm
+	shf.r.wrap.b32 %r317, %r319, %r319, %r960;
+	// end inline asm
+	add.s32 	%r1181, %r317, %r1148;
+	xor.b32  	%r323, %r1181, %r217;
+	// begin inline asm
+	shf.r.wrap.b32 %r321, %r323, %r323, %r964;
+	// end inline asm
+	add.s32 	%r1182, %r321, %r1180;
+	add.s32 	%r1183, %r1182, %r1042;
+	xor.b32  	%r327, %r1183, %r317;
+	// begin inline asm
+	shf.r.wrap.b32 %r325, %r327, %r327, %r968;
+	// end inline asm
+	add.s32 	%r1184, %r325, %r1181;
+	xor.b32  	%r331, %r1184, %r321;
+	// begin inline asm
+	shf.r.wrap.b32 %r329, %r331, %r331, %r972;
+	// end inline asm
+	add.s32 	%r1185, %r329, %r1165;
+	add.s32 	%r1186, %r1185, %r1001;
+	xor.b32  	%r335, %r1186, %r293;
+	// begin inline asm
+	shf.r.wrap.b32 %r333, %r335, %r335, %r960;
+	// end inline asm
+	add.s32 	%r1187, %r333, %r1178;
+	xor.b32  	%r339, %r1187, %r329;
+	// begin inline asm
+	shf.r.wrap.b32 %r337, %r339, %r339, %r964;
+	// end inline asm
+	add.s32 	%r1188, %r337, %r1186;
+	add.s32 	%r1189, %r1188, %r1014;
+	xor.b32  	%r343, %r1189, %r333;
+	// begin inline asm
+	shf.r.wrap.b32 %r341, %r343, %r343, %r968;
+	// end inline asm
+	add.s32 	%r1190, %r341, %r1187;
+	xor.b32  	%r347, %r1190, %r337;
+	// begin inline asm
+	shf.r.wrap.b32 %r345, %r347, %r347, %r972;
+	// end inline asm
+	add.s32 	%r1191, %r1171, %r281;
+	add.s32 	%r1192, %r1191, %r1052;
+	xor.b32  	%r351, %r1192, %r309;
+	// begin inline asm
+	shf.r.wrap.b32 %r349, %r351, %r351, %r960;
+	// end inline asm
+	add.s32 	%r1193, %r349, %r1184;
+	xor.b32  	%r355, %r1193, %r281;
+	// begin inline asm
+	shf.r.wrap.b32 %r353, %r355, %r355, %r964;
+	// end inline asm
+	add.s32 	%r1194, %r353, %r1192;
+	add.s32 	%r1195, %r1194, %r1070;
+	xor.b32  	%r359, %r1195, %r349;
+	// begin inline asm
+	shf.r.wrap.b32 %r357, %r359, %r359, %r968;
+	// end inline asm
+	add.s32 	%r1196, %r357, %r1193;
+	xor.b32  	%r363, %r1196, %r353;
+	// begin inline asm
+	shf.r.wrap.b32 %r361, %r363, %r363, %r972;
+	// end inline asm
+	add.s32 	%r1197, %r1177, %r297;
+	add.s32 	%r1198, %r1197, %r1075;
+	xor.b32  	%r367, %r1198, %r325;
+	// begin inline asm
+	shf.r.wrap.b32 %r365, %r367, %r367, %r960;
+	// end inline asm
+	add.s32 	%r1199, %r365, %r1166;
+	xor.b32  	%r371, %r1199, %r297;
+	// begin inline asm
+	shf.r.wrap.b32 %r369, %r371, %r371, %r964;
+	// end inline asm
+	add.s32 	%r1200, %r369, %r1198;
+	add.s32 	%r1201, %r1200, %r996;
+	xor.b32  	%r375, %r1201, %r365;
+	// begin inline asm
+	shf.r.wrap.b32 %r373, %r375, %r375, %r968;
+	// end inline asm
+	add.s32 	%r1202, %r373, %r1199;
+	xor.b32  	%r379, %r1202, %r369;
+	// begin inline asm
+	shf.r.wrap.b32 %r377, %r379, %r379, %r972;
+	// end inline asm
+	add.s32 	%r1203, %r1183, %r313;
+	add.s32 	%r1204, %r1203, %r1029;
+	xor.b32  	%r383, %r1204, %r277;
+	// begin inline asm
+	shf.r.wrap.b32 %r381, %r383, %r383, %r960;
+	// end inline asm
+	add.s32 	%r1205, %r381, %r1172;
+	xor.b32  	%r387, %r1205, %r313;
+	// begin inline asm
+	shf.r.wrap.b32 %r385, %r387, %r387, %r964;
+	// end inline asm
+	add.s32 	%r1206, %r385, %r1204;
+	add.s32 	%r1207, %r1206, %r1080;
+	xor.b32  	%r391, %r1207, %r381;
+	// begin inline asm
+	shf.r.wrap.b32 %r389, %r391, %r391, %r968;
+	// end inline asm
+	add.s32 	%r1208, %r389, %r1205;
+	xor.b32  	%r395, %r1208, %r385;
+	// begin inline asm
+	shf.r.wrap.b32 %r393, %r395, %r395, %r972;
+	// end inline asm
+	add.s32 	%r1209, %r361, %r1189;
+	add.s32 	%r1210, %r1209, %r1024;
+	xor.b32  	%r399, %r1210, %r389;
+	// begin inline asm
+	shf.r.wrap.b32 %r397, %r399, %r399, %r960;
+	// end inline asm
+	add.s32 	%r1211, %r397, %r1202;
+	xor.b32  	%r403, %r1211, %r361;
+	// begin inline asm
+	shf.r.wrap.b32 %r401, %r403, %r403, %r964;
+	// end inline asm
+	add.s32 	%r1212, %r401, %r1210;
+	add.s32 	%r1213, %r1212, %r1019;
+	xor.b32  	%r407, %r1213, %r397;
+	// begin inline asm
+	shf.r.wrap.b32 %r405, %r407, %r407, %r968;
+	// end inline asm
+	add.s32 	%r1214, %r405, %r1211;
+	xor.b32  	%r411, %r1214, %r401;
+	// begin inline asm
+	shf.r.wrap.b32 %r409, %r411, %r411, %r972;
+	// end inline asm
+	add.s32 	%r1215, %r377, %r1195;
+	add.s32 	%r1216, %r1215, %r1047;
+	xor.b32  	%r415, %r1216, %r341;
+	// begin inline asm
+	shf.r.wrap.b32 %r413, %r415, %r415, %r960;
+	// end inline asm
+	add.s32 	%r1217, %r413, %r1208;
+	xor.b32  	%r419, %r1217, %r377;
+	// begin inline asm
+	shf.r.wrap.b32 %r417, %r419, %r419, %r964;
+	// end inline asm
+	add.s32 	%r1218, %r417, %r1216;
+	add.s32 	%r1219, %r1218, %r986;
+	xor.b32  	%r423, %r1219, %r413;
+	// begin inline asm
+	shf.r.wrap.b32 %r421, %r423, %r423, %r968;
+	// end inline asm
+	add.s32 	%r1220, %r421, %r1217;
+	xor.b32  	%r427, %r1220, %r417;
+	// begin inline asm
+	shf.r.wrap.b32 %r425, %r427, %r427, %r972;
+	// end inline asm
+	add.s32 	%r1221, %r393, %r1201;
+	add.s32 	%r1222, %r1221, %r1057;
+	xor.b32  	%r431, %r1222, %r357;
+	// begin inline asm
+	shf.r.wrap.b32 %r429, %r431, %r431, %r960;
+	// end inline asm
+	add.s32 	%r1223, %r429, %r1190;
+	xor.b32  	%r435, %r1223, %r393;
+	// begin inline asm
+	shf.r.wrap.b32 %r433, %r435, %r435, %r964;
+	// end inline asm
+	add.s32 	%r1224, %r433, %r1222;
+	add.s32 	%r1225, %r1224, %r1085;
+	xor.b32  	%r439, %r1225, %r429;
+	// begin inline asm
+	shf.r.wrap.b32 %r437, %r439, %r439, %r968;
+	// end inline asm
+	add.s32 	%r1226, %r437, %r1223;
+	xor.b32  	%r443, %r1226, %r433;
+	// begin inline asm
+	shf.r.wrap.b32 %r441, %r443, %r443, %r972;
+	// end inline asm
+	add.s32 	%r1227, %r1207, %r345;
+	add.s32 	%r1228, %r1227, %r1042;
+	xor.b32  	%r447, %r1228, %r373;
+	// begin inline asm
+	shf.r.wrap.b32 %r445, %r447, %r447, %r960;
+	// end inline asm
+	add.s32 	%r1229, %r445, %r1196;
+	xor.b32  	%r451, %r1229, %r345;
+	// begin inline asm
+	shf.r.wrap.b32 %r449, %r451, %r451, %r964;
+	// end inline asm
+	add.s32 	%r1230, %r449, %r1228;
+	add.s32 	%r1231, %r1230, %r991;
+	xor.b32  	%r455, %r1231, %r445;
+	// begin inline asm
+	shf.r.wrap.b32 %r453, %r455, %r455, %r968;
+	// end inline asm
+	add.s32 	%r1232, %r453, %r1229;
+	xor.b32  	%r459, %r1232, %r449;
+	// begin inline asm
+	shf.r.wrap.b32 %r457, %r459, %r459, %r972;
+	// end inline asm
+	add.s32 	%r1233, %r457, %r1213;
+	add.s32 	%r1234, %r1233, %r1052;
+	xor.b32  	%r463, %r1234, %r421;
+	// begin inline asm
+	shf.r.wrap.b32 %r461, %r463, %r463, %r960;
+	// end inline asm
+	add.s32 	%r1235, %r461, %r1226;
+	xor.b32  	%r467, %r1235, %r457;
+	// begin inline asm
+	shf.r.wrap.b32 %r465, %r467, %r467, %r964;
+	// end inline asm
+	add.s32 	%r1236, %r465, %r1234;
+	add.s32 	%r1237, %r1236, %r1029;
+	xor.b32  	%r471, %r1237, %r461;
+	// begin inline asm
+	shf.r.wrap.b32 %r469, %r471, %r471, %r968;
+	// end inline asm
+	add.s32 	%r1238, %r469, %r1235;
+	xor.b32  	%r475, %r1238, %r465;
+	// begin inline asm
+	shf.r.wrap.b32 %r473, %r475, %r475, %r972;
+	// end inline asm
+	add.s32 	%r1239, %r1219, %r409;
+	add.s32 	%r1240, %r1239, %r1070;
+	xor.b32  	%r479, %r1240, %r437;
+	// begin inline asm
+	shf.r.wrap.b32 %r477, %r479, %r479, %r960;
+	// end inline asm
+	add.s32 	%r1241, %r477, %r1232;
+	xor.b32  	%r483, %r1241, %r409;
+	// begin inline asm
+	shf.r.wrap.b32 %r481, %r483, %r483, %r964;
+	// end inline asm
+	add.s32 	%r1242, %r481, %r1240;
+	add.s32 	%r1243, %r1242, %r1047;
+	xor.b32  	%r487, %r1243, %r477;
+	// begin inline asm
+	shf.r.wrap.b32 %r485, %r487, %r487, %r968;
+	// end inline asm
+	add.s32 	%r1244, %r485, %r1241;
+	xor.b32  	%r491, %r1244, %r481;
+	// begin inline asm
+	shf.r.wrap.b32 %r489, %r491, %r491, %r972;
+	// end inline asm
+	add.s32 	%r1245, %r1225, %r425;
+	add.s32 	%r1246, %r1245, %r1080;
+	xor.b32  	%r495, %r1246, %r453;
+	// begin inline asm
+	shf.r.wrap.b32 %r493, %r495, %r495, %r960;
+	// end inline asm
+	add.s32 	%r1247, %r493, %r1214;
+	xor.b32  	%r499, %r1247, %r425;
+	// begin inline asm
+	shf.r.wrap.b32 %r497, %r499, %r499, %r964;
+	// end inline asm
+	add.s32 	%r1248, %r497, %r1246;
+	add.s32 	%r1249, %r1248, %r1001;
+	xor.b32  	%r503, %r1249, %r493;
+	// begin inline asm
+	shf.r.wrap.b32 %r501, %r503, %r503, %r968;
+	// end inline asm
+	add.s32 	%r1250, %r501, %r1247;
+	xor.b32  	%r507, %r1250, %r497;
+	// begin inline asm
+	shf.r.wrap.b32 %r505, %r507, %r507, %r972;
+	// end inline asm
+	add.s32 	%r1251, %r1231, %r441;
+	add.s32 	%r1252, %r1251, %r1075;
+	xor.b32  	%r511, %r1252, %r405;
+	// begin inline asm
+	shf.r.wrap.b32 %r509, %r511, %r511, %r960;
+	// end inline asm
+	add.s32 	%r1253, %r509, %r1220;
+	xor.b32  	%r515, %r1253, %r441;
+	// begin inline asm
+	shf.r.wrap.b32 %r513, %r515, %r515, %r964;
+	// end inline asm
+	add.s32 	%r1254, %r513, %r1252;
+	add.s32 	%r1255, %r1254, %r1085;
+	xor.b32  	%r519, %r1255, %r509;
+	// begin inline asm
+	shf.r.wrap.b32 %r517, %r519, %r519, %r968;
+	// end inline asm
+	add.s32 	%r1256, %r517, %r1253;
+	xor.b32  	%r523, %r1256, %r513;
+	// begin inline asm
+	shf.r.wrap.b32 %r521, %r523, %r523, %r972;
+	// end inline asm
+	add.s32 	%r1257, %r489, %r1237;
+	add.s32 	%r1258, %r1257, %r1014;
+	xor.b32  	%r527, %r1258, %r517;
+	// begin inline asm
+	shf.r.wrap.b32 %r525, %r527, %r527, %r960;
+	// end inline asm
+	add.s32 	%r1259, %r525, %r1250;
+	xor.b32  	%r531, %r1259, %r489;
+	// begin inline asm
+	shf.r.wrap.b32 %r529, %r531, %r531, %r964;
+	// end inline asm
+	add.s32 	%r1260, %r529, %r1258;
+	add.s32 	%r1261, %r1260, %r986;
+	xor.b32  	%r535, %r1261, %r525;
+	// begin inline asm
+	shf.r.wrap.b32 %r533, %r535, %r535, %r968;
+	// end inline asm
+	add.s32 	%r1262, %r533, %r1259;
+	xor.b32  	%r539, %r1262, %r529;
+	// begin inline asm
+	shf.r.wrap.b32 %r537, %r539, %r539, %r972;
+	// end inline asm
+	add.s32 	%r1263, %r505, %r1243;
+	add.s32 	%r1264, %r1263, %r1057;
+	xor.b32  	%r543, %r1264, %r469;
+	// begin inline asm
+	shf.r.wrap.b32 %r541, %r543, %r543, %r960;
+	// end inline asm
+	add.s32 	%r1265, %r541, %r1256;
+	xor.b32  	%r547, %r1265, %r505;
+	// begin inline asm
+	shf.r.wrap.b32 %r545, %r547, %r547, %r964;
+	// end inline asm
+	add.s32 	%r1266, %r545, %r1264;
+	add.s32 	%r1267, %r1266, %r996;
+	xor.b32  	%r551, %r1267, %r541;
+	// begin inline asm
+	shf.r.wrap.b32 %r549, %r551, %r551, %r968;
+	// end inline asm
+	add.s32 	%r1268, %r549, %r1265;
+	xor.b32  	%r555, %r1268, %r545;
+	// begin inline asm
+	shf.r.wrap.b32 %r553, %r555, %r555, %r972;
+	// end inline asm
+	add.s32 	%r1269, %r521, %r1249;
+	add.s32 	%r1270, %r1269, %r1019;
+	xor.b32  	%r559, %r1270, %r485;
+	// begin inline asm
+	shf.r.wrap.b32 %r557, %r559, %r559, %r960;
+	// end inline asm
+	add.s32 	%r1271, %r557, %r1238;
+	xor.b32  	%r563, %r1271, %r521;
+	// begin inline asm
+	shf.r.wrap.b32 %r561, %r563, %r563, %r964;
+	// end inline asm
+	add.s32 	%r1272, %r561, %r1270;
+	add.s32 	%r1273, %r1272, %r1042;
+	xor.b32  	%r567, %r1273, %r557;
+	// begin inline asm
+	shf.r.wrap.b32 %r565, %r567, %r567, %r968;
+	// end inline asm
+	add.s32 	%r1274, %r565, %r1271;
+	xor.b32  	%r571, %r1274, %r561;
+	// begin inline asm
+	shf.r.wrap.b32 %r569, %r571, %r571, %r972;
+	// end inline asm
+	add.s32 	%r1275, %r1255, %r473;
+	add.s32 	%r1276, %r1275, %r991;
+	xor.b32  	%r575, %r1276, %r501;
+	// begin inline asm
+	shf.r.wrap.b32 %r573, %r575, %r575, %r960;
+	// end inline asm
+	add.s32 	%r1277, %r573, %r1244;
+	xor.b32  	%r579, %r1277, %r473;
+	// begin inline asm
+	shf.r.wrap.b32 %r577, %r579, %r579, %r964;
+	// end inline asm
+	add.s32 	%r1278, %r577, %r1276;
+	add.s32 	%r1279, %r1278, %r1024;
+	xor.b32  	%r583, %r1279, %r573;
+	// begin inline asm
+	shf.r.wrap.b32 %r581, %r583, %r583, %r968;
+	// end inline asm
+	add.s32 	%r1280, %r581, %r1277;
+	xor.b32  	%r587, %r1280, %r577;
+	// begin inline asm
+	shf.r.wrap.b32 %r585, %r587, %r587, %r972;
+	// end inline asm
+	add.s32 	%r1281, %r585, %r1261;
+	add.s32 	%r1282, %r1281, %r1070;
+	xor.b32  	%r591, %r1282, %r549;
+	// begin inline asm
+	shf.r.wrap.b32 %r589, %r591, %r591, %r960;
+	// end inline asm
+	add.s32 	%r1283, %r589, %r1274;
+	xor.b32  	%r595, %r1283, %r585;
+	// begin inline asm
+	shf.r.wrap.b32 %r593, %r595, %r595, %r964;
+	// end inline asm
+	add.s32 	%r1284, %r593, %r1282;
+	add.s32 	%r1285, %r1284, %r1075;
+	xor.b32  	%r599, %r1285, %r589;
+	// begin inline asm
+	shf.r.wrap.b32 %r597, %r599, %r599, %r968;
+	// end inline asm
+	add.s32 	%r1286, %r597, %r1283;
+	xor.b32  	%r603, %r1286, %r593;
+	// begin inline asm
+	shf.r.wrap.b32 %r601, %r603, %r603, %r972;
+	// end inline asm
+	add.s32 	%r1287, %r1267, %r537;
+	add.s32 	%r1288, %r1287, %r1047;
+	xor.b32  	%r607, %r1288, %r565;
+	// begin inline asm
+	shf.r.wrap.b32 %r605, %r607, %r607, %r960;
+	// end inline asm
+	add.s32 	%r1289, %r605, %r1280;
+	xor.b32  	%r611, %r1289, %r537;
+	// begin inline asm
+	shf.r.wrap.b32 %r609, %r611, %r611, %r964;
+	// end inline asm
+	add.s32 	%r1290, %r609, %r1288;
+	add.s32 	%r1291, %r1290, %r1057;
+	xor.b32  	%r615, %r1291, %r605;
+	// begin inline asm
+	shf.r.wrap.b32 %r613, %r615, %r615, %r968;
+	// end inline asm
+	add.s32 	%r1292, %r613, %r1289;
+	xor.b32  	%r619, %r1292, %r609;
+	// begin inline asm
+	shf.r.wrap.b32 %r617, %r619, %r619, %r972;
+	// end inline asm
+	add.s32 	%r1293, %r1273, %r553;
+	add.s32 	%r1294, %r1293, %r1085;
+	xor.b32  	%r623, %r1294, %r581;
+	// begin inline asm
+	shf.r.wrap.b32 %r621, %r623, %r623, %r960;
+	// end inline asm
+	add.s32 	%r1295, %r621, %r1262;
+	xor.b32  	%r627, %r1295, %r553;
+	// begin inline asm
+	shf.r.wrap.b32 %r625, %r627, %r627, %r964;
+	// end inline asm
+	add.s32 	%r1296, %r625, %r1294;
+	add.s32 	%r1297, %r1296, %r1052;
+	xor.b32  	%r631, %r1297, %r621;
+	// begin inline asm
+	shf.r.wrap.b32 %r629, %r631, %r631, %r968;
+	// end inline asm
+	add.s32 	%r1298, %r629, %r1295;
+	xor.b32  	%r635, %r1298, %r625;
+	// begin inline asm
+	shf.r.wrap.b32 %r633, %r635, %r635, %r972;
+	// end inline asm
+	add.s32 	%r1299, %r1279, %r569;
+	add.s32 	%r1300, %r1299, %r1080;
+	xor.b32  	%r639, %r1300, %r533;
+	// begin inline asm
+	shf.r.wrap.b32 %r637, %r639, %r639, %r960;
+	// end inline asm
+	add.s32 	%r1301, %r637, %r1268;
+	xor.b32  	%r643, %r1301, %r569;
+	// begin inline asm
+	shf.r.wrap.b32 %r641, %r643, %r643, %r964;
+	// end inline asm
+	add.s32 	%r1302, %r641, %r1300;
+	add.s32 	%r1303, %r1302, %r1042;
+	xor.b32  	%r647, %r1303, %r637;
+	// begin inline asm
+	shf.r.wrap.b32 %r645, %r647, %r647, %r968;
+	// end inline asm
+	add.s32 	%r1304, %r645, %r1301;
+	xor.b32  	%r651, %r1304, %r641;
+	// begin inline asm
+	shf.r.wrap.b32 %r649, %r651, %r651, %r972;
+	// end inline asm
+	add.s32 	%r1305, %r617, %r1285;
+	add.s32 	%r1306, %r1305, %r1029;
+	xor.b32  	%r655, %r1306, %r645;
+	// begin inline asm
+	shf.r.wrap.b32 %r653, %r655, %r655, %r960;
+	// end inline asm
+	add.s32 	%r1307, %r653, %r1298;
+	xor.b32  	%r659, %r1307, %r617;
+	// begin inline asm
+	shf.r.wrap.b32 %r657, %r659, %r659, %r964;
+	// end inline asm
+	add.s32 	%r1308, %r657, %r1306;
+	add.s32 	%r1309, %r1308, %r996;
+	xor.b32  	%r663, %r1309, %r653;
+	// begin inline asm
+	shf.r.wrap.b32 %r661, %r663, %r663, %r968;
+	// end inline asm
+	add.s32 	%r1310, %r661, %r1307;
+	xor.b32  	%r667, %r1310, %r657;
+	// begin inline asm
+	shf.r.wrap.b32 %r665, %r667, %r667, %r972;
+	// end inline asm
+	add.s32 	%r1311, %r633, %r1291;
+	add.s32 	%r1312, %r1311, %r1019;
+	xor.b32  	%r671, %r1312, %r597;
+	// begin inline asm
+	shf.r.wrap.b32 %r669, %r671, %r671, %r960;
+	// end inline asm
+	add.s32 	%r1313, %r669, %r1304;
+	xor.b32  	%r675, %r1313, %r633;
+	// begin inline asm
+	shf.r.wrap.b32 %r673, %r675, %r675, %r964;
+	// end inline asm
+	add.s32 	%r1314, %r673, %r1312;
+	add.s32 	%r1315, %r1314, %r1001;
+	xor.b32  	%r679, %r1315, %r669;
+	// begin inline asm
+	shf.r.wrap.b32 %r677, %r679, %r679, %r968;
+	// end inline asm
+	add.s32 	%r1316, %r677, %r1313;
+	xor.b32  	%r683, %r1316, %r673;
+	// begin inline asm
+	shf.r.wrap.b32 %r681, %r683, %r683, %r972;
+	// end inline asm
+	add.s32 	%r1317, %r649, %r1297;
+	add.s32 	%r1318, %r1317, %r986;
+	xor.b32  	%r687, %r1318, %r613;
+	// begin inline asm
+	shf.r.wrap.b32 %r685, %r687, %r687, %r960;
+	// end inline asm
+	add.s32 	%r1319, %r685, %r1286;
+	xor.b32  	%r691, %r1319, %r649;
+	// begin inline asm
+	shf.r.wrap.b32 %r689, %r691, %r691, %r964;
+	// end inline asm
+	add.s32 	%r1320, %r689, %r1318;
+	add.s32 	%r1321, %r1320, %r991;
+	xor.b32  	%r695, %r1321, %r685;
+	// begin inline asm
+	shf.r.wrap.b32 %r693, %r695, %r695, %r968;
+	// end inline asm
+	add.s32 	%r1322, %r693, %r1319;
+	xor.b32  	%r699, %r1322, %r689;
+	// begin inline asm
+	shf.r.wrap.b32 %r697, %r699, %r699, %r972;
+	// end inline asm
+	add.s32 	%r1323, %r1303, %r601;
+	add.s32 	%r1324, %r1323, %r1024;
+	xor.b32  	%r703, %r1324, %r629;
+	// begin inline asm
+	shf.r.wrap.b32 %r701, %r703, %r703, %r960;
+	// end inline asm
+	add.s32 	%r1325, %r701, %r1292;
+	xor.b32  	%r707, %r1325, %r601;
+	// begin inline asm
+	shf.r.wrap.b32 %r705, %r707, %r707, %r964;
+	// end inline asm
+	add.s32 	%r1326, %r705, %r1324;
+	add.s32 	%r1327, %r1326, %r1014;
+	xor.b32  	%r711, %r1327, %r701;
+	// begin inline asm
+	shf.r.wrap.b32 %r709, %r711, %r711, %r968;
+	// end inline asm
+	add.s32 	%r1328, %r709, %r1325;
+	xor.b32  	%r715, %r1328, %r705;
+	// begin inline asm
+	shf.r.wrap.b32 %r713, %r715, %r715, %r972;
+	// end inline asm
+	add.s32 	%r1329, %r713, %r1309;
+	add.s32 	%r1330, %r1329, %r1047;
+	xor.b32  	%r719, %r1330, %r677;
+	// begin inline asm
+	shf.r.wrap.b32 %r717, %r719, %r719, %r960;
+	// end inline asm
+	add.s32 	%r1331, %r717, %r1322;
+	xor.b32  	%r723, %r1331, %r713;
+	// begin inline asm
+	shf.r.wrap.b32 %r721, %r723, %r723, %r964;
+	// end inline asm
+	add.s32 	%r1332, %r721, %r1330;
+	add.s32 	%r1333, %r1332, %r1080;
+	xor.b32  	%r727, %r1333, %r717;
+	// begin inline asm
+	shf.r.wrap.b32 %r725, %r727, %r727, %r968;
+	// end inline asm
+	add.s32 	%r1334, %r725, %r1331;
+	xor.b32  	%r731, %r1334, %r721;
+	// begin inline asm
+	shf.r.wrap.b32 %r729, %r731, %r731, %r972;
+	// end inline asm
+	add.s32 	%r1335, %r1315, %r665;
+	add.s32 	%r1336, %r1335, %r1057;
+	xor.b32  	%r735, %r1336, %r693;
+	// begin inline asm
+	shf.r.wrap.b32 %r733, %r735, %r735, %r960;
+	// end inline asm
+	add.s32 	%r1337, %r733, %r1328;
+	xor.b32  	%r739, %r1337, %r665;
+	// begin inline asm
+	shf.r.wrap.b32 %r737, %r739, %r739, %r964;
+	// end inline asm
+	add.s32 	%r1338, %r737, %r1336;
+	add.s32 	%r1339, %r1338, %r1019;
+	xor.b32  	%r743, %r1339, %r733;
+	// begin inline asm
+	shf.r.wrap.b32 %r741, %r743, %r743, %r968;
+	// end inline asm
+	add.s32 	%r1340, %r741, %r1337;
+	xor.b32  	%r747, %r1340, %r737;
+	// begin inline asm
+	shf.r.wrap.b32 %r745, %r747, %r747, %r972;
+	// end inline asm
+	add.s32 	%r1341, %r1321, %r681;
+	add.s32 	%r1342, %r1341, %r1042;
+	xor.b32  	%r751, %r1342, %r709;
+	// begin inline asm
+	shf.r.wrap.b32 %r749, %r751, %r751, %r960;
+	// end inline asm
+	add.s32 	%r1343, %r749, %r1310;
+	xor.b32  	%r755, %r1343, %r681;
+	// begin inline asm
+	shf.r.wrap.b32 %r753, %r755, %r755, %r964;
+	// end inline asm
+	add.s32 	%r1344, %r753, %r1342;
+	add.s32 	%r1345, %r1344, %r1070;
+	xor.b32  	%r759, %r1345, %r749;
+	// begin inline asm
+	shf.r.wrap.b32 %r757, %r759, %r759, %r968;
+	// end inline asm
+	add.s32 	%r1346, %r757, %r1343;
+	xor.b32  	%r763, %r1346, %r753;
+	// begin inline asm
+	shf.r.wrap.b32 %r761, %r763, %r763, %r972;
+	// end inline asm
+	add.s32 	%r1347, %r1327, %r697;
+	add.s32 	%r1348, %r1347, %r1085;
+	xor.b32  	%r767, %r1348, %r661;
+	// begin inline asm
+	shf.r.wrap.b32 %r765, %r767, %r767, %r960;
+	// end inline asm
+	add.s32 	%r1349, %r765, %r1316;
+	xor.b32  	%r771, %r1349, %r697;
+	// begin inline asm
+	shf.r.wrap.b32 %r769, %r771, %r771, %r964;
+	// end inline asm
+	add.s32 	%r1350, %r769, %r1348;
+	add.s32 	%r1351, %r1350, %r991;
+	xor.b32  	%r775, %r1351, %r765;
+	// begin inline asm
+	shf.r.wrap.b32 %r773, %r775, %r775, %r968;
+	// end inline asm
+	add.s32 	%r1352, %r773, %r1349;
+	xor.b32  	%r779, %r1352, %r769;
+	// begin inline asm
+	shf.r.wrap.b32 %r777, %r779, %r779, %r972;
+	// end inline asm
+	add.s32 	%r1353, %r745, %r1333;
+	add.s32 	%r1354, %r1353, %r1075;
+	xor.b32  	%r783, %r1354, %r773;
+	// begin inline asm
+	shf.r.wrap.b32 %r781, %r783, %r783, %r960;
+	// end inline asm
+	add.s32 	%r1355, %r781, %r1346;
+	xor.b32  	%r787, %r1355, %r745;
+	// begin inline asm
+	shf.r.wrap.b32 %r785, %r787, %r787, %r964;
+	// end inline asm
+	add.s32 	%r1356, %r785, %r1354;
+	add.s32 	%r1357, %r1356, %r1001;
+	xor.b32  	%r791, %r1357, %r781;
+	// begin inline asm
+	shf.r.wrap.b32 %r789, %r791, %r791, %r968;
+	// end inline asm
+	add.s32 	%r1358, %r789, %r1355;
+	xor.b32  	%r795, %r1358, %r785;
+	// begin inline asm
+	shf.r.wrap.b32 %r793, %r795, %r795, %r972;
+	// end inline asm
+	add.s32 	%r1359, %r761, %r1339;
+	add.s32 	%r1360, %r1359, %r986;
+	xor.b32  	%r799, %r1360, %r725;
+	// begin inline asm
+	shf.r.wrap.b32 %r797, %r799, %r799, %r960;
+	// end inline asm
+	add.s32 	%r1361, %r797, %r1352;
+	xor.b32  	%r803, %r1361, %r761;
+	// begin inline asm
+	shf.r.wrap.b32 %r801, %r803, %r803, %r964;
+	// end inline asm
+	add.s32 	%r1362, %r801, %r1360;
+	add.s32 	%r1363, %r1362, %r1052;
+	xor.b32  	%r807, %r1363, %r797;
+	// begin inline asm
+	shf.r.wrap.b32 %r805, %r807, %r807, %r968;
+	// end inline asm
+	add.s32 	%r1364, %r805, %r1361;
+	xor.b32  	%r811, %r1364, %r801;
+	// begin inline asm
+	shf.r.wrap.b32 %r809, %r811, %r811, %r972;
+	// end inline asm
+	add.s32 	%r1365, %r777, %r1345;
+	add.s32 	%r1366, %r1365, %r996;
+	xor.b32  	%r815, %r1366, %r741;
+	// begin inline asm
+	shf.r.wrap.b32 %r813, %r815, %r815, %r960;
+	// end inline asm
+	add.s32 	%r1367, %r813, %r1334;
+	xor.b32  	%r819, %r1367, %r777;
+	// begin inline asm
+	shf.r.wrap.b32 %r817, %r819, %r819, %r964;
+	// end inline asm
+	add.s32 	%r1368, %r817, %r1366;
+	add.s32 	%r1369, %r1368, %r1024;
+	xor.b32  	%r823, %r1369, %r813;
+	// begin inline asm
+	shf.r.wrap.b32 %r821, %r823, %r823, %r968;
+	// end inline asm
+	add.s32 	%r1370, %r821, %r1367;
+	xor.b32  	%r827, %r1370, %r817;
+	// begin inline asm
+	shf.r.wrap.b32 %r825, %r827, %r827, %r972;
+	// end inline asm
+	add.s32 	%r1371, %r1351, %r729;
+	add.s32 	%r1372, %r1371, %r1014;
+	xor.b32  	%r831, %r1372, %r757;
+	// begin inline asm
+	shf.r.wrap.b32 %r829, %r831, %r831, %r960;
+	// end inline asm
+	add.s32 	%r1373, %r829, %r1340;
+	xor.b32  	%r835, %r1373, %r729;
+	// begin inline asm
+	shf.r.wrap.b32 %r833, %r835, %r835, %r964;
+	// end inline asm
+	add.s32 	%r1374, %r833, %r1372;
+	add.s32 	%r1375, %r1374, %r1029;
+	xor.b32  	%r839, %r1375, %r829;
+	// begin inline asm
+	shf.r.wrap.b32 %r837, %r839, %r839, %r968;
+	// end inline asm
+	add.s32 	%r1376, %r837, %r1373;
+	xor.b32  	%r843, %r1376, %r833;
+	// begin inline asm
+	shf.r.wrap.b32 %r841, %r843, %r843, %r972;
+	// end inline asm
+	add.s32 	%r1377, %r841, %r1357;
+	add.s32 	%r1378, %r1377, %r1057;
+	xor.b32  	%r847, %r1378, %r805;
+	// begin inline asm
+	shf.r.wrap.b32 %r845, %r847, %r847, %r960;
+	// end inline asm
+	add.s32 	%r1379, %r845, %r1370;
+	xor.b32  	%r851, %r1379, %r841;
+	// begin inline asm
+	shf.r.wrap.b32 %r849, %r851, %r851, %r964;
+	// end inline asm
+	add.s32 	%r1380, %r849, %r1378;
+	add.s32 	%r1381, %r1380, %r1085;
+	xor.b32  	%r855, %r1381, %r845;
+	// begin inline asm
+	shf.r.wrap.b32 %r853, %r855, %r855, %r968;
+	// end inline asm
+	add.s32 	%r1382, %r853, %r1379;
+	xor.b32  	%r859, %r1382, %r849;
+	// begin inline asm
+	shf.r.wrap.b32 %r857, %r859, %r859, %r972;
+	// end inline asm
+	add.s32 	%r1383, %r1363, %r793;
+	add.s32 	%r1384, %r1383, %r1019;
+	xor.b32  	%r863, %r1384, %r821;
+	// begin inline asm
+	shf.r.wrap.b32 %r861, %r863, %r863, %r960;
+	// end inline asm
+	add.s32 	%r1385, %r861, %r1376;
+	xor.b32  	%r867, %r1385, %r793;
+	// begin inline asm
+	shf.r.wrap.b32 %r865, %r867, %r867, %r964;
+	// end inline asm
+	add.s32 	%r1386, %r865, %r1384;
+	add.s32 	%r1387, %r1386, %r986;
+	xor.b32  	%r871, %r1387, %r861;
+	// begin inline asm
+	shf.r.wrap.b32 %r869, %r871, %r871, %r968;
+	// end inline asm
+	add.s32 	%r1388, %r869, %r1385;
+	xor.b32  	%r875, %r1388, %r865;
+	// begin inline asm
+	shf.r.wrap.b32 %r873, %r875, %r875, %r972;
+	// end inline asm
+	add.s32 	%r1389, %r1369, %r809;
+	add.s32 	%r1390, %r1389, %r991;
+	xor.b32  	%r879, %r1390, %r837;
+	// begin inline asm
+	shf.r.wrap.b32 %r877, %r879, %r879, %r960;
+	// end inline asm
+	add.s32 	%r1391, %r877, %r1358;
+	xor.b32  	%r883, %r1391, %r809;
+	// begin inline asm
+	shf.r.wrap.b32 %r881, %r883, %r883, %r964;
+	// end inline asm
+	add.s32 	%r1392, %r881, %r1390;
+	add.s32 	%r1393, %r1392, %r1047;
+	xor.b32  	%r887, %r1393, %r877;
+	// begin inline asm
+	shf.r.wrap.b32 %r885, %r887, %r887, %r968;
+	// end inline asm
+	add.s32 	%r1394, %r885, %r1391;
+	xor.b32  	%r891, %r1394, %r881;
+	// begin inline asm
+	shf.r.wrap.b32 %r889, %r891, %r891, %r972;
+	// end inline asm
+	add.s32 	%r1395, %r1375, %r825;
+	add.s32 	%r1396, %r1395, %r1042;
+	xor.b32  	%r895, %r1396, %r789;
+	// begin inline asm
+	shf.r.wrap.b32 %r893, %r895, %r895, %r960;
+	// end inline asm
+	add.s32 	%r1397, %r893, %r1364;
+	xor.b32  	%r899, %r1397, %r825;
+	// begin inline asm
+	shf.r.wrap.b32 %r897, %r899, %r899, %r964;
+	// end inline asm
+	add.s32 	%r1398, %r897, %r1396;
+	add.s32 	%r1399, %r1398, %r1024;
+	xor.b32  	%r903, %r1399, %r893;
+	// begin inline asm
+	shf.r.wrap.b32 %r901, %r903, %r903, %r968;
+	// end inline asm
+	add.s32 	%r1400, %r901, %r1397;
+	xor.b32  	%r907, %r1400, %r897;
+	// begin inline asm
+	shf.r.wrap.b32 %r905, %r907, %r907, %r972;
+	// end inline asm
+	add.s32 	%r1401, %r873, %r1381;
+	add.s32 	%r1402, %r1401, %r1080;
+	xor.b32  	%r911, %r1402, %r901;
+	// begin inline asm
+	shf.r.wrap.b32 %r909, %r911, %r911, %r960;
+	// end inline asm
+	add.s32 	%r1403, %r909, %r1394;
+	xor.b32  	%r915, %r1403, %r873;
+	// begin inline asm
+	shf.r.wrap.b32 %r913, %r915, %r915, %r964;
+	// end inline asm
+	add.s32 	%r1404, %r913, %r1402;
+	add.s32 	%r1405, %r1404, %r1052;
+	xor.b32  	%r919, %r1405, %r909;
+	// begin inline asm
+	shf.r.wrap.b32 %r917, %r919, %r919, %r968;
+	// end inline asm
+	add.s32 	%r1406, %r917, %r1403;
+	xor.b32  	%r923, %r1406, %r913;
+	// begin inline asm
+	shf.r.wrap.b32 %r921, %r923, %r923, %r972;
+	// end inline asm
+	add.s32 	%r1407, %r889, %r1387;
+	add.s32 	%r1408, %r1407, %r996;
+	xor.b32  	%r927, %r1408, %r853;
+	// begin inline asm
+	shf.r.wrap.b32 %r925, %r927, %r927, %r960;
+	// end inline asm
+	add.s32 	%r1409, %r925, %r1400;
+	xor.b32  	%r931, %r1409, %r889;
+	// begin inline asm
+	shf.r.wrap.b32 %r929, %r931, %r931, %r964;
+	// end inline asm
+	add.s32 	%r1410, %r929, %r1408;
+	add.s32 	%r1411, %r1410, %r1070;
+	xor.b32  	%r935, %r1411, %r925;
+	// begin inline asm
+	shf.r.wrap.b32 %r933, %r935, %r935, %r968;
+	// end inline asm
+	add.s32 	%r1412, %r933, %r1409;
+	xor.b32  	%r939, %r1412, %r929;
+	// begin inline asm
+	shf.r.wrap.b32 %r937, %r939, %r939, %r972;
+	// end inline asm
+	add.s32 	%r1413, %r905, %r1393;
+	add.s32 	%r1414, %r1413, %r1001;
+	xor.b32  	%r943, %r1414, %r869;
+	// begin inline asm
+	shf.r.wrap.b32 %r941, %r943, %r943, %r960;
+	// end inline asm
+	add.s32 	%r1415, %r941, %r1382;
+	xor.b32  	%r947, %r1415, %r905;
+	// begin inline asm
+	shf.r.wrap.b32 %r945, %r947, %r947, %r964;
+	// end inline asm
+	add.s32 	%r1416, %r945, %r1414;
+	add.s32 	%r1417, %r1416, %r1014;
+	xor.b32  	%r951, %r1417, %r941;
+	// begin inline asm
+	shf.r.wrap.b32 %r949, %r951, %r951, %r968;
+	// end inline asm
+	add.s32 	%r1418, %r949, %r1415;
+	xor.b32  	%r955, %r1418, %r945;
+	// begin inline asm
+	shf.r.wrap.b32 %r953, %r955, %r955, %r972;
+	// end inline asm
+	add.s32 	%r1419, %r1399, %r857;
+	add.s32 	%r1420, %r1419, %r1029;
+	xor.b32  	%r959, %r1420, %r885;
+	// begin inline asm
+	shf.r.wrap.b32 %r957, %r959, %r959, %r960;
+	// end inline asm
+	add.s32 	%r1421, %r957, %r1388;
+	xor.b32  	%r963, %r1421, %r857;
+	// begin inline asm
+	shf.r.wrap.b32 %r961, %r963, %r963, %r964;
+	// end inline asm
+	add.s32 	%r1422, %r961, %r1420;
+	add.s32 	%r1423, %r1422, %r1075;
+	xor.b32  	%r967, %r1423, %r957;
+	// begin inline asm
+	shf.r.wrap.b32 %r965, %r967, %r967, %r968;
+	// end inline asm
+	add.s32 	%r1424, %r965, %r1421;
+	xor.b32  	%r971, %r1424, %r961;
+	// begin inline asm
+	shf.r.wrap.b32 %r969, %r971, %r971, %r972;
+	// end inline asm
+	xor.b32  	%r2711, %r1418, %r1405;
+	xor.b32  	%r2712, %r1424, %r1411;
+	xor.b32  	%r2713, %r1417, %r1406;
+	xor.b32  	%r2714, %r1423, %r1412;
+	xor.b32  	%r2715, %r969, %r933;
+	xor.b32  	%r2716, %r949, %r921;
+	xor.b32  	%r2717, %r965, %r937;
+	xor.b32  	%r2718, %r953, %r917;
+	add.s32 	%r2710, %r2710, 1;
+	setp.ne.s32 	%p4, %r2710, 16;
+	@%p4 bra 	$L__BB10_2;
+
+$L__BB10_3:
+	ld.const.u32 	%r2701, [B3IV+16];
+	ld.const.u32 	%r2700, [B3IV+20];
+	ld.const.u32 	%r2699, [B3IV+24];
+	ld.const.u32 	%r2698, [B3IV+28];
+	mov.u32 	%r2683, %tid.x;
+	and.b32  	%r1427, %r2683, 64;
+	mov.u32 	%r1428, _ZZ6b3leafE2sc;
+	mad.lo.s32 	%r1429, %r2683, 36, %r1428;
+	st.shared.u32 	[%r1429], %r2711;
+	st.shared.u32 	[%r1429+4], %r2712;
+	st.shared.u32 	[%r1429+8], %r2713;
+	st.shared.u32 	[%r1429+12], %r2714;
+	st.shared.u32 	[%r1429+16], %r2715;
+	st.shared.u32 	[%r1429+20], %r2716;
+	st.shared.u32 	[%r1429+24], %r2717;
+	st.shared.u32 	[%r1429+28], %r2718;
+	bar.sync 	0;
+	shl.b32 	%r1430, %r2, 1;
+	add.s32 	%r1431, %r1430, %r1427;
+	mad.lo.s32 	%r39, %r1431, 36, %r1428;
+	add.s32 	%r40, %r2701, %r3;
+	add.s32 	%r41, %r2700, %r4;
+	add.s32 	%r42, %r2699, %r5;
+	add.s32 	%r43, %r2698, %r6;
+	or.b32  	%r1432, %r1427, %r2;
+	mad.lo.s32 	%r44, %r1432, 36, %r1428;
+	mov.u32 	%r2727, 32;
+
+$L__BB10_4:
+	setp.ge.s32 	%p5, %r2, %r2727;
+	@%p5 bra 	$L__BB10_6;
+
+	ld.const.u32 	%r2697, [B3IV];
+	ld.const.u32 	%r2696, [B3IV+4];
+	ld.const.u32 	%r2695, [B3IV+8];
+	ld.const.u32 	%r2694, [B3IV+12];
+	ld.const.u32 	%r2693, [B3IV+16];
+	ld.const.u32 	%r2692, [B3IV+20];
+	ld.const.u32 	%r2691, [B3IV+24];
+	ld.const.u32 	%r2690, [B3IV+28];
+	ld.shared.u32 	%r2329, [%r39];
+	ld.shared.u32 	%r2330, [%r39+36];
+	ld.shared.u32 	%r2331, [%r39+4];
+	ld.shared.u32 	%r2332, [%r39+40];
+	mov.u32 	%r2324, 8;
+	ld.shared.u32 	%r2333, [%r39+8];
+	ld.shared.u32 	%r2334, [%r39+44];
+	mov.u32 	%r2320, 12;
+	ld.shared.u32 	%r2335, [%r39+12];
+	ld.shared.u32 	%r2336, [%r39+48];
+	mov.u32 	%r2316, 16;
+	ld.shared.u32 	%r2337, [%r39+16];
+	ld.shared.u32 	%r2338, [%r39+52];
+	ld.shared.u32 	%r2339, [%r39+20];
+	ld.shared.u32 	%r2340, [%r39+56];
+	ld.shared.u32 	%r2341, [%r39+24];
+	ld.shared.u32 	%r2342, [%r39+60];
+	ld.shared.u32 	%r2343, [%r39+28];
+	ld.shared.u32 	%r2344, [%r39+64];
+	add.s32 	%r1435, %r40, %r2329;
+	// begin inline asm
+	shf.r.wrap.b32 %r1433, %r1435, %r1435, %r2316;
+	// end inline asm
+	add.s32 	%r2345, %r1433, %r2697;
+	xor.b32  	%r1439, %r2345, %r2693;
+	// begin inline asm
+	shf.r.wrap.b32 %r1437, %r1439, %r1439, %r2320;
+	// end inline asm
+	add.s32 	%r2346, %r1437, %r1435;
+	add.s32 	%r2347, %r2346, %r2331;
+	xor.b32  	%r1443, %r2347, %r1433;
+	// begin inline asm
+	shf.r.wrap.b32 %r1441, %r1443, %r1443, %r2324;
+	// end inline asm
+	add.s32 	%r2348, %r1441, %r2345;
+	xor.b32  	%r1447, %r2348, %r1437;
+	mov.u32 	%r2328, 7;
+	// begin inline asm
+	shf.r.wrap.b32 %r1445, %r1447, %r1447, %r2328;
+	// end inline asm
+	add.s32 	%r1451, %r41, %r2333;
+	// begin inline asm
+	shf.r.wrap.b32 %r1449, %r1451, %r1451, %r2316;
+	// end inline asm
+	add.s32 	%r2349, %r1449, %r2696;
+	xor.b32  	%r1455, %r2349, %r2692;
+	// begin inline asm
+	shf.r.wrap.b32 %r1453, %r1455, %r1455, %r2320;
+	// end inline asm
+	add.s32 	%r2350, %r1453, %r1451;
+	add.s32 	%r2351, %r2350, %r2335;
+	xor.b32  	%r1459, %r2351, %r1449;
+	// begin inline asm
+	shf.r.wrap.b32 %r1457, %r1459, %r1459, %r2324;
+	// end inline asm
+	add.s32 	%r2352, %r1457, %r2349;
+	xor.b32  	%r1463, %r2352, %r1453;
+	// begin inline asm
+	shf.r.wrap.b32 %r1461, %r1463, %r1463, %r2328;
+	// end inline asm
+	add.s32 	%r2353, %r42, %r2337;
+	xor.b32  	%r1467, %r2353, 64;
+	// begin inline asm
+	shf.r.wrap.b32 %r1465, %r1467, %r1467, %r2316;
+	// end inline asm
+	add.s32 	%r2354, %r1465, %r2695;
+	xor.b32  	%r1471, %r2354, %r2691;
+	// begin inline asm
+	shf.r.wrap.b32 %r1469, %r1471, %r1471, %r2320;
+	// end inline asm
+	add.s32 	%r2355, %r1469, %r2353;
+	add.s32 	%r2356, %r2355, %r2339;
+	xor.b32  	%r1475, %r2356, %r1465;
+	// begin inline asm
+	shf.r.wrap.b32 %r1473, %r1475, %r1475, %r2324;
+	// end inline asm
+	add.s32 	%r2357, %r1473, %r2354;
+	xor.b32  	%r1479, %r2357, %r1469;
+	// begin inline asm
+	shf.r.wrap.b32 %r1477, %r1479, %r1479, %r2328;
+	// end inline asm
+	add.s32 	%r2358, %r43, %r2341;
+	xor.b32  	%r1483, %r2358, 4;
+	// begin inline asm
+	shf.r.wrap.b32 %r1481, %r1483, %r1483, %r2316;
+	// end inline asm
+	add.s32 	%r2359, %r1481, %r2694;
+	xor.b32  	%r1487, %r2359, %r2690;
+	// begin inline asm
+	shf.r.wrap.b32 %r1485, %r1487, %r1487, %r2320;
+	// end inline asm
+	add.s32 	%r2360, %r1485, %r2358;
+	add.s32 	%r2361, %r2360, %r2343;
+	xor.b32  	%r1491, %r2361, %r1481;
+	// begin inline asm
+	shf.r.wrap.b32 %r1489, %r1491, %r1491, %r2324;
+	// end inline asm
+	add.s32 	%r2362, %r1489, %r2359;
+	xor.b32  	%r1495, %r2362, %r1485;
+	// begin inline asm
+	shf.r.wrap.b32 %r1493, %r1495, %r1495, %r2328;
+	// end inline asm
+	add.s32 	%r2363, %r1461, %r2347;
+	add.s32 	%r2364, %r2363, %r2330;
+	xor.b32  	%r1499, %r2364, %r1489;
+	// begin inline asm
+	shf.r.wrap.b32 %r1497, %r1499, %r1499, %r2316;
+	// end inline asm
+	add.s32 	%r2365, %r1497, %r2357;
+	xor.b32  	%r1503, %r2365, %r1461;
+	// begin inline asm
+	shf.r.wrap.b32 %r1501, %r1503, %r1503, %r2320;
+	// end inline asm
+	add.s32 	%r2366, %r1501, %r2364;
+	add.s32 	%r2367, %r2366, %r2332;
+	xor.b32  	%r1507, %r2367, %r1497;
+	// begin inline asm
+	shf.r.wrap.b32 %r1505, %r1507, %r1507, %r2324;
+	// end inline asm
+	add.s32 	%r2368, %r1505, %r2365;
+	xor.b32  	%r1511, %r2368, %r1501;
+	// begin inline asm
+	shf.r.wrap.b32 %r1509, %r1511, %r1511, %r2328;
+	// end inline asm
+	add.s32 	%r2369, %r1477, %r2351;
+	add.s32 	%r2370, %r2369, %r2334;
+	xor.b32  	%r1515, %r2370, %r1441;
+	// begin inline asm
+	shf.r.wrap.b32 %r1513, %r1515, %r1515, %r2316;
+	// end inline asm
+	add.s32 	%r2371, %r1513, %r2362;
+	xor.b32  	%r1519, %r2371, %r1477;
+	// begin inline asm
+	shf.r.wrap.b32 %r1517, %r1519, %r1519, %r2320;
+	// end inline asm
+	add.s32 	%r2372, %r1517, %r2370;
+	add.s32 	%r2373, %r2372, %r2336;
+	xor.b32  	%r1523, %r2373, %r1513;
+	// begin inline asm
+	shf.r.wrap.b32 %r1521, %r1523, %r1523, %r2324;
+	// end inline asm
+	add.s32 	%r2374, %r1521, %r2371;
+	xor.b32  	%r1527, %r2374, %r1517;
+	// begin inline asm
+	shf.r.wrap.b32 %r1525, %r1527, %r1527, %r2328;
+	// end inline asm
+	add.s32 	%r2375, %r1493, %r2356;
+	add.s32 	%r2376, %r2375, %r2338;
+	xor.b32  	%r1531, %r2376, %r1457;
+	// begin inline asm
+	shf.r.wrap.b32 %r1529, %r1531, %r1531, %r2316;
+	// end inline asm
+	add.s32 	%r2377, %r1529, %r2348;
+	xor.b32  	%r1535, %r2377, %r1493;
+	// begin inline asm
+	shf.r.wrap.b32 %r1533, %r1535, %r1535, %r2320;
+	// end inline asm
+	add.s32 	%r2378, %r1533, %r2376;
+	add.s32 	%r2379, %r2378, %r2340;
+	xor.b32  	%r1539, %r2379, %r1529;
+	// begin inline asm
+	shf.r.wrap.b32 %r1537, %r1539, %r1539, %r2324;
+	// end inline asm
+	add.s32 	%r2380, %r1537, %r2377;
+	xor.b32  	%r1543, %r2380, %r1533;
+	// begin inline asm
+	shf.r.wrap.b32 %r1541, %r1543, %r1543, %r2328;
+	// end inline asm
+	add.s32 	%r2381, %r2361, %r1445;
+	add.s32 	%r2382, %r2381, %r2342;
+	xor.b32  	%r1547, %r2382, %r1473;
+	// begin inline asm
+	shf.r.wrap.b32 %r1545, %r1547, %r1547, %r2316;
+	// end inline asm
+	add.s32 	%r2383, %r1545, %r2352;
+	xor.b32  	%r1551, %r2383, %r1445;
+	// begin inline asm
+	shf.r.wrap.b32 %r1549, %r1551, %r1551, %r2320;
+	// end inline asm
+	add.s32 	%r2384, %r1549, %r2382;
+	add.s32 	%r2385, %r2384, %r2344;
+	xor.b32  	%r1555, %r2385, %r1545;
+	// begin inline asm
+	shf.r.wrap.b32 %r1553, %r1555, %r1555, %r2324;
+	// end inline asm
+	add.s32 	%r2386, %r1553, %r2383;
+	xor.b32  	%r1559, %r2386, %r1549;
+	// begin inline asm
+	shf.r.wrap.b32 %r1557, %r1559, %r1559, %r2328;
+	// end inline asm
+	add.s32 	%r2387, %r1557, %r2367;
+	add.s32 	%r2388, %r2387, %r2333;
+	xor.b32  	%r1563, %r2388, %r1521;
+	// begin inline asm
+	shf.r.wrap.b32 %r1561, %r1563, %r1563, %r2316;
+	// end inline asm
+	add.s32 	%r2389, %r1561, %r2380;
+	xor.b32  	%r1567, %r2389, %r1557;
+	// begin inline asm
+	shf.r.wrap.b32 %r1565, %r1567, %r1567, %r2320;
+	// end inline asm
+	add.s32 	%r2390, %r1565, %r2388;
+	add.s32 	%r2391, %r2390, %r2341;
+	xor.b32  	%r1571, %r2391, %r1561;
+	// begin inline asm
+	shf.r.wrap.b32 %r1569, %r1571, %r1571, %r2324;
+	// end inline asm
+	add.s32 	%r2392, %r1569, %r2389;
+	xor.b32  	%r1575, %r2392, %r1565;
+	// begin inline asm
+	shf.r.wrap.b32 %r1573, %r1575, %r1575, %r2328;
+	// end inline asm
+	add.s32 	%r2393, %r2373, %r1509;
+	add.s32 	%r2394, %r2393, %r2335;
+	xor.b32  	%r1579, %r2394, %r1537;
+	// begin inline asm
+	shf.r.wrap.b32 %r1577, %r1579, %r1579, %r2316;
+	// end inline asm
+	add.s32 	%r2395, %r1577, %r2386;
+	xor.b32  	%r1583, %r2395, %r1509;
+	// begin inline asm
+	shf.r.wrap.b32 %r1581, %r1583, %r1583, %r2320;
+	// end inline asm
+	add.s32 	%r2396, %r1581, %r2394;
+	add.s32 	%r2397, %r2396, %r2334;
+	xor.b32  	%r1587, %r2397, %r1577;
+	// begin inline asm
+	shf.r.wrap.b32 %r1585, %r1587, %r1587, %r2324;
+	// end inline asm
+	add.s32 	%r2398, %r1585, %r2395;
+	xor.b32  	%r1591, %r2398, %r1581;
+	// begin inline asm
+	shf.r.wrap.b32 %r1589, %r1591, %r1591, %r2328;
+	// end inline asm
+	add.s32 	%r2399, %r2379, %r1525;
+	add.s32 	%r2400, %r2399, %r2343;
+	xor.b32  	%r1595, %r2400, %r1553;
+	// begin inline asm
+	shf.r.wrap.b32 %r1593, %r1595, %r1595, %r2316;
+	// end inline asm
+	add.s32 	%r2401, %r1593, %r2368;
+	xor.b32  	%r1599, %r2401, %r1525;
+	// begin inline asm
+	shf.r.wrap.b32 %r1597, %r1599, %r1599, %r2320;
+	// end inline asm
+	add.s32 	%r2402, %r1597, %r2400;
+	add.s32 	%r2403, %r2402, %r2329;
+	xor.b32  	%r1603, %r2403, %r1593;
+	// begin inline asm
+	shf.r.wrap.b32 %r1601, %r1603, %r1603, %r2324;
+	// end inline asm
+	add.s32 	%r2404, %r1601, %r2401;
+	xor.b32  	%r1607, %r2404, %r1597;
+	// begin inline asm
+	shf.r.wrap.b32 %r1605, %r1607, %r1607, %r2328;
+	// end inline asm
+	add.s32 	%r2405, %r2385, %r1541;
+	add.s32 	%r2406, %r2405, %r2337;
+	xor.b32  	%r1611, %r2406, %r1505;
+	// begin inline asm
+	shf.r.wrap.b32 %r1609, %r1611, %r1611, %r2316;
+	// end inline asm
+	add.s32 	%r2407, %r1609, %r2374;
+	xor.b32  	%r1615, %r2407, %r1541;
+	// begin inline asm
+	shf.r.wrap.b32 %r1613, %r1615, %r1615, %r2320;
+	// end inline asm
+	add.s32 	%r2408, %r1613, %r2406;
+	add.s32 	%r2409, %r2408, %r2340;
+	xor.b32  	%r1619, %r2409, %r1609;
+	// begin inline asm
+	shf.r.wrap.b32 %r1617, %r1619, %r1619, %r2324;
+	// end inline asm
+	add.s32 	%r2410, %r1617, %r2407;
+	xor.b32  	%r1623, %r2410, %r1613;
+	// begin inline asm
+	shf.r.wrap.b32 %r1621, %r1623, %r1623, %r2328;
+	// end inline asm
+	add.s32 	%r2411, %r1589, %r2391;
+	add.s32 	%r2412, %r2411, %r2331;
+	xor.b32  	%r1627, %r2412, %r1617;
+	// begin inline asm
+	shf.r.wrap.b32 %r1625, %r1627, %r1627, %r2316;
+	// end inline asm
+	add.s32 	%r2413, %r1625, %r2404;
+	xor.b32  	%r1631, %r2413, %r1589;
+	// begin inline asm
+	shf.r.wrap.b32 %r1629, %r1631, %r1631, %r2320;
+	// end inline asm
+	add.s32 	%r2414, %r1629, %r2412;
+	add.s32 	%r2415, %r2414, %r2336;
+	xor.b32  	%r1635, %r2415, %r1625;
+	// begin inline asm
+	shf.r.wrap.b32 %r1633, %r1635, %r1635, %r2324;
+	// end inline asm
+	add.s32 	%r2416, %r1633, %r2413;
+	xor.b32  	%r1639, %r2416, %r1629;
+	// begin inline asm
+	shf.r.wrap.b32 %r1637, %r1639, %r1639, %r2328;
+	// end inline asm
+	add.s32 	%r2417, %r1605, %r2397;
+	add.s32 	%r2418, %r2417, %r2338;
+	xor.b32  	%r1643, %r2418, %r1569;
+	// begin inline asm
+	shf.r.wrap.b32 %r1641, %r1643, %r1643, %r2316;
+	// end inline asm
+	add.s32 	%r2419, %r1641, %r2410;
+	xor.b32  	%r1647, %r2419, %r1605;
+	// begin inline asm
+	shf.r.wrap.b32 %r1645, %r1647, %r1647, %r2320;
+	// end inline asm
+	add.s32 	%r2420, %r1645, %r2418;
+	add.s32 	%r2421, %r2420, %r2339;
+	xor.b32  	%r1651, %r2421, %r1641;
+	// begin inline asm
+	shf.r.wrap.b32 %r1649, %r1651, %r1651, %r2324;
+	// end inline asm
+	add.s32 	%r2422, %r1649, %r2419;
+	xor.b32  	%r1655, %r2422, %r1645;
+	// begin inline asm
+	shf.r.wrap.b32 %r1653, %r1655, %r1655, %r2328;
+	// end inline asm
+	add.s32 	%r2423, %r1621, %r2403;
+	add.s32 	%r2424, %r2423, %r2332;
+	xor.b32  	%r1659, %r2424, %r1585;
+	// begin inline asm
+	shf.r.wrap.b32 %r1657, %r1659, %r1659, %r2316;
+	// end inline asm
+	add.s32 	%r2425, %r1657, %r2392;
+	xor.b32  	%r1663, %r2425, %r1621;
+	// begin inline asm
+	shf.r.wrap.b32 %r1661, %r1663, %r1663, %r2320;
+	// end inline asm
+	add.s32 	%r2426, %r1661, %r2424;
+	add.s32 	%r2427, %r2426, %r2342;
+	xor.b32  	%r1667, %r2427, %r1657;
+	// begin inline asm
+	shf.r.wrap.b32 %r1665, %r1667, %r1667, %r2324;
+	// end inline asm
+	add.s32 	%r2428, %r1665, %r2425;
+	xor.b32  	%r1671, %r2428, %r1661;
+	// begin inline asm
+	shf.r.wrap.b32 %r1669, %r1671, %r1671, %r2328;
+	// end inline asm
+	add.s32 	%r2429, %r2409, %r1573;
+	add.s32 	%r2430, %r2429, %r2344;
+	xor.b32  	%r1675, %r2430, %r1601;
+	// begin inline asm
+	shf.r.wrap.b32 %r1673, %r1675, %r1675, %r2316;
+	// end inline asm
+	add.s32 	%r2431, %r1673, %r2398;
+	xor.b32  	%r1679, %r2431, %r1573;
+	// begin inline asm
+	shf.r.wrap.b32 %r1677, %r1679, %r1679, %r2320;
+	// end inline asm
+	add.s32 	%r2432, %r1677, %r2430;
+	add.s32 	%r2433, %r2432, %r2330;
+	xor.b32  	%r1683, %r2433, %r1673;
+	// begin inline asm
+	shf.r.wrap.b32 %r1681, %r1683, %r1683, %r2324;
+	// end inline asm
+	add.s32 	%r2434, %r1681, %r2431;
+	xor.b32  	%r1687, %r2434, %r1677;
+	// begin inline asm
+	shf.r.wrap.b32 %r1685, %r1687, %r1687, %r2328;
+	// end inline asm
+	add.s32 	%r2435, %r1685, %r2415;
+	add.s32 	%r2436, %r2435, %r2335;
+	xor.b32  	%r1691, %r2436, %r1649;
+	// begin inline asm
+	shf.r.wrap.b32 %r1689, %r1691, %r1691, %r2316;
+	// end inline asm
+	add.s32 	%r2437, %r1689, %r2428;
+	xor.b32  	%r1695, %r2437, %r1685;
+	// begin inline asm
+	shf.r.wrap.b32 %r1693, %r1695, %r1695, %r2320;
+	// end inline asm
+	add.s32 	%r2438, %r1693, %r2436;
+	add.s32 	%r2439, %r2438, %r2337;
+	xor.b32  	%r1699, %r2439, %r1689;
+	// begin inline asm
+	shf.r.wrap.b32 %r1697, %r1699, %r1699, %r2324;
+	// end inline asm
+	add.s32 	%r2440, %r1697, %r2437;
+	xor.b32  	%r1703, %r2440, %r1693;
+	// begin inline asm
+	shf.r.wrap.b32 %r1701, %r1703, %r1703, %r2328;
+	// end inline asm
+	add.s32 	%r2441, %r2421, %r1637;
+	add.s32 	%r2442, %r2441, %r2334;
+	xor.b32  	%r1707, %r2442, %r1665;
+	// begin inline asm
+	shf.r.wrap.b32 %r1705, %r1707, %r1707, %r2316;
+	// end inline asm
+	add.s32 	%r2443, %r1705, %r2434;
+	xor.b32  	%r1711, %r2443, %r1637;
+	// begin inline asm
+	shf.r.wrap.b32 %r1709, %r1711, %r1711, %r2320;
+	// end inline asm
+	add.s32 	%r2444, %r1709, %r2442;
+	add.s32 	%r2445, %r2444, %r2338;
+	xor.b32  	%r1715, %r2445, %r1705;
+	// begin inline asm
+	shf.r.wrap.b32 %r1713, %r1715, %r1715, %r2324;
+	// end inline asm
+	add.s32 	%r2446, %r1713, %r2443;
+	xor.b32  	%r1719, %r2446, %r1709;
+	// begin inline asm
+	shf.r.wrap.b32 %r1717, %r1719, %r1719, %r2328;
+	// end inline asm
+	add.s32 	%r2447, %r2427, %r1653;
+	add.s32 	%r2448, %r2447, %r2340;
+	xor.b32  	%r1723, %r2448, %r1681;
+	// begin inline asm
+	shf.r.wrap.b32 %r1721, %r1723, %r1723, %r2316;
+	// end inline asm
+	add.s32 	%r2449, %r1721, %r2416;
+	xor.b32  	%r1727, %r2449, %r1653;
+	// begin inline asm
+	shf.r.wrap.b32 %r1725, %r1727, %r1727, %r2320;
+	// end inline asm
+	add.s32 	%r2450, %r1725, %r2448;
+	add.s32 	%r2451, %r2450, %r2333;
+	xor.b32  	%r1731, %r2451, %r1721;
+	// begin inline asm
+	shf.r.wrap.b32 %r1729, %r1731, %r1731, %r2324;
+	// end inline asm
+	add.s32 	%r2452, %r1729, %r2449;
+	xor.b32  	%r1735, %r2452, %r1725;
+	// begin inline asm
+	shf.r.wrap.b32 %r1733, %r1735, %r1735, %r2328;
+	// end inline asm
+	add.s32 	%r2453, %r2433, %r1669;
+	add.s32 	%r2454, %r2453, %r2343;
+	xor.b32  	%r1739, %r2454, %r1633;
+	// begin inline asm
+	shf.r.wrap.b32 %r1737, %r1739, %r1739, %r2316;
+	// end inline asm
+	add.s32 	%r2455, %r1737, %r2422;
+	xor.b32  	%r1743, %r2455, %r1669;
+	// begin inline asm
+	shf.r.wrap.b32 %r1741, %r1743, %r1743, %r2320;
+	// end inline asm
+	add.s32 	%r2456, %r1741, %r2454;
+	add.s32 	%r2457, %r2456, %r2342;
+	xor.b32  	%r1747, %r2457, %r1737;
+	// begin inline asm
+	shf.r.wrap.b32 %r1745, %r1747, %r1747, %r2324;
+	// end inline asm
+	add.s32 	%r2458, %r1745, %r2455;
+	xor.b32  	%r1751, %r2458, %r1741;
+	// begin inline asm
+	shf.r.wrap.b32 %r1749, %r1751, %r1751, %r2328;
+	// end inline asm
+	add.s32 	%r2459, %r1717, %r2439;
+	add.s32 	%r2460, %r2459, %r2341;
+	xor.b32  	%r1755, %r2460, %r1745;
+	// begin inline asm
+	shf.r.wrap.b32 %r1753, %r1755, %r1755, %r2316;
+	// end inline asm
+	add.s32 	%r2461, %r1753, %r2452;
+	xor.b32  	%r1759, %r2461, %r1717;
+	// begin inline asm
+	shf.r.wrap.b32 %r1757, %r1759, %r1759, %r2320;
+	// end inline asm
+	add.s32 	%r2462, %r1757, %r2460;
+	add.s32 	%r2463, %r2462, %r2339;
+	xor.b32  	%r1763, %r2463, %r1753;
+	// begin inline asm
+	shf.r.wrap.b32 %r1761, %r1763, %r1763, %r2324;
+	// end inline asm
+	add.s32 	%r2464, %r1761, %r2461;
+	xor.b32  	%r1767, %r2464, %r1757;
+	// begin inline asm
+	shf.r.wrap.b32 %r1765, %r1767, %r1767, %r2328;
+	// end inline asm
+	add.s32 	%r2465, %r1733, %r2445;
+	add.s32 	%r2466, %r2465, %r2332;
+	xor.b32  	%r1771, %r2466, %r1697;
+	// begin inline asm
+	shf.r.wrap.b32 %r1769, %r1771, %r1771, %r2316;
+	// end inline asm
+	add.s32 	%r2467, %r1769, %r2458;
+	xor.b32  	%r1775, %r2467, %r1733;
+	// begin inline asm
+	shf.r.wrap.b32 %r1773, %r1775, %r1775, %r2320;
+	// end inline asm
+	add.s32 	%r2468, %r1773, %r2466;
+	add.s32 	%r2469, %r2468, %r2329;
+	xor.b32  	%r1779, %r2469, %r1769;
+	// begin inline asm
+	shf.r.wrap.b32 %r1777, %r1779, %r1779, %r2324;
+	// end inline asm
+	add.s32 	%r2470, %r1777, %r2467;
+	xor.b32  	%r1783, %r2470, %r1773;
+	// begin inline asm
+	shf.r.wrap.b32 %r1781, %r1783, %r1783, %r2328;
+	// end inline asm
+	add.s32 	%r2471, %r1749, %r2451;
+	add.s32 	%r2472, %r2471, %r2336;
+	xor.b32  	%r1787, %r2472, %r1713;
+	// begin inline asm
+	shf.r.wrap.b32 %r1785, %r1787, %r1787, %r2316;
+	// end inline asm
+	add.s32 	%r2473, %r1785, %r2440;
+	xor.b32  	%r1791, %r2473, %r1749;
+	// begin inline asm
+	shf.r.wrap.b32 %r1789, %r1791, %r1791, %r2320;
+	// end inline asm
+	add.s32 	%r2474, %r1789, %r2472;
+	add.s32 	%r2475, %r2474, %r2344;
+	xor.b32  	%r1795, %r2475, %r1785;
+	// begin inline asm
+	shf.r.wrap.b32 %r1793, %r1795, %r1795, %r2324;
+	// end inline asm
+	add.s32 	%r2476, %r1793, %r2473;
+	xor.b32  	%r1799, %r2476, %r1789;
+	// begin inline asm
+	shf.r.wrap.b32 %r1797, %r1799, %r1799, %r2328;
+	// end inline asm
+	add.s32 	%r2477, %r2457, %r1701;
+	add.s32 	%r2478, %r2477, %r2330;
+	xor.b32  	%r1803, %r2478, %r1729;
+	// begin inline asm
+	shf.r.wrap.b32 %r1801, %r1803, %r1803, %r2316;
+	// end inline asm
+	add.s32 	%r2479, %r1801, %r2446;
+	xor.b32  	%r1807, %r2479, %r1701;
+	// begin inline asm
+	shf.r.wrap.b32 %r1805, %r1807, %r1807, %r2320;
+	// end inline asm
+	add.s32 	%r2480, %r1805, %r2478;
+	add.s32 	%r2481, %r2480, %r2331;
+	xor.b32  	%r1811, %r2481, %r1801;
+	// begin inline asm
+	shf.r.wrap.b32 %r1809, %r1811, %r1811, %r2324;
+	// end inline asm
+	add.s32 	%r2482, %r1809, %r2479;
+	xor.b32  	%r1815, %r2482, %r1805;
+	// begin inline asm
+	shf.r.wrap.b32 %r1813, %r1815, %r1815, %r2328;
+	// end inline asm
+	add.s32 	%r2483, %r1813, %r2463;
+	add.s32 	%r2484, %r2483, %r2334;
+	xor.b32  	%r1819, %r2484, %r1777;
+	// begin inline asm
+	shf.r.wrap.b32 %r1817, %r1819, %r1819, %r2316;
+	// end inline asm
+	add.s32 	%r2485, %r1817, %r2476;
+	xor.b32  	%r1823, %r2485, %r1813;
+	// begin inline asm
+	shf.r.wrap.b32 %r1821, %r1823, %r1823, %r2320;
+	// end inline asm
+	add.s32 	%r2486, %r1821, %r2484;
+	add.s32 	%r2487, %r2486, %r2343;
+	xor.b32  	%r1827, %r2487, %r1817;
+	// begin inline asm
+	shf.r.wrap.b32 %r1825, %r1827, %r1827, %r2324;
+	// end inline asm
+	add.s32 	%r2488, %r1825, %r2485;
+	xor.b32  	%r1831, %r2488, %r1821;
+	// begin inline asm
+	shf.r.wrap.b32 %r1829, %r1831, %r1831, %r2328;
+	// end inline asm
+	add.s32 	%r2489, %r2469, %r1765;
+	add.s32 	%r2490, %r2489, %r2338;
+	xor.b32  	%r1835, %r2490, %r1793;
+	// begin inline asm
+	shf.r.wrap.b32 %r1833, %r1835, %r1835, %r2316;
+	// end inline asm
+	add.s32 	%r2491, %r1833, %r2482;
+	xor.b32  	%r1839, %r2491, %r1765;
+	// begin inline asm
+	shf.r.wrap.b32 %r1837, %r1839, %r1839, %r2320;
+	// end inline asm
+	add.s32 	%r2492, %r1837, %r2490;
+	add.s32 	%r2493, %r2492, %r2332;
+	xor.b32  	%r1843, %r2493, %r1833;
+	// begin inline asm
+	shf.r.wrap.b32 %r1841, %r1843, %r1843, %r2324;
+	// end inline asm
+	add.s32 	%r2494, %r1841, %r2491;
+	xor.b32  	%r1847, %r2494, %r1837;
+	// begin inline asm
+	shf.r.wrap.b32 %r1845, %r1847, %r1847, %r2328;
+	// end inline asm
+	add.s32 	%r2495, %r2475, %r1781;
+	add.s32 	%r2496, %r2495, %r2342;
+	xor.b32  	%r1851, %r2496, %r1809;
+	// begin inline asm
+	shf.r.wrap.b32 %r1849, %r1851, %r1851, %r2316;
+	// end inline asm
+	add.s32 	%r2497, %r1849, %r2464;
+	xor.b32  	%r1855, %r2497, %r1781;
+	// begin inline asm
+	shf.r.wrap.b32 %r1853, %r1855, %r1855, %r2320;
+	// end inline asm
+	add.s32 	%r2498, %r1853, %r2496;
+	add.s32 	%r2499, %r2498, %r2335;
+	xor.b32  	%r1859, %r2499, %r1849;
+	// begin inline asm
+	shf.r.wrap.b32 %r1857, %r1859, %r1859, %r2324;
+	// end inline asm
+	add.s32 	%r2500, %r1857, %r2497;
+	xor.b32  	%r1863, %r2500, %r1853;
+	// begin inline asm
+	shf.r.wrap.b32 %r1861, %r1863, %r1863, %r2328;
+	// end inline asm
+	add.s32 	%r2501, %r2481, %r1797;
+	add.s32 	%r2502, %r2501, %r2340;
+	xor.b32  	%r1867, %r2502, %r1761;
+	// begin inline asm
+	shf.r.wrap.b32 %r1865, %r1867, %r1867, %r2316;
+	// end inline asm
+	add.s32 	%r2503, %r1865, %r2470;
+	xor.b32  	%r1871, %r2503, %r1797;
+	// begin inline asm
+	shf.r.wrap.b32 %r1869, %r1871, %r1871, %r2320;
+	// end inline asm
+	add.s32 	%r2504, %r1869, %r2502;
+	add.s32 	%r2505, %r2504, %r2344;
+	xor.b32  	%r1875, %r2505, %r1865;
+	// begin inline asm
+	shf.r.wrap.b32 %r1873, %r1875, %r1875, %r2324;
+	// end inline asm
+	add.s32 	%r2506, %r1873, %r2503;
+	xor.b32  	%r1879, %r2506, %r1869;
+	// begin inline asm
+	shf.r.wrap.b32 %r1877, %r1879, %r1879, %r2328;
+	// end inline asm
+	add.s32 	%r2507, %r1845, %r2487;
+	add.s32 	%r2508, %r2507, %r2337;
+	xor.b32  	%r1883, %r2508, %r1873;
+	// begin inline asm
+	shf.r.wrap.b32 %r1881, %r1883, %r1883, %r2316;
+	// end inline asm
+	add.s32 	%r2509, %r1881, %r2500;
+	xor.b32  	%r1887, %r2509, %r1845;
+	// begin inline asm
+	shf.r.wrap.b32 %r1885, %r1887, %r1887, %r2320;
+	// end inline asm
+	add.s32 	%r2510, %r1885, %r2508;
+	add.s32 	%r2511, %r2510, %r2329;
+	xor.b32  	%r1891, %r2511, %r1881;
+	// begin inline asm
+	shf.r.wrap.b32 %r1889, %r1891, %r1891, %r2324;
+	// end inline asm
+	add.s32 	%r2512, %r1889, %r2509;
+	xor.b32  	%r1895, %r2512, %r1885;
+	// begin inline asm
+	shf.r.wrap.b32 %r1893, %r1895, %r1895, %r2328;
+	// end inline asm
+	add.s32 	%r2513, %r1861, %r2493;
+	add.s32 	%r2514, %r2513, %r2336;
+	xor.b32  	%r1899, %r2514, %r1825;
+	// begin inline asm
+	shf.r.wrap.b32 %r1897, %r1899, %r1899, %r2316;
+	// end inline asm
+	add.s32 	%r2515, %r1897, %r2506;
+	xor.b32  	%r1903, %r2515, %r1861;
+	// begin inline asm
+	shf.r.wrap.b32 %r1901, %r1903, %r1903, %r2320;
+	// end inline asm
+	add.s32 	%r2516, %r1901, %r2514;
+	add.s32 	%r2517, %r2516, %r2333;
+	xor.b32  	%r1907, %r2517, %r1897;
+	// begin inline asm
+	shf.r.wrap.b32 %r1905, %r1907, %r1907, %r2324;
+	// end inline asm
+	add.s32 	%r2518, %r1905, %r2515;
+	xor.b32  	%r1911, %r2518, %r1901;
+	// begin inline asm
+	shf.r.wrap.b32 %r1909, %r1911, %r1911, %r2328;
+	// end inline asm
+	add.s32 	%r2519, %r1877, %r2499;
+	add.s32 	%r2520, %r2519, %r2339;
+	xor.b32  	%r1915, %r2520, %r1841;
+	// begin inline asm
+	shf.r.wrap.b32 %r1913, %r1915, %r1915, %r2316;
+	// end inline asm
+	add.s32 	%r2521, %r1913, %r2488;
+	xor.b32  	%r1919, %r2521, %r1877;
+	// begin inline asm
+	shf.r.wrap.b32 %r1917, %r1919, %r1919, %r2320;
+	// end inline asm
+	add.s32 	%r2522, %r1917, %r2520;
+	add.s32 	%r2523, %r2522, %r2330;
+	xor.b32  	%r1923, %r2523, %r1913;
+	// begin inline asm
+	shf.r.wrap.b32 %r1921, %r1923, %r1923, %r2324;
+	// end inline asm
+	add.s32 	%r2524, %r1921, %r2521;
+	xor.b32  	%r1927, %r2524, %r1917;
+	// begin inline asm
+	shf.r.wrap.b32 %r1925, %r1927, %r1927, %r2328;
+	// end inline asm
+	add.s32 	%r2525, %r2505, %r1829;
+	add.s32 	%r2526, %r2525, %r2331;
+	xor.b32  	%r1931, %r2526, %r1857;
+	// begin inline asm
+	shf.r.wrap.b32 %r1929, %r1931, %r1931, %r2316;
+	// end inline asm
+	add.s32 	%r2527, %r1929, %r2494;
+	xor.b32  	%r1935, %r2527, %r1829;
+	// begin inline asm
+	shf.r.wrap.b32 %r1933, %r1935, %r1935, %r2320;
+	// end inline asm
+	add.s32 	%r2528, %r1933, %r2526;
+	add.s32 	%r2529, %r2528, %r2341;
+	xor.b32  	%r1939, %r2529, %r1929;
+	// begin inline asm
+	shf.r.wrap.b32 %r1937, %r1939, %r1939, %r2324;
+	// end inline asm
+	add.s32 	%r2530, %r1937, %r2527;
+	xor.b32  	%r1943, %r2530, %r1933;
+	// begin inline asm
+	shf.r.wrap.b32 %r1941, %r1943, %r1943, %r2328;
+	// end inline asm
+	add.s32 	%r2531, %r1941, %r2511;
+	add.s32 	%r2532, %r2531, %r2338;
+	xor.b32  	%r1947, %r2532, %r1905;
+	// begin inline asm
+	shf.r.wrap.b32 %r1945, %r1947, %r1947, %r2316;
+	// end inline asm
+	add.s32 	%r2533, %r1945, %r2524;
+	xor.b32  	%r1951, %r2533, %r1941;
+	// begin inline asm
+	shf.r.wrap.b32 %r1949, %r1951, %r1951, %r2320;
+	// end inline asm
+	add.s32 	%r2534, %r1949, %r2532;
+	add.s32 	%r2535, %r2534, %r2340;
+	xor.b32  	%r1955, %r2535, %r1945;
+	// begin inline asm
+	shf.r.wrap.b32 %r1953, %r1955, %r1955, %r2324;
+	// end inline asm
+	add.s32 	%r2536, %r1953, %r2533;
+	xor.b32  	%r1959, %r2536, %r1949;
+	// begin inline asm
+	shf.r.wrap.b32 %r1957, %r1959, %r1959, %r2328;
+	// end inline asm
+	add.s32 	%r2537, %r2517, %r1893;
+	add.s32 	%r2538, %r2537, %r2332;
+	xor.b32  	%r1963, %r2538, %r1921;
+	// begin inline asm
+	shf.r.wrap.b32 %r1961, %r1963, %r1963, %r2316;
+	// end inline asm
+	add.s32 	%r2539, %r1961, %r2530;
+	xor.b32  	%r1967, %r2539, %r1893;
+	// begin inline asm
+	shf.r.wrap.b32 %r1965, %r1967, %r1967, %r2320;
+	// end inline asm
+	add.s32 	%r2540, %r1965, %r2538;
+	add.s32 	%r2541, %r2540, %r2336;
+	xor.b32  	%r1971, %r2541, %r1961;
+	// begin inline asm
+	shf.r.wrap.b32 %r1969, %r1971, %r1971, %r2324;
+	// end inline asm
+	add.s32 	%r2542, %r1969, %r2539;
+	xor.b32  	%r1975, %r2542, %r1965;
+	// begin inline asm
+	shf.r.wrap.b32 %r1973, %r1975, %r1975, %r2328;
+	// end inline asm
+	add.s32 	%r2543, %r2523, %r1909;
+	add.s32 	%r2544, %r2543, %r2344;
+	xor.b32  	%r1979, %r2544, %r1937;
+	// begin inline asm
+	shf.r.wrap.b32 %r1977, %r1979, %r1979, %r2316;
+	// end inline asm
+	add.s32 	%r2545, %r1977, %r2512;
+	xor.b32  	%r1983, %r2545, %r1909;
+	// begin inline asm
+	shf.r.wrap.b32 %r1981, %r1983, %r1983, %r2320;
+	// end inline asm
+	add.s32 	%r2546, %r1981, %r2544;
+	add.s32 	%r2547, %r2546, %r2334;
+	xor.b32  	%r1987, %r2547, %r1977;
+	// begin inline asm
+	shf.r.wrap.b32 %r1985, %r1987, %r1987, %r2324;
+	// end inline asm
+	add.s32 	%r2548, %r1985, %r2545;
+	xor.b32  	%r1991, %r2548, %r1981;
+	// begin inline asm
+	shf.r.wrap.b32 %r1989, %r1991, %r1991, %r2328;
+	// end inline asm
+	add.s32 	%r2549, %r2529, %r1925;
+	add.s32 	%r2550, %r2549, %r2342;
+	xor.b32  	%r1995, %r2550, %r1889;
+	// begin inline asm
+	shf.r.wrap.b32 %r1993, %r1995, %r1995, %r2316;
+	// end inline asm
+	add.s32 	%r2551, %r1993, %r2518;
+	xor.b32  	%r1999, %r2551, %r1925;
+	// begin inline asm
+	shf.r.wrap.b32 %r1997, %r1999, %r1999, %r2320;
+	// end inline asm
+	add.s32 	%r2552, %r1997, %r2550;
+	add.s32 	%r2553, %r2552, %r2330;
+	xor.b32  	%r2003, %r2553, %r1993;
+	// begin inline asm
+	shf.r.wrap.b32 %r2001, %r2003, %r2003, %r2324;
+	// end inline asm
+	add.s32 	%r2554, %r2001, %r2551;
+	xor.b32  	%r2007, %r2554, %r1997;
+	// begin inline asm
+	shf.r.wrap.b32 %r2005, %r2007, %r2007, %r2328;
+	// end inline asm
+	add.s32 	%r2555, %r1973, %r2535;
+	add.s32 	%r2556, %r2555, %r2343;
+	xor.b32  	%r2011, %r2556, %r2001;
+	// begin inline asm
+	shf.r.wrap.b32 %r2009, %r2011, %r2011, %r2316;
+	// end inline asm
+	add.s32 	%r2557, %r2009, %r2548;
+	xor.b32  	%r2015, %r2557, %r1973;
+	// begin inline asm
+	shf.r.wrap.b32 %r2013, %r2015, %r2015, %r2320;
+	// end inline asm
+	add.s32 	%r2558, %r2013, %r2556;
+	add.s32 	%r2559, %r2558, %r2333;
+	xor.b32  	%r2019, %r2559, %r2009;
+	// begin inline asm
+	shf.r.wrap.b32 %r2017, %r2019, %r2019, %r2324;
+	// end inline asm
+	add.s32 	%r2560, %r2017, %r2557;
+	xor.b32  	%r2023, %r2560, %r2013;
+	// begin inline asm
+	shf.r.wrap.b32 %r2021, %r2023, %r2023, %r2328;
+	// end inline asm
+	add.s32 	%r2561, %r1989, %r2541;
+	add.s32 	%r2562, %r2561, %r2339;
+	xor.b32  	%r2027, %r2562, %r1953;
+	// begin inline asm
+	shf.r.wrap.b32 %r2025, %r2027, %r2027, %r2316;
+	// end inline asm
+	add.s32 	%r2563, %r2025, %r2554;
+	xor.b32  	%r2031, %r2563, %r1989;
+	// begin inline asm
+	shf.r.wrap.b32 %r2029, %r2031, %r2031, %r2320;
+	// end inline asm
+	add.s32 	%r2564, %r2029, %r2562;
+	add.s32 	%r2565, %r2564, %r2335;
+	xor.b32  	%r2035, %r2565, %r2025;
+	// begin inline asm
+	shf.r.wrap.b32 %r2033, %r2035, %r2035, %r2324;
+	// end inline asm
+	add.s32 	%r2566, %r2033, %r2563;
+	xor.b32  	%r2039, %r2566, %r2029;
+	// begin inline asm
+	shf.r.wrap.b32 %r2037, %r2039, %r2039, %r2328;
+	// end inline asm
+	add.s32 	%r2567, %r2005, %r2547;
+	add.s32 	%r2568, %r2567, %r2329;
+	xor.b32  	%r2043, %r2568, %r1969;
+	// begin inline asm
+	shf.r.wrap.b32 %r2041, %r2043, %r2043, %r2316;
+	// end inline asm
+	add.s32 	%r2569, %r2041, %r2536;
+	xor.b32  	%r2047, %r2569, %r2005;
+	// begin inline asm
+	shf.r.wrap.b32 %r2045, %r2047, %r2047, %r2320;
+	// end inline asm
+	add.s32 	%r2570, %r2045, %r2568;
+	add.s32 	%r2571, %r2570, %r2331;
+	xor.b32  	%r2051, %r2571, %r2041;
+	// begin inline asm
+	shf.r.wrap.b32 %r2049, %r2051, %r2051, %r2324;
+	// end inline asm
+	add.s32 	%r2572, %r2049, %r2569;
+	xor.b32  	%r2055, %r2572, %r2045;
+	// begin inline asm
+	shf.r.wrap.b32 %r2053, %r2055, %r2055, %r2328;
+	// end inline asm
+	add.s32 	%r2573, %r2553, %r1957;
+	add.s32 	%r2574, %r2573, %r2341;
+	xor.b32  	%r2059, %r2574, %r1985;
+	// begin inline asm
+	shf.r.wrap.b32 %r2057, %r2059, %r2059, %r2316;
+	// end inline asm
+	add.s32 	%r2575, %r2057, %r2542;
+	xor.b32  	%r2063, %r2575, %r1957;
+	// begin inline asm
+	shf.r.wrap.b32 %r2061, %r2063, %r2063, %r2320;
+	// end inline asm
+	add.s32 	%r2576, %r2061, %r2574;
+	add.s32 	%r2577, %r2576, %r2337;
+	xor.b32  	%r2067, %r2577, %r2057;
+	// begin inline asm
+	shf.r.wrap.b32 %r2065, %r2067, %r2067, %r2324;
+	// end inline asm
+	add.s32 	%r2578, %r2065, %r2575;
+	xor.b32  	%r2071, %r2578, %r2061;
+	// begin inline asm
+	shf.r.wrap.b32 %r2069, %r2071, %r2071, %r2328;
+	// end inline asm
+	add.s32 	%r2579, %r2069, %r2559;
+	add.s32 	%r2580, %r2579, %r2332;
+	xor.b32  	%r2075, %r2580, %r2033;
+	// begin inline asm
+	shf.r.wrap.b32 %r2073, %r2075, %r2075, %r2316;
+	// end inline asm
+	add.s32 	%r2581, %r2073, %r2572;
+	xor.b32  	%r2079, %r2581, %r2069;
+	// begin inline asm
+	shf.r.wrap.b32 %r2077, %r2079, %r2079, %r2320;
+	// end inline asm
+	add.s32 	%r2582, %r2077, %r2580;
+	add.s32 	%r2583, %r2582, %r2342;
+	xor.b32  	%r2083, %r2583, %r2073;
+	// begin inline asm
+	shf.r.wrap.b32 %r2081, %r2083, %r2083, %r2324;
+	// end inline asm
+	add.s32 	%r2584, %r2081, %r2581;
+	xor.b32  	%r2087, %r2584, %r2077;
+	// begin inline asm
+	shf.r.wrap.b32 %r2085, %r2087, %r2087, %r2328;
+	// end inline asm
+	add.s32 	%r2585, %r2565, %r2021;
+	add.s32 	%r2586, %r2585, %r2336;
+	xor.b32  	%r2091, %r2586, %r2049;
+	// begin inline asm
+	shf.r.wrap.b32 %r2089, %r2091, %r2091, %r2316;
+	// end inline asm
+	add.s32 	%r2587, %r2089, %r2578;
+	xor.b32  	%r2095, %r2587, %r2021;
+	// begin inline asm
+	shf.r.wrap.b32 %r2093, %r2095, %r2095, %r2320;
+	// end inline asm
+	add.s32 	%r2588, %r2093, %r2586;
+	add.s32 	%r2589, %r2588, %r2339;
+	xor.b32  	%r2099, %r2589, %r2089;
+	// begin inline asm
+	shf.r.wrap.b32 %r2097, %r2099, %r2099, %r2324;
+	// end inline asm
+	add.s32 	%r2590, %r2097, %r2587;
+	xor.b32  	%r2103, %r2590, %r2093;
+	// begin inline asm
+	shf.r.wrap.b32 %r2101, %r2103, %r2103, %r2328;
+	// end inline asm
+	add.s32 	%r2591, %r2571, %r2037;
+	add.s32 	%r2592, %r2591, %r2330;
+	xor.b32  	%r2107, %r2592, %r2065;
+	// begin inline asm
+	shf.r.wrap.b32 %r2105, %r2107, %r2107, %r2316;
+	// end inline asm
+	add.s32 	%r2593, %r2105, %r2560;
+	xor.b32  	%r2111, %r2593, %r2037;
+	// begin inline asm
+	shf.r.wrap.b32 %r2109, %r2111, %r2111, %r2320;
+	// end inline asm
+	add.s32 	%r2594, %r2109, %r2592;
+	add.s32 	%r2595, %r2594, %r2338;
+	xor.b32  	%r2115, %r2595, %r2105;
+	// begin inline asm
+	shf.r.wrap.b32 %r2113, %r2115, %r2115, %r2324;
+	// end inline asm
+	add.s32 	%r2596, %r2113, %r2593;
+	xor.b32  	%r2119, %r2596, %r2109;
+	// begin inline asm
+	shf.r.wrap.b32 %r2117, %r2119, %r2119, %r2328;
+	// end inline asm
+	add.s32 	%r2597, %r2577, %r2053;
+	add.s32 	%r2598, %r2597, %r2344;
+	xor.b32  	%r2123, %r2598, %r2017;
+	// begin inline asm
+	shf.r.wrap.b32 %r2121, %r2123, %r2123, %r2316;
+	// end inline asm
+	add.s32 	%r2599, %r2121, %r2566;
+	xor.b32  	%r2127, %r2599, %r2053;
+	// begin inline asm
+	shf.r.wrap.b32 %r2125, %r2127, %r2127, %r2320;
+	// end inline asm
+	add.s32 	%r2600, %r2125, %r2598;
+	add.s32 	%r2601, %r2600, %r2331;
+	xor.b32  	%r2131, %r2601, %r2121;
+	// begin inline asm
+	shf.r.wrap.b32 %r2129, %r2131, %r2131, %r2324;
+	// end inline asm
+	add.s32 	%r2602, %r2129, %r2599;
+	xor.b32  	%r2135, %r2602, %r2125;
+	// begin inline asm
+	shf.r.wrap.b32 %r2133, %r2135, %r2135, %r2328;
+	// end inline asm
+	add.s32 	%r2603, %r2101, %r2583;
+	add.s32 	%r2604, %r2603, %r2340;
+	xor.b32  	%r2139, %r2604, %r2129;
+	// begin inline asm
+	shf.r.wrap.b32 %r2137, %r2139, %r2139, %r2316;
+	// end inline asm
+	add.s32 	%r2605, %r2137, %r2596;
+	xor.b32  	%r2143, %r2605, %r2101;
+	// begin inline asm
+	shf.r.wrap.b32 %r2141, %r2143, %r2143, %r2320;
+	// end inline asm
+	add.s32 	%r2606, %r2141, %r2604;
+	add.s32 	%r2607, %r2606, %r2335;
+	xor.b32  	%r2147, %r2607, %r2137;
+	// begin inline asm
+	shf.r.wrap.b32 %r2145, %r2147, %r2147, %r2324;
+	// end inline asm
+	add.s32 	%r2608, %r2145, %r2605;
+	xor.b32  	%r2151, %r2608, %r2141;
+	// begin inline asm
+	shf.r.wrap.b32 %r2149, %r2151, %r2151, %r2328;
+	// end inline asm
+	add.s32 	%r2609, %r2117, %r2589;
+	add.s32 	%r2610, %r2609, %r2329;
+	xor.b32  	%r2155, %r2610, %r2081;
+	// begin inline asm
+	shf.r.wrap.b32 %r2153, %r2155, %r2155, %r2316;
+	// end inline asm
+	add.s32 	%r2611, %r2153, %r2602;
+	xor.b32  	%r2159, %r2611, %r2117;
+	// begin inline asm
+	shf.r.wrap.b32 %r2157, %r2159, %r2159, %r2320;
+	// end inline asm
+	add.s32 	%r2612, %r2157, %r2610;
+	add.s32 	%r2613, %r2612, %r2334;
+	xor.b32  	%r2163, %r2613, %r2153;
+	// begin inline asm
+	shf.r.wrap.b32 %r2161, %r2163, %r2163, %r2324;
+	// end inline asm
+	add.s32 	%r2614, %r2161, %r2611;
+	xor.b32  	%r2167, %r2614, %r2157;
+	// begin inline asm
+	shf.r.wrap.b32 %r2165, %r2167, %r2167, %r2328;
+	// end inline asm
+	add.s32 	%r2615, %r2133, %r2595;
+	add.s32 	%r2616, %r2615, %r2333;
+	xor.b32  	%r2171, %r2616, %r2097;
+	// begin inline asm
+	shf.r.wrap.b32 %r2169, %r2171, %r2171, %r2316;
+	// end inline asm
+	add.s32 	%r2617, %r2169, %r2584;
+	xor.b32  	%r2175, %r2617, %r2133;
+	// begin inline asm
+	shf.r.wrap.b32 %r2173, %r2175, %r2175, %r2320;
+	// end inline asm
+	add.s32 	%r2618, %r2173, %r2616;
+	add.s32 	%r2619, %r2618, %r2341;
+	xor.b32  	%r2179, %r2619, %r2169;
+	// begin inline asm
+	shf.r.wrap.b32 %r2177, %r2179, %r2179, %r2324;
+	// end inline asm
+	add.s32 	%r2620, %r2177, %r2617;
+	xor.b32  	%r2183, %r2620, %r2173;
+	// begin inline asm
+	shf.r.wrap.b32 %r2181, %r2183, %r2183, %r2328;
+	// end inline asm
+	add.s32 	%r2621, %r2601, %r2085;
+	add.s32 	%r2622, %r2621, %r2337;
+	xor.b32  	%r2187, %r2622, %r2113;
+	// begin inline asm
+	shf.r.wrap.b32 %r2185, %r2187, %r2187, %r2316;
+	// end inline asm
+	add.s32 	%r2623, %r2185, %r2590;
+	xor.b32  	%r2191, %r2623, %r2085;
+	// begin inline asm
+	shf.r.wrap.b32 %r2189, %r2191, %r2191, %r2320;
+	// end inline asm
+	add.s32 	%r2624, %r2189, %r2622;
+	add.s32 	%r2625, %r2624, %r2343;
+	xor.b32  	%r2195, %r2625, %r2185;
+	// begin inline asm
+	shf.r.wrap.b32 %r2193, %r2195, %r2195, %r2324;
+	// end inline asm
+	add.s32 	%r2626, %r2193, %r2623;
+	xor.b32  	%r2199, %r2626, %r2189;
+	// begin inline asm
+	shf.r.wrap.b32 %r2197, %r2199, %r2199, %r2328;
+	// end inline asm
+	add.s32 	%r2627, %r2197, %r2607;
+	add.s32 	%r2628, %r2627, %r2336;
+	xor.b32  	%r2203, %r2628, %r2161;
+	// begin inline asm
+	shf.r.wrap.b32 %r2201, %r2203, %r2203, %r2316;
+	// end inline asm
+	add.s32 	%r2629, %r2201, %r2620;
+	xor.b32  	%r2207, %r2629, %r2197;
+	// begin inline asm
+	shf.r.wrap.b32 %r2205, %r2207, %r2207, %r2320;
+	// end inline asm
+	add.s32 	%r2630, %r2205, %r2628;
+	add.s32 	%r2631, %r2630, %r2344;
+	xor.b32  	%r2211, %r2631, %r2201;
+	// begin inline asm
+	shf.r.wrap.b32 %r2209, %r2211, %r2211, %r2324;
+	// end inline asm
+	add.s32 	%r2632, %r2209, %r2629;
+	xor.b32  	%r2215, %r2632, %r2205;
+	// begin inline asm
+	shf.r.wrap.b32 %r2213, %r2215, %r2215, %r2328;
+	// end inline asm
+	add.s32 	%r2633, %r2613, %r2149;
+	add.s32 	%r2634, %r2633, %r2339;
+	xor.b32  	%r2219, %r2634, %r2177;
+	// begin inline asm
+	shf.r.wrap.b32 %r2217, %r2219, %r2219, %r2316;
+	// end inline asm
+	add.s32 	%r2635, %r2217, %r2626;
+	xor.b32  	%r2223, %r2635, %r2149;
+	// begin inline asm
+	shf.r.wrap.b32 %r2221, %r2223, %r2223, %r2320;
+	// end inline asm
+	add.s32 	%r2636, %r2221, %r2634;
+	add.s32 	%r2637, %r2636, %r2329;
+	xor.b32  	%r2227, %r2637, %r2217;
+	// begin inline asm
+	shf.r.wrap.b32 %r2225, %r2227, %r2227, %r2324;
+	// end inline asm
+	add.s32 	%r2638, %r2225, %r2635;
+	xor.b32  	%r2231, %r2638, %r2221;
+	// begin inline asm
+	shf.r.wrap.b32 %r2229, %r2231, %r2231, %r2328;
+	// end inline asm
+	add.s32 	%r2639, %r2619, %r2165;
+	add.s32 	%r2640, %r2639, %r2331;
+	xor.b32  	%r2235, %r2640, %r2193;
+	// begin inline asm
+	shf.r.wrap.b32 %r2233, %r2235, %r2235, %r2316;
+	// end inline asm
+	add.s32 	%r2641, %r2233, %r2608;
+	xor.b32  	%r2239, %r2641, %r2165;
+	// begin inline asm
+	shf.r.wrap.b32 %r2237, %r2239, %r2239, %r2320;
+	// end inline asm
+	add.s32 	%r2642, %r2237, %r2640;
+	add.s32 	%r2643, %r2642, %r2332;
+	xor.b32  	%r2243, %r2643, %r2233;
+	// begin inline asm
+	shf.r.wrap.b32 %r2241, %r2243, %r2243, %r2324;
+	// end inline asm
+	add.s32 	%r2644, %r2241, %r2641;
+	xor.b32  	%r2247, %r2644, %r2237;
+	// begin inline asm
+	shf.r.wrap.b32 %r2245, %r2247, %r2247, %r2328;
+	// end inline asm
+	add.s32 	%r2645, %r2625, %r2181;
+	add.s32 	%r2646, %r2645, %r2330;
+	xor.b32  	%r2251, %r2646, %r2145;
+	// begin inline asm
+	shf.r.wrap.b32 %r2249, %r2251, %r2251, %r2316;
+	// end inline asm
+	add.s32 	%r2647, %r2249, %r2614;
+	xor.b32  	%r2255, %r2647, %r2181;
+	// begin inline asm
+	shf.r.wrap.b32 %r2253, %r2255, %r2255, %r2320;
+	// end inline asm
+	add.s32 	%r2648, %r2253, %r2646;
+	add.s32 	%r2649, %r2648, %r2341;
+	xor.b32  	%r2259, %r2649, %r2249;
+	// begin inline asm
+	shf.r.wrap.b32 %r2257, %r2259, %r2259, %r2324;
+	// end inline asm
+	add.s32 	%r2650, %r2257, %r2647;
+	xor.b32  	%r2263, %r2650, %r2253;
+	// begin inline asm
+	shf.r.wrap.b32 %r2261, %r2263, %r2263, %r2328;
+	// end inline asm
+	add.s32 	%r2651, %r2229, %r2631;
+	add.s32 	%r2652, %r2651, %r2342;
+	xor.b32  	%r2267, %r2652, %r2257;
+	// begin inline asm
+	shf.r.wrap.b32 %r2265, %r2267, %r2267, %r2316;
+	// end inline asm
+	add.s32 	%r2653, %r2265, %r2644;
+	xor.b32  	%r2271, %r2653, %r2229;
+	// begin inline asm
+	shf.r.wrap.b32 %r2269, %r2271, %r2271, %r2320;
+	// end inline asm
+	add.s32 	%r2654, %r2269, %r2652;
+	add.s32 	%r2655, %r2654, %r2334;
+	xor.b32  	%r2275, %r2655, %r2265;
+	// begin inline asm
+	shf.r.wrap.b32 %r2273, %r2275, %r2275, %r2324;
+	// end inline asm
+	add.s32 	%r2656, %r2273, %r2653;
+	xor.b32  	%r2279, %r2656, %r2269;
+	// begin inline asm
+	shf.r.wrap.b32 %r2277, %r2279, %r2279, %r2328;
+	// end inline asm
+	add.s32 	%r2657, %r2245, %r2637;
+	add.s32 	%r2658, %r2657, %r2333;
+	xor.b32  	%r2283, %r2658, %r2209;
+	// begin inline asm
+	shf.r.wrap.b32 %r2281, %r2283, %r2283, %r2316;
+	// end inline asm
+	add.s32 	%r2659, %r2281, %r2650;
+	xor.b32  	%r2287, %r2659, %r2245;
+	// begin inline asm
+	shf.r.wrap.b32 %r2285, %r2287, %r2287, %r2320;
+	// end inline asm
+	add.s32 	%r2660, %r2285, %r2658;
+	add.s32 	%r2661, %r2660, %r2338;
+	xor.b32  	%r2291, %r2661, %r2281;
+	// begin inline asm
+	shf.r.wrap.b32 %r2289, %r2291, %r2291, %r2324;
+	// end inline asm
+	add.s32 	%r2662, %r2289, %r2659;
+	xor.b32  	%r2295, %r2662, %r2285;
+	// begin inline asm
+	shf.r.wrap.b32 %r2293, %r2295, %r2295, %r2328;
+	// end inline asm
+	add.s32 	%r2663, %r2261, %r2643;
+	add.s32 	%r2664, %r2663, %r2335;
+	xor.b32  	%r2299, %r2664, %r2225;
+	// begin inline asm
+	shf.r.wrap.b32 %r2297, %r2299, %r2299, %r2316;
+	// end inline asm
+	add.s32 	%r2665, %r2297, %r2632;
+	xor.b32  	%r2303, %r2665, %r2261;
+	// begin inline asm
+	shf.r.wrap.b32 %r2301, %r2303, %r2303, %r2320;
+	// end inline asm
+	add.s32 	%r2666, %r2301, %r2664;
+	add.s32 	%r2667, %r2666, %r2337;
+	xor.b32  	%r2307, %r2667, %r2297;
+	// begin inline asm
+	shf.r.wrap.b32 %r2305, %r2307, %r2307, %r2324;
+	// end inline asm
+	add.s32 	%r2668, %r2305, %r2665;
+	xor.b32  	%r2311, %r2668, %r2301;
+	// begin inline asm
+	shf.r.wrap.b32 %r2309, %r2311, %r2311, %r2328;
+	// end inline asm
+	add.s32 	%r2669, %r2649, %r2213;
+	add.s32 	%r2670, %r2669, %r2343;
+	xor.b32  	%r2315, %r2670, %r2241;
+	// begin inline asm
+	shf.r.wrap.b32 %r2313, %r2315, %r2315, %r2316;
+	// end inline asm
+	add.s32 	%r2671, %r2313, %r2638;
+	xor.b32  	%r2319, %r2671, %r2213;
+	// begin inline asm
+	shf.r.wrap.b32 %r2317, %r2319, %r2319, %r2320;
+	// end inline asm
+	add.s32 	%r2672, %r2317, %r2670;
+	add.s32 	%r2673, %r2672, %r2340;
+	xor.b32  	%r2323, %r2673, %r2313;
+	// begin inline asm
+	shf.r.wrap.b32 %r2321, %r2323, %r2323, %r2324;
+	// end inline asm
+	add.s32 	%r2674, %r2321, %r2671;
+	xor.b32  	%r2327, %r2674, %r2317;
+	// begin inline asm
+	shf.r.wrap.b32 %r2325, %r2327, %r2327, %r2328;
+	// end inline asm
+	xor.b32  	%r2735, %r2668, %r2655;
+	xor.b32  	%r2734, %r2674, %r2661;
+	xor.b32  	%r2733, %r2667, %r2656;
+	xor.b32  	%r2732, %r2673, %r2662;
+	xor.b32  	%r2731, %r2325, %r2289;
+	xor.b32  	%r2730, %r2305, %r2277;
+	xor.b32  	%r2729, %r2321, %r2293;
+	xor.b32  	%r2728, %r2309, %r2273;
+
+$L__BB10_6:
+	bar.sync 	0;
+	@%p5 bra 	$L__BB10_8;
+
+	st.shared.u32 	[%r44], %r2735;
+	st.shared.u32 	[%r44+4], %r2734;
+	st.shared.u32 	[%r44+8], %r2733;
+	st.shared.u32 	[%r44+12], %r2732;
+	st.shared.u32 	[%r44+16], %r2731;
+	st.shared.u32 	[%r44+20], %r2730;
+	st.shared.u32 	[%r44+24], %r2729;
+	st.shared.u32 	[%r44+28], %r2728;
+
+$L__BB10_8:
+	bar.sync 	0;
+	shr.s32 	%r70, %r2727, 1;
+	setp.gt.s32 	%p7, %r2727, 3;
+	mov.u32 	%r2727, %r70;
+	@%p7 bra 	$L__BB10_4;
+
+	mov.u32 	%r2689, %ctaid.x;
+	mov.u32 	%r2688, %tid.x;
+	shr.u32 	%r2687, %r2688, 6;
+	cvt.u64.u32 	%rd30, %r2687;
+	mul.wide.u32 	%rd29, %r2689, 2;
+	ld.param.u64 	%rd28, [b3leaf_param_1];
+	add.s64 	%rd27, %rd29, %rd30;
+	setp.ge.u64 	%p11, %rd27, %rd28;
+	setp.gt.u32 	%p9, %r2, 1;
+	or.pred  	%p10, %p9, %p11;
+	@%p10 bra 	$L__BB10_11;
+
+	ld.param.u64 	%rd32, [b3leaf_param_3];
+	cvta.to.global.u64 	%rd31, %rd32;
+	mov.u32 	%r2686, %ctaid.x;
+	mov.u32 	%r2685, %tid.x;
+	shr.u32 	%r2684, %r2685, 6;
+	cvt.u64.u32 	%rd26, %r2684;
+	mul.wide.u32 	%rd25, %r2686, 2;
+	add.s64 	%rd24, %rd25, %rd26;
+	shl.b64 	%rd18, %rd24, 1;
+	cvt.u64.u32 	%rd19, %r2;
+	add.s64 	%rd20, %rd18, %rd19;
+	ld.shared.u32 	%r2675, [%r44];
+	shl.b64 	%rd21, %rd20, 5;
+	add.s64 	%rd22, %rd31, %rd21;
+	st.global.u32 	[%rd22], %r2675;
+	ld.shared.u32 	%r2676, [%r44+4];
+	st.global.u32 	[%rd22+4], %r2676;
+	ld.shared.u32 	%r2677, [%r44+8];
+	st.global.u32 	[%rd22+8], %r2677;
+	ld.shared.u32 	%r2678, [%r44+12];
+	st.global.u32 	[%rd22+12], %r2678;
+	ld.shared.u32 	%r2679, [%r44+16];
+	st.global.u32 	[%rd22+16], %r2679;
+	ld.shared.u32 	%r2680, [%r44+20];
+	st.global.u32 	[%rd22+20], %r2680;
+	ld.shared.u32 	%r2681, [%r44+24];
+	st.global.u32 	[%rd22+24], %r2681;
+	ld.shared.u32 	%r2682, [%r44+28];
+	st.global.u32 	[%rd22+28], %r2682;
+
+$L__BB10_11:
+	ret;
+
+}
+	// .globl	b3up
+.visible .entry b3up(
+	.param .u64 b3up_param_0,
+	.param .u64 b3up_param_1,
+	.param .u64 b3up_param_2,
+	.param .u64 b3up_param_3,
+	.param .u64 b3up_param_4
+)
+{
+	.reg .pred 	%p<2>;
+	.reg .b32 	%r<1266>;
+	.reg .b64 	%rd<18>;
+
+
+	ld.param.u64 	%rd2, [b3up_param_0];
+	ld.param.u64 	%rd3, [b3up_param_1];
+	ld.param.u64 	%rd4, [b3up_param_2];
+	ld.param.u64 	%rd5, [b3up_param_3];
+	ld.param.u64 	%rd6, [b3up_param_4];
+	mov.u32 	%r1, %ctaid.x;
+	mov.u32 	%r2, %ntid.x;
+	mul.wide.u32 	%rd7, %r1, %r2;
+	mov.u32 	%r3, %tid.x;
+	cvt.u64.u32 	%rd8, %r3;
+	add.s64 	%rd1, %rd7, %rd8;
+	setp.ge.u64 	%p1, %rd1, %rd6;
+	@%p1 bra 	$L__BB11_2;
+
+	add.s64 	%rd9, %rd1, %rd5;
+	shl.b64 	%rd10, %rd9, 1;
+	sub.s64 	%rd11, %rd10, %rd3;
+	cvta.to.global.u64 	%rd12, %rd2;
+	shl.b64 	%rd13, %rd11, 5;
+	add.s64 	%rd14, %rd12, %rd13;
+	ld.global.nc.u32 	%r900, [%rd14+32];
+	ld.global.nc.u32 	%r901, [%rd14+4];
+	ld.global.nc.u32 	%r902, [%rd14+36];
+	ld.const.u32 	%r903, [B3IV+4];
+	ld.global.nc.u32 	%r904, [%rd14+8];
+	ld.global.nc.u32 	%r905, [%rd14+40];
+	ld.const.u32 	%r906, [B3IV+8];
+	ld.global.nc.u32 	%r907, [%rd14+12];
+	ld.global.nc.u32 	%r908, [%rd14+44];
+	ld.const.u32 	%r909, [B3IV+12];
+	ld.global.nc.u32 	%r910, [%rd14+16];
+	ld.global.nc.u32 	%r911, [%rd14+48];
+	ld.global.nc.u32 	%r912, [%rd14+20];
+	ld.global.nc.u32 	%r913, [%rd14+52];
+	ld.const.u32 	%r914, [B3IV+20];
+	ld.global.nc.u32 	%r915, [%rd14+24];
+	ld.global.nc.u32 	%r916, [%rd14+56];
+	ld.const.u32 	%r917, [B3IV+24];
+	ld.global.nc.u32 	%r918, [%rd14+28];
+	ld.global.nc.u32 	%r919, [%rd14+60];
+	ld.const.u32 	%r920, [B3IV+28];
+	ld.const.u32 	%r921, [B3IV+16];
+	ld.const.u32 	%r922, [B3IV];
+	add.s32 	%r923, %r921, %r922;
+	ld.global.nc.u32 	%r924, [%rd14];
+	add.s32 	%r6, %r923, %r924;
+	mov.u32 	%r887, 16;
+	// begin inline asm
+	shf.r.wrap.b32 %r4, %r6, %r6, %r887;
+	// end inline asm
+	add.s32 	%r925, %r4, %r922;
+	xor.b32  	%r10, %r925, %r921;
+	mov.u32 	%r891, 12;
+	// begin inline asm
+	shf.r.wrap.b32 %r8, %r10, %r10, %r891;
+	// end inline asm
+	add.s32 	%r926, %r8, %r6;
+	add.s32 	%r927, %r926, %r901;
+	xor.b32  	%r14, %r927, %r4;
+	mov.u32 	%r895, 8;
+	// begin inline asm
+	shf.r.wrap.b32 %r12, %r14, %r14, %r895;
+	// end inline asm
+	add.s32 	%r928, %r12, %r925;
+	xor.b32  	%r18, %r928, %r8;
+	mov.u32 	%r899, 7;
+	// begin inline asm
+	shf.r.wrap.b32 %r16, %r18, %r18, %r899;
+	// end inline asm
+	add.s32 	%r929, %r914, %r903;
+	add.s32 	%r22, %r929, %r904;
+	// begin inline asm
+	shf.r.wrap.b32 %r20, %r22, %r22, %r887;
+	// end inline asm
+	add.s32 	%r930, %r20, %r903;
+	xor.b32  	%r26, %r930, %r914;
+	// begin inline asm
+	shf.r.wrap.b32 %r24, %r26, %r26, %r891;
+	// end inline asm
+	add.s32 	%r931, %r24, %r22;
+	add.s32 	%r932, %r931, %r907;
+	xor.b32  	%r30, %r932, %r20;
+	// begin inline asm
+	shf.r.wrap.b32 %r28, %r30, %r30, %r895;
+	// end inline asm
+	add.s32 	%r933, %r28, %r930;
+	xor.b32  	%r34, %r933, %r24;
+	// begin inline asm
+	shf.r.wrap.b32 %r32, %r34, %r34, %r899;
+	// end inline asm
+	add.s32 	%r934, %r917, %r906;
+	add.s32 	%r935, %r934, %r910;
+	xor.b32  	%r38, %r935, 64;
+	// begin inline asm
+	shf.r.wrap.b32 %r36, %r38, %r38, %r887;
+	// end inline asm
+	add.s32 	%r936, %r36, %r906;
+	xor.b32  	%r42, %r936, %r917;
+	// begin inline asm
+	shf.r.wrap.b32 %r40, %r42, %r42, %r891;
+	// end inline asm
+	add.s32 	%r937, %r40, %r935;
+	add.s32 	%r938, %r937, %r912;
+	xor.b32  	%r46, %r938, %r36;
+	// begin inline asm
+	shf.r.wrap.b32 %r44, %r46, %r46, %r895;
+	// end inline asm
+	add.s32 	%r939, %r44, %r936;
+	xor.b32  	%r50, %r939, %r40;
+	// begin inline asm
+	shf.r.wrap.b32 %r48, %r50, %r50, %r899;
+	// end inline asm
+	add.s32 	%r940, %r920, %r909;
+	add.s32 	%r941, %r940, %r915;
+	xor.b32  	%r54, %r941, 4;
+	// begin inline asm
+	shf.r.wrap.b32 %r52, %r54, %r54, %r887;
+	// end inline asm
+	add.s32 	%r942, %r52, %r909;
+	xor.b32  	%r58, %r942, %r920;
+	// begin inline asm
+	shf.r.wrap.b32 %r56, %r58, %r58, %r891;
+	// end inline asm
+	add.s32 	%r943, %r56, %r941;
+	add.s32 	%r944, %r943, %r918;
+	xor.b32  	%r62, %r944, %r52;
+	// begin inline asm
+	shf.r.wrap.b32 %r60, %r62, %r62, %r895;
+	// end inline asm
+	add.s32 	%r945, %r60, %r942;
+	xor.b32  	%r66, %r945, %r56;
+	// begin inline asm
+	shf.r.wrap.b32 %r64, %r66, %r66, %r899;
+	// end inline asm
+	add.s32 	%r946, %r32, %r927;
+	add.s32 	%r947, %r946, %r900;
+	xor.b32  	%r70, %r947, %r60;
+	// begin inline asm
+	shf.r.wrap.b32 %r68, %r70, %r70, %r887;
+	// end inline asm
+	add.s32 	%r948, %r68, %r939;
+	xor.b32  	%r74, %r948, %r32;
+	// begin inline asm
+	shf.r.wrap.b32 %r72, %r74, %r74, %r891;
+	// end inline asm
+	add.s32 	%r949, %r72, %r947;
+	add.s32 	%r950, %r949, %r902;
+	xor.b32  	%r78, %r950, %r68;
+	// begin inline asm
+	shf.r.wrap.b32 %r76, %r78, %r78, %r895;
+	// end inline asm
+	add.s32 	%r951, %r76, %r948;
+	xor.b32  	%r82, %r951, %r72;
+	// begin inline asm
+	shf.r.wrap.b32 %r80, %r82, %r82, %r899;
+	// end inline asm
+	add.s32 	%r952, %r48, %r932;
+	add.s32 	%r953, %r952, %r905;
+	xor.b32  	%r86, %r953, %r12;
+	// begin inline asm
+	shf.r.wrap.b32 %r84, %r86, %r86, %r887;
+	// end inline asm
+	add.s32 	%r954, %r84, %r945;
+	xor.b32  	%r90, %r954, %r48;
+	// begin inline asm
+	shf.r.wrap.b32 %r88, %r90, %r90, %r891;
+	// end inline asm
+	add.s32 	%r955, %r88, %r953;
+	add.s32 	%r956, %r955, %r908;
+	xor.b32  	%r94, %r956, %r84;
+	// begin inline asm
+	shf.r.wrap.b32 %r92, %r94, %r94, %r895;
+	// end inline asm
+	add.s32 	%r957, %r92, %r954;
+	xor.b32  	%r98, %r957, %r88;
+	// begin inline asm
+	shf.r.wrap.b32 %r96, %r98, %r98, %r899;
+	// end inline asm
+	add.s32 	%r958, %r64, %r938;
+	add.s32 	%r959, %r958, %r911;
+	xor.b32  	%r102, %r959, %r28;
+	// begin inline asm
+	shf.r.wrap.b32 %r100, %r102, %r102, %r887;
+	// end inline asm
+	add.s32 	%r960, %r100, %r928;
+	xor.b32  	%r106, %r960, %r64;
+	// begin inline asm
+	shf.r.wrap.b32 %r104, %r106, %r106, %r891;
+	// end inline asm
+	add.s32 	%r961, %r104, %r959;
+	add.s32 	%r962, %r961, %r913;
+	xor.b32  	%r110, %r962, %r100;
+	// begin inline asm
+	shf.r.wrap.b32 %r108, %r110, %r110, %r895;
+	// end inline asm
+	add.s32 	%r963, %r108, %r960;
+	xor.b32  	%r114, %r963, %r104;
+	// begin inline asm
+	shf.r.wrap.b32 %r112, %r114, %r114, %r899;
+	// end inline asm
+	add.s32 	%r964, %r944, %r16;
+	add.s32 	%r965, %r964, %r916;
+	xor.b32  	%r118, %r965, %r44;
+	// begin inline asm
+	shf.r.wrap.b32 %r116, %r118, %r118, %r887;
+	// end inline asm
+	add.s32 	%r966, %r116, %r933;
+	xor.b32  	%r122, %r966, %r16;
+	// begin inline asm
+	shf.r.wrap.b32 %r120, %r122, %r122, %r891;
+	// end inline asm
+	add.s32 	%r967, %r120, %r965;
+	add.s32 	%r968, %r967, %r919;
+	xor.b32  	%r126, %r968, %r116;
+	// begin inline asm
+	shf.r.wrap.b32 %r124, %r126, %r126, %r895;
+	// end inline asm
+	add.s32 	%r969, %r124, %r966;
+	xor.b32  	%r130, %r969, %r120;
+	// begin inline asm
+	shf.r.wrap.b32 %r128, %r130, %r130, %r899;
+	// end inline asm
+	add.s32 	%r970, %r128, %r950;
+	add.s32 	%r971, %r970, %r904;
+	xor.b32  	%r134, %r971, %r92;
+	// begin inline asm
+	shf.r.wrap.b32 %r132, %r134, %r134, %r887;
+	// end inline asm
+	add.s32 	%r972, %r132, %r963;
+	xor.b32  	%r138, %r972, %r128;
+	// begin inline asm
+	shf.r.wrap.b32 %r136, %r138, %r138, %r891;
+	// end inline asm
+	add.s32 	%r973, %r136, %r971;
+	add.s32 	%r974, %r973, %r915;
+	xor.b32  	%r142, %r974, %r132;
+	// begin inline asm
+	shf.r.wrap.b32 %r140, %r142, %r142, %r895;
+	// end inline asm
+	add.s32 	%r975, %r140, %r972;
+	xor.b32  	%r146, %r975, %r136;
+	// begin inline asm
+	shf.r.wrap.b32 %r144, %r146, %r146, %r899;
+	// end inline asm
+	add.s32 	%r976, %r956, %r80;
+	add.s32 	%r977, %r976, %r907;
+	xor.b32  	%r150, %r977, %r108;
+	// begin inline asm
+	shf.r.wrap.b32 %r148, %r150, %r150, %r887;
+	// end inline asm
+	add.s32 	%r978, %r148, %r969;
+	xor.b32  	%r154, %r978, %r80;
+	// begin inline asm
+	shf.r.wrap.b32 %r152, %r154, %r154, %r891;
+	// end inline asm
+	add.s32 	%r979, %r152, %r977;
+	add.s32 	%r980, %r979, %r905;
+	xor.b32  	%r158, %r980, %r148;
+	// begin inline asm
+	shf.r.wrap.b32 %r156, %r158, %r158, %r895;
+	// end inline asm
+	add.s32 	%r981, %r156, %r978;
+	xor.b32  	%r162, %r981, %r152;
+	// begin inline asm
+	shf.r.wrap.b32 %r160, %r162, %r162, %r899;
+	// end inline asm
+	add.s32 	%r982, %r962, %r96;
+	add.s32 	%r983, %r982, %r918;
+	xor.b32  	%r166, %r983, %r124;
+	// begin inline asm
+	shf.r.wrap.b32 %r164, %r166, %r166, %r887;
+	// end inline asm
+	add.s32 	%r984, %r164, %r951;
+	xor.b32  	%r170, %r984, %r96;
+	// begin inline asm
+	shf.r.wrap.b32 %r168, %r170, %r170, %r891;
+	// end inline asm
+	add.s32 	%r985, %r168, %r983;
+	add.s32 	%r986, %r985, %r924;
+	xor.b32  	%r174, %r986, %r164;
+	// begin inline asm
+	shf.r.wrap.b32 %r172, %r174, %r174, %r895;
+	// end inline asm
+	add.s32 	%r987, %r172, %r984;
+	xor.b32  	%r178, %r987, %r168;
+	// begin inline asm
+	shf.r.wrap.b32 %r176, %r178, %r178, %r899;
+	// end inline asm
+	add.s32 	%r988, %r968, %r112;
+	add.s32 	%r989, %r988, %r910;
+	xor.b32  	%r182, %r989, %r76;
+	// begin inline asm
+	shf.r.wrap.b32 %r180, %r182, %r182, %r887;
+	// end inline asm
+	add.s32 	%r990, %r180, %r957;
+	xor.b32  	%r186, %r990, %r112;
+	// begin inline asm
+	shf.r.wrap.b32 %r184, %r186, %r186, %r891;
+	// end inline asm
+	add.s32 	%r991, %r184, %r989;
+	add.s32 	%r992, %r991, %r913;
+	xor.b32  	%r190, %r992, %r180;
+	// begin inline asm
+	shf.r.wrap.b32 %r188, %r190, %r190, %r895;
+	// end inline asm
+	add.s32 	%r993, %r188, %r990;
+	xor.b32  	%r194, %r993, %r184;
+	// begin inline asm
+	shf.r.wrap.b32 %r192, %r194, %r194, %r899;
+	// end inline asm
+	add.s32 	%r994, %r160, %r974;
+	add.s32 	%r995, %r994, %r901;
+	xor.b32  	%r198, %r995, %r188;
+	// begin inline asm
+	shf.r.wrap.b32 %r196, %r198, %r198, %r887;
+	// end inline asm
+	add.s32 	%r996, %r196, %r987;
+	xor.b32  	%r202, %r996, %r160;
+	// begin inline asm
+	shf.r.wrap.b32 %r200, %r202, %r202, %r891;
+	// end inline asm
+	add.s32 	%r997, %r200, %r995;
+	add.s32 	%r998, %r997, %r908;
+	xor.b32  	%r206, %r998, %r196;
+	// begin inline asm
+	shf.r.wrap.b32 %r204, %r206, %r206, %r895;
+	// end inline asm
+	add.s32 	%r999, %r204, %r996;
+	xor.b32  	%r210, %r999, %r200;
+	// begin inline asm
+	shf.r.wrap.b32 %r208, %r210, %r210, %r899;
+	// end inline asm
+	add.s32 	%r1000, %r176, %r980;
+	add.s32 	%r1001, %r1000, %r911;
+	xor.b32  	%r214, %r1001, %r140;
+	// begin inline asm
+	shf.r.wrap.b32 %r212, %r214, %r214, %r887;
+	// end inline asm
+	add.s32 	%r1002, %r212, %r993;
+	xor.b32  	%r218, %r1002, %r176;
+	// begin inline asm
+	shf.r.wrap.b32 %r216, %r218, %r218, %r891;
+	// end inline asm
+	add.s32 	%r1003, %r216, %r1001;
+	add.s32 	%r1004, %r1003, %r912;
+	xor.b32  	%r222, %r1004, %r212;
+	// begin inline asm
+	shf.r.wrap.b32 %r220, %r222, %r222, %r895;
+	// end inline asm
+	add.s32 	%r1005, %r220, %r1002;
+	xor.b32  	%r226, %r1005, %r216;
+	// begin inline asm
+	shf.r.wrap.b32 %r224, %r226, %r226, %r899;
+	// end inline asm
+	add.s32 	%r1006, %r192, %r986;
+	add.s32 	%r1007, %r1006, %r902;
+	xor.b32  	%r230, %r1007, %r156;
+	// begin inline asm
+	shf.r.wrap.b32 %r228, %r230, %r230, %r887;
+	// end inline asm
+	add.s32 	%r1008, %r228, %r975;
+	xor.b32  	%r234, %r1008, %r192;
+	// begin inline asm
+	shf.r.wrap.b32 %r232, %r234, %r234, %r891;
+	// end inline asm
+	add.s32 	%r1009, %r232, %r1007;
+	add.s32 	%r1010, %r1009, %r916;
+	xor.b32  	%r238, %r1010, %r228;
+	// begin inline asm
+	shf.r.wrap.b32 %r236, %r238, %r238, %r895;
+	// end inline asm
+	add.s32 	%r1011, %r236, %r1008;
+	xor.b32  	%r242, %r1011, %r232;
+	// begin inline asm
+	shf.r.wrap.b32 %r240, %r242, %r242, %r899;
+	// end inline asm
+	add.s32 	%r1012, %r992, %r144;
+	add.s32 	%r1013, %r1012, %r919;
+	xor.b32  	%r246, %r1013, %r172;
+	// begin inline asm
+	shf.r.wrap.b32 %r244, %r246, %r246, %r887;
+	// end inline asm
+	add.s32 	%r1014, %r244, %r981;
+	xor.b32  	%r250, %r1014, %r144;
+	// begin inline asm
+	shf.r.wrap.b32 %r248, %r250, %r250, %r891;
+	// end inline asm
+	add.s32 	%r1015, %r248, %r1013;
+	add.s32 	%r1016, %r1015, %r900;
+	xor.b32  	%r254, %r1016, %r244;
+	// begin inline asm
+	shf.r.wrap.b32 %r252, %r254, %r254, %r895;
+	// end inline asm
+	add.s32 	%r1017, %r252, %r1014;
+	xor.b32  	%r258, %r1017, %r248;
+	// begin inline asm
+	shf.r.wrap.b32 %r256, %r258, %r258, %r899;
+	// end inline asm
+	add.s32 	%r1018, %r256, %r998;
+	add.s32 	%r1019, %r1018, %r907;
+	xor.b32  	%r262, %r1019, %r220;
+	// begin inline asm
+	shf.r.wrap.b32 %r260, %r262, %r262, %r887;
+	// end inline asm
+	add.s32 	%r1020, %r260, %r1011;
+	xor.b32  	%r266, %r1020, %r256;
+	// begin inline asm
+	shf.r.wrap.b32 %r264, %r266, %r266, %r891;
+	// end inline asm
+	add.s32 	%r1021, %r264, %r1019;
+	add.s32 	%r1022, %r1021, %r910;
+	xor.b32  	%r270, %r1022, %r260;
+	// begin inline asm
+	shf.r.wrap.b32 %r268, %r270, %r270, %r895;
+	// end inline asm
+	add.s32 	%r1023, %r268, %r1020;
+	xor.b32  	%r274, %r1023, %r264;
+	// begin inline asm
+	shf.r.wrap.b32 %r272, %r274, %r274, %r899;
+	// end inline asm
+	add.s32 	%r1024, %r1004, %r208;
+	add.s32 	%r1025, %r1024, %r905;
+	xor.b32  	%r278, %r1025, %r236;
+	// begin inline asm
+	shf.r.wrap.b32 %r276, %r278, %r278, %r887;
+	// end inline asm
+	add.s32 	%r1026, %r276, %r1017;
+	xor.b32  	%r282, %r1026, %r208;
+	// begin inline asm
+	shf.r.wrap.b32 %r280, %r282, %r282, %r891;
+	// end inline asm
+	add.s32 	%r1027, %r280, %r1025;
+	add.s32 	%r1028, %r1027, %r911;
+	xor.b32  	%r286, %r1028, %r276;
+	// begin inline asm
+	shf.r.wrap.b32 %r284, %r286, %r286, %r895;
+	// end inline asm
+	add.s32 	%r1029, %r284, %r1026;
+	xor.b32  	%r290, %r1029, %r280;
+	// begin inline asm
+	shf.r.wrap.b32 %r288, %r290, %r290, %r899;
+	// end inline asm
+	add.s32 	%r1030, %r1010, %r224;
+	add.s32 	%r1031, %r1030, %r913;
+	xor.b32  	%r294, %r1031, %r252;
+	// begin inline asm
+	shf.r.wrap.b32 %r292, %r294, %r294, %r887;
+	// end inline asm
+	add.s32 	%r1032, %r292, %r999;
+	xor.b32  	%r298, %r1032, %r224;
+	// begin inline asm
+	shf.r.wrap.b32 %r296, %r298, %r298, %r891;
+	// end inline asm
+	add.s32 	%r1033, %r296, %r1031;
+	add.s32 	%r1034, %r1033, %r904;
+	xor.b32  	%r302, %r1034, %r292;
+	// begin inline asm
+	shf.r.wrap.b32 %r300, %r302, %r302, %r895;
+	// end inline asm
+	add.s32 	%r1035, %r300, %r1032;
+	xor.b32  	%r306, %r1035, %r296;
+	// begin inline asm
+	shf.r.wrap.b32 %r304, %r306, %r306, %r899;
+	// end inline asm
+	add.s32 	%r1036, %r1016, %r240;
+	add.s32 	%r1037, %r1036, %r918;
+	xor.b32  	%r310, %r1037, %r204;
+	// begin inline asm
+	shf.r.wrap.b32 %r308, %r310, %r310, %r887;
+	// end inline asm
+	add.s32 	%r1038, %r308, %r1005;
+	xor.b32  	%r314, %r1038, %r240;
+	// begin inline asm
+	shf.r.wrap.b32 %r312, %r314, %r314, %r891;
+	// end inline asm
+	add.s32 	%r1039, %r312, %r1037;
+	add.s32 	%r1040, %r1039, %r916;
+	xor.b32  	%r318, %r1040, %r308;
+	// begin inline asm
+	shf.r.wrap.b32 %r316, %r318, %r318, %r895;
+	// end inline asm
+	add.s32 	%r1041, %r316, %r1038;
+	xor.b32  	%r322, %r1041, %r312;
+	// begin inline asm
+	shf.r.wrap.b32 %r320, %r322, %r322, %r899;
+	// end inline asm
+	add.s32 	%r1042, %r288, %r1022;
+	add.s32 	%r1043, %r1042, %r915;
+	xor.b32  	%r326, %r1043, %r316;
+	// begin inline asm
+	shf.r.wrap.b32 %r324, %r326, %r326, %r887;
+	// end inline asm
+	add.s32 	%r1044, %r324, %r1035;
+	xor.b32  	%r330, %r1044, %r288;
+	// begin inline asm
+	shf.r.wrap.b32 %r328, %r330, %r330, %r891;
+	// end inline asm
+	add.s32 	%r1045, %r328, %r1043;
+	add.s32 	%r1046, %r1045, %r912;
+	xor.b32  	%r334, %r1046, %r324;
+	// begin inline asm
+	shf.r.wrap.b32 %r332, %r334, %r334, %r895;
+	// end inline asm
+	add.s32 	%r1047, %r332, %r1044;
+	xor.b32  	%r338, %r1047, %r328;
+	// begin inline asm
+	shf.r.wrap.b32 %r336, %r338, %r338, %r899;
+	// end inline asm
+	add.s32 	%r1048, %r304, %r1028;
+	add.s32 	%r1049, %r1048, %r902;
+	xor.b32  	%r342, %r1049, %r268;
+	// begin inline asm
+	shf.r.wrap.b32 %r340, %r342, %r342, %r887;
+	// end inline asm
+	add.s32 	%r1050, %r340, %r1041;
+	xor.b32  	%r346, %r1050, %r304;
+	// begin inline asm
+	shf.r.wrap.b32 %r344, %r346, %r346, %r891;
+	// end inline asm
+	add.s32 	%r1051, %r344, %r1049;
+	add.s32 	%r1052, %r1051, %r924;
+	xor.b32  	%r350, %r1052, %r340;
+	// begin inline asm
+	shf.r.wrap.b32 %r348, %r350, %r350, %r895;
+	// end inline asm
+	add.s32 	%r1053, %r348, %r1050;
+	xor.b32  	%r354, %r1053, %r344;
+	// begin inline asm
+	shf.r.wrap.b32 %r352, %r354, %r354, %r899;
+	// end inline asm
+	add.s32 	%r1054, %r320, %r1034;
+	add.s32 	%r1055, %r1054, %r908;
+	xor.b32  	%r358, %r1055, %r284;
+	// begin inline asm
+	shf.r.wrap.b32 %r356, %r358, %r358, %r887;
+	// end inline asm
+	add.s32 	%r1056, %r356, %r1023;
+	xor.b32  	%r362, %r1056, %r320;
+	// begin inline asm
+	shf.r.wrap.b32 %r360, %r362, %r362, %r891;
+	// end inline asm
+	add.s32 	%r1057, %r360, %r1055;
+	add.s32 	%r1058, %r1057, %r919;
+	xor.b32  	%r366, %r1058, %r356;
+	// begin inline asm
+	shf.r.wrap.b32 %r364, %r366, %r366, %r895;
+	// end inline asm
+	add.s32 	%r1059, %r364, %r1056;
+	xor.b32  	%r370, %r1059, %r360;
+	// begin inline asm
+	shf.r.wrap.b32 %r368, %r370, %r370, %r899;
+	// end inline asm
+	add.s32 	%r1060, %r1040, %r272;
+	add.s32 	%r1061, %r1060, %r900;
+	xor.b32  	%r374, %r1061, %r300;
+	// begin inline asm
+	shf.r.wrap.b32 %r372, %r374, %r374, %r887;
+	// end inline asm
+	add.s32 	%r1062, %r372, %r1029;
+	xor.b32  	%r378, %r1062, %r272;
+	// begin inline asm
+	shf.r.wrap.b32 %r376, %r378, %r378, %r891;
+	// end inline asm
+	add.s32 	%r1063, %r376, %r1061;
+	add.s32 	%r1064, %r1063, %r901;
+	xor.b32  	%r382, %r1064, %r372;
+	// begin inline asm
+	shf.r.wrap.b32 %r380, %r382, %r382, %r895;
+	// end inline asm
+	add.s32 	%r1065, %r380, %r1062;
+	xor.b32  	%r386, %r1065, %r376;
+	// begin inline asm
+	shf.r.wrap.b32 %r384, %r386, %r386, %r899;
+	// end inline asm
+	add.s32 	%r1066, %r384, %r1046;
+	add.s32 	%r1067, %r1066, %r905;
+	xor.b32  	%r390, %r1067, %r348;
+	// begin inline asm
+	shf.r.wrap.b32 %r388, %r390, %r390, %r887;
+	// end inline asm
+	add.s32 	%r1068, %r388, %r1059;
+	xor.b32  	%r394, %r1068, %r384;
+	// begin inline asm
+	shf.r.wrap.b32 %r392, %r394, %r394, %r891;
+	// end inline asm
+	add.s32 	%r1069, %r392, %r1067;
+	add.s32 	%r1070, %r1069, %r918;
+	xor.b32  	%r398, %r1070, %r388;
+	// begin inline asm
+	shf.r.wrap.b32 %r396, %r398, %r398, %r895;
+	// end inline asm
+	add.s32 	%r1071, %r396, %r1068;
+	xor.b32  	%r402, %r1071, %r392;
+	// begin inline asm
+	shf.r.wrap.b32 %r400, %r402, %r402, %r899;
+	// end inline asm
+	add.s32 	%r1072, %r1052, %r336;
+	add.s32 	%r1073, %r1072, %r911;
+	xor.b32  	%r406, %r1073, %r364;
+	// begin inline asm
+	shf.r.wrap.b32 %r404, %r406, %r406, %r887;
+	// end inline asm
+	add.s32 	%r1074, %r404, %r1065;
+	xor.b32  	%r410, %r1074, %r336;
+	// begin inline asm
+	shf.r.wrap.b32 %r408, %r410, %r410, %r891;
+	// end inline asm
+	add.s32 	%r1075, %r408, %r1073;
+	add.s32 	%r1076, %r1075, %r902;
+	xor.b32  	%r414, %r1076, %r404;
+	// begin inline asm
+	shf.r.wrap.b32 %r412, %r414, %r414, %r895;
+	// end inline asm
+	add.s32 	%r1077, %r412, %r1074;
+	xor.b32  	%r418, %r1077, %r408;
+	// begin inline asm
+	shf.r.wrap.b32 %r416, %r418, %r418, %r899;
+	// end inline asm
+	add.s32 	%r1078, %r1058, %r352;
+	add.s32 	%r1079, %r1078, %r916;
+	xor.b32  	%r422, %r1079, %r380;
+	// begin inline asm
+	shf.r.wrap.b32 %r420, %r422, %r422, %r887;
+	// end inline asm
+	add.s32 	%r1080, %r420, %r1047;
+	xor.b32  	%r426, %r1080, %r352;
+	// begin inline asm
+	shf.r.wrap.b32 %r424, %r426, %r426, %r891;
+	// end inline asm
+	add.s32 	%r1081, %r424, %r1079;
+	add.s32 	%r1082, %r1081, %r907;
+	xor.b32  	%r430, %r1082, %r420;
+	// begin inline asm
+	shf.r.wrap.b32 %r428, %r430, %r430, %r895;
+	// end inline asm
+	add.s32 	%r1083, %r428, %r1080;
+	xor.b32  	%r434, %r1083, %r424;
+	// begin inline asm
+	shf.r.wrap.b32 %r432, %r434, %r434, %r899;
+	// end inline asm
+	add.s32 	%r1084, %r1064, %r368;
+	add.s32 	%r1085, %r1084, %r913;
+	xor.b32  	%r438, %r1085, %r332;
+	// begin inline asm
+	shf.r.wrap.b32 %r436, %r438, %r438, %r887;
+	// end inline asm
+	add.s32 	%r1086, %r436, %r1053;
+	xor.b32  	%r442, %r1086, %r368;
+	// begin inline asm
+	shf.r.wrap.b32 %r440, %r442, %r442, %r891;
+	// end inline asm
+	add.s32 	%r1087, %r440, %r1085;
+	add.s32 	%r1088, %r1087, %r919;
+	xor.b32  	%r446, %r1088, %r436;
+	// begin inline asm
+	shf.r.wrap.b32 %r444, %r446, %r446, %r895;
+	// end inline asm
+	add.s32 	%r1089, %r444, %r1086;
+	xor.b32  	%r450, %r1089, %r440;
+	// begin inline asm
+	shf.r.wrap.b32 %r448, %r450, %r450, %r899;
+	// end inline asm
+	add.s32 	%r1090, %r416, %r1070;
+	add.s32 	%r1091, %r1090, %r910;
+	xor.b32  	%r454, %r1091, %r444;
+	// begin inline asm
+	shf.r.wrap.b32 %r452, %r454, %r454, %r887;
+	// end inline asm
+	add.s32 	%r1092, %r452, %r1083;
+	xor.b32  	%r458, %r1092, %r416;
+	// begin inline asm
+	shf.r.wrap.b32 %r456, %r458, %r458, %r891;
+	// end inline asm
+	add.s32 	%r1093, %r456, %r1091;
+	add.s32 	%r1094, %r1093, %r924;
+	xor.b32  	%r462, %r1094, %r452;
+	// begin inline asm
+	shf.r.wrap.b32 %r460, %r462, %r462, %r895;
+	// end inline asm
+	add.s32 	%r1095, %r460, %r1092;
+	xor.b32  	%r466, %r1095, %r456;
+	// begin inline asm
+	shf.r.wrap.b32 %r464, %r466, %r466, %r899;
+	// end inline asm
+	add.s32 	%r1096, %r432, %r1076;
+	add.s32 	%r1097, %r1096, %r908;
+	xor.b32  	%r470, %r1097, %r396;
+	// begin inline asm
+	shf.r.wrap.b32 %r468, %r470, %r470, %r887;
+	// end inline asm
+	add.s32 	%r1098, %r468, %r1089;
+	xor.b32  	%r474, %r1098, %r432;
+	// begin inline asm
+	shf.r.wrap.b32 %r472, %r474, %r474, %r891;
+	// end inline asm
+	add.s32 	%r1099, %r472, %r1097;
+	add.s32 	%r1100, %r1099, %r904;
+	xor.b32  	%r478, %r1100, %r468;
+	// begin inline asm
+	shf.r.wrap.b32 %r476, %r478, %r478, %r895;
+	// end inline asm
+	add.s32 	%r1101, %r476, %r1098;
+	xor.b32  	%r482, %r1101, %r472;
+	// begin inline asm
+	shf.r.wrap.b32 %r480, %r482, %r482, %r899;
+	// end inline asm
+	add.s32 	%r1102, %r448, %r1082;
+	add.s32 	%r1103, %r1102, %r912;
+	xor.b32  	%r486, %r1103, %r412;
+	// begin inline asm
+	shf.r.wrap.b32 %r484, %r486, %r486, %r887;
+	// end inline asm
+	add.s32 	%r1104, %r484, %r1071;
+	xor.b32  	%r490, %r1104, %r448;
+	// begin inline asm
+	shf.r.wrap.b32 %r488, %r490, %r490, %r891;
+	// end inline asm
+	add.s32 	%r1105, %r488, %r1103;
+	add.s32 	%r1106, %r1105, %r900;
+	xor.b32  	%r494, %r1106, %r484;
+	// begin inline asm
+	shf.r.wrap.b32 %r492, %r494, %r494, %r895;
+	// end inline asm
+	add.s32 	%r1107, %r492, %r1104;
+	xor.b32  	%r498, %r1107, %r488;
+	// begin inline asm
+	shf.r.wrap.b32 %r496, %r498, %r498, %r899;
+	// end inline asm
+	add.s32 	%r1108, %r1088, %r400;
+	add.s32 	%r1109, %r1108, %r901;
+	xor.b32  	%r502, %r1109, %r428;
+	// begin inline asm
+	shf.r.wrap.b32 %r500, %r502, %r502, %r887;
+	// end inline asm
+	add.s32 	%r1110, %r500, %r1077;
+	xor.b32  	%r506, %r1110, %r400;
+	// begin inline asm
+	shf.r.wrap.b32 %r504, %r506, %r506, %r891;
+	// end inline asm
+	add.s32 	%r1111, %r504, %r1109;
+	add.s32 	%r1112, %r1111, %r915;
+	xor.b32  	%r510, %r1112, %r500;
+	// begin inline asm
+	shf.r.wrap.b32 %r508, %r510, %r510, %r895;
+	// end inline asm
+	add.s32 	%r1113, %r508, %r1110;
+	xor.b32  	%r514, %r1113, %r504;
+	// begin inline asm
+	shf.r.wrap.b32 %r512, %r514, %r514, %r899;
+	// end inline asm
+	add.s32 	%r1114, %r512, %r1094;
+	add.s32 	%r1115, %r1114, %r911;
+	xor.b32  	%r518, %r1115, %r476;
+	// begin inline asm
+	shf.r.wrap.b32 %r516, %r518, %r518, %r887;
+	// end inline asm
+	add.s32 	%r1116, %r516, %r1107;
+	xor.b32  	%r522, %r1116, %r512;
+	// begin inline asm
+	shf.r.wrap.b32 %r520, %r522, %r522, %r891;
+	// end inline asm
+	add.s32 	%r1117, %r520, %r1115;
+	add.s32 	%r1118, %r1117, %r913;
+	xor.b32  	%r526, %r1118, %r516;
+	// begin inline asm
+	shf.r.wrap.b32 %r524, %r526, %r526, %r895;
+	// end inline asm
+	add.s32 	%r1119, %r524, %r1116;
+	xor.b32  	%r530, %r1119, %r520;
+	// begin inline asm
+	shf.r.wrap.b32 %r528, %r530, %r530, %r899;
+	// end inline asm
+	add.s32 	%r1120, %r1100, %r464;
+	add.s32 	%r1121, %r1120, %r902;
+	xor.b32  	%r534, %r1121, %r492;
+	// begin inline asm
+	shf.r.wrap.b32 %r532, %r534, %r534, %r887;
+	// end inline asm
+	add.s32 	%r1122, %r532, %r1113;
+	xor.b32  	%r538, %r1122, %r464;
+	// begin inline asm
+	shf.r.wrap.b32 %r536, %r538, %r538, %r891;
+	// end inline asm
+	add.s32 	%r1123, %r536, %r1121;
+	add.s32 	%r1124, %r1123, %r908;
+	xor.b32  	%r542, %r1124, %r532;
+	// begin inline asm
+	shf.r.wrap.b32 %r540, %r542, %r542, %r895;
+	// end inline asm
+	add.s32 	%r1125, %r540, %r1122;
+	xor.b32  	%r546, %r1125, %r536;
+	// begin inline asm
+	shf.r.wrap.b32 %r544, %r546, %r546, %r899;
+	// end inline asm
+	add.s32 	%r1126, %r1106, %r480;
+	add.s32 	%r1127, %r1126, %r919;
+	xor.b32  	%r550, %r1127, %r508;
+	// begin inline asm
+	shf.r.wrap.b32 %r548, %r550, %r550, %r887;
+	// end inline asm
+	add.s32 	%r1128, %r548, %r1095;
+	xor.b32  	%r554, %r1128, %r480;
+	// begin inline asm
+	shf.r.wrap.b32 %r552, %r554, %r554, %r891;
+	// end inline asm
+	add.s32 	%r1129, %r552, %r1127;
+	add.s32 	%r1130, %r1129, %r905;
+	xor.b32  	%r558, %r1130, %r548;
+	// begin inline asm
+	shf.r.wrap.b32 %r556, %r558, %r558, %r895;
+	// end inline asm
+	add.s32 	%r1131, %r556, %r1128;
+	xor.b32  	%r562, %r1131, %r552;
+	// begin inline asm
+	shf.r.wrap.b32 %r560, %r562, %r562, %r899;
+	// end inline asm
+	add.s32 	%r1132, %r1112, %r496;
+	add.s32 	%r1133, %r1132, %r916;
+	xor.b32  	%r566, %r1133, %r460;
+	// begin inline asm
+	shf.r.wrap.b32 %r564, %r566, %r566, %r887;
+	// end inline asm
+	add.s32 	%r1134, %r564, %r1101;
+	xor.b32  	%r570, %r1134, %r496;
+	// begin inline asm
+	shf.r.wrap.b32 %r568, %r570, %r570, %r891;
+	// end inline asm
+	add.s32 	%r1135, %r568, %r1133;
+	add.s32 	%r1136, %r1135, %r900;
+	xor.b32  	%r574, %r1136, %r564;
+	// begin inline asm
+	shf.r.wrap.b32 %r572, %r574, %r574, %r895;
+	// end inline asm
+	add.s32 	%r1137, %r572, %r1134;
+	xor.b32  	%r578, %r1137, %r568;
+	// begin inline asm
+	shf.r.wrap.b32 %r576, %r578, %r578, %r899;
+	// end inline asm
+	add.s32 	%r1138, %r544, %r1118;
+	add.s32 	%r1139, %r1138, %r918;
+	xor.b32  	%r582, %r1139, %r572;
+	// begin inline asm
+	shf.r.wrap.b32 %r580, %r582, %r582, %r887;
+	// end inline asm
+	add.s32 	%r1140, %r580, %r1131;
+	xor.b32  	%r586, %r1140, %r544;
+	// begin inline asm
+	shf.r.wrap.b32 %r584, %r586, %r586, %r891;
+	// end inline asm
+	add.s32 	%r1141, %r584, %r1139;
+	add.s32 	%r1142, %r1141, %r904;
+	xor.b32  	%r590, %r1142, %r580;
+	// begin inline asm
+	shf.r.wrap.b32 %r588, %r590, %r590, %r895;
+	// end inline asm
+	add.s32 	%r1143, %r588, %r1140;
+	xor.b32  	%r594, %r1143, %r584;
+	// begin inline asm
+	shf.r.wrap.b32 %r592, %r594, %r594, %r899;
+	// end inline asm
+	add.s32 	%r1144, %r560, %r1124;
+	add.s32 	%r1145, %r1144, %r912;
+	xor.b32  	%r598, %r1145, %r524;
+	// begin inline asm
+	shf.r.wrap.b32 %r596, %r598, %r598, %r887;
+	// end inline asm
+	add.s32 	%r1146, %r596, %r1137;
+	xor.b32  	%r602, %r1146, %r560;
+	// begin inline asm
+	shf.r.wrap.b32 %r600, %r602, %r602, %r891;
+	// end inline asm
+	add.s32 	%r1147, %r600, %r1145;
+	add.s32 	%r1148, %r1147, %r907;
+	xor.b32  	%r606, %r1148, %r596;
+	// begin inline asm
+	shf.r.wrap.b32 %r604, %r606, %r606, %r895;
+	// end inline asm
+	add.s32 	%r1149, %r604, %r1146;
+	xor.b32  	%r610, %r1149, %r600;
+	// begin inline asm
+	shf.r.wrap.b32 %r608, %r610, %r610, %r899;
+	// end inline asm
+	add.s32 	%r1150, %r576, %r1130;
+	add.s32 	%r1151, %r1150, %r924;
+	xor.b32  	%r614, %r1151, %r540;
+	// begin inline asm
+	shf.r.wrap.b32 %r612, %r614, %r614, %r887;
+	// end inline asm
+	add.s32 	%r1152, %r612, %r1119;
+	xor.b32  	%r618, %r1152, %r576;
+	// begin inline asm
+	shf.r.wrap.b32 %r616, %r618, %r618, %r891;
+	// end inline asm
+	add.s32 	%r1153, %r616, %r1151;
+	add.s32 	%r1154, %r1153, %r901;
+	xor.b32  	%r622, %r1154, %r612;
+	// begin inline asm
+	shf.r.wrap.b32 %r620, %r622, %r622, %r895;
+	// end inline asm
+	add.s32 	%r1155, %r620, %r1152;
+	xor.b32  	%r626, %r1155, %r616;
+	// begin inline asm
+	shf.r.wrap.b32 %r624, %r626, %r626, %r899;
+	// end inline asm
+	add.s32 	%r1156, %r1136, %r528;
+	add.s32 	%r1157, %r1156, %r915;
+	xor.b32  	%r630, %r1157, %r556;
+	// begin inline asm
+	shf.r.wrap.b32 %r628, %r630, %r630, %r887;
+	// end inline asm
+	add.s32 	%r1158, %r628, %r1125;
+	xor.b32  	%r634, %r1158, %r528;
+	// begin inline asm
+	shf.r.wrap.b32 %r632, %r634, %r634, %r891;
+	// end inline asm
+	add.s32 	%r1159, %r632, %r1157;
+	add.s32 	%r1160, %r1159, %r910;
+	xor.b32  	%r638, %r1160, %r628;
+	// begin inline asm
+	shf.r.wrap.b32 %r636, %r638, %r638, %r895;
+	// end inline asm
+	add.s32 	%r1161, %r636, %r1158;
+	xor.b32  	%r642, %r1161, %r632;
+	// begin inline asm
+	shf.r.wrap.b32 %r640, %r642, %r642, %r899;
+	// end inline asm
+	add.s32 	%r1162, %r640, %r1142;
+	add.s32 	%r1163, %r1162, %r902;
+	xor.b32  	%r646, %r1163, %r604;
+	// begin inline asm
+	shf.r.wrap.b32 %r644, %r646, %r646, %r887;
+	// end inline asm
+	add.s32 	%r1164, %r644, %r1155;
+	xor.b32  	%r650, %r1164, %r640;
+	// begin inline asm
+	shf.r.wrap.b32 %r648, %r650, %r650, %r891;
+	// end inline asm
+	add.s32 	%r1165, %r648, %r1163;
+	add.s32 	%r1166, %r1165, %r916;
+	xor.b32  	%r654, %r1166, %r644;
+	// begin inline asm
+	shf.r.wrap.b32 %r652, %r654, %r654, %r895;
+	// end inline asm
+	add.s32 	%r1167, %r652, %r1164;
+	xor.b32  	%r658, %r1167, %r648;
+	// begin inline asm
+	shf.r.wrap.b32 %r656, %r658, %r658, %r899;
+	// end inline asm
+	add.s32 	%r1168, %r1148, %r592;
+	add.s32 	%r1169, %r1168, %r908;
+	xor.b32  	%r662, %r1169, %r620;
+	// begin inline asm
+	shf.r.wrap.b32 %r660, %r662, %r662, %r887;
+	// end inline asm
+	add.s32 	%r1170, %r660, %r1161;
+	xor.b32  	%r666, %r1170, %r592;
+	// begin inline asm
+	shf.r.wrap.b32 %r664, %r666, %r666, %r891;
+	// end inline asm
+	add.s32 	%r1171, %r664, %r1169;
+	add.s32 	%r1172, %r1171, %r912;
+	xor.b32  	%r670, %r1172, %r660;
+	// begin inline asm
+	shf.r.wrap.b32 %r668, %r670, %r670, %r895;
+	// end inline asm
+	add.s32 	%r1173, %r668, %r1170;
+	xor.b32  	%r674, %r1173, %r664;
+	// begin inline asm
+	shf.r.wrap.b32 %r672, %r674, %r674, %r899;
+	// end inline asm
+	add.s32 	%r1174, %r1154, %r608;
+	add.s32 	%r1175, %r1174, %r900;
+	xor.b32  	%r678, %r1175, %r636;
+	// begin inline asm
+	shf.r.wrap.b32 %r676, %r678, %r678, %r887;
+	// end inline asm
+	add.s32 	%r1176, %r676, %r1143;
+	xor.b32  	%r682, %r1176, %r608;
+	// begin inline asm
+	shf.r.wrap.b32 %r680, %r682, %r682, %r891;
+	// end inline asm
+	add.s32 	%r1177, %r680, %r1175;
+	add.s32 	%r1178, %r1177, %r911;
+	xor.b32  	%r686, %r1178, %r676;
+	// begin inline asm
+	shf.r.wrap.b32 %r684, %r686, %r686, %r895;
+	// end inline asm
+	add.s32 	%r1179, %r684, %r1176;
+	xor.b32  	%r690, %r1179, %r680;
+	// begin inline asm
+	shf.r.wrap.b32 %r688, %r690, %r690, %r899;
+	// end inline asm
+	add.s32 	%r1180, %r1160, %r624;
+	add.s32 	%r1181, %r1180, %r919;
+	xor.b32  	%r694, %r1181, %r588;
+	// begin inline asm
+	shf.r.wrap.b32 %r692, %r694, %r694, %r887;
+	// end inline asm
+	add.s32 	%r1182, %r692, %r1149;
+	xor.b32  	%r698, %r1182, %r624;
+	// begin inline asm
+	shf.r.wrap.b32 %r696, %r698, %r698, %r891;
+	// end inline asm
+	add.s32 	%r1183, %r696, %r1181;
+	add.s32 	%r1184, %r1183, %r901;
+	xor.b32  	%r702, %r1184, %r692;
+	// begin inline asm
+	shf.r.wrap.b32 %r700, %r702, %r702, %r895;
+	// end inline asm
+	add.s32 	%r1185, %r700, %r1182;
+	xor.b32  	%r706, %r1185, %r696;
+	// begin inline asm
+	shf.r.wrap.b32 %r704, %r706, %r706, %r899;
+	// end inline asm
+	add.s32 	%r1186, %r672, %r1166;
+	add.s32 	%r1187, %r1186, %r913;
+	xor.b32  	%r710, %r1187, %r700;
+	// begin inline asm
+	shf.r.wrap.b32 %r708, %r710, %r710, %r887;
+	// end inline asm
+	add.s32 	%r1188, %r708, %r1179;
+	xor.b32  	%r714, %r1188, %r672;
+	// begin inline asm
+	shf.r.wrap.b32 %r712, %r714, %r714, %r891;
+	// end inline asm
+	add.s32 	%r1189, %r712, %r1187;
+	add.s32 	%r1190, %r1189, %r907;
+	xor.b32  	%r718, %r1190, %r708;
+	// begin inline asm
+	shf.r.wrap.b32 %r716, %r718, %r718, %r895;
+	// end inline asm
+	add.s32 	%r1191, %r716, %r1188;
+	xor.b32  	%r722, %r1191, %r712;
+	// begin inline asm
+	shf.r.wrap.b32 %r720, %r722, %r722, %r899;
+	// end inline asm
+	add.s32 	%r1192, %r688, %r1172;
+	add.s32 	%r1193, %r1192, %r924;
+	xor.b32  	%r726, %r1193, %r652;
+	// begin inline asm
+	shf.r.wrap.b32 %r724, %r726, %r726, %r887;
+	// end inline asm
+	add.s32 	%r1194, %r724, %r1185;
+	xor.b32  	%r730, %r1194, %r688;
+	// begin inline asm
+	shf.r.wrap.b32 %r728, %r730, %r730, %r891;
+	// end inline asm
+	add.s32 	%r1195, %r728, %r1193;
+	add.s32 	%r1196, %r1195, %r905;
+	xor.b32  	%r734, %r1196, %r724;
+	// begin inline asm
+	shf.r.wrap.b32 %r732, %r734, %r734, %r895;
+	// end inline asm
+	add.s32 	%r1197, %r732, %r1194;
+	xor.b32  	%r738, %r1197, %r728;
+	// begin inline asm
+	shf.r.wrap.b32 %r736, %r738, %r738, %r899;
+	// end inline asm
+	add.s32 	%r1198, %r704, %r1178;
+	add.s32 	%r1199, %r1198, %r904;
+	xor.b32  	%r742, %r1199, %r668;
+	// begin inline asm
+	shf.r.wrap.b32 %r740, %r742, %r742, %r887;
+	// end inline asm
+	add.s32 	%r1200, %r740, %r1167;
+	xor.b32  	%r746, %r1200, %r704;
+	// begin inline asm
+	shf.r.wrap.b32 %r744, %r746, %r746, %r891;
+	// end inline asm
+	add.s32 	%r1201, %r744, %r1199;
+	add.s32 	%r1202, %r1201, %r915;
+	xor.b32  	%r750, %r1202, %r740;
+	// begin inline asm
+	shf.r.wrap.b32 %r748, %r750, %r750, %r895;
+	// end inline asm
+	add.s32 	%r1203, %r748, %r1200;
+	xor.b32  	%r754, %r1203, %r744;
+	// begin inline asm
+	shf.r.wrap.b32 %r752, %r754, %r754, %r899;
+	// end inline asm
+	add.s32 	%r1204, %r1184, %r656;
+	add.s32 	%r1205, %r1204, %r910;
+	xor.b32  	%r758, %r1205, %r684;
+	// begin inline asm
+	shf.r.wrap.b32 %r756, %r758, %r758, %r887;
+	// end inline asm
+	add.s32 	%r1206, %r756, %r1173;
+	xor.b32  	%r762, %r1206, %r656;
+	// begin inline asm
+	shf.r.wrap.b32 %r760, %r762, %r762, %r891;
+	// end inline asm
+	add.s32 	%r1207, %r760, %r1205;
+	add.s32 	%r1208, %r1207, %r918;
+	xor.b32  	%r766, %r1208, %r756;
+	// begin inline asm
+	shf.r.wrap.b32 %r764, %r766, %r766, %r895;
+	// end inline asm
+	add.s32 	%r1209, %r764, %r1206;
+	xor.b32  	%r770, %r1209, %r760;
+	// begin inline asm
+	shf.r.wrap.b32 %r768, %r770, %r770, %r899;
+	// end inline asm
+	add.s32 	%r1210, %r768, %r1190;
+	add.s32 	%r1211, %r1210, %r908;
+	xor.b32  	%r774, %r1211, %r732;
+	// begin inline asm
+	shf.r.wrap.b32 %r772, %r774, %r774, %r887;
+	// end inline asm
+	add.s32 	%r1212, %r772, %r1203;
+	xor.b32  	%r778, %r1212, %r768;
+	// begin inline asm
+	shf.r.wrap.b32 %r776, %r778, %r778, %r891;
+	// end inline asm
+	add.s32 	%r1213, %r776, %r1211;
+	add.s32 	%r1214, %r1213, %r919;
+	xor.b32  	%r782, %r1214, %r772;
+	// begin inline asm
+	shf.r.wrap.b32 %r780, %r782, %r782, %r895;
+	// end inline asm
+	add.s32 	%r1215, %r780, %r1212;
+	xor.b32  	%r786, %r1215, %r776;
+	// begin inline asm
+	shf.r.wrap.b32 %r784, %r786, %r786, %r899;
+	// end inline asm
+	add.s32 	%r1216, %r1196, %r720;
+	add.s32 	%r1217, %r1216, %r912;
+	xor.b32  	%r790, %r1217, %r748;
+	// begin inline asm
+	shf.r.wrap.b32 %r788, %r790, %r790, %r887;
+	// end inline asm
+	add.s32 	%r1218, %r788, %r1209;
+	xor.b32  	%r794, %r1218, %r720;
+	// begin inline asm
+	shf.r.wrap.b32 %r792, %r794, %r794, %r891;
+	// end inline asm
+	add.s32 	%r1219, %r792, %r1217;
+	add.s32 	%r1220, %r1219, %r924;
+	xor.b32  	%r798, %r1220, %r788;
+	// begin inline asm
+	shf.r.wrap.b32 %r796, %r798, %r798, %r895;
+	// end inline asm
+	add.s32 	%r1221, %r796, %r1218;
+	xor.b32  	%r802, %r1221, %r792;
+	// begin inline asm
+	shf.r.wrap.b32 %r800, %r802, %r802, %r899;
+	// end inline asm
+	add.s32 	%r1222, %r1202, %r736;
+	add.s32 	%r1223, %r1222, %r901;
+	xor.b32  	%r806, %r1223, %r764;
+	// begin inline asm
+	shf.r.wrap.b32 %r804, %r806, %r806, %r887;
+	// end inline asm
+	add.s32 	%r1224, %r804, %r1191;
+	xor.b32  	%r810, %r1224, %r736;
+	// begin inline asm
+	shf.r.wrap.b32 %r808, %r810, %r810, %r891;
+	// end inline asm
+	add.s32 	%r1225, %r808, %r1223;
+	add.s32 	%r1226, %r1225, %r902;
+	xor.b32  	%r814, %r1226, %r804;
+	// begin inline asm
+	shf.r.wrap.b32 %r812, %r814, %r814, %r895;
+	// end inline asm
+	add.s32 	%r1227, %r812, %r1224;
+	xor.b32  	%r818, %r1227, %r808;
+	// begin inline asm
+	shf.r.wrap.b32 %r816, %r818, %r818, %r899;
+	// end inline asm
+	add.s32 	%r1228, %r1208, %r752;
+	add.s32 	%r1229, %r1228, %r900;
+	xor.b32  	%r822, %r1229, %r716;
+	// begin inline asm
+	shf.r.wrap.b32 %r820, %r822, %r822, %r887;
+	// end inline asm
+	add.s32 	%r1230, %r820, %r1197;
+	xor.b32  	%r826, %r1230, %r752;
+	// begin inline asm
+	shf.r.wrap.b32 %r824, %r826, %r826, %r891;
+	// end inline asm
+	add.s32 	%r1231, %r824, %r1229;
+	add.s32 	%r1232, %r1231, %r915;
+	xor.b32  	%r830, %r1232, %r820;
+	// begin inline asm
+	shf.r.wrap.b32 %r828, %r830, %r830, %r895;
+	// end inline asm
+	add.s32 	%r1233, %r828, %r1230;
+	xor.b32  	%r834, %r1233, %r824;
+	// begin inline asm
+	shf.r.wrap.b32 %r832, %r834, %r834, %r899;
+	// end inline asm
+	add.s32 	%r1234, %r800, %r1214;
+	add.s32 	%r1235, %r1234, %r916;
+	xor.b32  	%r838, %r1235, %r828;
+	// begin inline asm
+	shf.r.wrap.b32 %r836, %r838, %r838, %r887;
+	// end inline asm
+	add.s32 	%r1236, %r836, %r1227;
+	xor.b32  	%r842, %r1236, %r800;
+	// begin inline asm
+	shf.r.wrap.b32 %r840, %r842, %r842, %r891;
+	// end inline asm
+	add.s32 	%r1237, %r840, %r1235;
+	add.s32 	%r1238, %r1237, %r905;
+	xor.b32  	%r846, %r1238, %r836;
+	// begin inline asm
+	shf.r.wrap.b32 %r844, %r846, %r846, %r895;
+	// end inline asm
+	add.s32 	%r1239, %r844, %r1236;
+	xor.b32  	%r850, %r1239, %r840;
+	// begin inline asm
+	shf.r.wrap.b32 %r848, %r850, %r850, %r899;
+	// end inline asm
+	add.s32 	%r1240, %r816, %r1220;
+	add.s32 	%r1241, %r1240, %r904;
+	xor.b32  	%r854, %r1241, %r780;
+	// begin inline asm
+	shf.r.wrap.b32 %r852, %r854, %r854, %r887;
+	// end inline asm
+	add.s32 	%r1242, %r852, %r1233;
+	xor.b32  	%r858, %r1242, %r816;
+	// begin inline asm
+	shf.r.wrap.b32 %r856, %r858, %r858, %r891;
+	// end inline asm
+	add.s32 	%r1243, %r856, %r1241;
+	add.s32 	%r1244, %r1243, %r911;
+	xor.b32  	%r862, %r1244, %r852;
+	// begin inline asm
+	shf.r.wrap.b32 %r860, %r862, %r862, %r895;
+	// end inline asm
+	add.s32 	%r1245, %r860, %r1242;
+	xor.b32  	%r866, %r1245, %r856;
+	// begin inline asm
+	shf.r.wrap.b32 %r864, %r866, %r866, %r899;
+	// end inline asm
+	add.s32 	%r1246, %r832, %r1226;
+	add.s32 	%r1247, %r1246, %r907;
+	xor.b32  	%r870, %r1247, %r796;
+	// begin inline asm
+	shf.r.wrap.b32 %r868, %r870, %r870, %r887;
+	// end inline asm
+	add.s32 	%r1248, %r868, %r1215;
+	xor.b32  	%r874, %r1248, %r832;
+	// begin inline asm
+	shf.r.wrap.b32 %r872, %r874, %r874, %r891;
+	// end inline asm
+	add.s32 	%r1249, %r872, %r1247;
+	add.s32 	%r1250, %r1249, %r910;
+	xor.b32  	%r878, %r1250, %r868;
+	// begin inline asm
+	shf.r.wrap.b32 %r876, %r878, %r878, %r895;
+	// end inline asm
+	add.s32 	%r1251, %r876, %r1248;
+	xor.b32  	%r882, %r1251, %r872;
+	// begin inline asm
+	shf.r.wrap.b32 %r880, %r882, %r882, %r899;
+	// end inline asm
+	add.s32 	%r1252, %r1232, %r784;
+	add.s32 	%r1253, %r1252, %r918;
+	xor.b32  	%r886, %r1253, %r812;
+	// begin inline asm
+	shf.r.wrap.b32 %r884, %r886, %r886, %r887;
+	// end inline asm
+	add.s32 	%r1254, %r884, %r1221;
+	xor.b32  	%r890, %r1254, %r784;
+	// begin inline asm
+	shf.r.wrap.b32 %r888, %r890, %r890, %r891;
+	// end inline asm
+	add.s32 	%r1255, %r888, %r1253;
+	add.s32 	%r1256, %r1255, %r913;
+	xor.b32  	%r894, %r1256, %r884;
+	// begin inline asm
+	shf.r.wrap.b32 %r892, %r894, %r894, %r895;
+	// end inline asm
+	add.s32 	%r1257, %r892, %r1254;
+	xor.b32  	%r898, %r1257, %r888;
+	// begin inline asm
+	shf.r.wrap.b32 %r896, %r898, %r898, %r899;
+	// end inline asm
+	xor.b32  	%r1258, %r1251, %r1238;
+	xor.b32  	%r1259, %r1257, %r1244;
+	xor.b32  	%r1260, %r1250, %r1239;
+	xor.b32  	%r1261, %r1256, %r1245;
+	xor.b32  	%r1262, %r896, %r860;
+	xor.b32  	%r1263, %r876, %r848;
+	xor.b32  	%r1264, %r892, %r864;
+	xor.b32  	%r1265, %r880, %r844;
+	cvta.to.global.u64 	%rd15, %rd4;
+	shl.b64 	%rd16, %rd1, 5;
+	add.s64 	%rd17, %rd15, %rd16;
+	st.global.u32 	[%rd17], %r1258;
+	st.global.u32 	[%rd17+4], %r1259;
+	st.global.u32 	[%rd17+8], %r1260;
+	st.global.u32 	[%rd17+12], %r1261;
+	st.global.u32 	[%rd17+16], %r1262;
+	st.global.u32 	[%rd17+20], %r1263;
+	st.global.u32 	[%rd17+24], %r1264;
+	st.global.u32 	[%rd17+28], %r1265;
+
+$L__BB11_2:
+	ret;
+
+}
+	// .globl	b3pick
+.visible .entry b3pick(
+	.param .u64 b3pick_param_0,
+	.param .u64 b3pick_param_1,
+	.param .u64 b3pick_param_2,
+	.param .u64 b3pick_param_3,
+	.param .u64 b3pick_param_4
+)
+{
+	.local .align 16 .b8 	__local_depot12[1024];
+	.reg .b64 	%SP;
+	.reg .b64 	%SPL;
+	.reg .pred 	%p<71>;
+	.reg .b32 	%r<34>;
+	.reg .b64 	%rd<352>;
+
+
+	mov.u64 	%SPL, __local_depot12;
+	ld.param.u64 	%rd196, [b3pick_param_0];
+	ld.param.u64 	%rd351, [b3pick_param_1];
+	ld.param.u64 	%rd198, [b3pick_param_2];
+	ld.param.u64 	%rd199, [b3pick_param_3];
+	ld.param.u64 	%rd200, [b3pick_param_4];
+	add.u64 	%rd1, %SPL, 0;
+	add.u64 	%rd2, %SPL, 512;
+	mov.u32 	%r6, %tid.x;
+	mov.u32 	%r7, %ctaid.x;
+	or.b32  	%r8, %r6, %r7;
+	setp.ne.s32 	%p1, %r8, 0;
+	@%p1 bra 	$L__BB12_70;
+
+	mov.u64 	%rd203, 0;
+	st.local.u64 	[%rd2], %rd351;
+	st.local.u64 	[%rd1], %rd203;
+	setp.le.u64 	%p2, %rd198, %rd351;
+	mov.u32 	%r33, 0;
+	@%p2 bra 	$L__BB12_69;
+
+	sub.s64 	%rd5, %rd198, %rd351;
+	add.s64 	%rd204, %rd351, 1;
+	shr.u64 	%rd6, %rd204, 1;
+	st.local.u64 	[%rd2+8], %rd6;
+	st.local.u64 	[%rd1+8], %rd5;
+	shr.u64 	%rd7, %rd198, 1;
+	setp.le.u64 	%p3, %rd7, %rd6;
+	@%p3 bra 	$L__BB12_65;
+
+	add.s64 	%rd205, %rd7, %rd5;
+	sub.s64 	%rd8, %rd205, %rd6;
+	add.s64 	%rd206, %rd351, 3;
+	shr.u64 	%rd9, %rd206, 2;
+	st.local.u64 	[%rd2+16], %rd9;
+	st.local.u64 	[%rd1+16], %rd8;
+	shr.u64 	%rd10, %rd198, 2;
+	setp.le.u64 	%p4, %rd10, %rd9;
+	@%p4 bra 	$L__BB12_65;
+
+	add.s64 	%rd207, %rd10, %rd8;
+	sub.s64 	%rd11, %rd207, %rd9;
+	add.s64 	%rd208, %rd351, 7;
+	shr.u64 	%rd12, %rd208, 3;
+	st.local.u64 	[%rd2+24], %rd12;
+	st.local.u64 	[%rd1+24], %rd11;
+	shr.u64 	%rd13, %rd198, 3;
+	setp.le.u64 	%p5, %rd13, %rd12;
+	@%p5 bra 	$L__BB12_65;
+
+	add.s64 	%rd209, %rd13, %rd11;
+	sub.s64 	%rd14, %rd209, %rd12;
+	add.s64 	%rd210, %rd351, 15;
+	shr.u64 	%rd15, %rd210, 4;
+	st.local.u64 	[%rd2+32], %rd15;
+	st.local.u64 	[%rd1+32], %rd14;
+	shr.u64 	%rd16, %rd198, 4;
+	setp.le.u64 	%p6, %rd16, %rd15;
+	@%p6 bra 	$L__BB12_65;
+
+	add.s64 	%rd211, %rd16, %rd14;
+	sub.s64 	%rd17, %rd211, %rd15;
+	add.s64 	%rd212, %rd351, 31;
+	shr.u64 	%rd18, %rd212, 5;
+	st.local.u64 	[%rd2+40], %rd18;
+	st.local.u64 	[%rd1+40], %rd17;
+	shr.u64 	%rd19, %rd198, 5;
+	setp.le.u64 	%p7, %rd19, %rd18;
+	@%p7 bra 	$L__BB12_65;
+
+	add.s64 	%rd213, %rd19, %rd17;
+	sub.s64 	%rd20, %rd213, %rd18;
+	add.s64 	%rd214, %rd351, 63;
+	shr.u64 	%rd21, %rd214, 6;
+	st.local.u64 	[%rd2+48], %rd21;
+	st.local.u64 	[%rd1+48], %rd20;
+	shr.u64 	%rd22, %rd198, 6;
+	setp.le.u64 	%p8, %rd22, %rd21;
+	@%p8 bra 	$L__BB12_65;
+
+	add.s64 	%rd215, %rd22, %rd20;
+	sub.s64 	%rd23, %rd215, %rd21;
+	add.s64 	%rd216, %rd351, 127;
+	shr.u64 	%rd24, %rd216, 7;
+	st.local.u64 	[%rd2+56], %rd24;
+	st.local.u64 	[%rd1+56], %rd23;
+	shr.u64 	%rd25, %rd198, 7;
+	setp.le.u64 	%p9, %rd25, %rd24;
+	@%p9 bra 	$L__BB12_65;
+
+	add.s64 	%rd217, %rd25, %rd23;
+	sub.s64 	%rd26, %rd217, %rd24;
+	add.s64 	%rd218, %rd351, 255;
+	shr.u64 	%rd27, %rd218, 8;
+	st.local.u64 	[%rd2+64], %rd27;
+	st.local.u64 	[%rd1+64], %rd26;
+	shr.u64 	%rd28, %rd198, 8;
+	setp.le.u64 	%p10, %rd28, %rd27;
+	@%p10 bra 	$L__BB12_65;
+
+	add.s64 	%rd219, %rd28, %rd26;
+	sub.s64 	%rd29, %rd219, %rd27;
+	add.s64 	%rd220, %rd351, 511;
+	shr.u64 	%rd30, %rd220, 9;
+	st.local.u64 	[%rd2+72], %rd30;
+	st.local.u64 	[%rd1+72], %rd29;
+	shr.u64 	%rd31, %rd198, 9;
+	setp.le.u64 	%p11, %rd31, %rd30;
+	@%p11 bra 	$L__BB12_65;
+
+	add.s64 	%rd221, %rd31, %rd29;
+	sub.s64 	%rd32, %rd221, %rd30;
+	add.s64 	%rd222, %rd351, 1023;
+	shr.u64 	%rd33, %rd222, 10;
+	st.local.u64 	[%rd2+80], %rd33;
+	st.local.u64 	[%rd1+80], %rd32;
+	shr.u64 	%rd34, %rd198, 10;
+	setp.le.u64 	%p12, %rd34, %rd33;
+	@%p12 bra 	$L__BB12_65;
+
+	add.s64 	%rd223, %rd34, %rd32;
+	sub.s64 	%rd35, %rd223, %rd33;
+	add.s64 	%rd224, %rd351, 2047;
+	shr.u64 	%rd36, %rd224, 11;
+	st.local.u64 	[%rd2+88], %rd36;
+	st.local.u64 	[%rd1+88], %rd35;
+	shr.u64 	%rd37, %rd198, 11;
+	setp.le.u64 	%p13, %rd37, %rd36;
+	@%p13 bra 	$L__BB12_65;
+
+	add.s64 	%rd225, %rd37, %rd35;
+	sub.s64 	%rd38, %rd225, %rd36;
+	add.s64 	%rd226, %rd351, 4095;
+	shr.u64 	%rd39, %rd226, 12;
+	st.local.u64 	[%rd2+96], %rd39;
+	st.local.u64 	[%rd1+96], %rd38;
+	shr.u64 	%rd40, %rd198, 12;
+	setp.le.u64 	%p14, %rd40, %rd39;
+	@%p14 bra 	$L__BB12_65;
+
+	add.s64 	%rd227, %rd40, %rd38;
+	sub.s64 	%rd41, %rd227, %rd39;
+	add.s64 	%rd228, %rd351, 8191;
+	shr.u64 	%rd42, %rd228, 13;
+	st.local.u64 	[%rd2+104], %rd42;
+	st.local.u64 	[%rd1+104], %rd41;
+	shr.u64 	%rd43, %rd198, 13;
+	setp.le.u64 	%p15, %rd43, %rd42;
+	@%p15 bra 	$L__BB12_65;
+
+	add.s64 	%rd229, %rd43, %rd41;
+	sub.s64 	%rd44, %rd229, %rd42;
+	add.s64 	%rd230, %rd351, 16383;
+	shr.u64 	%rd45, %rd230, 14;
+	st.local.u64 	[%rd2+112], %rd45;
+	st.local.u64 	[%rd1+112], %rd44;
+	shr.u64 	%rd46, %rd198, 14;
+	setp.le.u64 	%p16, %rd46, %rd45;
+	@%p16 bra 	$L__BB12_65;
+
+	add.s64 	%rd231, %rd46, %rd44;
+	sub.s64 	%rd47, %rd231, %rd45;
+	add.s64 	%rd232, %rd351, 32767;
+	shr.u64 	%rd48, %rd232, 15;
+	st.local.u64 	[%rd2+120], %rd48;
+	st.local.u64 	[%rd1+120], %rd47;
+	shr.u64 	%rd49, %rd198, 15;
+	setp.le.u64 	%p17, %rd49, %rd48;
+	@%p17 bra 	$L__BB12_65;
+
+	add.s64 	%rd233, %rd49, %rd47;
+	sub.s64 	%rd50, %rd233, %rd48;
+	add.s64 	%rd234, %rd351, 65535;
+	shr.u64 	%rd51, %rd234, 16;
+	st.local.u64 	[%rd2+128], %rd51;
+	st.local.u64 	[%rd1+128], %rd50;
+	shr.u64 	%rd52, %rd198, 16;
+	setp.le.u64 	%p18, %rd52, %rd51;
+	@%p18 bra 	$L__BB12_65;
+
+	add.s64 	%rd235, %rd52, %rd50;
+	sub.s64 	%rd53, %rd235, %rd51;
+	add.s64 	%rd236, %rd351, 131071;
+	shr.u64 	%rd54, %rd236, 17;
+	st.local.u64 	[%rd2+136], %rd54;
+	st.local.u64 	[%rd1+136], %rd53;
+	shr.u64 	%rd55, %rd198, 17;
+	setp.le.u64 	%p19, %rd55, %rd54;
+	@%p19 bra 	$L__BB12_65;
+
+	add.s64 	%rd237, %rd55, %rd53;
+	sub.s64 	%rd56, %rd237, %rd54;
+	add.s64 	%rd238, %rd351, 262143;
+	shr.u64 	%rd57, %rd238, 18;
+	st.local.u64 	[%rd2+144], %rd57;
+	st.local.u64 	[%rd1+144], %rd56;
+	shr.u64 	%rd58, %rd198, 18;
+	setp.le.u64 	%p20, %rd58, %rd57;
+	@%p20 bra 	$L__BB12_65;
+
+	add.s64 	%rd239, %rd58, %rd56;
+	sub.s64 	%rd59, %rd239, %rd57;
+	add.s64 	%rd240, %rd351, 524287;
+	shr.u64 	%rd60, %rd240, 19;
+	st.local.u64 	[%rd2+152], %rd60;
+	st.local.u64 	[%rd1+152], %rd59;
+	shr.u64 	%rd61, %rd198, 19;
+	setp.le.u64 	%p21, %rd61, %rd60;
+	@%p21 bra 	$L__BB12_65;
+
+	add.s64 	%rd241, %rd61, %rd59;
+	sub.s64 	%rd62, %rd241, %rd60;
+	add.s64 	%rd242, %rd351, 1048575;
+	shr.u64 	%rd63, %rd242, 20;
+	st.local.u64 	[%rd2+160], %rd63;
+	st.local.u64 	[%rd1+160], %rd62;
+	shr.u64 	%rd64, %rd198, 20;
+	setp.le.u64 	%p22, %rd64, %rd63;
+	@%p22 bra 	$L__BB12_65;
+
+	add.s64 	%rd243, %rd64, %rd62;
+	sub.s64 	%rd65, %rd243, %rd63;
+	add.s64 	%rd244, %rd351, 2097151;
+	shr.u64 	%rd66, %rd244, 21;
+	st.local.u64 	[%rd2+168], %rd66;
+	st.local.u64 	[%rd1+168], %rd65;
+	shr.u64 	%rd67, %rd198, 21;
+	setp.le.u64 	%p23, %rd67, %rd66;
+	@%p23 bra 	$L__BB12_65;
+
+	add.s64 	%rd245, %rd67, %rd65;
+	sub.s64 	%rd68, %rd245, %rd66;
+	add.s64 	%rd246, %rd351, 4194303;
+	shr.u64 	%rd69, %rd246, 22;
+	st.local.u64 	[%rd2+176], %rd69;
+	st.local.u64 	[%rd1+176], %rd68;
+	shr.u64 	%rd70, %rd198, 22;
+	setp.le.u64 	%p24, %rd70, %rd69;
+	@%p24 bra 	$L__BB12_65;
+
+	add.s64 	%rd247, %rd70, %rd68;
+	sub.s64 	%rd71, %rd247, %rd69;
+	add.s64 	%rd248, %rd351, 8388607;
+	shr.u64 	%rd72, %rd248, 23;
+	st.local.u64 	[%rd2+184], %rd72;
+	st.local.u64 	[%rd1+184], %rd71;
+	shr.u64 	%rd73, %rd198, 23;
+	setp.le.u64 	%p25, %rd73, %rd72;
+	@%p25 bra 	$L__BB12_65;
+
+	add.s64 	%rd249, %rd73, %rd71;
+	sub.s64 	%rd74, %rd249, %rd72;
+	add.s64 	%rd250, %rd351, 16777215;
+	shr.u64 	%rd75, %rd250, 24;
+	st.local.u64 	[%rd2+192], %rd75;
+	st.local.u64 	[%rd1+192], %rd74;
+	shr.u64 	%rd76, %rd198, 24;
+	setp.le.u64 	%p26, %rd76, %rd75;
+	@%p26 bra 	$L__BB12_65;
+
+	add.s64 	%rd251, %rd76, %rd74;
+	sub.s64 	%rd77, %rd251, %rd75;
+	add.s64 	%rd252, %rd351, 33554431;
+	shr.u64 	%rd78, %rd252, 25;
+	st.local.u64 	[%rd2+200], %rd78;
+	st.local.u64 	[%rd1+200], %rd77;
+	shr.u64 	%rd79, %rd198, 25;
+	setp.le.u64 	%p27, %rd79, %rd78;
+	@%p27 bra 	$L__BB12_65;
+
+	add.s64 	%rd253, %rd79, %rd77;
+	sub.s64 	%rd80, %rd253, %rd78;
+	add.s64 	%rd254, %rd351, 67108863;
+	shr.u64 	%rd81, %rd254, 26;
+	st.local.u64 	[%rd2+208], %rd81;
+	st.local.u64 	[%rd1+208], %rd80;
+	shr.u64 	%rd82, %rd198, 26;
+	setp.le.u64 	%p28, %rd82, %rd81;
+	@%p28 bra 	$L__BB12_65;
+
+	add.s64 	%rd255, %rd82, %rd80;
+	sub.s64 	%rd83, %rd255, %rd81;
+	add.s64 	%rd256, %rd351, 134217727;
+	shr.u64 	%rd84, %rd256, 27;
+	st.local.u64 	[%rd2+216], %rd84;
+	st.local.u64 	[%rd1+216], %rd83;
+	shr.u64 	%rd85, %rd198, 27;
+	setp.le.u64 	%p29, %rd85, %rd84;
+	@%p29 bra 	$L__BB12_65;
+
+	add.s64 	%rd257, %rd85, %rd83;
+	sub.s64 	%rd86, %rd257, %rd84;
+	add.s64 	%rd258, %rd351, 268435455;
+	shr.u64 	%rd87, %rd258, 28;
+	st.local.u64 	[%rd2+224], %rd87;
+	st.local.u64 	[%rd1+224], %rd86;
+	shr.u64 	%rd88, %rd198, 28;
+	setp.le.u64 	%p30, %rd88, %rd87;
+	@%p30 bra 	$L__BB12_65;
+
+	add.s64 	%rd259, %rd88, %rd86;
+	sub.s64 	%rd89, %rd259, %rd87;
+	add.s64 	%rd260, %rd351, 536870911;
+	shr.u64 	%rd90, %rd260, 29;
+	st.local.u64 	[%rd2+232], %rd90;
+	st.local.u64 	[%rd1+232], %rd89;
+	shr.u64 	%rd91, %rd198, 29;
+	setp.le.u64 	%p31, %rd91, %rd90;
+	@%p31 bra 	$L__BB12_65;
+
+	add.s64 	%rd261, %rd91, %rd89;
+	sub.s64 	%rd92, %rd261, %rd90;
+	add.s64 	%rd262, %rd351, 1073741823;
+	shr.u64 	%rd93, %rd262, 30;
+	st.local.u64 	[%rd2+240], %rd93;
+	st.local.u64 	[%rd1+240], %rd92;
+	shr.u64 	%rd94, %rd198, 30;
+	setp.le.u64 	%p32, %rd94, %rd93;
+	@%p32 bra 	$L__BB12_65;
+
+	add.s64 	%rd263, %rd94, %rd92;
+	sub.s64 	%rd95, %rd263, %rd93;
+	add.s64 	%rd264, %rd351, 2147483647;
+	shr.u64 	%rd96, %rd264, 31;
+	st.local.u64 	[%rd2+248], %rd96;
+	st.local.u64 	[%rd1+248], %rd95;
+	shr.u64 	%rd97, %rd198, 31;
+	setp.le.u64 	%p33, %rd97, %rd96;
+	@%p33 bra 	$L__BB12_65;
+
+	add.s64 	%rd265, %rd97, %rd95;
+	sub.s64 	%rd98, %rd265, %rd96;
+	add.s64 	%rd266, %rd351, 4294967295;
+	shr.u64 	%rd99, %rd266, 32;
+	st.local.u64 	[%rd2+256], %rd99;
+	st.local.u64 	[%rd1+256], %rd98;
+	shr.u64 	%rd100, %rd198, 32;
+	setp.le.u64 	%p34, %rd100, %rd99;
+	@%p34 bra 	$L__BB12_65;
+
+	add.s64 	%rd267, %rd100, %rd98;
+	sub.s64 	%rd101, %rd267, %rd99;
+	add.s64 	%rd268, %rd351, 8589934591;
+	shr.u64 	%rd102, %rd268, 33;
+	st.local.u64 	[%rd2+264], %rd102;
+	st.local.u64 	[%rd1+264], %rd101;
+	shr.u64 	%rd103, %rd198, 33;
+	setp.le.u64 	%p35, %rd103, %rd102;
+	@%p35 bra 	$L__BB12_65;
+
+	add.s64 	%rd269, %rd103, %rd101;
+	sub.s64 	%rd104, %rd269, %rd102;
+	add.s64 	%rd270, %rd351, 17179869183;
+	shr.u64 	%rd105, %rd270, 34;
+	st.local.u64 	[%rd2+272], %rd105;
+	st.local.u64 	[%rd1+272], %rd104;
+	shr.u64 	%rd106, %rd198, 34;
+	setp.le.u64 	%p36, %rd106, %rd105;
+	@%p36 bra 	$L__BB12_65;
+
+	add.s64 	%rd271, %rd106, %rd104;
+	sub.s64 	%rd107, %rd271, %rd105;
+	add.s64 	%rd272, %rd351, 34359738367;
+	shr.u64 	%rd108, %rd272, 35;
+	st.local.u64 	[%rd2+280], %rd108;
+	st.local.u64 	[%rd1+280], %rd107;
+	shr.u64 	%rd109, %rd198, 35;
+	setp.le.u64 	%p37, %rd109, %rd108;
+	@%p37 bra 	$L__BB12_65;
+
+	add.s64 	%rd273, %rd109, %rd107;
+	sub.s64 	%rd110, %rd273, %rd108;
+	add.s64 	%rd274, %rd351, 68719476735;
+	shr.u64 	%rd111, %rd274, 36;
+	st.local.u64 	[%rd2+288], %rd111;
+	st.local.u64 	[%rd1+288], %rd110;
+	shr.u64 	%rd112, %rd198, 36;
+	setp.le.u64 	%p38, %rd112, %rd111;
+	@%p38 bra 	$L__BB12_65;
+
+	add.s64 	%rd275, %rd112, %rd110;
+	sub.s64 	%rd113, %rd275, %rd111;
+	add.s64 	%rd276, %rd351, 137438953471;
+	shr.u64 	%rd114, %rd276, 37;
+	st.local.u64 	[%rd2+296], %rd114;
+	st.local.u64 	[%rd1+296], %rd113;
+	shr.u64 	%rd115, %rd198, 37;
+	setp.le.u64 	%p39, %rd115, %rd114;
+	@%p39 bra 	$L__BB12_65;
+
+	add.s64 	%rd277, %rd115, %rd113;
+	sub.s64 	%rd116, %rd277, %rd114;
+	add.s64 	%rd278, %rd351, 274877906943;
+	shr.u64 	%rd117, %rd278, 38;
+	st.local.u64 	[%rd2+304], %rd117;
+	st.local.u64 	[%rd1+304], %rd116;
+	shr.u64 	%rd118, %rd198, 38;
+	setp.le.u64 	%p40, %rd118, %rd117;
+	@%p40 bra 	$L__BB12_65;
+
+	add.s64 	%rd279, %rd118, %rd116;
+	sub.s64 	%rd119, %rd279, %rd117;
+	add.s64 	%rd280, %rd351, 549755813887;
+	shr.u64 	%rd120, %rd280, 39;
+	st.local.u64 	[%rd2+312], %rd120;
+	st.local.u64 	[%rd1+312], %rd119;
+	shr.u64 	%rd121, %rd198, 39;
+	setp.le.u64 	%p41, %rd121, %rd120;
+	@%p41 bra 	$L__BB12_65;
+
+	add.s64 	%rd281, %rd121, %rd119;
+	sub.s64 	%rd122, %rd281, %rd120;
+	add.s64 	%rd282, %rd351, 1099511627775;
+	shr.u64 	%rd123, %rd282, 40;
+	st.local.u64 	[%rd2+320], %rd123;
+	st.local.u64 	[%rd1+320], %rd122;
+	shr.u64 	%rd124, %rd198, 40;
+	setp.le.u64 	%p42, %rd124, %rd123;
+	@%p42 bra 	$L__BB12_65;
+
+	add.s64 	%rd283, %rd124, %rd122;
+	sub.s64 	%rd125, %rd283, %rd123;
+	add.s64 	%rd284, %rd351, 2199023255551;
+	shr.u64 	%rd126, %rd284, 41;
+	st.local.u64 	[%rd2+328], %rd126;
+	st.local.u64 	[%rd1+328], %rd125;
+	shr.u64 	%rd127, %rd198, 41;
+	setp.le.u64 	%p43, %rd127, %rd126;
+	@%p43 bra 	$L__BB12_65;
+
+	add.s64 	%rd285, %rd127, %rd125;
+	sub.s64 	%rd128, %rd285, %rd126;
+	add.s64 	%rd286, %rd351, 4398046511103;
+	shr.u64 	%rd129, %rd286, 42;
+	st.local.u64 	[%rd2+336], %rd129;
+	st.local.u64 	[%rd1+336], %rd128;
+	shr.u64 	%rd130, %rd198, 42;
+	setp.le.u64 	%p44, %rd130, %rd129;
+	@%p44 bra 	$L__BB12_65;
+
+	add.s64 	%rd287, %rd130, %rd128;
+	sub.s64 	%rd131, %rd287, %rd129;
+	add.s64 	%rd288, %rd351, 8796093022207;
+	shr.u64 	%rd132, %rd288, 43;
+	st.local.u64 	[%rd2+344], %rd132;
+	st.local.u64 	[%rd1+344], %rd131;
+	shr.u64 	%rd133, %rd198, 43;
+	setp.le.u64 	%p45, %rd133, %rd132;
+	@%p45 bra 	$L__BB12_65;
+
+	add.s64 	%rd289, %rd133, %rd131;
+	sub.s64 	%rd134, %rd289, %rd132;
+	add.s64 	%rd290, %rd351, 17592186044415;
+	shr.u64 	%rd135, %rd290, 44;
+	st.local.u64 	[%rd2+352], %rd135;
+	st.local.u64 	[%rd1+352], %rd134;
+	shr.u64 	%rd136, %rd198, 44;
+	setp.le.u64 	%p46, %rd136, %rd135;
+	@%p46 bra 	$L__BB12_65;
+
+	add.s64 	%rd291, %rd136, %rd134;
+	sub.s64 	%rd137, %rd291, %rd135;
+	add.s64 	%rd292, %rd351, 35184372088831;
+	shr.u64 	%rd138, %rd292, 45;
+	st.local.u64 	[%rd2+360], %rd138;
+	st.local.u64 	[%rd1+360], %rd137;
+	shr.u64 	%rd139, %rd198, 45;
+	setp.le.u64 	%p47, %rd139, %rd138;
+	@%p47 bra 	$L__BB12_65;
+
+	add.s64 	%rd293, %rd139, %rd137;
+	sub.s64 	%rd140, %rd293, %rd138;
+	add.s64 	%rd294, %rd351, 70368744177663;
+	shr.u64 	%rd141, %rd294, 46;
+	st.local.u64 	[%rd2+368], %rd141;
+	st.local.u64 	[%rd1+368], %rd140;
+	shr.u64 	%rd142, %rd198, 46;
+	setp.le.u64 	%p48, %rd142, %rd141;
+	@%p48 bra 	$L__BB12_65;
+
+	add.s64 	%rd295, %rd142, %rd140;
+	sub.s64 	%rd143, %rd295, %rd141;
+	add.s64 	%rd296, %rd351, 140737488355327;
+	shr.u64 	%rd144, %rd296, 47;
+	st.local.u64 	[%rd2+376], %rd144;
+	st.local.u64 	[%rd1+376], %rd143;
+	shr.u64 	%rd145, %rd198, 47;
+	setp.le.u64 	%p49, %rd145, %rd144;
+	@%p49 bra 	$L__BB12_65;
+
+	add.s64 	%rd297, %rd145, %rd143;
+	sub.s64 	%rd146, %rd297, %rd144;
+	add.s64 	%rd298, %rd351, 281474976710655;
+	shr.u64 	%rd147, %rd298, 48;
+	st.local.u64 	[%rd2+384], %rd147;
+	st.local.u64 	[%rd1+384], %rd146;
+	shr.u64 	%rd148, %rd198, 48;
+	setp.le.u64 	%p50, %rd148, %rd147;
+	@%p50 bra 	$L__BB12_65;
+
+	add.s64 	%rd299, %rd148, %rd146;
+	sub.s64 	%rd149, %rd299, %rd147;
+	add.s64 	%rd300, %rd351, 562949953421311;
+	shr.u64 	%rd150, %rd300, 49;
+	st.local.u64 	[%rd2+392], %rd150;
+	st.local.u64 	[%rd1+392], %rd149;
+	shr.u64 	%rd151, %rd198, 49;
+	setp.le.u64 	%p51, %rd151, %rd150;
+	@%p51 bra 	$L__BB12_65;
+
+	add.s64 	%rd301, %rd151, %rd149;
+	sub.s64 	%rd152, %rd301, %rd150;
+	add.s64 	%rd302, %rd351, 1125899906842623;
+	shr.u64 	%rd153, %rd302, 50;
+	st.local.u64 	[%rd2+400], %rd153;
+	st.local.u64 	[%rd1+400], %rd152;
+	shr.u64 	%rd154, %rd198, 50;
+	setp.le.u64 	%p52, %rd154, %rd153;
+	@%p52 bra 	$L__BB12_65;
+
+	add.s64 	%rd303, %rd154, %rd152;
+	sub.s64 	%rd155, %rd303, %rd153;
+	add.s64 	%rd304, %rd351, 2251799813685247;
+	shr.u64 	%rd156, %rd304, 51;
+	st.local.u64 	[%rd2+408], %rd156;
+	st.local.u64 	[%rd1+408], %rd155;
+	shr.u64 	%rd157, %rd198, 51;
+	setp.le.u64 	%p53, %rd157, %rd156;
+	@%p53 bra 	$L__BB12_65;
+
+	add.s64 	%rd305, %rd157, %rd155;
+	sub.s64 	%rd158, %rd305, %rd156;
+	add.s64 	%rd306, %rd351, 4503599627370495;
+	shr.u64 	%rd159, %rd306, 52;
+	st.local.u64 	[%rd2+416], %rd159;
+	st.local.u64 	[%rd1+416], %rd158;
+	shr.u64 	%rd160, %rd198, 52;
+	setp.le.u64 	%p54, %rd160, %rd159;
+	@%p54 bra 	$L__BB12_65;
+
+	add.s64 	%rd307, %rd160, %rd158;
+	sub.s64 	%rd161, %rd307, %rd159;
+	add.s64 	%rd308, %rd351, 9007199254740991;
+	shr.u64 	%rd162, %rd308, 53;
+	st.local.u64 	[%rd2+424], %rd162;
+	st.local.u64 	[%rd1+424], %rd161;
+	shr.u64 	%rd163, %rd198, 53;
+	setp.le.u64 	%p55, %rd163, %rd162;
+	@%p55 bra 	$L__BB12_65;
+
+	add.s64 	%rd309, %rd163, %rd161;
+	sub.s64 	%rd164, %rd309, %rd162;
+	add.s64 	%rd310, %rd351, 18014398509481983;
+	shr.u64 	%rd165, %rd310, 54;
+	st.local.u64 	[%rd2+432], %rd165;
+	st.local.u64 	[%rd1+432], %rd164;
+	shr.u64 	%rd166, %rd198, 54;
+	setp.le.u64 	%p56, %rd166, %rd165;
+	@%p56 bra 	$L__BB12_65;
+
+	add.s64 	%rd311, %rd166, %rd164;
+	sub.s64 	%rd167, %rd311, %rd165;
+	add.s64 	%rd312, %rd351, 36028797018963967;
+	shr.u64 	%rd168, %rd312, 55;
+	st.local.u64 	[%rd2+440], %rd168;
+	st.local.u64 	[%rd1+440], %rd167;
+	shr.u64 	%rd169, %rd198, 55;
+	setp.le.u64 	%p57, %rd169, %rd168;
+	@%p57 bra 	$L__BB12_65;
+
+	add.s64 	%rd313, %rd169, %rd167;
+	sub.s64 	%rd170, %rd313, %rd168;
+	add.s64 	%rd314, %rd351, 72057594037927935;
+	shr.u64 	%rd171, %rd314, 56;
+	st.local.u64 	[%rd2+448], %rd171;
+	st.local.u64 	[%rd1+448], %rd170;
+	shr.u64 	%rd172, %rd198, 56;
+	setp.le.u64 	%p58, %rd172, %rd171;
+	@%p58 bra 	$L__BB12_65;
+
+	add.s64 	%rd315, %rd172, %rd170;
+	sub.s64 	%rd173, %rd315, %rd171;
+	add.s64 	%rd316, %rd351, 144115188075855871;
+	shr.u64 	%rd174, %rd316, 57;
+	st.local.u64 	[%rd2+456], %rd174;
+	st.local.u64 	[%rd1+456], %rd173;
+	shr.u64 	%rd175, %rd198, 57;
+	setp.le.u64 	%p59, %rd175, %rd174;
+	@%p59 bra 	$L__BB12_65;
+
+	add.s64 	%rd317, %rd175, %rd173;
+	sub.s64 	%rd176, %rd317, %rd174;
+	add.s64 	%rd318, %rd351, 288230376151711743;
+	shr.u64 	%rd177, %rd318, 58;
+	st.local.u64 	[%rd2+464], %rd177;
+	st.local.u64 	[%rd1+464], %rd176;
+	shr.u64 	%rd178, %rd198, 58;
+	setp.le.u64 	%p60, %rd178, %rd177;
+	@%p60 bra 	$L__BB12_65;
+
+	add.s64 	%rd319, %rd178, %rd176;
+	sub.s64 	%rd179, %rd319, %rd177;
+	add.s64 	%rd320, %rd351, 576460752303423487;
+	shr.u64 	%rd180, %rd320, 59;
+	st.local.u64 	[%rd2+472], %rd180;
+	st.local.u64 	[%rd1+472], %rd179;
+	shr.u64 	%rd181, %rd198, 59;
+	setp.le.u64 	%p61, %rd181, %rd180;
+	@%p61 bra 	$L__BB12_65;
+
+	add.s64 	%rd321, %rd181, %rd179;
+	sub.s64 	%rd182, %rd321, %rd180;
+	add.s64 	%rd322, %rd351, 1152921504606846975;
+	shr.u64 	%rd183, %rd322, 60;
+	st.local.u64 	[%rd2+480], %rd183;
+	st.local.u64 	[%rd1+480], %rd182;
+	shr.u64 	%rd184, %rd198, 60;
+	setp.le.u64 	%p62, %rd184, %rd183;
+	@%p62 bra 	$L__BB12_65;
+
+	add.s64 	%rd323, %rd184, %rd182;
+	sub.s64 	%rd185, %rd323, %rd183;
+	add.s64 	%rd324, %rd351, 2305843009213693951;
+	shr.u64 	%rd186, %rd324, 61;
+	st.local.u64 	[%rd2+488], %rd186;
+	st.local.u64 	[%rd1+488], %rd185;
+	shr.u64 	%rd187, %rd198, 61;
+	setp.le.u64 	%p63, %rd187, %rd186;
+	@%p63 bra 	$L__BB12_65;
+
+	add.s64 	%rd325, %rd187, %rd185;
+	sub.s64 	%rd188, %rd325, %rd186;
+	add.s64 	%rd326, %rd351, 4611686018427387903;
+	shr.u64 	%rd189, %rd326, 62;
+	st.local.u64 	[%rd2+496], %rd189;
+	st.local.u64 	[%rd1+496], %rd188;
+	shr.u64 	%rd190, %rd198, 62;
+	setp.le.u64 	%p64, %rd190, %rd189;
+	@%p64 bra 	$L__BB12_65;
+
+	add.s64 	%rd327, %rd190, %rd188;
+	sub.s64 	%rd328, %rd327, %rd189;
+	add.s64 	%rd329, %rd351, 9223372036854775807;
+	shr.u64 	%rd330, %rd329, 63;
+	st.local.u64 	[%rd2+504], %rd330;
+	st.local.u64 	[%rd1+504], %rd328;
+
+$L__BB12_65:
+	cvta.to.global.u64 	%rd191, %rd196;
+	cvta.to.global.u64 	%rd192, %rd199;
+	mov.u32 	%r33, 0;
+
+$L__BB12_66:
+	mov.u32 	%r32, 1;
+
+$L__BB12_67:
+	cvt.u64.u32 	%rd194, %r32;
+	mov.u64 	%rd331, 2;
+	shl.b64 	%rd332, %rd331, %r32;
+	add.s64 	%rd333, %rd332, -1;
+	and.b64  	%rd334, %rd333, %rd351;
+	setp.eq.s64 	%p65, %rd334, 0;
+	setp.lt.u32 	%p66, %r32, 62;
+	and.pred  	%p67, %p66, %p65;
+	add.s64 	%rd335, %rd332, %rd351;
+	setp.le.u64 	%p68, %rd335, %rd198;
+	and.pred  	%p69, %p68, %p67;
+	add.s32 	%r32, %r32, 1;
+	@%p69 bra 	$L__BB12_67;
+
+	cvt.u32.u64 	%r12, %rd194;
+	add.s32 	%r13, %r12, -1;
+	shr.u64 	%rd336, %rd351, %r13;
+	mul.wide.s32 	%rd337, %r13, 8;
+	add.s64 	%rd338, %rd1, %rd337;
+	add.s64 	%rd339, %rd2, %rd337;
+	ld.local.u64 	%rd340, [%rd338];
+	add.s64 	%rd341, %rd340, %rd336;
+	ld.local.u64 	%rd342, [%rd339];
+	sub.s64 	%rd343, %rd341, %rd342;
+	shl.b64 	%rd344, %rd343, 5;
+	add.s64 	%rd345, %rd191, %rd344;
+	ld.global.nc.u32 	%r14, [%rd345];
+	shl.b32 	%r15, %r33, 3;
+	mul.wide.u32 	%rd346, %r15, 4;
+	add.s64 	%rd347, %rd192, %rd346;
+	st.global.u32 	[%rd347], %r14;
+	ld.global.nc.u32 	%r16, [%rd345+4];
+	st.global.u32 	[%rd347+4], %r16;
+	ld.global.nc.u32 	%r17, [%rd345+8];
+	st.global.u32 	[%rd347+8], %r17;
+	ld.global.nc.u32 	%r18, [%rd345+12];
+	st.global.u32 	[%rd347+12], %r18;
+	ld.global.nc.u32 	%r19, [%rd345+16];
+	st.global.u32 	[%rd347+16], %r19;
+	ld.global.nc.u32 	%r20, [%rd345+20];
+	st.global.u32 	[%rd347+20], %r20;
+	ld.global.nc.u32 	%r21, [%rd345+24];
+	st.global.u32 	[%rd347+24], %r21;
+	ld.global.nc.u32 	%r22, [%rd345+28];
+	st.global.u32 	[%rd347+28], %r22;
+	ld.global.nc.u32 	%r23, [%rd345+32];
+	st.global.u32 	[%rd347+32], %r23;
+	ld.global.nc.u32 	%r24, [%rd345+36];
+	st.global.u32 	[%rd347+36], %r24;
+	ld.global.nc.u32 	%r25, [%rd345+40];
+	st.global.u32 	[%rd347+40], %r25;
+	ld.global.nc.u32 	%r26, [%rd345+44];
+	st.global.u32 	[%rd347+44], %r26;
+	ld.global.nc.u32 	%r27, [%rd345+48];
+	st.global.u32 	[%rd347+48], %r27;
+	ld.global.nc.u32 	%r28, [%rd345+52];
+	st.global.u32 	[%rd347+52], %r28;
+	ld.global.nc.u32 	%r29, [%rd345+56];
+	st.global.u32 	[%rd347+56], %r29;
+	ld.global.nc.u32 	%r30, [%rd345+60];
+	st.global.u32 	[%rd347+60], %r30;
+	add.s32 	%r33, %r33, 2;
+	mov.u64 	%rd348, 1;
+	shl.b64 	%rd349, %rd348, %r12;
+	add.s64 	%rd351, %rd349, %rd351;
+	setp.lt.u64 	%p70, %rd351, %rd198;
+	@%p70 bra 	$L__BB12_66;
+
+$L__BB12_69:
+	cvta.to.global.u64 	%rd350, %rd200;
+	st.global.u32 	[%rd350], %r33;
+
+$L__BB12_70:
 	ret;
 
 }

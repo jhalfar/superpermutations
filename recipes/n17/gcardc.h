@@ -10,7 +10,10 @@
    optionally the route-A ranker on one shard and a copy of the letters back to the host (for the plain SHA-256).
    Leaf digests are hashed on the host: tree hash = SHA-256 of the concatenated leaf digests (32 bytes each, in
    order), leaf = 65,536 letters of the word spelled with 0-9A-F (the last leaf may be shorter).
-   Needs from the includer: u8/u32/u64, wall(), Sha/sha_init/sha_update/sha_final, pthread. */
+   Needs from the includer: u8/u32/u64, wall(), Sha/sha_init/sha_update/sha_final, pthread, and blake3.h (b3_hasher):
+   with g2_blake3_on() after g2_init the card also computes the standard BLAKE3 hash of the same
+   letters (kernels b3leaf/b3up/b3pick of gcheckc.cu: the CVs of aligned power-of-two subtrees of every flush; the host
+   pushes them onto a BLAKE3 stack; the word's last leaf, when partial, goes through the host). */
 #ifdef _WIN32
 #define CAPI __stdcall
 __declspec(dllimport) void *__stdcall LoadLibraryA(const char *);
@@ -55,6 +58,7 @@ static struct {
     double tk; u64 st[4]; u32 ovf_h;
     u64 flip_at, cut_at;                          /* tests: change the letter at this word position (+1 mod n); end the word here */
     CSpan *stg[NSTG]; void *stgev[NSTG]; int stgi, stgused[NSTG];   /* spans go card-wards from pinned slots, in stream order */
+    void *mod; int b3; void *fb3leaf, *fb3up, *fb3pick; CDP b3buf, b3out, b3nout; u32 *hb3; b3_hasher b3h; double tb3;   /* BLAKE3 (g2_blake3_on) */
 } G2;
 
 static void *c_fn(void *mod, const char *name) { void *f; CCK(cuModuleGetFunction_(&f, mod, name)); return f; }
@@ -92,7 +96,7 @@ static void g2_init(const char *argv0, int n, int S, int tbits, u64 seg, int cop
     fseek(pf, 0, SEEK_END); long psz = ftell(pf); fseek(pf, 0, SEEK_SET); char *ptx = calloc(psz + 1, 1);
     if (fread(ptx, 1, psz, pf) != (size_t)psz) exit(2); fclose(pf);
     int dev; void *mod;
-    CCK(cuInit_(0)); CCK(cuDeviceGet_(&dev, 0)); CCK(cuCtxCreate_(&G2.ctx, 4, dev)); CCK(cuModuleLoadData_(&mod, ptx)); free(ptx);
+    CCK(cuInit_(0)); CCK(cuDeviceGet_(&dev, 0)); CCK(cuCtxCreate_(&G2.ctx, 4, dev)); CCK(cuModuleLoadData_(&mod, ptx)); free(ptx); G2.mod = mod;
     G2.scan1 = getenv("GEN17_SCAN2") == NULL; G2.fscan = c_fn(mod, G2.scan1 ? "scan" : "scan2");   /* scan (default) or scan2 (GEN17_SCAN2: letters staged in shared memory; same results, no faster here) */ G2.fharv = c_fn(mod, "harvest"); G2.freins = c_fn(mod, "reinsert"); G2.fpop = c_fn(mod, "popcnt64");
     G2.fexp = c_fn(mod, "expand"); G2.fleaf = c_fn(mod, "leafsha"); G2.frank = c_fn(mod, "rankmark");
     G2.fcsweep = c_fn(mod, "csweep"); G2.fcreins = c_fn(mod, "creins");
@@ -129,6 +133,14 @@ static void g2_init(const char *argv0, int n, int S, int tbits, u64 seg, int cop
     if (copyback && cuMemHostAlloc_((void **)&G2.hcopy, seg + 64, 0)) G2.hcopy = malloc(seg + 64);
     for (int i = 0; i < NSTG; i++) { CCK(cuMemHostAlloc_((void **)&G2.stg[i], G2.spancap * sizeof(CSpan), 0)); CCK(cuEventCreate_(&G2.stgev[i], 2)); }
     CCK(cuCtxSync_());
+}
+/* BLAKE3 on the card (after g2_init): units of 32 chunks, at most 2 (SEG/LEAF + 1) per flush, all levels in b3buf */
+#define B3_MAXOUT 256
+static void g2_blake3_on(void) {
+    G2.b3 = 1; G2.fb3leaf = c_fn(G2.mod, "b3leaf"); G2.fb3up = c_fn(G2.mod, "b3up"); G2.fb3pick = c_fn(G2.mod, "b3pick");
+    u64 units = 2 * (G2.SEG / LEAF + 1);
+    CCK(cuMemAlloc_(&G2.b3buf, 2 * units * 32 + 64)); CCK(cuMemAlloc_(&G2.b3out, B3_MAXOUT * 32)); CCK(cuMemAlloc_(&G2.b3nout, 8));
+    G2.hb3 = malloc(B3_MAXOUT * 32); b3_init(&G2.b3h);
 }
 /* The card's letter buffer (G2.seg, SEG letters) holds the word from some position on: windows from offset wst on
    are not scanned yet, leaves from offset lst on (16-byte aligned; lst is a multiple of LEAF in word positions) are
@@ -176,6 +188,25 @@ static void g2_flush(int final) {
     CDP nl = G2.seg + g_lst; u32 lf = LEAF;
     if (nleaf) { void *a4[] = { &nl, &hlen, &lf, &G2.dig }; c_launch(G2.fleaf, nleaf, 64, a4); }
     PSYNC(4);
+    /* BLAKE3: the full leaves of this flush (the word's last leaf, when partial, goes through the host below) */
+    u64 b3n = 0, b3U0 = 0, b3U1 = 0; double tb0 = 0;
+    if (G2.b3) {
+        if (g_prof) { CCK(cuCtxSync_()); tb0 = wall(); }
+        b3n = final ? hl / LEAF : nleaf;
+        if (b3n) {
+            b3U0 = 2 * G2.nleaves; b3U1 = b3U0 + 2 * b3n;
+            void *a6[] = { &nl, &b3n, &G2.nleaves, &G2.b3buf }; CCK(cuLaunch_(G2.fb3leaf, (unsigned)((b3n + 1) / 2), 1, 1, 128, 1, 1, 0, NULL, a6, NULL));
+            u64 base = 0, plo = b3U0, pcnt = b3U1 - b3U0;            /* level j: nodes lo..hi-1, stored after level j-1 */
+            for (int j = 1; j < 63; j++) {
+                u64 lo = (b3U0 + (1ULL << j) - 1) >> j, hi = b3U1 >> j; if (hi <= lo) break;
+                CDP src = G2.b3buf + base * 32, dst = G2.b3buf + (base + pcnt) * 32; u64 cnt = hi - lo;
+                void *a7[] = { &src, &plo, &dst, &lo, &cnt }; c_launch(G2.fb3up, cnt, 128, a7);
+                base += pcnt; plo = lo; pcnt = cnt;
+            }
+            void *a8[] = { &G2.b3buf, &b3U0, &b3U1, &G2.b3out, &G2.b3nout }; CCK(cuLaunch_(G2.fb3pick, 1, 1, 1, 1, 1, 1, 0, NULL, a8, NULL));
+        }
+        if (g_prof) { CCK(cuCtxSync_()); G2.tb3 += wall() - tb0; g_tp = wall(); }
+    }
     CCK(cuCtxSync_());
     u32 cnt[2]; CCK(cuDtoH_(&cnt[0], G2.nsurv, 4)); CCK(cuDtoH_(&cnt[1], G2.nres, 4)); CCK(cuDtoH_(&G2.ovf_h, G2.ovf, 4));
     if (G2.ovf_h) fprintf(stderr, "gcard: table or list overflow (flag %u) at flush %llu; the run is not valid\n", G2.ovf_h, (unsigned long long)G2.segs);
@@ -184,6 +215,24 @@ static void g2_flush(int final) {
     if (getenv("CORETAB_DEBUG")) { u32 c3 = 0; if (G2.mode & 2) CCK(cuDtoH_(&c3, G2.nclst, 4)); fprintf(stderr, "flush %llu: letters %llu, partial groups %u, residues %u, active cores %u\n", (unsigned long long)G2.segs, (unsigned long long)G2.total, cnt[0], cnt[1], c3); }
     if (G2.mode & 2) { u32 c3; u64 d6; CCK(cuDtoH_(&c3, G2.nclst, 4)); CCK(cuDtoH_(&d6, G2.stats + 48, 8)); G2.ncl = c3 < G2.clcap ? c3 : G2.clcap; if (c3 > G2.peak_cores) G2.peak_cores = c3;
         if (d6 - G2.last_done + c3 > G2.peak_ctab) G2.peak_ctab = d6 - G2.last_done + c3; G2.last_done = d6; }   /* cores in the table before the sweep */
+    if (b3n) {                                         /* BLAKE3: push the two halves of every block, in order */
+        u32 no; CCK(cuDtoH_(&no, G2.b3nout, 4));
+        if (no > B3_MAXOUT || G2.b3h.c.counter != b3U0 * 32) { fprintf(stderr, "gcard: BLAKE3 bookkeeping error (%u values, counter %llu, expected %llu)\n", no, (unsigned long long)G2.b3h.c.counter, (unsigned long long)(b3U0 * 32)); exit(2); }
+        CCK(cuDtoH_(G2.hb3, G2.b3out, (size_t)no * 32));
+        u64 p = b3U0; u32 i = 0;
+        while (p < b3U1) {
+            int k = 1; while (k < 62 && (p & ((2ULL << k) - 1)) == 0 && p + (2ULL << k) <= b3U1) k++;
+            for (int hh = 0; hh < 2; hh++, i++) if (i >= no || b3_push_subtree(&G2.b3h, G2.hb3 + 8 * (u64)i, (1ULL << (k - 1)) * 32)) { fprintf(stderr, "gcard: BLAKE3 push refused\n"); exit(2); }
+            p += 1ULL << k;
+        }
+        if (i != no) { fprintf(stderr, "gcard: BLAKE3: %u values from the card, %u expected\n", no, i); exit(2); }
+    }
+    if (G2.b3 && final && hl > b3n * LEAF) {           /* the word's last, partial leaf (< 64 KiB) on the host */
+        u64 r3 = hl - b3n * LEAF; u8 *b3t = malloc(r3); if (!b3t) exit(2);
+        CCK(cuDtoH_(b3t, nl + b3n * LEAF, r3));
+        static const char A3[] = "0123456789ABCDEFG"; for (u64 i = 0; i < r3; i++) b3t[i] = (u8)A3[b3t[i]];
+        b3_update(&G2.b3h, b3t, r3); free(b3t);
+    }
     u32 nr = cnt[1] < G2.rescap ? cnt[1] : G2.rescap;
     if (nr) {
         if (G2.nhres + nr > G2.caphres) { G2.caphres = (G2.nhres + nr) * 2; G2.hres = realloc(G2.hres, G2.caphres * sizeof(CRec)); if (!G2.hres) { fprintf(stderr, "gcard: out of memory (residues)\n"); exit(2); } }
@@ -253,7 +302,7 @@ static u64 h_core_of(int n, u64 g, int *child) {
     }
     *child = p; return c;
 }
-typedef struct { u64 total, pw, runs, complete_on_card, residues, residue_groups, residue_complete, bits, missing, rseen, rmarked; int overflow; char tree[65], plain[65];
+typedef struct { u64 total, pw, runs, complete_on_card, residues, residue_groups, residue_complete, bits, missing, rseen, rmarked; int overflow; char tree[65], plain[65], b3[65];
                  /* coretab */ u64 cbits, cdone_card, cdone_host, cleft, cgroups, cmissing, crecomp_child, crecomp_core, cres_full, cpartial; int cvalid, gvalid; } G2Res;
 /* host hash of active cores (g2_finish) */
 static u64 *hk_, hc_;
@@ -268,7 +317,7 @@ static void mir_put(CDP base, u64 *mir, u64 nw) { if (mir) CCK(cuHtoD_(base, mir
 static u64 cbit_word(u64 c) { return wget(G2.CB, mirCB, c >> 6); }
 static void g2_finish(G2Res *o) {
     g2_flush(1);
-    if (g_prof > 0) fprintf(stderr, "gcard profile (s): queued copies+expands %.2f, reinsert %.2f, scan %.2f, harvest %.2f, leaf hashes %.2f, rest %.2f\n", g_pt[0], g_pt[1], g_pt[2], g_pt[3], g_pt[4], g_pt[5]);
+    if (g_prof > 0) fprintf(stderr, "gcard profile (s): queued copies+expands %.2f, reinsert %.2f, scan %.2f, harvest %.2f, leaf hashes %.2f, rest %.2f, blake3 %.2f\n", g_pt[0], g_pt[1], g_pt[2], g_pt[3], g_pt[4], g_pt[5], G2.tb3);
     memset(o, 0, sizeof *o);
     /* the survivors left after the last segment are residues too */
     if (G2.ns) {
@@ -364,14 +413,15 @@ static void g2_finish(G2Res *o) {
         CCK(cuDtoH_(&o->rseen, dc2, 8));
         if (G2.rnw & 1) { u32 last; CCK(cuDtoH_(&last, G2.rbits + (G2.rnw - 1) * 4, 4)); o->rseen += __builtin_popcount(last); } }
     sha_final(&G2.tree, o->tree); if (G2.copyback) sha_final(&G2.plain, o->plain); else strcpy(o->plain, "none");
+    if (G2.b3) { u8 h3[32]; b3_final(&G2.b3h, h3); b3_hex(h3, o->b3); } else strcpy(o->b3, "none");
 }
 static void g2_json(FILE *f, const G2Res *o) {
     fprintf(f, "\"satellite\":%d,\"segment_letters\":%llu,\"segments\":%llu,\"permutation_windows\":%llu,\"rotation_runs\":%llu,\"groups\":%llu,\"groups_complete_on_card\":%llu,"
-            "\"residues\":%llu,\"residue_groups\":%llu,\"overflow\":%d,\"overflow_flags\":%u,\"tree_sha256\":\"%s\",\"leaves\":%llu,\"plain_sha256_card_letters\":\"%s\",\"card_seconds\":%.1f,"
+            "\"residues\":%llu,\"residue_groups\":%llu,\"overflow\":%d,\"overflow_flags\":%u,\"tree_sha256\":\"%s\"%s%s%s,\"leaves\":%llu,\"plain_sha256_card_letters\":\"%s\",\"card_seconds\":%.1f,"
             "\"table_mode\":\"%s\",\"peak_partial_groups_on_card\":%llu",
             G2.S, (unsigned long long)G2.SEG, (unsigned long long)G2.segs, (unsigned long long)o->pw, (unsigned long long)o->runs, (unsigned long long)G2.NG,
             (unsigned long long)o->complete_on_card, (unsigned long long)o->residues, (unsigned long long)o->residue_groups, o->overflow, G2.ovf_h,
-            o->tree, (unsigned long long)G2.nleaves, o->plain, G2.tk, G2.mode == 1 ? "group" : G2.mode == 2 ? "core" : "both", (unsigned long long)G2.peak_surv);
+            o->tree, G2.b3 ? ",\"blake3\":\"" : "", G2.b3 ? o->b3 : "", G2.b3 ? "\"" : "", (unsigned long long)G2.nleaves, o->plain, G2.tk, G2.mode == 1 ? "group" : G2.mode == 2 ? "core" : "both", (unsigned long long)G2.peak_surv);
     if (G2.mode & 1)
         fprintf(f, ",\"group_shard\":\"%llu/%llu\",\"shard_groups\":%llu,\"residue_groups_complete\":%llu,\"group_bits\":%llu,\"missing_permutations\":%llu,\"group_valid\":%s",
                 (unsigned long long)G2.oI, (unsigned long long)G2.oK, (unsigned long long)G2.NGloc, (unsigned long long)o->residue_complete,
