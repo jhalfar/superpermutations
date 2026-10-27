@@ -84,6 +84,13 @@ Part five, n = 15 and 16 (October 25 and 26):
     the loops above the 6,048 loops without a row: 22,320,795,912,621 letters, checked on the card, 34,178,619 below
     the value of `hasWord_sixteen_B`.
 
+Part six, n = 17, n = 6 and n = 11 (October 26 and 27):
+
+15. One more lift with the block gives 377,961,971,839,096 letters for n = 17, 520,219,328 below
+    `hasWord_seventeen_B`, checked on one card in one pass by a table of (n-3)! bits. All 45,116 minimal words for
+    n = 6 come from two separate programs, with the counts of Gheorghe's census. Jay Pantone's n = 11 word of
+    43,930,548 letters, made from my selection X, went to 43,930,540 by local kicks.
+
 ## The model
 
 A word of Pantone's construction splits into pieces at the steps of weight 4 or more. Almost every piece is a
@@ -868,9 +875,41 @@ most a few million letters are left in it.
 
 The check is a group check on the graphics card, in four passes of 19 minutes each, each recording a quarter of the
 14! groups. All four passes were valid with the same length and tree hash. Removing one block walk unit from the
-plan made pass 0 report 509,520 missing permutations. Only this one program has checked the word, and I did not run
-`tools/trailsearch.c` on the plans of n = 15 and 16, which it does not read. [`recipes/n16/`](recipes/n16/README.md)
-has the recipe.
+plan made pass 0 report 509,520 missing permutations. The one-pass check of part six later found every permutation
+too, with the same length and tree hash. I did not run `tools/trailsearch.c` on the plans of n = 15 and 16, which it
+does not read. [`recipes/n16/`](recipes/n16/README.md) has the recipe.
+
+# Part six: n = 17, one-pass checks, n = 6 and n = 11 (October 26 and 27)
+
+**n = 17.** `liftB lift 5` lifts the n = 16 plan once more, with the block at every position (`tools/plans/`): 55,463,616
+units, 5.1 hours on one thread and 5.1 GB. The word has 377,961,971,839,096 letters, 520,219,328 below
+`hasWord_seventeen_B` (377,962,492,058,424). The same lift without the block gives 377,964,020,415,918, which is above
+the Lean value; only the block gets the words of n = 16 and 17 below it. A rebuild from the repository's n = 16 plan
+gave the same units. [`recipes/n17/`](recipes/n17/README.md) has the recipe.
+
+**One pass instead of four.** The group check keeps one bit per group, (n-2)! bits, which for n = 17 is 15!, more
+than a card holds. The check of `recipes/n17/coreBp.c` keeps one bit per core, (n-3)! bits, and a small table for
+the cores that are only partly seen so far (at most 183,504 entries in the runs for n = 15 and 16). For n = 17 the table of 14! bits takes 10.9 GB of card memory, and one pass over the word took
+13,701 seconds, and 12,908 in a second run of `check.sh core`: every permutation occurs. The same check takes 13
+minutes for n = 16 and 60 seconds for n = 15, with the lengths and tree hashes of the other checks. For n = 18 the
+table would need 163 GB. As a candidate for that I tested a check by hashes: every covered group adds a random
+value modulo 2^61 - 1 under four keys, and the sums are compared with those of the full set. It agreed with the exact
+check on n = 16 and n = 17 and reported an n = 16 word with one group missing as incomplete. It is not in the
+repository yet. Plain SHA-256 of a word this long is sequential (about 4 days for n = 17), so the recipes print a
+tree hash, SHA-256 over segments of 2^29 letters, which the card computes during the check.
+
+**n = 6.** I enumerated all minimal superpermutations for n = 6: a minimal word spells a Hamiltonian path of weight
+866, which gives a standard configuration of defect at most 5 with the same entries and rows; a first stage lists
+46,798 candidate configurations, a second searches every path for each. Two programs written separately give the
+same 45,116 words up to relabelling, the counts of Vlad Gheorghe's provisional census; the list contains all 44,120
+words of Robin Houston's four classes. The step from paths to configurations with the same entries and rows is proved
+on paper only. [`words/n6/`](words/n6/README.md) has the list and a checker of it.
+
+**n = 11.** Jay Pantone's repository for his upper bounds has a word of 43,930,548 letters, 30 below my 43,930,578,
+made from my selection X by changing the images of its blocks and choosing the openings anew. I had not seen it until
+October 27. The local kicks of `tools/segins_ils.c` took it to 43,930,541 within minutes on three seeds, and kicks of
+up to two letters to 43,930,540; segment insertion with three to five cuts and an hour of `tools/trailsearch.c` find
+nothing more on it.
 
 # What gave nothing
 
