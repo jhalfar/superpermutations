@@ -89,7 +89,8 @@ Part six, n = 17, n = 6 and n = 11 (October 26 and 27):
 15. One more lift with the block gives 377,961,971,839,096 letters for n = 17, 520,219,328 below
     `hasWord_seventeen_B`, checked on one card in one pass by a table of (n-3)! bits. All 45,116 minimal words for
     n = 6 come from two separate programs, with the counts of Gheorghe's census. Jay Pantone's n = 11 word of
-    43,930,548 letters, made from my selection X, went to 43,930,540 by local kicks.
+    43,930,548 letters, made from my selection X, went to 43,930,534 once I had recovered his block images and
+    changed two of them.
 
 ## The model
 
@@ -907,9 +908,17 @@ on paper only. [`words/n6/`](words/n6/README.md) has the list and a checker of i
 
 **n = 11.** Jay Pantone's repository for his upper bounds has a word of 43,930,548 letters, 30 below my 43,930,578,
 made from my selection X by changing the images of its blocks and choosing the openings anew. I had not seen it until
-October 27. The local kicks of `tools/segins_ils.c` took it to 43,930,541 within minutes on three seeds, and kicks of
-up to two letters to 43,930,540; segment insertion with three to five cuts and an hour of `tools/trailsearch.c` find
-nothing more on it.
+October 27. Read as its own base, his word has 18 joins of cost 0 and 10 of its trails cannot move; the local kicks of
+`tools/segins_ils.c` still took it to 43,930,541 within minutes and to 43,930,540 with kicks of up to two letters. To
+search properly I recovered his images: each image of each block of X was scored by the pairs of consecutive
+permutations it shares with his word, and every block has exactly one image that scores above 0.999 (the next is at
+most 0.988). He relabelled 22 blocks and reversed 15, and left 11 as they were, among them the 10 blocks that are tied
+to big walks and cannot change. With all 800 trails of his images as the base, the kicks reached 43,930,538. Then I
+tried every other image of each free block at a fixed order, and kicks around the place after the change: one image
+cost a letter at a fixed order and gave 43,930,536 after the kicks, and one more, which also exchanges the two added
+letters, gave 43,930,534, 14 below his word. An hour of `tools/trailsearch.c`, the cut pass and segment insertion with
+three to five cuts find nothing more. The images are in [`plan/images-11-43930534.txt`](plan/images-11-43930534.txt),
+the base and the plan next to it.
 
 # What gave nothing
 

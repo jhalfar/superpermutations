@@ -20,7 +20,7 @@ runs the searches and writes the code and this text.
 |---|---:|---:|---|---:|
 | 8 | 46,174 | 46,178 | William Echols | -4 |
 | 10 | 4,034,855 | 4,034,873 | rumstd | -18 |
-| 11 | 43,930,578 | 43,930,624 | Theo H. | -46 |
+| 11 | 43,930,534 | 43,930,548 | Jay Pantone | -14 |
 | 12 | 522,736,969 | 522,737,173 | Theo H. | -204 |
 | 13 | 6,747,801,798 | 6,747,918,066 | Jay Pantone | -116,268 |
 | 14 | 93,904,804,405 | 93,904,804,516 | William Echols | -111 |
@@ -31,14 +31,17 @@ runs the searches and writes the code and this text.
 "Before" is the best word of someone else when mine was published. For n = 8 the shortest word known is now
 Theo H.'s 46,173, which he found with `tools/trailsearch.c` of this repository on the same selection
 ([`words/n8/`](words/n8/README.md)). Theo H.'s words for n = 11 and 12 were made from earlier words of mine. The
-word for n = 12 starts from William Echols's 522,737,174, and it and the word for n = 13 use two moves from the
-group: his re-opening of a stretch of consecutive trails and Theo H.'s moving of a trail with a new phase.
-Against Pantone's own words of 4,034,889, 43,930,680, 522,745,581 and 6,747,918,066 letters the words for n = 10 to
-13 are 34, 102, 8,612 and 116,268 letters shorter. My own best words on Pantone's closed trails, before the change
+word for n = 11 starts from Jay Pantone's 43,930,548, which he made from my selection X by changing the images of
+its blocks; I recovered his images, changed two of them and repaired the order with local kicks
+([`plan/images-11-43930534.txt`](plan/images-11-43930534.txt)). The word for n = 12 starts from William Echols's
+522,737,174, and it and the word for n = 13 use two moves from the group: his re-opening of a stretch of consecutive
+trails and Theo H.'s moving of a trail with a new phase. Against Pantone's own words of 4,034,889, 43,930,680,
+522,745,581 and 6,747,918,066 letters from the 43/80 release the words for n = 10 to 13 are 34, 146, 8,612 and
+116,268 letters shorter. My own best words on Pantone's closed trails, before the change
 of selection, had 43,930,614, 522,745,350 and 6,747,916,657 letters.
 
 The files are `words/superpermutation-N-LENGTH.txt.xz`: XZ archives with a delta filter of distance n that `xz -d`
-unpacks (2 KB for n = 8, then 65 KB, 0.4 MB, 4.1 MB and 45 MB for n = 10 to 13), on the first n letters of
+unpacks (2 KB for n = 8, then 65 KB, 1.1 MB, 4.1 MB and 45 MB for n = 10 to 13), on the first n letters of
 `0123456789ABC`, one line plus a line feed, as in Pantone's repository. New words for $`n \ge 13`$ are stored in Theo
 H.'s [SPRA format](https://github.com/Tholsh/SPRA) (version 0.2, fields of 6 bits) and packed with `xz`:
 `words/superpermutation-13-6747801798.spra.xz`, 1.26 MB. Its decoder is `tools/reduced_codec.cpp` of that
@@ -67,7 +70,7 @@ has the hashes of every archive, word and plan.
 
     n = 8    66ec57ba428e0ac1affc5503b86821920f0def27380697317033911a6628cddd
     n = 10   09e2c807aea5f0890d257f97d5d447c0235d41df9589caff8899f01d2016f7f6
-    n = 11   65ddf4c4a3ebaa69de7bc6be29e0b38ad010055f22ef6abeeffdb4f508176092
+    n = 11   fea642b8f56e7ab7259a0852fd6cb8ae6f76fffeb407b709ac330726b0a131f2
     n = 12   48c00acf991d87a396fb162bc66447d9dba90ddc0ac9dca5ffed89e46597fcba
     n = 13   272680a7668ae245a16a9b0e6bd8e4bdd90cb7bf67922a2d534deeff70c68232
     n = 14   5eebd12aa5f4fcf1851bfbcfb0aa0ffeb860b68d265fb1be9c3321a121357a92
@@ -131,7 +134,9 @@ Each word rebuilds from a selection (what the closed trails are) and a plan (the
 6,747,802,393 letters, with a generator and the hashes to expect: Python 3 and a C compiler, no solver. The newest
 words for n = 12 and 13 are on the same base words; their plans are `plan/trailsearch-12-522736969.plan` and
 `plan/trailsearch-13-6747801798.plan` (and `plan/trailsearch-13-6747801835.plan` and
-`plan/trailsearch-13-6747802319.plan` for the words before), and the
+`plan/trailsearch-13-6747802319.plan` for the words before). The word for n = 11 rebuilds from its own base, the 800
+closed trails of selection X with the block images of `plan/images-11-43930534.txt`
+(`plan/base-11-43930534.txt.xz`, unpack first), and `plan/trailsearch-11-43930534.plan`. The
 earlier words on Pantone's closed trails rebuild from his words and the plans in [`plan/`](plan/) and
 [`plan/history/`](plan/history/README.md):
 
