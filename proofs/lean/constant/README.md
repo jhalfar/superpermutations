@@ -6,7 +6,7 @@ Mathlib at `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`). It applies his construct
 proves, for superpermutations on $`n`$ symbols,
 
 ```math
-S(n) \le F_3(n) + \left(\tfrac{1771}{3456} + o(1)\right)(n-3)!, \qquad F_3(n) = n! + (n-1)! + (n-2)!
+L(n) \le F_3(n) + \left(\tfrac{1771}{3456} + o(1)\right)(n-3)!, \qquad F_3(n) = n! + (n-1)! + (n-2)!
 ```
 
 ```math

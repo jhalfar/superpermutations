@@ -1,4 +1,4 @@
-# S(1) to S(6) in Lean, checked by the kernel alone
+# L(1) to L(6) in Lean, checked by the kernel alone
 
 The shortest superpermutation on n symbols has 1, 3, 9, 33, 153 and 872 letters for n = 1, 2, 3, 4, 5 and 6.
 This directory proves the six values in Lean 4. Each value is one theorem with both halves: a word of that length

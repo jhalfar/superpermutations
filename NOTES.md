@@ -1046,7 +1046,7 @@ where the optimum under rotation is 301. So it does not say how much a better bl
 
 ## The constant
 
-Pantone's bound is $`S(n) \le n! + (n - 1)! + (n - 2)! + (\tfrac{43}{80} + o(1))\,(n - 3)!`$. Selection C has full and short
+Pantone's bound is $`L(n) \le n! + (n - 1)! + (n - 2)! + (\tfrac{43}{80} + o(1))\,(n - 3)!`$. Selection C has full and short
 rows only and transports to every n, so it has a constant of its own. What I can say about it:
 
 * Its floor, Q plus the number of closed trails, is $`\tfrac{193}{378} = 0.510582`$ times $`(n - 3)!`$ at n = 12 and n = 13. For
@@ -1056,7 +1056,7 @@ rows only and transports to every n, so it has a constant of its own. What I can
 * With connector cycles chosen explicitly at n = 12 (203 cycles that meet the 1,152 walk trails, checked by two
   programs), sections 4 and 5 of Pantone's summary applied to this selection give
 
-  $`\displaystyle S(n) \le n! + (n-1)! + (n-2)! + \left(\tfrac{1771}{3456} + o(1)\right)(n-3)!, \qquad \tfrac{1771}{3456} = 0.512442.`$
+  $`\displaystyle L(n) \le n! + (n-1)! + (n-2)! + \left(\tfrac{1771}{3456} + o(1)\right)(n-3)!, \qquad \tfrac{1771}{3456} = 0.512442.`$
 
   Since October 6 this is a theorem in Lean, for every $`n \ge 13`$, built on Pantone's Lean library and stated with
   his definitions (`proofs/lean/constant/`). His lemma carries the 203 cycles to n = 13, where they become

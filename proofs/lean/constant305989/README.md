@@ -4,7 +4,7 @@ This directory builds on [`../constant61937/`](../constant61937/README.md) (the 
 proves, for superpermutations on $`n`$ symbols,
 
 ```math
-S(n) \le F_3(n) + \left(\tfrac{305989}{604800} + o(1)\right)(n-3)!, \qquad F_3(n) = n! + (n-1)! + (n-2)!
+L(n) \le F_3(n) + \left(\tfrac{305989}{604800} + o(1)\right)(n-3)!, \qquad F_3(n) = n! + (n-1)! + (n-2)!
 ```
 
 ```math

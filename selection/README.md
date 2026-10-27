@@ -149,7 +149,7 @@ The transportable selection has the floor 193/378 = 0.510582 at every n >= 12, b
 the loops without a row and the closed trails of the walks by the same number. With explicit connector cycles it
 gives
 
-    S(n) <= F3(n) + (1771/3456 + o(1)) (n-3)!,      1771/3456 = 53/108 + 7875/9! = 0.512442
+    L(n) <= F3(n) + (1771/3456 + o(1)) (n-3)!,      1771/3456 = 53/108 + 7875/9! = 0.512442
 
 against Pantone's 43/80 = 0.5375. This is a consequence of sections 4 and 5 of his paper applied to this
 selection. I checked the hypotheses by computation and did not prove the argument again.

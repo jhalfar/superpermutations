@@ -4,7 +4,7 @@ This directory builds on [`../constant305989/`](../constant305989/README.md). It
 $`n`$ symbols,
 
 ```math
-S(n) \le F_3(n) + \left(c + o(1)\right)(n-3)!, \qquad F_3(n) = n! + (n-1)! + (n-2)!
+L(n) \le F_3(n) + \left(c + o(1)\right)(n-3)!, \qquad F_3(n) = n! + (n-1)! + (n-2)!
 ```
 
 for eight coefficients $`c`$, and in `Uniform/` that the best coefficient tends to 0. The construction is Pantone's.

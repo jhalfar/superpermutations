@@ -36,7 +36,7 @@ The shortest words over n symbols that contain all permutations have 1, 3, 9, 33
 * method: Lean theorems SmallSuperperm.exact_one to exact_five, kernel only, no native_decide: proofs/lean/small/Small. Upper bounds: the words of the recursive construction, checked by the kernel. Lower bounds: n = 1, 2 direct; n = 3, 4 pointwise_3, pointwise_4 of the Hunter-Raudvere library through the bridge of proofs/lean/words; n = 5 Theorem A of proofs/lean/lower.
 * credit: The values are classical. Lean: Jakub Halfar (with Claude); the lower bounds for n = 3 and 4 are Zach Hunter and Uku Raudvere's (their library, Corollary 28).; date 2026-10-25
 * reproduce: `./build.sh 5` in `proofs/lean/small`
-* evidence: `proofs/lean/small/README.md` (sha256 `e8b15f6eaef1...`); `proofs/lean/small/Small/Upto5.lean` (sha256 `166f467bd7fa...`)
+* evidence: `proofs/lean/small/README.md` (sha256 `bd18881a8dcf...`); `proofs/lean/small/Small/Upto5.lean` (sha256 `166f467bd7fa...`)
 * source: `proofs/lean/small/README.md:3`
 
 
@@ -53,7 +53,7 @@ Every word over 6 symbols that contains all 720 permutations has at least 872 le
 * method: Lean theorem SmallSuperperm.exact_six (also grayzel_six : Superperm6.IsMinimumLength 872), kernel only, no native_decide: proofs/lean/small. Lower bound K6.covers_872: a kernel search (one part of 52,386 nodes for the chain caps, 72 parts for the tight case at defect 4) in the model of standard configurations with Theorems W and N of proofs/lean/n7. Upper bound: Robin Houston's word in the kernel-only version of Benjamin Grayzel's Witness.lean. Axioms propext, Classical.choice, Quot.sound.
 * credit: Jakub Halfar (with Claude). The value 872 was known: the word is Robin Houston's (2014), and Benjamin Grayzel's Lean proof of s(6) = 872 uses native_decide; his definitions and his check of the word are used here.; date 2026-10-25
 * reproduce: `JOBS=2 ./build.sh` in `proofs/lean/small`
-* evidence: `proofs/lean/small/README.md` (sha256 `e8b15f6eaef1...`); `proofs/lean/small/Small/Exact.lean` (sha256 `facc80dc14e7...`); `proofs/lean/small/K6/Final872.lean` (sha256 `fe08a1bd0087...`)
+* evidence: `proofs/lean/small/README.md` (sha256 `bd18881a8dcf...`); `proofs/lean/small/Small/Exact.lean` (sha256 `facc80dc14e7...`); `proofs/lean/small/K6/Final872.lean` (sha256 `fe08a1bd0087...`)
 * source: `proofs/lean/small/README.md:10`
 * notes: Before this, the best kernel-only bound at n = 6 was 870 (Theorem A of proofs/lean/lower). The README of proofs/lean/small gives the cost of a build from an empty directory.
 
@@ -611,7 +611,7 @@ Lean proves that for every rational eps > 0 there is an N >= 13 such that every 
 * method: Lean theorems finite_bound and eventual_bound of proofs/lean/constant on Pantone's library; decide +kernel, no native_decide, axioms propext, Classical.choice, Quot.sound
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's (his theorem has 43/80); date 2026-10-06
 * reproduce: `./build.sh` in `proofs/lean/constant`
-* evidence: `proofs/lean/constant/README.md` (sha256 `25d35610db91...`)
+* evidence: `proofs/lean/constant/README.md` (sha256 `249f0e23f5dc...`)
 * source: `proofs/lean/constant/README.md:1`
 * superseded by: `all-const-61937`
 * notes: Module directory proofs/lean/constant/SuperpermutationUpperBound1771; 1771/3456 = 0.51244.
@@ -625,7 +625,7 @@ Lean proves that for every rational eps > 0 there is an N >= 13 such that every 
 * method: Lean theorems SuperpermutationUpperBound61937.finite_bound, eventual_bound (Main.lean), word_thirteen (Main13.lean); every certificate check decide +kernel, no sorry, no native_decide, axioms propext, Classical.choice, Quot.sound; proofs/lean/constant61937
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's; date 2026-10-18
 * reproduce: `./build.sh` in `proofs/lean/constant61937`
-* evidence: `proofs/lean/constant61937/README.md` (sha256 `dc7379b28683...`)
+* evidence: `proofs/lean/constant61937/README.md` (sha256 `c12f1452973a...`)
 * source: `proofs/lean/constant61937/README.md:1`
 * supersedes: `all-const-1771`
 * superseded by: `all-const-305989`
@@ -640,7 +640,7 @@ Lean proves that for every rational eps > 0 there is an N >= 16 such that every 
 * method: Lean theorems SuperpermutationUpperBound305989.finite_bound16 and eventual_bound16 (MainB.lean); decide +kernel for certificates, no sorry, no native_decide, axioms propext, Classical.choice, Quot.sound; proofs/lean/constant305989
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's; date 2026-10-18
 * reproduce: `./build.sh` in `proofs/lean/constant305989`
-* evidence: `proofs/lean/constant305989/README.md` (sha256 `550a5910fde3...`)
+* evidence: `proofs/lean/constant305989/README.md` (sha256 `f525b09843c2...`)
 * source: `proofs/lean/constant305989/README.md:1`
 * supersedes: `all-const-61937`
 * superseded by: `all-const-8711159`
@@ -655,7 +655,7 @@ Lean proves (finite_bound19_8711159 and eventual_bound for the nested blocks C; 
 * method: Lean theorem finite_bound19_8711159 of namespace SuperpermutationUpperBound43586371, decide +kernel for certificates, no sorry, no native_decide; axioms propext, Classical.choice, Quot.sound audited for all 48 main theorems; proofs/lean/constant43586371
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's; date 2026-10-18
 * reproduce: `./build.sh` in `proofs/lean/constant43586371`
-* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a3e8a2894751...`)
+* evidence: `proofs/lean/constant43586371/README.md` (sha256 `b1314ec8de89...`)
 * source: `proofs/lean/constant43586371/README.md:26`
 * supersedes: `all-const-305989`
 * notes: Module directory proofs/lean/constant43586371/SuperpermutationUpperBound43586371; HasWord 19 128413775108545920. Coefficient 0.5036144.
@@ -669,7 +669,7 @@ Lean proves (finite_bound22_21736511 and the matching eventual bound) that every
 * method: Lean theorem finite_bound22_21736511 of namespace SuperpermutationUpperBound43586371, decide +kernel for certificates, no sorry, no native_decide; proofs/lean/constant43586371
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's; date 2026-10-18
 * reproduce: `./build.sh` in `proofs/lean/constant43586371`
-* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a3e8a2894751...`)
+* evidence: `proofs/lean/constant43586371/README.md` (sha256 `b1314ec8de89...`)
 * source: `proofs/lean/constant43586371/README.md:28`
 * notes: Module directory proofs/lean/constant43586371/SuperpermutationUpperBound43586371; HasWord 22 1177586065108048296960. Coefficient 0.5026573.
 
@@ -682,7 +682,7 @@ Lean proves (finite_bound19_3853 and the matching eventual bound) that every K >
 * method: Lean theorem finite_bound19_3853 of namespace SuperpermutationUpperBound43586371, decide +kernel for certificates, no sorry, no native_decide; proofs/lean/constant43586371
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's; date 2026-10-18
 * reproduce: `./build.sh` in `proofs/lean/constant43586371`
-* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a3e8a2894751...`)
+* evidence: `proofs/lean/constant43586371/README.md` (sha256 `b1314ec8de89...`)
 * source: `proofs/lean/constant43586371/README.md:30`
 * superseded by: `all-const-11117297`
 * notes: Module directory proofs/lean/constant43586371/SuperpermutationUpperBound43586371; HasWord 19 128412985922988480. proofs/lean/constant43586371/REFEREE.md covers the method.
@@ -696,7 +696,7 @@ Lean proves (finite_bound22_11117297 and the matching eventual bound) that every
 * method: Lean theorem finite_bound22_11117297 of namespace SuperpermutationUpperBound43586371, decide +kernel for certificates, no sorry, no native_decide; proofs/lean/constant43586371
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's; date 2026-10-18
 * reproduce: `./build.sh` in `proofs/lean/constant43586371`
-* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a3e8a2894751...`)
+* evidence: `proofs/lean/constant43586371/README.md` (sha256 `b1314ec8de89...`)
 * source: `proofs/lean/constant43586371/README.md:31`
 * supersedes: `all-const-3853`
 * notes: Module directory proofs/lean/constant43586371/SuperpermutationUpperBound43586371; HasWord 22 1177577603255664374400. The best finite constant proved here.
@@ -710,7 +710,7 @@ Lean proves coefficient_tends_to_zero: for every rational eps > 0 there is N suc
 * method: Lean theorem SuperpermutationUpperBound43586371.Uniform.coefficient_tends_to_zero (Uniform/Main.lean, 2,489 lines), axioms propext, Classical.choice, Quot.sound, no sorry, no native_decide, no decide on anything that depends on m; a referee pass found no error (REFEREE.md); leanchecker --fresh passes on all 118 modules of the limit theorem; the comparator and nanoda accepted it
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's; date 2026-10-19
 * reproduce: `./build.sh` in `proofs/lean/constant43586371`
-* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a3e8a2894751...`)
+* evidence: `proofs/lean/constant43586371/README.md` (sha256 `b1314ec8de89...`)
 * source: `proofs/lean/constant43586371/README.md:73`
 * notes: rate_R is in proofs/lean/constant43586371/SuperpermutationUpperBound43586371/UniR/RRate.lean.
 
@@ -723,7 +723,7 @@ Lean proves UniR.rate_R8: for every n >= 2^14 a covering word of length at most 
 * method: Lean theorems in proofs/lean/constant43586371/SuperpermutationUpperBound43586371/UniR/RRate8.lean (word_bound8, rate_R8, rate_R8_eventually), axioms propext, Classical.choice, Quot.sound, no sorry, no native_decide; RRate8 builds in 20 s
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's; date 2026-10-19
 * reproduce: `./build.sh` in `proofs/lean/constant43586371`
-* evidence: `proofs/lean/constant43586371/README.md` (sha256 `a3e8a2894751...`)
+* evidence: `proofs/lean/constant43586371/README.md` (sha256 `b1314ec8de89...`)
 * source: `proofs/lean/constant43586371/README.md:104`
 
 #### `all-const-asym`

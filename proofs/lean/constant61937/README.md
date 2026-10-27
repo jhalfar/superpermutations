@@ -4,7 +4,7 @@ This directory is a second development in the style of [`../constant/`](../const
 superpermutations on $`n`$ symbols,
 
 ```math
-S(n) \le F_3(n) + \left(\tfrac{61937}{120960} + o(1)\right)(n-3)!, \qquad F_3(n) = n! + (n-1)! + (n-2)!
+L(n) \le F_3(n) + \left(\tfrac{61937}{120960} + o(1)\right)(n-3)!, \qquad F_3(n) = n! + (n-1)! + (n-2)!
 ```
 
 ```math

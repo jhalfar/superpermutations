@@ -270,7 +270,7 @@ His repository is not copied: `n8/` holds diffs against it, three new Lean files
 clone his repository yourself. This part stops at 46,132. [`n8/README.md`](n8/README.md) says what replaces
 each `native_decide`.
 
-### S(1) to S(6) (`small/`, namespace `SmallSuperperm`)
+### L(1) to L(6) (`small/`, namespace `SmallSuperperm`)
 
 ```lean
 theorem exact_six :
@@ -326,7 +326,7 @@ statement. Level 2 supplies the equations. `covers_lower_bound_7_native` depends
   `build.sh`, a README.
 * `n8struct/`: the nine Lean files about the selection of the word of 46,174 letters, a Python cross-check
   with its output, `build.sh`, a README.
-* `small/`: S(1) to S(6): the checker and the small cases (3 Lean files), the proof at n = 6 (94 Lean files,
+* `small/`: L(1) to L(6): the checker and the small cases (3 Lean files), the proof at n = 6 (94 Lean files,
   72 of them parts of the search, and four generators), two files of Grayzel's superperm6 changed to be checked
   by the kernel alone, with his data file, licence and notice, an audit file, a list of hashes, `build.sh`, a
   README.
