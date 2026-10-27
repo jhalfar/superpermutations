@@ -46,11 +46,11 @@ more with another seed.
     uopt15 3 sel.txt n15_654.uplan n15_491.uplan --time 10800 --qmin 8 --seed 2      # my run: 1401325411491
 
 `uopt15` stops by the clock, in the middle of a pass, so another run ends at another length. The plan of
-`recipes/n15/` is the result of my two runs on 2026-10-26 and 27 (44 passes in the second, 5.8 GB). The n = 15 plan
-published first, 1,401,325,413,744 letters from an earlier 40-minute run, is in the git history; the n = 16 and 17
+`recipes/n15/` is the result of my two runs on 2026-10-26 and 27 (44 passes in the second, 5.8 GB). The first plan of
+`recipes/n15/`, 1,401,325,413,744 letters from an earlier 40-minute run, is in the git history; the n = 16 and 17
 plans below were lifted from it:
 
-    git show df98259:recipes/n15/n15_1401325413744_on_selC.uplan.xz | xz -dc > n15.uplan
+    git show 9a09a58:recipes/n15/n15_1401325413744_on_selC.uplan.xz | xz -dc > n15.uplan
 
 **n = 16, 22,320,795,912,621** (`recipes/n16/`): block order, then `liftB` from that n = 15 plan.
 

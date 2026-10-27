@@ -27,7 +27,7 @@ The word would take 22 TB, so it is not stored. `genBt.c` writes it from four th
 
 The construction (slices, transport, completion, closed trails) is Jay Pantone's. The block step on top of it is
 mine, proved in Lean in `proofs/lean/constant305989/`. The plan comes from my plan for n = 15 (lifted from the n = 14
-plan of `recipes/n14/`; it is the 1,401,325,413,744 plan published first in `recipes/n15/`, now in the git history, see [`tools/plans/`](../../tools/plans/README.md)): for each of the 6,048 positions, its 110 small units are replaced by the 440 small and 14 walk units of the block, in one fixed order, and
+plan of `recipes/n14/`; it is the first plan of `recipes/n15/`, 1,401,325,413,744 letters, now in the git history, see [`tools/plans/`](../../tools/plans/README.md)): for each of the 6,048 positions, its 110 small units are replaced by the 440 small and 14 walk units of the block, in one fixed order, and
 the openings are chosen again by an exact dynamic programme. The same plan lifted without the block has
 22,320,835,819,119 letters, so the block saves 39,906,498. The plan has 15,619,232 letters in joins.
 
