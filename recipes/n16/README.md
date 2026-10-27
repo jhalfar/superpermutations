@@ -41,7 +41,7 @@ walk; cut at its full row i0, way 0 or 1).
 ```sh
 bash check.sh predict      # the length from the plan and the construction, no card; 4 threads, about 7 minutes
 bash check.sh pass 0       # one of the four passes of the check on the card
-bash check.sh core         # the whole check in one pass (builds coreBp from ../n17); about 25 minutes
+bash check.sh core         # the whole check in one pass (builds coreBp from ../n17); about 13 minutes
 bash check.sh all          # all four passes one after the other; about 80 minutes
 bash check.sh sha          # the plain SHA-256 of the letters: one thread, several hours, no card
 ```

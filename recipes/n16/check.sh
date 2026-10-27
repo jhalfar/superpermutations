@@ -7,7 +7,7 @@
 #     pass I    pass I (0 <= I < K) of the group check on the card: the word is spelled on the card and only the
 #               groups g with g mod K = I are recorded (K = 4: about 19 minutes on an RTX 5090 with 5 host threads)
 #     core      ONE pass of the core-table check (coreBp from ../n17: (n-3)! = 6,227,020,800 core bits instead of the
-#               (n-2)! group bits; the same length and tree hash as the K passes; about 25 minutes on an RTX 5090,
+#               (n-2)! group bits; the same length and tree hash as the K passes; about 13 minutes on an RTX 5090,
 #               2.5 GB on the card); the word is a superpermutation exactly when the pass is valid
 #     all       the K passes one after the other; the word is a superpermutation exactly when every pass is valid
 #               and all passes report the same length and tree hash
