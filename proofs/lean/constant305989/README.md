@@ -54,12 +54,13 @@ theorem eventual_bound16 :
 
 (The statement is copied from `MainB.lean` with the symbols spelled in ASCII.) `CorollariesB.lean` adds the
 bound in the shape of Pantone's `Finite` and `FiniteInteger` from m = 14 (`Cost305989`, `finite_305989`,
-`finiteInteger_305989`) and two values:
+`finiteInteger_305989`) and three values:
 
 | symbols | statement | parameters |
 |---|---|---|
 | 16 | `hasWord_sixteen_B : HasWord 16 22320830091240` | m = 14, a = 9 |
 | 17 | `hasWord_seventeen_B : HasWord 17 377962492058424` | m = 15, a = 9 |
+| 18 | `hasWord_eighteen_B : HasWord 18 6779652627881952` | m = 16, a = 9 |
 
 At 16 symbols this is about 74 million below the value of `../constant61937/` (22,320,904,300,200). These are
 values of the general formula, not words.
@@ -106,7 +107,8 @@ identical. I built the 66 modules of the development with one Lean process on on
 directory and with the compiled library of `../constant/` on the module path: 38 minutes, 2,222 s of Lean time.
 The new modules take at most 33 s each; `BlockChecks` needs 5.0 GB of working set, `BlockPorts16a` 4.4 GB. On
 2026-10-24 I ran `build.sh` from an empty build directory, on the files of this repository as `git archive`
-writes them, with five Lean processes: 161 modules, 12 minutes, exit 0.
+writes them, with five Lean processes: 161 modules, 12 minutes, exit 0. On 2026-10-28, after `hasWord_eighteen_B`
+was added, again from an empty build directory with two Lean processes: 161 modules, 25 minutes, exit 0.
 
 ## Axiom audit
 
@@ -118,6 +120,8 @@ The `#print axioms` lines of the final statements, from my build log:
     'SuperpermutationUpperBound305989.finiteInteger_305989' depends on axioms: [propext, Classical.choice, Quot.sound]
     'SuperpermutationUpperBound305989.hasWord_sixteen_B' depends on axioms: [propext, Classical.choice, Quot.sound]
     'SuperpermutationUpperBound305989.hasWord_seventeen_B' depends on axioms: [propext, Classical.choice, Quot.sound]
+    'SuperpermutationUpperBound305989.hasWord_eighteen_B' depends on axioms: [propext, Classical.choice, Quot.sound]
 
-All 98 `#print axioms` lines of that build: 59 with `[propext, Classical.choice, Quot.sound]`, 35 with
-`[propext, Quot.sound]`, 2 with `[propext]` and 2 without axioms. `build.sh` prints these counts at the end.
+All 163 `#print axioms` lines of the build of 2026-10-28 (Pantone's modules included): 70 with
+`[propext, Classical.choice, Quot.sound]`, 64 with `[propext, Quot.sound]`, 27 with `[propext]` and 2 without axioms.
+`build.sh` prints these counts at the end.

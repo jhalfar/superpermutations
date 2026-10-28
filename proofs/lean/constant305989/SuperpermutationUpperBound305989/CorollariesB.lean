@@ -66,9 +66,17 @@ theorem hasWord_seventeen_B : HasWord 17 377962492058424 := by
   norm_num [Nat.factorial] at hl
   exact_mod_cast hl
 
+/-- 18 symbols: `m = 16`, `a = 9`. -/
+theorem hasWord_eighteen_B : HasWord 18 6779652627881952 := by
+  obtain ⟨w, hw, hl⟩ := finite_bound16 16 (by norm_num) 9 (by norm_num) (by norm_num)
+  refine ⟨w, hw, ?_⟩
+  norm_num [Nat.factorial] at hl
+  exact_mod_cast hl
+
 end SuperpermutationUpperBound305989
 
 #print axioms SuperpermutationUpperBound305989.finite_305989
 #print axioms SuperpermutationUpperBound305989.finiteInteger_305989
 #print axioms SuperpermutationUpperBound305989.hasWord_sixteen_B
 #print axioms SuperpermutationUpperBound305989.hasWord_seventeen_B
+#print axioms SuperpermutationUpperBound305989.hasWord_eighteen_B

@@ -244,7 +244,7 @@ static void g2_flush(int final) {
         G2.nleaves += nleaf;
         if (G2.copyback) {
             CCK(cuDtoH_(G2.hcopy, nl, hlen));
-            static const char A[] = "0123456789ABCDEF"; for (u64 i = 0; i < hlen; i++) G2.hcopy[i] = A[G2.hcopy[i]];
+            static const char A[] = "0123456789ABCDEFG"; for (u64 i = 0; i < hlen; i++) G2.hcopy[i] = A[G2.hcopy[i]];
             sha_update(&G2.plain, G2.hcopy, hlen);
         }
     }

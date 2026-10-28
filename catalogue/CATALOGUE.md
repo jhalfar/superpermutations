@@ -659,7 +659,7 @@ Lean proves that for every rational eps > 0 there is an N >= 16 such that every 
 * source: `proofs/lean/constant305989/README.md:1`
 * supersedes: `all-const-61937`
 * superseded by: `all-const-8711159`
-* notes: 305989/604800 = 0.5059342. Module directory proofs/lean/constant305989/SuperpermutationUpperBound305989; HasWord 16 22320830091240 and HasWord 17 377962492058424.
+* notes: 305989/604800 = 0.5059342. Module directory proofs/lean/constant305989/SuperpermutationUpperBound305989; HasWord 16 22320830091240, HasWord 17 377962492058424 and HasWord 18 6779652627881952.
 
 #### `all-const-8711159`
 

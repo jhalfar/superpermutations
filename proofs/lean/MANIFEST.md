@@ -271,8 +271,8 @@ them, by `python3` or by Lean, and needs mode 644 only.
   level
 * `constant305989/SuperpermutationUpperBound305989/Certificate/modules.txt` (375 B): generated: the generated modules in
   the order in which they are written
-* `constant305989/SuperpermutationUpperBound305989/CorollariesB.lean` (3.1 KB): `finite_305989`, `finiteInteger_305989`,
-  `hasWord_sixteen_B`, `hasWord_seventeen_B`
+* `constant305989/SuperpermutationUpperBound305989/CorollariesB.lean` (3.5 KB): `finite_305989`, `finiteInteger_305989`,
+  `hasWord_sixteen_B`, `hasWord_seventeen_B`, `hasWord_eighteen_B`
 * `constant305989/SuperpermutationUpperBound305989/Fifteen.lean` (16.1 KB): the level on 15 symbols: core walks and the
   block above each of the 6,048 loops; the counts
 * `constant305989/SuperpermutationUpperBound305989/GenericBoundsB.lean` (11.2 KB): the rational bound and the epsilon
