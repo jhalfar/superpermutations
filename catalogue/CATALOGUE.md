@@ -36,7 +36,7 @@ The shortest words over n symbols that contain all permutations have 1, 3, 9, 33
 * method: Lean theorems SmallSuperperm.exact_one to exact_five, kernel only, no native_decide: proofs/lean/small/Small. Upper bounds: the words of the recursive construction, checked by the kernel. Lower bounds: n = 1, 2 direct; n = 3, 4 pointwise_3, pointwise_4 of the Hunter-Raudvere library through the bridge of proofs/lean/words; n = 5 Theorem A of proofs/lean/lower.
 * credit: The values are classical. Lean: Jakub Halfar (with Claude); the lower bounds for n = 3 and 4 are Zach Hunter and Uku Raudvere's (their library, Corollary 28).; date 2026-10-25
 * reproduce: `./build.sh 5` in `proofs/lean/small`
-* evidence: `proofs/lean/small/README.md` (sha256 `bd18881a8dcf...`); `proofs/lean/small/Small/Upto5.lean` (sha256 `166f467bd7fa...`)
+* evidence: `proofs/lean/small/README.md` (sha256 `2d06b30a4e68...`); `proofs/lean/small/Small/Upto5.lean` (sha256 `166f467bd7fa...`)
 * source: `proofs/lean/small/README.md:3`
 
 
@@ -53,7 +53,7 @@ Every word over 6 symbols that contains all 720 permutations has at least 872 le
 * method: Lean theorem SmallSuperperm.exact_six (also grayzel_six : Superperm6.IsMinimumLength 872), kernel only, no native_decide: proofs/lean/small. Lower bound K6.covers_872: a kernel search (one part of 52,386 nodes for the chain caps, 72 parts for the tight case at defect 4) in the model of standard configurations with Theorems W and N of proofs/lean/n7. Upper bound: Robin Houston's word in the kernel-only version of Benjamin Grayzel's Witness.lean. Axioms propext, Classical.choice, Quot.sound.
 * credit: Jakub Halfar (with Claude). The value 872 was known: the word is Robin Houston's (2014), and Benjamin Grayzel's Lean proof of s(6) = 872 uses native_decide; his definitions and his check of the word are used here.; date 2026-10-25
 * reproduce: `JOBS=2 ./build.sh` in `proofs/lean/small`
-* evidence: `proofs/lean/small/README.md` (sha256 `bd18881a8dcf...`); `proofs/lean/small/Small/Exact.lean` (sha256 `facc80dc14e7...`); `proofs/lean/small/K6/Final872.lean` (sha256 `fe08a1bd0087...`)
+* evidence: `proofs/lean/small/README.md` (sha256 `2d06b30a4e68...`); `proofs/lean/small/Small/Exact.lean` (sha256 `facc80dc14e7...`); `proofs/lean/small/K6/Final872.lean` (sha256 `fe08a1bd0087...`)
 * source: `proofs/lean/small/README.md:10`
 * notes: Before this, the best kernel-only bound at n = 6 was 870 (Theorem A of proofs/lean/lower). The README of proofs/lean/small gives the cost of a build from an empty directory.
 
@@ -68,7 +68,7 @@ Up to relabelling there are exactly 45,116 words of 872 letters over 6 symbols t
 * method: Reduction: a minimal word spells a Hamiltonian path of weight 866, which gives a standard configuration of defect <= 5 with the same entries and rows. Stage 1 enumerates the possible chain/loop sets (46,798 candidates), stage 2 searches all Hamiltonian paths of weight <= 866 for each. Program A (stage 1 and 2 in C) and program B (stage 1 in Python written from the model by another agent, stage 2 a separate C program) give the same 45,116 words; at n = 4 and 5 they give 1 and 8. The list contains all 44,120 words of Houston's four classes (Egan's files).
 * credit: Jakub Halfar (with Claude). Vlad Gheorghe's provisional census of 11 August 2026 has the same 45,116 words (compared word for word, 28.10); Robin Houston's classes and Greg Egan's files contain 44,120 of the words.; date 2026-10-27
 * reproduce: `python3 check_n6.py` in `words/n6`
-* evidence: `words/n6/README.md` (sha256 `79cce6439e1d...`); `words/n6/minimal-6-872.txt.xz` (sha256 `7314f08d865d...`)
+* evidence: `words/n6/README.md` (sha256 `d12ae087b10b...`); `words/n6/minimal-6-872.txt.xz` (sha256 `7314f08d865d...`)
 * source: `words/n6/README.md:48`
 * notes: check_n6.py checks every word and the counts, not completeness. The programs and the written reduction are not in the repository yet; they come with the Lean version of the enumeration.
 
@@ -655,7 +655,7 @@ Lean proves that for every rational eps > 0 there is an N >= 16 such that every 
 * method: Lean theorems SuperpermutationUpperBound305989.finite_bound16 and eventual_bound16 (MainB.lean); decide +kernel for certificates, no sorry, no native_decide, axioms propext, Classical.choice, Quot.sound; proofs/lean/constant305989
 * credit: Jakub Halfar (with Claude); the construction and library are Jay Pantone's; date 2026-10-18
 * reproduce: `./build.sh` in `proofs/lean/constant305989`
-* evidence: `proofs/lean/constant305989/README.md` (sha256 `f525b09843c2...`)
+* evidence: `proofs/lean/constant305989/README.md` (sha256 `91a951d92de0...`)
 * source: `proofs/lean/constant305989/README.md:1`
 * supersedes: `all-const-61937`
 * superseded by: `all-const-8711159`
@@ -750,7 +750,7 @@ Lean proves ConstAsym.shortest_superpermutation_coefficient: with L(n) the least
 * method: Lean theorem in proofs/lean/asym/ConstAsym/Main.lean (namespace ConstAsym), axioms propext, Classical.choice, Quot.sound, no sorry, no native_decide; clean independent compile verify.sh (111 modules)
 * credit: Jakub Halfar (with Claude); built on Hunter and Raudvere's library and Pantone's Challenge.lean; date 2026-10-19
 * reproduce: `./build.sh` in `proofs/lean/asym`
-* evidence: `proofs/lean/asym/README.md` (sha256 `b20bd025e383...`)
+* evidence: `proofs/lean/asym/README.md` (sha256 `6e0cc1fbd1fa...`)
 * source: `proofs/lean/asym/README.md:7`
 * notes: The next order (n-4)! is the content of all-const-n4. Module directory proofs/lean/asym/ConstAsym.
 
@@ -763,6 +763,6 @@ Lean proves ConstAsym.remainder_limit8: for every eps > 0, eventually 2 - eps <=
 * method: Lean theorems proofs/lean/asym/ConstAsym/Remainder8.lean (remainder_limit8, remainder_order8, lower2_L), axioms propext, Classical.choice, Quot.sound, no sorry, no native_decide; verify8.sh compiled 199 modules from sources into an empty lib, all exit 0
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries and Pantone's Challenge.lean; date 2026-10-19
 * reproduce: `./build.sh` in `proofs/lean/asym`
-* evidence: `proofs/lean/asym/README.md` (sha256 `b20bd025e383...`)
+* evidence: `proofs/lean/asym/README.md` (sha256 `6e0cc1fbd1fa...`)
 * source: `proofs/lean/asym/README.md:51`
 * notes: Module directories proofs/lean/asym/ConstAsym and proofs/lean/constant43586371.
