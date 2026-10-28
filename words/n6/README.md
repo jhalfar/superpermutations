@@ -19,8 +19,9 @@ In each of the 40 words with a repeat, the two copies of a repeated permutation 
 
 The list contains all 44,120 words of Robin Houston's four classes (Greg Egan's files `872-treelike`, `-slack1`,
 `-slack2` and `872-nonstandard`: 42,288, 772, 36 and 1,024 words) and 996 words that are in none of them: 956 without
-a repeat and the 40 with one. The counts 45,116, 22,560 and 40 (36 + 4) are those of Vlad Gheorghe's provisional
-census of 11 August 2026. I compared only the counts, since I do not have his list.
+a repeat and the 40 with one. The list is the same as Vlad Gheorghe's provisional
+census of 11 August 2026 (the canonical catalogue in his attachment to the group thread, 45,116 words): every word of
+either list is in the other after relabelling, so the counts 45,116, 22,560 and 40 (36 + 4) agree too.
 
 ```sh
 python3 check_n6.py      # each line is a superpermutation of length 872; prints the counts above and the SHA-256
