@@ -12,6 +12,11 @@ proof of $`s(6) = 872`$ (github.com/BGray-wrl/superperm6) uses `native_decide` i
 here is proven in the model of standard configurations of the proof of 5,899 in `../n7`, not in Grayzel's framework;
 his word and his statement are used for the upper bound and for the second form of the theorem.
 
+The comparator (leanprover/comparator) accepted the six values, both forms of 872 and the audit statements below
+against a challenge that imports only `Challenge.lean` and Mathlib and copies Grayzel's definitions word for word,
+and the independent kernel nanoda accepted the same proof terms. The Lean kernel replay took about an hour and
+34 GB of memory, nanoda about 36 minutes and 61 GB.
+
 ## The statements
 
 Copied from the Lean files with the symbols spelled in ASCII (`forall`, `exists`, `<=`, `->`, `/\`). `Covers` is the

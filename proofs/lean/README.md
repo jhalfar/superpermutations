@@ -77,8 +77,10 @@ axiom per equation, which `native_decide` records.
 
 The comparator (leanprover/comparator), which checks a statement against its source, and the independent
 kernel nanoda accepted the two limit theorems, `coefficient_tends_to_zero` (`constant43586371/`) and
-`shortest_superpermutation_coefficient` (`asym/`). They were not run on the rate and remainder theorems or on
-the other parts.
+`shortest_superpermutation_coefficient` (`asym/`), the bounds `lower2_L` and `remainder_limit8` (`asym/`), and
+L(1) to L(6) in full (`small/`, also in Grayzel's form `IsMinimumLength 872`). Each challenge imports only
+`Challenge.lean` and Mathlib (for `small/` also Grayzel's definitions, copied word for word); the proofs use
+only `propext`, `Classical.choice` and `Quot.sound`. They were not run on the other parts.
 
 ### The bounds for small n
 

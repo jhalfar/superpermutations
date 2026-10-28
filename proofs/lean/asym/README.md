@@ -56,7 +56,9 @@ theorem remainder_limit8 (eps : Rat) (heps : 0 < eps) : exists N : Nat, forall n
 so in Lean the limit inferior of $`(L(n) - F_3(n)) / (n-4)!`$ is at least 2 and the limit superior at most 8. The finite
 forms are `lower2_L` ($`2\,(n-4)! - 2\,(n-5)! \le L(n) - F_3(n)`$ for $`n \ge 7`$), `remainder_order8` and `remainder_ratio8` (for
 $`n \ge 2^{14}`$ the remainder is at most $`\tfrac{41}{5}(n-4)!`$). `UniR.rate_R8` gives $`F_3(n) + \tfrac{41}{5}(n-4)!`$ for $`n \ge 2^{14}`$ and
-`rate_R8_eventually` gives $`F_3(n) + (8 + \varepsilon)(n-4)!`$. The comparator was not run on these theorems.
+`rate_R8_eventually` gives $`F_3(n) + (8 + \varepsilon)(n-4)!`$. The comparator accepted `lower2_L`,
+`remainder_order8`, `lower2_ratio`, `remainder_ratio8` and `remainder_limit8` against a challenge that imports only
+`Challenge.lean` and Mathlib and defines $`L`$ from `Covers`, and nanoda accepted the same proof terms.
 
 `Remainder8` also needs Theorem B of `../lower/` and `Superperm.Bridge` of `../words/` (both in this directory
 tree) and Liu's preimage-chain library, github.com/Haruhiyuki/superpermutations-preimage-chain-lower-bounds, used
