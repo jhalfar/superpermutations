@@ -1,0 +1,510 @@
+/* gcheck6.cu (agent n18) - opt/mhgpu/gcheckm.cu and opt/coretab/gcheckc.cu (BLAKE3) merged, for n <= 18 (patch_ck.py). */
+/* gcheckm.cu - opt/coretab/gcheckc.cu with a multiset hash of the group completion events (agent mhgpu).
+   Mode bit 4 (P.mode & 4): every complete group g found by harvest adds r_k^g mod p (p = 2^61 - 1, Mersenne
+   reduction) to K <= 4 sums, k = 0..K-1.  r_k^g comes from window tables HT[k][i][d] = r_k^(d * 256^i) (8-bit windows,
+   i < 7, so g < 2^56).  Each thread adds its events in registers; the block adds its threads (warp shuffles, then
+   shared memory) and thread 0 adds the block's K sums and its event count into the block's own slot HS[block][0..K]
+   (one block owns one slot and harvest launches are ordered in the stream, so no atomics on the hash).  The host adds
+   the 4096 slots at the end, plus the events of the residue groups it completes.  Valid iff the event count is
+   N = (n-2)! and sum * (r_k - 1) = r_k^N - 1 for every k.  Modes: 1 group table, 2 core table, 4 hash; 3, 6 combine. */
+/* gcheckc.cu - opt/n17/gcheck17.cu with a two-level completed set (agent coretab).
+   Core of a group: the group is the cyclic order of the n-1 letters other than the satellite S, read from M; its
+   rank g is the Lehmer rank of the n-2 letters after M (classify).  Delete the top letter T (the largest letter
+   other than S and M) from that sequence: the rest, n-3 letters, ranked by Lehmer, is the core (one of (n-3)!), and
+   the position of T (0..n-3) is the child.  g <-> (core, child) is a bijection (core_of; tested on the host for every
+   g at small n, coreBp --selftest).  In the Lehmer digits of g, T is the first position whose digit is the largest
+   possible (all remaining letters are smaller than T); the other digits are the core's digits.
+   Modes (P.mode): 1 = group table as before ((n-2)!/oK bits, bit g/oK for g = oI mod oK), 2 = core table only,
+   3 = both (debug).  In modes 2 and 3 the scan records every group (gK = 1); the group table of mode 3 may be
+   restricted to the shard oI/oK (only to save card memory; bit g/oK).
+   Core table: harvest ORs the child bit of every complete group into an active-core hash (open addressing, key =
+   core, one 32-bit mask of n-2 <= 15 child bits), unless the core's bit is already set (a group completed again:
+   counted in stats[4], nothing changes).  csweep (after harvest): an active core whose mask is full sets its bit in
+   the (n-3)!-bit core table and is dropped; the others go to a list, the table is cleared, and creins puts them back.
+   So a core bit is set only after all its n-2 child groups were complete, each only after all its n(n-1) members
+   were seen.  A full core table or list raises overflow flag 8 / 16 and the run is not valid. */
+/* gcheck17.cu - opt/fastcheck/gcheck.cu for n <= 17 with group shards (agent n17):
+     - member masks of n(n-1) <= 272 bits: 9 words (table entries, survivors, residues);
+     - group shard gI/gK: only groups g with g mod gK = gI go into the table; their bit is g / gK in a table of
+       ceil((n-2)!/gK) bits (gK = 1: every group, bit g, as before).  The scan itself is unchanged: every window is
+       still tested and classified, a group outside the shard is simply not recorded;
+     - slice descriptors store the letters of B relative to the satellite (c - (c > s)), decoded in expand.
+   Original description: */
+/* gcheck.cu - v2 on the card: expansion of slice descriptors into letters, the group check of gcore.h, leaf hashes
+   of the tree hash, and the route-A ranker.  Compiled to PTX (build_ptx.bat), loaded through the CUDA driver library
+   by gcard.h.  Letters are values 0..n-1 (one byte each).
+
+   Group check (same claim as gcore.h: a group's bit is set only when all its n(n-1) members were seen):
+     scan:      every thread takes CH consecutive window starts of the segment; a permutation window is classified
+                (group G, class t, rotation j), the run of its left rotations is taken in one step, a weight-2 step
+                keeping S in the pair stays in the group; the members are OR-ed into a 240-bit mask while the group
+                does not change, then into the table entry of the group (open addressing, atomicCAS on the key,
+                atomicOr on the mask words).  Windows past the chunk belong to the next thread.
+     harvest:   every table entry: all members seen -> its bit in the group table (atomicOr); otherwise it is kept
+                for the next segment (survivor), or, if it was not touched during this segment, it goes to the host
+                as a residue (merged at the end).
+     reinsert:  survivors go back into the cleared table before the next segment's scan.
+   A full table never makes a group complete; it raises the overflow flag and the run is reported as failed. */
+typedef unsigned long long u64;
+typedef unsigned int u32;
+typedef unsigned char u8;
+#define EMPTYK 0xFFFFFFFFFFFFFFFFULL
+#define NMW 10                     /* n18: member-mask words, n(n-1) <= 320 bits (n <= 18) */
+
+struct GParam {                    /* constants of the run */
+    int n, S, M; int pad;
+    u64 fact[21];
+    u64 gK, gI;                    /* group shard: groups with g mod gK = gI */
+    u32 full[NMW];                 /* full member mask */
+    u32 pad2;
+    int mode, nc;                  /* coretab: 1 group table, 2 core table, 3 both; nc = n-2 children per core */
+    u64 oK, oI;                    /* group table (modes 1, 3): groups g = oI mod oK, bit g / oK */
+    u32 cfull; u32 pad3;           /* full child mask (n-2 bits) */
+};
+__constant__ GParam P;
+/* (core, child) of group g: see the header */
+__device__ __forceinline__ u64 core_of(u64 g, int *child) {
+    const int n = P.n; u64 rem = g, c = 0; int p = n - 3, found = 0;
+    for (int k = 1; k <= n - 3; k++) {
+        u64 f = P.fact[n - 2 - k], d = rem / f; rem -= d * f;
+        if (!found && d == (u64)(n - 2 - k)) { found = 1; p = k - 1; continue; }
+        c += d * (found ? f : P.fact[n - 3 - k]);
+    }
+    *child = p; return c;
+}
+/* mhgpu: arithmetic mod p = 2^61 - 1 (a, b < p).  a*b = hi*2^64 + lo = hi*8*2^61 + (lo>>61)*2^61 + (lo&p), and
+   2^61 = 1 mod p, so a*b = (lo&p) + (lo>>61) + 8*hi (< 2^63); one more fold and one conditional subtraction. */
+#define P61 0x1FFFFFFFFFFFFFFFULL
+__device__ __forceinline__ u64 mm61(u64 a, u64 b) {
+    u64 lo = a * b, hi = __umul64hi(a, b);
+    u64 x = (lo & P61) + ((lo >> 61) | (hi << 3));
+    x = (x & P61) + (x >> 61);
+    return x >= P61 ? x - P61 : x;
+}
+__device__ __forceinline__ u64 ad61(u64 a, u64 b) { u64 r = a + b; return r >= P61 ? r - P61 : r; }
+__device__ __forceinline__ u64 chsh(u64 c) { return (c * 0xC2B2AE3D27D4EB4FULL) >> 24; }
+
+__device__ __forceinline__ u64 classify(const u8 *x, int *tt, int *jj) {
+    const int n = P.n, S = P.S, M = P.M;
+    int js = 0; while (x[js] != S) js++;
+    u8 q[40];                      /* n18: 2(n-1) letters */
+    for (int k = 0; k < n - 1; k++) { int p = js + 1 + k; if (p >= n) p -= n; q[k] = x[p]; q[k + n - 1] = x[p]; }
+    int t = 0; while (q[t] != M) t++;
+    u32 avail = ((1u << n) - 1) & ~(1u << S) & ~(1u << M);
+    u64 r = 0;
+    for (int k = 1; k <= n - 3; k++) { int s = q[t + k]; r += (u64)__popc(avail & ((1u << s) - 1)) * P.fact[n - 2 - k]; avail &= ~(1u << s); }
+    *tt = t; *jj = js; return r;
+}
+__device__ __forceinline__ u64 hsh(u64 g) { return (g * 0x9E3779B97F4A7C15ULL) >> 20; }
+/* OR mask m into the entry of group g; returns 0 if the table is full along the probe path */
+__device__ int tab_or(u64 *keys, u32 *masks, u8 *touched, u64 tmask, u64 g, const u32 *m) {
+    u64 h = hsh(g) & tmask;
+    for (int probe = 0; probe < 4096; probe++) {
+        u64 k = keys[h];
+        if (k == EMPTYK) { u64 old = atomicCAS(&keys[h], EMPTYK, g); if (old == EMPTYK || old == g) k = g; else k = old; }
+        if (k == g) {
+            for (int w = 0; w < NMW; w++) if (m[w]) atomicOr(&masks[h * NMW + w], m[w]);
+            touched[h] = 1;
+            return 1;
+        }
+        h = (h + 1) & tmask;
+    }
+    return 0;
+}
+__device__ __forceinline__ void addbits(u32 *m, int t, int j, u64 cnt, int n) {
+    u32 rm;                        /* n <= 18: rm has n bits, off + n <= 306 <= 320 = 10 words */
+    if (cnt >= (u64)n) rm = (1u << n) - 1;
+    else { int c = (int)cnt, lo = j - c + 1; rm = lo >= 0 ? ((1u << c) - 1) << lo : (((1u << (j + 1)) - 1) | (((1u << (-lo)) - 1) << (n + lo))); }
+    int off = t * n, w = off >> 5, sh = off & 31;
+    m[w] |= rm << sh;
+    if (sh + n > 32) m[w + 1] |= rm >> (32 - sh);
+}
+extern "C" __global__ void scan(const u8 *__restrict__ d, u64 nwin, int CH, u64 *keys, u32 *masks, u8 *touched, u64 tmask,
+                                u64 *stats, u32 *overflow) {
+    const int n = P.n, S = P.S; const u32 FULL = (1u << n) - 1;
+    u64 a = ((u64)blockIdx.x * blockDim.x + threadIdx.x) * (u64)CH;
+    if (a >= nwin) return;
+    u64 b = a + CH < nwin ? a + CH : nwin;
+    u64 i = a; int have = 0, t = 0, j = 0; u64 g = 0;
+    u64 cg = EMPTYK; u32 cm[NMW] = {0}; int cin = 0;   /* cin: cg is in the shard */
+    u64 pw = 0, runs = 0;
+    while (i < b) {
+        const u8 *x = d + i;
+        if (!have) {
+            u32 seen = 0; for (int k = 0; k < n; k++) seen |= 1u << x[k];
+            if (seen != FULL) { i++; continue; }
+            g = classify(x, &t, &j);
+        }
+        u64 k = 0; while (i + k + 1 < b && x[k + n] == x[k]) k++;
+        u64 cnt = k + 1;
+        if (g != cg) {
+            if (cg != EMPTYK && cin && !tab_or(keys, masks, touched, tmask, cg, cm)) atomicOr(overflow, 1u);
+            cg = g; cin = P.gK == 1 || g % P.gK == P.gI; for (int w = 0; w < NMW; w++) cm[w] = 0;
+        }
+        addbits(cm, t, j, cnt, n);
+        pw += cnt; runs++;
+        u64 e = i + k;
+        if (e + 2 < b && d[e + n] == d[e + 1] && d[e + n + 1] == d[e]) {
+            u8 a1 = d[e], a2 = d[e + 1];
+            if (a1 == S) { t = t == 0 ? n - 2 : t - 1; j = n - 1; }
+            else if (a2 == S) { t = t == n - 2 ? 0 : t + 1; j = n - 2; }
+            else g = classify(d + e + 2, &t, &j);
+            have = 1;
+        } else have = 0;
+        i = e + 2;
+    }
+    if (cg != EMPTYK && cin && !tab_or(keys, masks, touched, tmask, cg, cm)) atomicOr(overflow, 1u);
+    atomicAdd(&stats[0], pw); atomicAdd(&stats[1], runs);
+}
+/* scan2 - the same scan with the block's letters staged in shared memory (agent n17).  In scan, the 32 threads of a
+   warp read bytes 256 apart, so every load touches 32 cache lines; here a block of 128 threads first copies its
+   32768 + n - 1 letters with consecutive (coalesced) loads into shared memory, with 4 bytes of padding after every
+   256 (thread t's letters then start in bank t mod 32), and every thread runs exactly the code of scan on them:
+   the same windows [a, b), the same reads (letters a .. b + n - 2), the same table updates.  Requires CH = 256 and
+   128 threads per block (as gcard17.h launches it). */
+#define SMB (128u * 256u)
+__device__ __forceinline__ u32 sidx(u32 p) { return p + ((p >> 8) << 2); }
+#define X(p) sm[sidx(p)]
+__device__ __forceinline__ u64 classify_s(const u8 *sm, u32 p0, int *tt, int *jj) {
+    const int n = P.n, S = P.S, M = P.M;
+    int js = 0; while (X(p0 + js) != S) js++;
+    u8 q[40];                      /* n18: 2(n-1) letters */
+    for (int k = 0; k < n - 1; k++) { int p = js + 1 + k; if (p >= n) p -= n; q[k] = X(p0 + p); q[k + n - 1] = q[k]; }
+    int t = 0; while (q[t] != M) t++;
+    u32 avail = ((1u << n) - 1) & ~(1u << S) & ~(1u << M);
+    u64 r = 0;
+    for (int k = 1; k <= n - 3; k++) { int s = q[t + k]; r += (u64)__popc(avail & ((1u << s) - 1)) * P.fact[n - 2 - k]; avail &= ~(1u << s); }
+    *tt = t; *jj = js; return r;
+}
+extern "C" __global__ void __launch_bounds__(128) scan2(const u8 *__restrict__ d, u64 nwin, int CH, u64 *keys, u32 *masks, u8 *touched, u64 tmask,
+                                u64 *stats, u32 *overflow) {
+    __shared__ u8 sm[SMB + 64 + ((SMB + 64) >> 8) * 4 + 16];
+    const int n = P.n, S = P.S; const u32 FULL = (1u << n) - 1;
+    u64 A = (u64)blockIdx.x * SMB;
+    if (A >= nwin) return;                                     /* the whole block */
+    u64 lim = nwin + n - 1 - A; if (lim > SMB + n - 1) lim = SMB + n - 1;
+    for (u32 p = threadIdx.x; p < lim; p += blockDim.x) sm[sidx(p)] = d[A + p];
+    __syncthreads();
+    u64 a = A + (u64)threadIdx.x * CH;
+    u64 b = a + CH < nwin ? a + CH : nwin; if (a > b) b = a;   /* threads past the end do nothing (no return: see below) */
+    u64 i = a; int have = 0, t = 0, j = 0; u64 g = 0;
+    u64 cg = EMPTYK; u32 cm[NMW] = {0}; int cin = 0;
+    u64 pw = 0, runs = 0;
+    while (i < b) {
+        u32 r = (u32)(i - A);
+        if (!have) {
+            u32 seen = 0; for (int k = 0; k < n; k++) seen |= 1u << X(r + k);
+            if (seen != FULL) { i++; continue; }
+            g = classify_s(sm, r, &t, &j);
+        }
+        u64 k = 0; while (i + k + 1 < b && X(r + (u32)k + n) == X(r + (u32)k)) k++;
+        u64 cnt = k + 1;
+        if (g != cg) {
+            if (cg != EMPTYK && cin && !tab_or(keys, masks, touched, tmask, cg, cm)) atomicOr(overflow, 1u);
+            cg = g; cin = P.gK == 1 || g % P.gK == P.gI; for (int w = 0; w < NMW; w++) cm[w] = 0;
+        }
+        addbits(cm, t, j, cnt, n);
+        pw += cnt; runs++;
+        u64 e = i + k; u32 re = (u32)(e - A);
+        if (e + 2 < b && X(re + n) == X(re + 1) && X(re + n + 1) == X(re)) {
+            u8 a1 = X(re), a2 = X(re + 1);
+            if (a1 == S) { t = t == 0 ? n - 2 : t - 1; j = n - 1; }
+            else if (a2 == S) { t = t == n - 2 ? 0 : t + 1; j = n - 2; }
+            else g = classify_s(sm, re + 2, &t, &j);
+            have = 1;
+        } else have = 0;
+        i = e + 2;
+    }
+    if (cg != EMPTYK && cin && !tab_or(keys, masks, touched, tmask, cg, cm)) atomicOr(overflow, 1u);
+    /* one atomic per warp instead of two per thread (same-address atomics serialise) */
+    for (int o = 16; o; o >>= 1) { pw += __shfl_down_sync(0xffffffffu, pw, o); runs += __shfl_down_sync(0xffffffffu, runs, o); }
+    if ((threadIdx.x & 31) == 0) { atomicAdd(&stats[0], pw); atomicAdd(&stats[1], runs); }
+}
+#undef X
+
+/* survivors / residues: g, then 8 mask words, then age (in a u64 slot as 10 u32... kept as struct of 5 u64) */
+struct Rec { u64 g; u32 m[NMW]; u32 age; };
+/* OR child bit ch into the active entry of core c (coretab); returns 0 if the table is full along the probe path */
+__device__ int core_or(u64 *ckeys, u32 *cmasks, u64 ctmask, u64 c, u32 bit, u64 *stats) {
+    u64 h = chsh(c) & ctmask;
+    for (int probe = 0; probe < 4096; probe++) {
+        u64 k = ckeys[h];
+        if (k == EMPTYK) { u64 old = atomicCAS(&ckeys[h], EMPTYK, c); if (old == EMPTYK || old == c) k = c; else k = old; }
+        if (k == c) { u32 o = atomicOr(&cmasks[h], bit); if (o & bit) atomicAdd(&stats[4], 1ULL); return 1; }
+        h = (h + 1) & ctmask;
+    }
+    return 0;
+}
+extern "C" __global__ void harvest(u64 *keys, u32 *masks, u8 *touched, u64 cap, unsigned long long *B2,
+                                   Rec *surv, u32 *nsurv, u32 survcap, Rec *res, u32 *nres, u32 rescap, u8 *ages, u64 *stats, u32 *overflow,
+                                   u64 *ckeys, u32 *cmasks, u64 ctmask, const unsigned long long *CB,
+                                   const u64 *__restrict__ HT, int MHK, u64 *HS) {
+    u64 ncomp = 0;                                      /* complete groups seen by this thread (stats[2]) */
+    u64 hacc[4] = {0, 0, 0, 0}, hcnt = 0;              /* mhgpu: this thread's hash sums and events */
+    for (u64 h = (u64)blockIdx.x * blockDim.x + threadIdx.x; h < cap; h += (u64)gridDim.x * blockDim.x) {
+        u64 g = keys[h];
+        if (g == EMPTYK) continue;
+        u32 m[NMW]; int full = 1;
+        for (int w = 0; w < NMW; w++) { m[w] = masks[h * NMW + w]; if (m[w] != P.full[w]) full = 0; }
+        if (full) {
+            if ((P.mode & 1) && g % P.oK == P.oI) { u64 gl = g / P.oK; atomicOr(&B2[gl >> 6], 1ULL << (gl & 63)); }
+            if (P.mode & 2) {
+                int ch; u64 c = core_of(g, &ch);
+                if (CB[c >> 6] >> (c & 63) & 1) atomicAdd(&stats[5], 1ULL);           /* core already complete: group seen again */
+                else if (!core_or(ckeys, cmasks, ctmask, c, 1u << ch, stats)) atomicOr(overflow, 8u);
+            }
+            if (P.mode & 4) {                            /* mhgpu: completion event of group g */
+                for (int k = 0; k < MHK; k++) {
+                    const u64 *T = HT + (u64)k * 7 * 256; u64 x = T[g & 255];
+                    for (int i = 1; i < 7; i++) { u32 d = (u32)(g >> (8 * i)) & 255; if (d) x = mm61(x, T[i * 256 + d]); }
+                    hacc[k] = ad61(hacc[k], x);
+                }
+                hcnt++;
+            }
+            ncomp++;
+        }
+        else if (touched[h] || ages[h] == 0) {          /* seen in this segment (or new): keep */
+            u32 s = atomicAdd(nsurv, 1u);
+            if (s < survcap) { Rec r; r.g = g; for (int w = 0; w < NMW; w++) r.m[w] = m[w]; r.age = 1; surv[s] = r; } else atomicOr(overflow, 2u);
+        } else {                                          /* not continued: residue for the host */
+            u32 s = atomicAdd(nres, 1u);
+            if (s < rescap) { Rec r; r.g = g; for (int w = 0; w < NMW; w++) r.m[w] = m[w]; r.age = 0; res[s] = r; } else atomicOr(overflow, 4u);
+        }
+        keys[h] = EMPTYK; for (int w = 0; w < NMW; w++) masks[h * NMW + w] = 0; touched[h] = 0; ages[h] = 0;
+    }
+    /* one atomic per warp instead of one per complete group (same-address atomics serialise) */
+    for (int o = 16; o; o >>= 1) ncomp += __shfl_down_sync(0xffffffffu, ncomp, o);
+    if ((threadIdx.x & 31) == 0 && ncomp) atomicAdd(&stats[2], ncomp);
+    if (P.mode & 4) {                                   /* mhgpu: block sum into the block's own slot (blockDim = 256) */
+        __shared__ u64 wsum[8][5];
+        for (int k = 0; k < 4; k++) for (int o = 16; o; o >>= 1) hacc[k] = ad61(hacc[k], __shfl_down_sync(0xffffffffu, hacc[k], o));
+        for (int o = 16; o; o >>= 1) hcnt += __shfl_down_sync(0xffffffffu, hcnt, o);
+        int wi = threadIdx.x >> 5;
+        if ((threadIdx.x & 31) == 0) { for (int k = 0; k < 4; k++) wsum[wi][k] = hacc[k]; wsum[wi][4] = hcnt; }
+        __syncthreads();
+        if (threadIdx.x == 0) {
+            u64 *s = HS + (u64)blockIdx.x * 5; int nwp = blockDim.x >> 5;
+            for (int w = 0; w < nwp; w++) { for (int k = 0; k < 4; k++) s[k] = ad61(s[k], wsum[w][k]); s[4] += wsum[w][4]; }
+        }
+    }
+}
+extern "C" __global__ void reinsert(const Rec *surv, u32 ns, u64 *keys, u32 *masks, u8 *touched, u8 *ages, u64 tmask, u32 *overflow) {
+    u32 i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i >= ns) return;
+    Rec r = surv[i];
+    if (!tab_or(keys, masks, touched, tmask, r.g, r.m)) { atomicOr(overflow, 1u); return; }
+    /* find the slot again to mark it as carried (not touched in the new segment yet) */
+    u64 h = hsh(r.g) & tmask; while (keys[h] != r.g) h = (h + 1) & tmask;
+    ages[h] = 1; touched[h] = 0;
+}
+/* coretab: after harvest.  Full active cores set their core bit and are dropped (stats[6]); the others go to the list
+   (key, mask); every entry is cleared.  creins puts the list back. */
+struct CoreRec { u64 c; u32 m; u32 pad; };
+extern "C" __global__ void csweep(u64 *ckeys, u32 *cmasks, u64 ccap, unsigned long long *CB, CoreRec *lst, u32 *nlst, u32 lstcap, u64 *stats, u32 *overflow) {
+    u64 ndone = 0;
+    for (u64 h = (u64)blockIdx.x * blockDim.x + threadIdx.x; h < ccap; h += (u64)gridDim.x * blockDim.x) {
+        u64 c = ckeys[h];
+        if (c == EMPTYK) continue;
+        u32 m = cmasks[h];
+        if (m == P.cfull) { atomicOr(&CB[c >> 6], 1ULL << (c & 63)); ndone++; }
+        else { u32 s = atomicAdd(nlst, 1u); if (s < lstcap) { CoreRec r; r.c = c; r.m = m; r.pad = 0; lst[s] = r; } else atomicOr(overflow, 16u); }
+        ckeys[h] = EMPTYK; cmasks[h] = 0;
+    }
+    for (int o = 16; o; o >>= 1) ndone += __shfl_down_sync(0xffffffffu, ndone, o);
+    if ((threadIdx.x & 31) == 0 && ndone) atomicAdd(&stats[6], ndone);
+}
+extern "C" __global__ void creins(const CoreRec *lst, u32 nl, u64 *ckeys, u32 *cmasks, u64 ctmask, u32 *overflow) {
+    u32 i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i >= nl) return;
+    CoreRec r = lst[i]; u64 h = chsh(r.c) & ctmask;
+    for (int probe = 0; probe < 4096; probe++) {
+        u64 old = atomicCAS(&ckeys[h], EMPTYK, r.c);
+        if (old == EMPTYK || old == r.c) { atomicOr(&cmasks[h], r.m); return; }
+        h = (h + 1) & ctmask;
+    }
+    atomicOr(overflow, 8u);
+}
+/* the bits set in B2[0 .. nw) */
+extern "C" __global__ void popcnt64(const unsigned long long *B2, u64 nw, u64 *out) {
+    u64 c = 0;
+    for (u64 i = (u64)blockIdx.x * blockDim.x + threadIdx.x; i < nw; i += (u64)gridDim.x * blockDim.x) c += __popcll(B2[i]);
+    for (int dd = 16; dd; dd >>= 1) c += __shfl_down_sync(0xffffffffu, c, dd);
+    if ((threadIdx.x & 31) == 0) atomicAdd(out, c);
+}
+
+/* ------------------------------------------------------------------ expansion of slice descriptors
+   A slice (B: n-1 letters, satellite s, v classes) spells B s B (B[t] s rot(B, t+1)) for t < v-1.  A span asks for
+   letters from .. from+len-1 of it, written at out[off ..]. */
+struct Span { u64 B, B2; u64 off; unsigned short from, len; u8 s, v, pad0, pad1; };   /* n18: 5 bits a letter, letters 0..11 in B */
+extern "C" __global__ void expand(const Span *__restrict__ sp, u32 nsp, u8 *__restrict__ out) {
+    u32 wid = (blockIdx.x * blockDim.x + threadIdx.x) >> 5, lane = threadIdx.x & 31;
+    if (wid >= nsp) return;
+    Span z = sp[wid];
+    const int n1 = P.n - 1;
+    for (u32 q = lane; q < z.len; q += 32) {
+        int p = z.from + q, c, i;                   /* i: index into B, or -1 for the satellite */
+        if (p < n1) i = p;
+        else if (p == n1) i = -1;
+        else if (p < 2 * n1 + 1) i = p - n1 - 1;
+        else {
+            int r0 = p - 2 * n1 - 1, t = r0 / (n1 + 2), r = r0 % (n1 + 2);
+            if (r == 0) i = t;
+            else if (r == 1) i = -1;
+            else { int k = t + 1 + r - 2; if (k >= n1) k -= n1; i = k; }
+        }
+        if (i < 0) c = z.s; else { c = i < 12 ? (int)((z.B >> (5 * i)) & 31) : (int)((z.B2 >> (5 * (i - 12))) & 31); c += c >= z.s; }
+        out[z.off + q] = (u8)c;
+    }
+}
+
+/* ------------------------------------------------------------------ SHA-256 of leaves (tree hash)
+   leaf i = ASCII letters (alphabet 0-9A-F) of word positions [i*LEAF, (i+1)*LEAF) of the segment; one thread per
+   leaf; digest[i] (8 words, big-endian values). */
+__constant__ u32 SK[64] = {
+0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,
+0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,
+0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,
+0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2};
+#define ROR(x,k) __funnelshift_r((x),(x),(k))
+__device__ __forceinline__ u32 asc(u32 v) { return v < 10 ? 48 + v : 55 + v; }
+__device__ void sha_block(u32 *h, const u32 *w0) {
+    u32 w[64];
+    for (int i = 0; i < 16; i++) w[i] = w0[i];
+    for (int i = 16; i < 64; i++) { u32 s0 = ROR(w[i-15],7)^ROR(w[i-15],18)^(w[i-15]>>3), s1 = ROR(w[i-2],17)^ROR(w[i-2],19)^(w[i-2]>>10); w[i] = w[i-16]+s0+w[i-7]+s1; }
+    u32 a=h[0],b=h[1],c=h[2],d=h[3],e=h[4],f=h[5],g=h[6],hh=h[7];
+#pragma unroll 8
+    for (int i = 0; i < 64; i++) {
+        u32 t1 = hh + (ROR(e,6)^ROR(e,11)^ROR(e,25)) + ((e&f)^(~e&g)) + SK[i] + w[i];
+        u32 t2 = (ROR(a,2)^ROR(a,13)^ROR(a,22)) + ((a&b)^(a&c)^(b&c));
+        hh=g; g=f; f=e; e=d+t1; d=c; c=b; b=a; a=t1+t2;
+    }
+    h[0]+=a; h[1]+=b; h[2]+=c; h[3]+=d; h[4]+=e; h[5]+=f; h[6]+=g; h[7]+=hh;
+}
+extern "C" __global__ void leafsha(const u8 *__restrict__ d, u64 len, u32 LEAF, u32 *digest) {
+    u64 li = (u64)blockIdx.x * blockDim.x + threadIdx.x;
+    u64 a = li * LEAF; if (a >= len) return;
+    u64 L = len - a < LEAF ? len - a : LEAF;
+    u32 h[8] = {0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19};
+    u32 w[16];
+    const u8 *p = d + a;
+    u64 nb = L / 64;
+    for (u64 bk = 0; bk < nb; bk++) {
+        const uint4 *q = (const uint4 *)(p + bk * 64);     /* 64 letters, 16-byte aligned (segments are) */
+        for (int k = 0; k < 4; k++) {
+            uint4 v = q[k]; u32 x[4] = {v.x, v.y, v.z, v.w};
+            for (int m = 0; m < 4; m++) {
+                u32 y = x[m];
+                w[k * 4 + m] = asc(y & 255) << 24 | asc((y >> 8) & 255) << 16 | asc((y >> 16) & 255) << 8 | asc(y >> 24);
+            }
+        }
+        sha_block(h, w);
+    }
+    /* tail and padding */
+    u32 rem = (u32)(L - nb * 64); u8 buf[128];
+    for (u32 k = 0; k < rem; k++) buf[k] = (u8)asc(p[nb * 64 + k]);
+    buf[rem] = 0x80; u32 tot = rem + 1 <= 56 ? 64 : 128;
+    for (u32 k = rem + 1; k < tot - 8; k++) buf[k] = 0;
+    u64 bits = L * 8; for (int k = 0; k < 8; k++) buf[tot - 8 + k] = (u8)(bits >> (56 - 8 * k));
+    for (u32 o = 0; o < tot; o += 64) { for (int k = 0; k < 16; k++) w[k] = (u32)buf[o+4*k] << 24 | (u32)buf[o+4*k+1] << 16 | (u32)buf[o+4*k+2] << 8 | buf[o+4*k+3]; sha_block(h, w); }
+    for (int k = 0; k < 8; k++) digest[li * 8 + k] = h[k];
+}
+
+/* ------------------------------------------------------------------ route A sample: rank and mark a shard */
+extern "C" __global__ void rankmark(const u8 *__restrict__ w, u64 nwin, u64 lo, u64 span, u32 *__restrict__ bits, u64 *__restrict__ stats) {
+    const int n = P.n; const u32 full = (1u << n) - 1;
+    u64 i = (u64)blockIdx.x * blockDim.x + threadIdx.x;
+    u32 marked = 0;
+    for (; i < nwin; i += (u64)gridDim.x * blockDim.x) {
+        const u8 *x = w + i; u32 m = 0;
+        for (int k = 0; k < n; k++) m |= 1u << x[k];
+        if (m != full) continue;
+        u64 r = 0; u32 av = full;
+        for (int k = 0; k < n - 1; k++) { u32 bb = 1u << x[k]; r = r * (u64)(n - k) + (u32)__popc(av & (bb - 1)); av &= ~bb; }
+        u64 q = r - lo;
+        if (q < span) { atomicOr(bits + (q >> 5), 1u << (q & 31)); marked++; }
+    }
+    if (marked) atomicAdd(&stats[3], (u64)marked);
+}
+
+/* ------------------------------------------------------------------ BLAKE3 (agent blake3; see opt/blake3/NOTES.txt)
+   The standard BLAKE3 hash (default mode, no key, 32 bytes) of the letters spelled 0-9A-G, the same bytes as the
+   tree hash.  A 64 KiB leaf of the tree hash is 64 BLAKE3 chunks, an aligned subtree of the BLAKE3 tree.
+   b3leaf:  one thread per chunk (16 compressions, chunk counter = global chunk index, 64 bits), then the 64 chunk
+            chaining values of the leaf are merged in shared memory into the CVs of its two halves (32 chunks each):
+            out[2i], out[2i+1] for leaf i (unit = 32 chunks).
+   b3up:    one level of parents: node m of level j (units m*2^j .. (m+1)*2^j - 1) from nodes 2m, 2m+1 of level j-1.
+   b3pick:  one thread: the units [U0, U1) of this flush split into maximal aligned blocks of 2^k units (k >= 1,
+            U0 and U1 even), and for each block the CVs of its two halves are copied to out in order (the host pushes
+            them onto its BLAKE3 stack; it never needs the ROOT flag from the card). */
+__device__ __constant__ u32 B3IV[8] = { 0x6A09E667u, 0xBB67AE85u, 0x3C6EF372u, 0xA54FF53Au, 0x510E527Fu, 0x9B05688Cu, 0x1F83D9ABu, 0x5BE0CD19u };
+__device__ __forceinline__ u32 b3r(u32 x, int r) { return __funnelshift_r(x, x, r); }
+#define B3G(a, b, c, d, x, y) { a = a + b + (x); d = b3r(d ^ a, 16); c = c + d; b = b3r(b ^ c, 12); a = a + b + (y); d = b3r(d ^ a, 8); c = c + d; b = b3r(b ^ c, 7); }
+#define B3ROUND { B3G(s0, s4, s8, s12, m[0], m[1]); B3G(s1, s5, s9, s13, m[2], m[3]); B3G(s2, s6, s10, s14, m[4], m[5]); B3G(s3, s7, s11, s15, m[6], m[7]); \
+                  B3G(s0, s5, s10, s15, m[8], m[9]); B3G(s1, s6, s11, s12, m[10], m[11]); B3G(s2, s7, s8, s13, m[12], m[13]); B3G(s3, s4, s9, s14, m[14], m[15]); }
+#define B3PERM { u32 t0 = m[2], t1 = m[6], t2 = m[3], t3 = m[10], t4 = m[7], t5 = m[0], t6 = m[4], t7 = m[13], t8 = m[1], t9 = m[11], t10 = m[12], t11 = m[5], t12 = m[9], t13 = m[14], t14 = m[15], t15 = m[8]; \
+                 m[0] = t0; m[1] = t1; m[2] = t2; m[3] = t3; m[4] = t4; m[5] = t5; m[6] = t6; m[7] = t7; m[8] = t8; m[9] = t9; m[10] = t10; m[11] = t11; m[12] = t12; m[13] = t13; m[14] = t14; m[15] = t15; }
+/* cv = first 8 words of compress(cv, m, counter, 64, flags) (block length 64 everywhere on the card) */
+__device__ __forceinline__ void b3c(u32 cv[8], u32 m[16], u64 ctr, u32 flags) {
+    u32 s0 = cv[0], s1 = cv[1], s2 = cv[2], s3 = cv[3], s4 = cv[4], s5 = cv[5], s6 = cv[6], s7 = cv[7];
+    u32 s8 = B3IV[0], s9 = B3IV[1], s10 = B3IV[2], s11 = B3IV[3], s12 = (u32)ctr, s13 = (u32)(ctr >> 32), s14 = 64, s15 = flags;
+    B3ROUND B3PERM B3ROUND B3PERM B3ROUND B3PERM B3ROUND B3PERM B3ROUND B3PERM B3ROUND B3PERM B3ROUND
+    cv[0] = s0 ^ s8; cv[1] = s1 ^ s9; cv[2] = s2 ^ s10; cv[3] = s3 ^ s11; cv[4] = s4 ^ s12; cv[5] = s5 ^ s13; cv[6] = s6 ^ s14; cv[7] = s7 ^ s15;
+}
+__device__ __forceinline__ void b3parent(const u32 *l, const u32 *r, u32 *o) {
+    u32 m[16], cv[8];
+    for (int k = 0; k < 8; k++) { m[k] = l[k]; m[k + 8] = r[k]; cv[k] = B3IV[k]; }
+    b3c(cv, m, 0, 4u);                                   /* PARENT */
+    for (int k = 0; k < 8; k++) o[k] = cv[k];
+}
+/* four letters (bytes 0..16) -> their ASCII bytes 0-9A-G, in one word: v + '0', plus 7 where v >= 10 */
+__device__ __forceinline__ u32 asc4(u32 x) { return x + 0x30303030u + ((((x + 0x76767676u) >> 7) & 0x01010101u) * 7u); }
+extern "C" __global__ void __launch_bounds__(128) b3leaf(const u8 *__restrict__ d, u64 nleaf, u64 leaf0, u32 *__restrict__ out) {
+    __shared__ u32 sc[128][9];
+    const int t = threadIdx.x & 63, base = threadIdx.x & 64;
+    const u64 li = (u64)blockIdx.x * 2 + (threadIdx.x >> 6);
+    u32 cv[8]; for (int k = 0; k < 8; k++) cv[k] = B3IV[k];
+    if (li < nleaf) {
+        const uint4 *q = (const uint4 *)(d + li * 65536 + (u64)t * 1024);
+        const u64 ctr = (leaf0 + li) * 64 + t;
+        for (int b = 0; b < 16; b++) {
+            u32 m[16];
+            for (int k = 0; k < 4; k++) { uint4 v = q[b * 4 + k]; m[4*k] = asc4(v.x); m[4*k+1] = asc4(v.y); m[4*k+2] = asc4(v.z); m[4*k+3] = asc4(v.w); }
+            b3c(cv, m, ctr, (b == 0 ? 1u : 0u) | (b == 15 ? 2u : 0u));    /* CHUNK_START, CHUNK_END */
+        }
+    }
+    for (int k = 0; k < 8; k++) sc[threadIdx.x][k] = cv[k];
+    __syncthreads();
+    for (int w = 32; w >= 2; w >>= 1) {                  /* 64 -> 32 -> ... -> 2 CVs per leaf */
+        u32 o[8];
+        if (t < w) b3parent(sc[base + 2 * t], sc[base + 2 * t + 1], o);
+        __syncthreads();
+        if (t < w) for (int k = 0; k < 8; k++) sc[base + t][k] = o[k];
+        __syncthreads();
+    }
+    if (li < nleaf && t < 2) for (int k = 0; k < 8; k++) out[(li * 2 + t) * 8 + k] = sc[base + t][k];
+}
+extern "C" __global__ void b3up(const u32 *__restrict__ src, u64 srclo, u32 *__restrict__ dst, u64 dstlo, u64 cnt) {
+    u64 i = (u64)blockIdx.x * blockDim.x + threadIdx.x; if (i >= cnt) return;
+    u64 m = dstlo + i, a = 2 * m - srclo;
+    b3parent(src + a * 8, src + (a + 1) * 8, dst + i * 8);
+}
+/* level j of [U0, U1): nodes ceil(U0/2^j) .. floor(U1/2^j)-1, stored one level after the other from buf on */
+extern "C" __global__ void b3pick(const u32 *__restrict__ buf, u64 U0, u64 U1, u32 *__restrict__ out, u32 *__restrict__ nout) {
+    if (blockIdx.x || threadIdx.x) return;
+    u64 lbase[64], llo[64]; u64 acc = 0;
+    for (int j = 0; j < 64; j++) {
+        u64 lo = (U0 + (1ULL << j) - 1) >> j, hi = U1 >> j; llo[j] = lo; lbase[j] = acc;
+        if (hi <= lo) break;
+        acc += hi - lo;
+    }
+    u64 p = U0; u32 no = 0;
+    while (p < U1) {
+        int k = 1; while (k < 62 && (p & ((2ULL << k) - 1)) == 0 && p + (2ULL << k) <= U1) k++;
+        int j = k - 1; u64 node = p >> j, at = lbase[j] + (node - llo[j]);
+        for (int h = 0; h < 2; h++) { for (int q = 0; q < 8; q++) out[no * 8 + q] = buf[(at + h) * 8 + q]; no++; }
+        p += 1ULL << k;
+    }
+    *nout = no;
+}

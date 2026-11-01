@@ -92,6 +92,11 @@ Part six, n = 17, n = 6 and n = 11 (October 26 and 27):
     43,930,548 letters, made from my selection X, went to 43,930,534 once I had recovered his block images and
     changed two of them.
 
+Part seven, n = 18 (October 28 to November 1):
+
+16. One more lift gives 6,779,644,944,870,572 letters for n = 18, 7,683,011,380 below `hasWord_eighteen_B`,
+    checked on one card by hash sums whose keys came from a public random beacon after the plan was fixed.
+
 ## The model
 
 A word of Pantone's construction splits into pieces at the steps of weight 4 or more. Almost every piece is a
@@ -895,8 +900,8 @@ the cores that are only partly seen so far (at most 183,504 entries in the runs 
 minutes for n = 16 and 60 seconds for n = 15, with the lengths and tree hashes of the other checks. For n = 18 the
 table would need 163 GB. As a candidate for that I tested a check by hashes: every covered group adds a random
 value modulo 2^61 - 1 under four keys, and the sums are compared with those of the full set. It agreed with the exact
-check on n = 16 and n = 17 and reported an n = 16 word with one group missing as incomplete. It is not in the
-repository yet. Plain SHA-256 of a word this long is sequential (about 4 days for n = 17), so the recipes print a
+check on n = 16 and n = 17 and reported an n = 16 word with one group missing as incomplete; part seven uses it
+for n = 18. Plain SHA-256 of a word this long is sequential (about 4 days for n = 17), so the recipes print a
 tree hash (the SHA-256 of the SHA-256 digests of the word's 64 KiB leaves), which the card computes during the
 check. Since 28.10 the n = 17 recipe also prints the BLAKE3 of the letters, which the card computes from the same
 leaves in the same pass (5d64909d... for n = 17; values for n = 15 and 16 in the README). I checked the card's
@@ -922,6 +927,26 @@ cost a letter at a fixed order and gave 43,930,536 after the kicks, and one more
 letters, gave 43,930,534, 14 below his word. An hour of `tools/trailsearch.c`, the cut pass and segment insertion with
 three to five cuts find nothing more. The images are in [`plan/images-11-43930534.txt`](plan/images-11-43930534.txt),
 the base and the plan next to it.
+
+# Part seven: n = 18 (October 28 to November 1)
+
+**The word.** `liftB6 lift 6` (`recipes/n18/gen/liftB6.c`) lifts the n = 17 plan once more with the block: every
+closed trail of the n = 17 word becomes one unit, 776,490,624 units in the same order, and the openings are chosen
+by an exact dynamic programme cut into 23,697 chunks of 32,768 units; the program bounds the loss from the cuts by
+164,070 letters. The word has 6,779,644,944,870,572 letters, 7,683,011,380 below `hasWord_eighteen_B`. Two runs, with
+16 and 12 threads, wrote the same plan; it is 15.6 GB of text and 630 MB as xz, above the file limit of GitHub,
+so the recipe rebuilds it from the n = 17 plan of the repository and checks its SHA-256.
+
+**The check.** The table of the n = 17 check would need 15! bits, 163 GB, for n = 18. So the card check of
+`recipes/n18/ck/mh6.c` keeps no set: every group (16! of them) that is completed adds r_k^g modulo 2^61 - 1 to four
+sums, and the word passes when there are exactly 16! completions and each sum equals the sum over all groups. A
+word that misses a group passes only if every key is a root of a fixed nonzero polynomial of degree below 16!, so
+with keys chosen after the word is fixed the chance is at most 6.8e-21. To make the keys come after the word, I
+committed the SHA-256 of the plan and of the checker (`recipes/n18/COMMITMENT.md`) and took the keys from the
+randomness of drand quicknet round 33475799, released after that commit. One pass took 289,217 seconds (3.3 days)
+on an RTX 5090 with 12 host threads: valid, 16! completions, every sum as expected. The card also computed the
+BLAKE3 of the letters, 8a534409..., which is the name of the word; a plain SHA-256 would take about 80 days.
+This is one probabilistic run of one program, with no exact check and no second checker.
 
 # What gave nothing
 

@@ -67,6 +67,15 @@ It prints `LENGTH 377961971839096`. My run took 5.1 hours on one thread (18,403 
 memory; the rebuild in the tests below took about as long. `check.sh predict` in `recipes/n17/` recomputes the length of the
 result from the plan and the construction.
 
+**n = 18, 6,779,644,944,870,572** (`recipes/n18/`): one more lift, from the n = 17 plan, by `recipes/n18/gen/liftB6.c`
+(the lift for L = 6 with the block; it keeps the dynamic programme in memory, cut into chunks of 32,768 units, and
+needs no back pointer file).
+
+    GENB_BLOCK=block.txt liftB6 lift 6 sel.txt nB17a.uplan nB18a.uplan --threads 12 --chunk 32768
+
+It prints `LENGTH 6779644944870572`. Runs with 16 and 12 threads took 5.2 and 6.7 hours and 19 to 20 GB of memory, and
+wrote the same file. `recipes/n18/check.sh plan` does this and compares the hash with `recipes/n18/COMMITMENT.md`.
+
 The C words for n = 16 and n = 17 (no block) come from the same programs without `GENB_BLOCK`:
 `lift16 lift 4` gives 22,320,835,819,119 for n = 16.
 

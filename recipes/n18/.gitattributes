@@ -1,0 +1,2 @@
+# the PTX keeps the CR LF bytes whose SHA-256 is in COMMITMENT.md
+*.ptx -text

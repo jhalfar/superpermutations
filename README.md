@@ -27,6 +27,7 @@ runs the searches and writes the code and this text.
 | 15 | 1,401,325,411,491 | 1,401,326,497,322 | Theo H. | -1,085,831 |
 | 16 | 22,320,795,912,621 | - | - | - |
 | 17 | 377,961,971,839,096 | - | - | - |
+| 18 | 6,779,644,944,870,572 | - | - | - |
 
 "Before" is the best word of someone else when mine was published. For n = 8 the shortest word known is now
 Theo H.'s 46,173, which he found with `tools/trailsearch.c` of this repository on the same selection
@@ -58,7 +59,13 @@ is no earlier word in the table to compare with.
 The word for n = 17 is a recipe as well, in [`recipes/n17/`](recipes/n17/README.md): 377,961,971,839,096 letters,
 520,219,328 below the value of `hasWord_seventeen_B`, checked on the card in one pass of 3.6 to 3.8 hours. The recipe
 prints a tree hash of the word (the SHA-256 of the SHA-256 digests of its 64 KiB leaves) and the BLAKE3 of the
-letters, both computed on the card in the same pass; its plain SHA-256 (below) took a separate CPU run of 4.6 days. The plans of the recipes are made by the programs in [`tools/plans/`](tools/plans/README.md).
+letters, both computed on the card in the same pass; its plain SHA-256 (below) took a separate CPU run of 4.6 days.
+The word for n = 18, in [`recipes/n18/`](recipes/n18/README.md), has 6,779,644,944,870,572 letters, 7,683,011,380
+below `hasWord_eighteen_B`. Its plan (15.6 GB) is too big for the repository, so `recipes/n18/check.sh` rebuilds it
+from the n = 17 plan and compares its hash with one fixed in advance. The exact check would need 163 GB of card
+memory, so this word is checked by sums of hashes over the groups, with keys taken from a public random beacon
+after the plan was fixed: one pass of 3.3 days on an RTX 5090, false pass probability at most 6.8e-21. That is a
+probabilistic check, not an exact one. The plans of the recipes are made by the programs in [`tools/plans/`](tools/plans/README.md).
 
 ```sh
 xz -dk words/superpermutation-13-6747801798.spra.xz
@@ -66,7 +73,7 @@ xz -dk words/superpermutation-13-6747801798.spra.xz
 ```
 
 SHA-256 of the words (for n = 8 to 12 the file, which is the word and one line feed; for n = 13 the letters as the
-decoder writes them and for n = 14 to 17 as the recipes write them, both with no line feed). [`SHA256SUMS`](SHA256SUMS)
+decoder writes them and for n = 14 to 17 as the recipes write them, both with no line feed; for n = 18 I have only the BLAKE3). [`SHA256SUMS`](SHA256SUMS)
 has the hashes of every archive, word and plan.
 
     n = 8    66ec57ba428e0ac1affc5503b86821920f0def27380697317033911a6628cddd
@@ -79,12 +86,13 @@ has the hashes of every archive, word and plan.
     n = 16   e16a7e7f92119f4713e0255cd2856a66dc63efd8e8f9c3c2b89dbd129cf4a61f
     n = 17   c10aee326806d932118a21d5819540101079d5acff9a5cab0e727ba29eb6ab2d
 
-BLAKE3 of the same letters (the value `b3sum` prints, no line feed), from the card check of
-[`recipes/n17/`](recipes/n17/README.md):
+BLAKE3 of the same letters (the value `b3sum` prints, no line feed), from the card checks of
+[`recipes/n17/`](recipes/n17/README.md) and [`recipes/n18/`](recipes/n18/README.md):
 
     n = 15   1cd0698e832bf3d35173e89f092932667f1f27667d6dc6e673946c3d95955fa4
     n = 16   e576707ec1f5bff740a3528dbc35160be1d41035e871f32c8d3d00f2f8c1d504
     n = 17   5d64909d4fd6420e9e5549367e2907ea13fc15d6e2fd1ea419e0b4caa48d8555
+    n = 18   8a5344098c97b5d6f34a66b56afafbf2f9928e95690b4604210fc7db12122af6
 
 How the words were found, step by step, is in [`NOTES.md`](NOTES.md).
 
@@ -133,7 +141,8 @@ word goes out only if neither shortens it. The word for n = 14 is checked by `re
 (66 minutes on one thread, 11 GB); it found all 87,178,291,200 permutations. The word for n = 15 is checked by
 `recipes/n15/check.sh` (a group check, 15 to 22 minutes on 4 threads) and the word for n = 16 by
 `recipes/n16/check.sh` on a graphics card (four passes of 19 minutes, or one pass with `core` in 13 minutes); the word for
-n = 17 by `recipes/n17/check.sh core` (3.6 to 3.8 hours on an RTX 5090).
+n = 17 by `recipes/n17/check.sh core` (3.6 to 3.8 hours on an RTX 5090), and the word for n = 18 by the
+probabilistic `recipes/n18/check.sh card` (3.3 days).
 
 ## Rebuilding a word
 
@@ -165,6 +174,7 @@ python3 words/n8/tools/n8.py rebuild words/n8/selection-46174.txt -o w46174.txt 
 | [`recipes/n15/`](recipes/n15/README.md) | the word on 15 symbols as a recipe: generator, plan, group check |
 | [`recipes/n16/`](recipes/n16/README.md) | the word on 16 symbols as a recipe: generator with the block, plan, card check |
 | [`recipes/n17/`](recipes/n17/README.md) | the word on 17 symbols as a recipe: generator with the block, plan, one-pass card check |
+| [`recipes/n18/`](recipes/n18/README.md) | the word on 18 symbols as a recipe: plan rebuilt from n = 17, hash commitment, probabilistic card check |
 | [`tools/plans/`](tools/plans/README.md) | the programs that make the plans of the recipes |
 | [`reproduce/`](reproduce/REPRODUCE.md) | selection, plan, generator and checker for four words |
 | [`plan/`](plan/), [`plan/history/`](plan/history/README.md) | plans of the newest and of the earlier words |
