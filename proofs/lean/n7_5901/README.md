@@ -17,7 +17,7 @@ eighteen joint runs and the ring search RX, engine `J16.jSearch`). `#print axiom
 kernel statements and their rules (K16: Lemma CUT16, Rule JS, the engine and its completeness) and the joint
 statements (J16: PREV, ORD, VS, the ring classes, the engine and its completeness).
 
-Six of the thirty equations are evaluated by `native_decide` so far (K10, K9, K8, K7, T9', T8), in files that
+Seven of the thirty equations are evaluated by `native_decide` (K10, K9, K8, K7, K6, T9', T8), in files that
 import this directory; they and their logs are in `../../n7_5901/lean/`. The README there has the trust level of
 each of the thirty searches.
 

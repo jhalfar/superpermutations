@@ -50,7 +50,7 @@ Lower bounds.
 * `n7_5900/` proves 5,900 on top of `n7/` in the same way: level 1 is checked by the kernel, level 2
   evaluates 99 equations (the 22 of `n7/` and 77 new ones in 72 modules) by `native_decide`.
 * `n7_5901/` is level 1 of the computer-assisted proof of 5,901: the reduction to thirty search equations,
-  checked by the kernel. Six of the thirty are evaluated by `native_decide` in `../n7_5901/lean/`; the others
+  checked by the kernel. Seven of the thirty are evaluated by `native_decide` in `../n7_5901/lean/`; the others
   rest on search programs (`../n7_5901/README.md` has the trust table). So 5,901 is not a Lean theorem.
 
 Exact values.

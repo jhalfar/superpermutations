@@ -7,8 +7,8 @@ with its exact model, on the written proof of 5,900 as far as its tables, lemmas
 arguments written out here and on the computations of Table C (section 0.3). Every computation of Table C has
 ended and found nothing; every part file is present and agrees with Table C (section 6.3). Most of the
 computations have been run by one program only (section 0.4). Lean also proves the reduction to search
-equations. Those equations are about the Lean search engines, which are not the programs of Table C. Six of the
-thirty equations of defect 16 are proved so far, and a seventh (K6) is being evaluated (section 0.4).
+equations. Those equations are about the Lean search engines, which are not the programs of Table C. Seven of the
+thirty equations of defect 16 are proved (section 0.4).
 
 Notation and terms are those of the written proof of 5,899, cited as [P], and of the written proof of 5,900,
 cited as [W]. [W] is `proofs/lean/n7_5900/PROOF_5900.md` of this repository. The written text of [P] is not
@@ -237,7 +237,7 @@ different and proves something different.
     prefix rule and the jump rule; the programs used the jump rule only, for T4'). It has no ORDS, which no
     counted run uses. So the "found 0" of a card run does not discharge the Lean equation of that run, and each
     equation has to be evaluated on its own.
-  - Six equations are evaluated, as Lean theorems proved by `native_decide` with the C code of the engines
+  - Seven equations are evaluated, as Lean theorems proved by `native_decide` with the C code of the engines
     loaded (the mechanism of the level-2 modules of 5,900), in `lean/Audit5901/` and outside the build of the
     level-1 sources. K10, K9, K8: `K16.Audit.k10_native`, `k9_native`, `k8_native` (`NK.lean`, 105 min on 1
     thread). T9', T8: `J16.Audit.t9_native`, `t8_native` (`NJ.lean`, 117 min on 2 threads). K7: the four
@@ -258,15 +258,17 @@ different and proves something different.
     min on 2 threads). The class cut and the clip do not act in these two runs, so there the Lean engine walks
     the card program's tree. The scripts, logs and the counting copy are in `lean/` (`Eval/*.lean`,
     `logs/*.log`, `Audit5901/J16Count.lean`).
-  - K6 is being evaluated in the same way, in 16 files `NK6_00.lean` to `NK6_15.lean`, each for one range of 16
-    of the 256 hash parts at depth 10, one file at a time on 4 threads. It started on 2026-10-24 at 03:26. The
-    first file (`k6_0_16`) ended at 07:12 after 13,552 s, with the `native_decide` axiom in its log; the second
-    was running when I wrote this. When K6 ends, 7 of the 30 equations are evaluated (section 7.2).
-  - The other 24 equations of `K16.Evals` and `J16.Evals`, K6 among them until it ends, are not evaluated.
+  - K6 was evaluated in the same way, as the sixteen theorems `K16.Audit.k6_0_16` to `k6_240_256` (`NK6_00.lean`
+    to `NK6_15.lean`), each for one range of 16 of the 256 hash parts at depth 10, one file at a time on 4 threads
+    from 2026-10-24 03:26 to 2026-10-31 11:14 (636,474 s of wall time; one file took between 6,494 s and
+    149,151 s; `lean/nk_queue.log`). `NEv6.lean` turns them into the field
+    `k6_ev : K16.Ev Utab6 6 38 60 10 16 25 false` by the same case split with sixteen ranges; `#print axioms`
+    lists propext and the sixteen `native_decide` axioms, and the file compiles in 204 s on 1 thread.
+  - The other 23 equations of `K16.Evals` and `J16.Evals` are not evaluated.
     Evaluating all of them would take about 900 days on 28 threads (section 7.3).
 
-  So the Lean level checks the whole argument, but for 24 of the 30 search equations of defect 16 it does not
-  check the searches. Those 24 rest on the computed level.
+  So the Lean level checks the whole argument, but for 23 of the 30 search equations of defect 16 it does not
+  check the searches. Those 23 rest on the computed level.
 
 The first referee set two conditions (ref16 6, items 1 and 2), and both are met. They asked that T9 be run by
 the plain rule, and that ORDS be tested on 7 symbols with a positive case before T9 and T6' were counted with
@@ -1247,7 +1249,7 @@ its binary in my runs (`gj2` for the host `gj2.c` with its kernel `gj2.cu`, and 
 | knapsack | `programs/knapsack/knap16.py`; `programs/knapsack/acc16.py` (with `tabs15.py`) | | by pieces; by items |
 | second counts K7 to K10 | `k2_s12` | `programs/second/k2_s12.cpp`: k2.cpp of defect 15, written from the texts, with SMAX = 12 in place of 9 | K7: `audit/k7second/run_k7.sh`, `summ_k7.py` |
 | second counts T7, T8, T9' | `j2_np5` | `programs/second/j2_np5.cpp`: j2.cpp of defect 15, written from the texts, with NPMAX = 5 in place of 4 | T7: `audit/t7second/run_t7.sh` |
-| Lean engines, compiled | `K16.seqSearch`, `J16.jSearch` (`LowerBounds/K16Search.lean`, `J16Search.lean` of the level-1 sources) | counting copies `LowerBounds/K16Count.lean`, `lean/Audit5901/J16Count.lean` | `lean/build.sh`, `ev.sh`, `Eval/*.lean`; theorems `lean/Audit5901/NK.lean`, `NJ.lean`, `NEv.lean`, K7 and K6 in `NK7_*.lean`, `NK6_*.lean` (`nat.sh`, `nat2.sh`, `nk_queue.sh`); logs in `lean/logs/` |
+| Lean engines, compiled | `K16.seqSearch`, `J16.jSearch` (`LowerBounds/K16Search.lean`, `J16Search.lean` of the level-1 sources) | counting copies `LowerBounds/K16Count.lean`, `lean/Audit5901/J16Count.lean` | `lean/build.sh`, `ev.sh`, `Eval/*.lean`; theorems `lean/Audit5901/NK.lean`, `NJ.lean`, `NEv.lean`, K7 and K6 in `NK7_*.lean`, `NK6_*.lean`, `NEv7.lean`, `NEv6.lean` (`nat.sh`, `nat2.sh`, `nk_queue.sh`); logs in `lean/logs/` |
 
 The card programs run one depth-first walk per thread with the rule of the CPU program. The switches of `gj2`
 (LEARN, EXH, ORB, ROT, RC, NRS) and of `gk5` (LEARN, RC, NR, FC) change the speed, not the counts; ORDS and JS are
@@ -1449,7 +1451,8 @@ Table C); the part files of K0, K1, K2 are packed in an archive of mine.
 ### 7.2 Second programs that are missing
 
 At defect 15 every statement had two programs that share no code. At defect 16, K7, K8, K9, K10, T7, T8 and T9'
-have independent second counts equal to Table C, and K0 to K6 and T1 to T6' rest on one card program each. For
+have independent second counts equal to Table C. K6 has an independent second answer, the Lean equation, but
+no second count. K0 to K5 and T1 to T6' rest on one card program each. For
 T2 48..55 a second program exists, but it shares the rule code with the card host. By "independent" I mean a
 program that shares no code with the card programs: the second programs of defect 15, which were written from
 the texts only (`k2_s12` and `j2_np5`, section 6.1), the referee's `ref7`, and the Lean engines
@@ -1461,18 +1464,19 @@ The second count of T7 by `j2_np5` ran on 2 threads in 8 resumable parts (`audit
 counts of Table C; they took 171,865 s of CPU time (about 48 thread-hours).
 
 The Lean equation of K7 ran as four `native_decide` theorems on 3 threads (`lean/nk_queue.sh`, log
-`lean/nk_queue.log`) and ended on 2026-10-21 at 16:46; section 0.4 says what is still missing to make them the
-field `k7`. The Lean equation of K6 started on 2026-10-24 at 03:26, after the evaluations of 5,900 that had
-priority on the machine (`lean/start_k6_20261024.sh`: the 16 files one after the other on 4 threads). Before the
-start I estimated about 217 thread-hours. The first file took 13,552 s; at that rate the 16 files take about 60
-hours, so K6 should end around 2026-10-26. Finished modules are skipped when the queue is started again.
+`lean/nk_queue.log`) and ended on 2026-10-21 at 16:46; `NEv7.lean` makes them the field `k7` (section 0.4).
+The Lean equation of K6 started on 2026-10-24 at 03:26, after the evaluations of 5,900 that had priority on the
+machine (`lean/start_k6_20261024.sh`: the 16 files one after the other on 4 threads), and ended on 2026-10-31 at
+11:14 with the answer "nothing found" in every file. Before the start I estimated about 217 thread-hours; the
+wall time was 636,474 s (about 707 thread-hours on 4 threads), because the parts are very uneven: the longest
+file took 149,151 s and the shortest 6,494 s. `NEv6.lean` makes the sixteen theorems the field `k6`.
 
 | statement | second count now | what would give one |
 |---|---|---|
 | K0, K1, K2 | none (`gkjs` only) | a second card program or the Lean engine; 1.6e15 kept in all is out of reach of the CPU |
 | K3, K4 | none | the same (5.3e14 and 1.6e14 kept) |
 | K5 | none | `k2_s12` on the CPU: 2.4e13 kept, about 470 thread-hours at the 0.071 us per kept of the K7 run |
-| K6 | none; the Lean equation is being evaluated (see above) | the end of that evaluation (an answer, not a count), or `k2_s12`: 2.6e12 kept, about 51 thread-hours |
+| K6 | the Lean equation: sixteen theorems by `native_decide` and the field `k6_ev`, answer "nothing found" (an answer, not a count) | a count: `k2_s12`, 2.6e12 kept, about 51 thread-hours |
 | K7 | `k2_s12`: 320,243,136,927 kept, no violation, 64 parts, 6.3 thread-hours (`audit/k7second/summary.txt`); the Lean equation: four theorems by `native_decide`, answer "nothing found" | done |
 | K8 | `k2_s12` 22,732,567,392 (`audit/second/k2_K8.txt`); the Lean engine: theorem `k8_ev` (`native_decide`), counting copy 22,732,567,392; `kfast2` (card lineage) | done |
 | K9 | `k2_s12` 384,081,983 (`audit/second/k2_K9.txt`); refjs `ref7`; the Lean engine: theorem `k9_ev`, count 384,081,983 (and 359,998,813 with Rule JS, as `kjs`); `kfast2` | done |
@@ -1492,7 +1496,7 @@ hours, so K6 should end around 2026-10-26. Finished modules are skipped when the
 | knapsack | two programs | done |
 | RX | three programs | done |
 
-### 7.3 The Lean form: level 1 done, six search equations evaluated
+### 7.3 The Lean form: level 1 done, seven search equations evaluated
 
 Level 1 is done (PLAN_5901; states STATE_5901A, STATE_5901B, STATE_5901C; the assembly `covers_5901_of_search` in
 `LowerBounds/F5901Search.lean`; axioms propext, Classical.choice, Quot.sound; no `sorry`, no `native_decide`).
@@ -1515,10 +1519,9 @@ this text; none of them changes a statement of Table C.
 
 Level 2 is the evaluation of the search equations: `K16.Evals` (eleven fields) and `J16.Evals` (eighteen runs and
 the ring search of RX). These equations are statements about the Lean engines, and section 0.4 says how they
-relate to the card runs. Six of them are proved as theorems by `native_decide` in `lean/Audit5901/`, outside the
-build of the level-1 sources: the fields k10, k9, k8, t9 and t8 (`NEv.lean`) and the four ranges of parts of k7
-(`NK7_0.lean` to `NK7_3.lean`; section 0.4 says what is missing to make them the field). K6 is being evaluated
-(section 7.2). The rest is about 2.4e15 kept prefixes (kernel) and 9.2e14 (joint), about 420 and 490 days on 28
+relate to the card runs. Seven of them are proved as theorems by `native_decide` in `lean/Audit5901/`, outside the
+build of the level-1 sources: the fields k10, k9, k8, t9 and t8 (`NEv.lean`), k7 (`NEv7.lean`, from four ranges of
+parts) and k6 (`NEv6.lean`, from sixteen ranges). The rest is about 2.4e15 kept prefixes (kernel) and 9.2e14 (joint), about 420 and 490 days on 28
 threads at the measured rates of the Lean engines (PLAN_5901 4). At those rates T4', T6', T7 and the six VS
 halves of T2 would each take under a day on 28 threads. K0 to K5, T1, the windows 8..31 and 56..89 of T2, T3'
 and T5 are out of reach without new rules or a faster engine. At defect 15 the searches were 2.9e13 start

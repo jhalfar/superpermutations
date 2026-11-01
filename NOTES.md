@@ -1195,8 +1195,8 @@ to K10 and nine joint statements T1 to T9 searched in 18 counted runs with new r
 piece, the order of pieces of equal kind, windows of ring holes), and the exact ring row RX. The last search,
 K1, ended on October 18 with nothing found. Here most searches have one program only: K7 to K10, T7, T8 and
 T9' have independent second counts and RX three programs, the rest one run of one card program each. Lean
-checks the whole reduction (`covers_5901_of_search`, level 1 complete on October 17) and, so far, six of the
-thirty search equations by `native_decide` (K10, K9, K8, K7, T9', T8); K6 is being evaluated since October 24.
+checks the whole reduction (`covers_5901_of_search`, level 1 complete on October 17) and seven of the
+thirty search equations by `native_decide` (K10, K9, K8, K7, K6, T9', T8; K6 ran from October 24 to 31).
 So 5,901 is a computer-assisted proof, not a Lean theorem. The written proof, the programs and a table with the
 trust level of every search are in [`proofs/n7_5901/`](proofs/n7_5901/README.md), the Lean reduction in
 [`proofs/lean/n7_5901/`](proofs/lean/n7_5901/README.md).

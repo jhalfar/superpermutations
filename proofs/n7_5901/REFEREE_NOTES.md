@@ -43,7 +43,7 @@ found, and section C keeps the points of my earlier list of disagreements betwee
   `native_decide` axiom each); `K10K9.log` 963 ms and 83,936 ms; `K8.log` 3,411,677 ms on 2 threads (57 min);
   `T8eq.log` 6,460,082 ms (108 min); `T8cnt.log` 6,925,342 ms (115 min) and the counts of T8; `T9.log` the counts
   of T9'. `NK7_0.log` to `NK7_3.log` and `nk_queue.log` for K7 (9,377 + 13,371 + 43,978 + 10,707 s), and
-  `NK6_00.log` for the first file of K6 (13,552 s).
+  `NK6_00.log` to `NK6_15.log` for K6 (636,474 s in all, 2026-10-24 to 10-31) and `NEv6.log` (204 s).
 - Small arithmetic: (L1) 5,884 + 17 = 5,901; ACC16 (720 - 680, 816 - 720); V, W and B of the 20 shapes; the sums
   by statement in 2.8; XL = 0 for 10,15,40 and 10,16,43; Lemma L2 (46 - 37, 46 - 36, 46 - 31 = 9, 10, 15).
 - The line numbers of 4.6 in `programs/gj2/jr_core.h` (92, 102, 158, 206) and `programs/gj2/gj2.c` (222): they
@@ -63,7 +63,7 @@ found, and section C keeps the points of my earlier list of disagreements betwee
    48..64, which cover all 64 parts. No compiled file states the field `k7 : K16.Ev Utab7 7 36 54 10 16 25 false`
    (`NEv.lean` has only k10, k9, k8, t9 and t8). The missing step is a `PS.Covered` case split like
    `f1_covered_native` of the proof of 5,899. Closed on 2026-10-24: `lean/Audit5901/NEv7.lean` states the field
-   as `k7_ev` and compiles in 16 s (`lean/logs/NEv7.log`). The same step will be needed for K6 (16 ranges).
+   as `k7_ev` and compiles in 16 s (`lean/logs/NEv7.log`). The same step for K6 (16 ranges) is `NEv6.lean`, `k6_ev`, 2026-11-01.
 3. "T9' in 16 s" (0.4, the `#eval` runs). No log shows 16 s: `lean/logs/T9.log` prints "(0 ms)" for the equation
    and a wall time of 65 s for the whole script, which also ran three counts; `T9g.log` ran 47 s on 2 threads. I
    left the number as written.

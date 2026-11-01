@@ -110,7 +110,7 @@ How the words were found, step by step, is in [`NOTES.md`](NOTES.md).
 "Kernel" means checked by the Lean kernel to the end with the axioms `propext`, `Classical.choice` and `Quot.sound`
 only. Where equations are evaluated by `native_decide`, the Lean compiler, the C compiler of the toolchain and the
 runtime are trusted for them, as in Lebar's proof. $`L(7) \ge 5{,}901`$ as a whole is a computer-assisted proof, not a
-Lean theorem: the 24 search equations that Lean has not evaluated rest on C, C++ and CUDA programs, most of them
+Lean theorem: the 23 search equations that Lean has not evaluated rest on C, C++ and CUDA programs, most of them
 run by one program only. [`proofs/n7_5901/`](proofs/n7_5901/README.md) has the written proof, the programs and
 a table that gives the trust level of each of the 30 searches. [`proofs/lean/README.md`](proofs/lean/README.md) has the
 statements, the trust levels, the builds and what they cost.

@@ -1,0 +1,5 @@
+nat: NK6_07 started 2026-10-28 14:42:03, 4 threads, dll ../../../../lb/lean/build/native/K16Search.dll c68925a4c3181f3e
+'SuperpermLowerBounds.K16.Audit.k6_112_128' depends on axioms: [propext,
+ SuperpermLowerBounds.K16.Audit.k6_112_128._native.native_decide.ax_1_1]
+[guard] exit 0, peak committed memory of the job 0.50 GB (limit 16.0 GB)
+nat: exit=0 wall=6494s, ended 2026-10-28 16:30:17

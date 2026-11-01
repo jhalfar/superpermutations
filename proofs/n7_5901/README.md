@@ -8,9 +8,9 @@ This is a computer-assisted proof. It is not a Lean theorem. The written proof i
 [`PROOF_5901.md`](PROOF_5901.md). Lean checks the whole reduction: the theorem `covers_5901_of_search` (level 1,
 no `native_decide`, axioms `propext`, `Classical.choice` and `Quot.sound`) says that every word containing all
 permutations of 7 symbols has at least 5,901 letters if thirty search equations of defect 16 hold, together with
-the search equations of 5,899 and 5,900. Six of the thirty are Lean theorems by `native_decide`. The other
-twenty-four rest on searches run by C, C++ and CUDA programs of mine; most of them were run by one program only.
-State of 2026-10-24.
+the search equations of 5,899 and 5,900. Seven of the thirty are Lean theorems by `native_decide`. The other
+twenty-three rest on searches run by C, C++ and CUDA programs of mine; most of them were run by one program only.
+State of 2026-11-01.
 
 ## Trust table
 
@@ -33,7 +33,7 @@ the number of kept prefixes of the card run (for RX of the three CPU programs). 
 | K3 | `k3` | F(3; 48, 78) | 527,651,578,348,368 | one program |
 | K4 | `k4` | F(4; 41, 72) | 160,141,566,085,840 | one program |
 | K5 | `k5` | F(5; 37, 66) | 23,993,915,746,406 | one program |
-| K6 | `k6` | F(6; 37, 60) | 2,569,985,903,558 | one program (the Lean equation is being evaluated, 1 of 16 files done) |
+| K6 | `k6` | F(6; 37, 60) | 2,569,985,903,558 | Lean + one program (the Lean equation gives an answer, not a count) |
 | K7 | `k7` | F(7; 35, 54) | 320,243,136,927 | Lean + two independent programs (see the note below the table) |
 | K8 | `k8` | F(8; 35, 48) | 22,732,567,392 | Lean + two independent programs |
 | K9 | `k9` | F(9; 35, 42) | 384,081,983 | Lean + two independent programs |
@@ -149,9 +149,10 @@ the level-2 modules of 5,899 and 5,900 do; `lean/build.sh`, `nat.sh` and `nat2.s
 
 ## What is missing
 
-Section 7 of `PROOF_5901.md`. In short: twenty of the thirty searches (K0 to K6, T1, T3', T4', T5, T6' and eight of the
-ten runs of T2) have one program only, and T2 48..55 has a second run that shares code. Twenty-four Lean
-equations are not evaluated. K6 is running since 2026-10-24 03:26 (16 files; the first took 3.8 hours on 4 threads); the others are out of reach
+Section 7 of `PROOF_5901.md`. In short: nineteen of the thirty searches (K0 to K5, T1, T3', T4', T5, T6' and eight of the
+ten runs of T2) have one program only, and T2 48..55 has a second run that shares code. K6 has the card program and
+the Lean equation (evaluated 2026-10-24 to 10-31), but no second count. Twenty-three Lean equations are not
+evaluated; they are out of reach
 of the Lean engines at their present speed, or would take up to a day each on 28 threads (T4', T6', T7 and the
 six halves of the split of T2).
 

@@ -1,0 +1,20 @@
+nat2: NEv6 started 2026-11-01 14:38:02, 1 threads
+'SuperpermLowerBounds.Audit5901.k6_ev' depends on axioms: [propext,
+ SuperpermLowerBounds.K16.Audit.k6_0_16._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k6_112_128._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k6_128_144._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k6_144_160._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k6_160_176._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k6_16_32._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k6_176_192._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k6_192_208._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k6_208_224._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k6_224_240._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k6_240_256._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k6_32_48._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k6_48_64._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k6_64_80._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k6_80_96._native.native_decide.ax_1_1,
+ SuperpermLowerBounds.K16.Audit.k6_96_112._native.native_decide.ax_1_1]
+[guard] exit 0, peak committed memory of the job 7.95 GB (limit 16.0 GB)
+nat2: exit=0 wall=204s, ended 2026-11-01 14:41:26
