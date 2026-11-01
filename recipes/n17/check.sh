@@ -26,7 +26,7 @@ TH=${2:-12}; K=${3:-8}
 [ "$MODE" = predict ] && TH=${2:-4}
 PLAN=nB17a_377961971839096.uplan.xz
 EXP_LEN=377961971839096
-EXP_SHA=                  # the plain SHA-256 of the letters: not known yet (the run takes days); sha mode prints it
+EXP_SHA=c10aee326806d932118a21d5819540101079d5acff9a5cab0e727ba29eb6ab2d   # the plain SHA-256 of the letters (sha mode, about 4.6 days)
 EXP_TREE=a17d292c31673102f3c18fa152317e81119320fb89d11815f9be6a59bdf425b2
 EXP_BLAKE3=5d64909d4fd6420e9e5549367e2907ea13fc15d6e2fd1ea419e0b4caa48d8555   # BLAKE3 of the letters, as b3sum prints it
 SEL_SHA=4f31dab69be987cb94cc993bf78f854833d861970c1f57ec290bebbe198d2a1a

@@ -5,8 +5,8 @@ A word of 377,961,971,839,096 letters on the alphabet `0123456789ABCDEFG` that c
 SHA-256 of the SHA-256 digests of its 64 KiB leaves):
 `a17d292c31673102f3c18fa152317e81119320fb89d11815f9be6a59bdf425b2`. BLAKE3 of the letters (the value `b3sum`
 prints for the word with no line feed), computed on the card in the same pass:
-`5d64909d4fd6420e9e5549367e2907ea13fc15d6e2fd1ea419e0b4caa48d8555`. The plain SHA-256 of the letters is not known
-yet: the run that computes it takes about 4.4 days, and I will add it here when it has finished.
+`5d64909d4fd6420e9e5549367e2907ea13fc15d6e2fd1ea419e0b4caa48d8555`. Plain SHA-256 of the letters, computed on the
+CPU by `check.sh sha`: `c10aee326806d932118a21d5819540101079d5acff9a5cab0e727ba29eb6ab2d`.
 
 It is 520,219,328 letters below the value of the Lean theorem `hasWord_seventeen_B : HasWord 17 377962492058424`
 (`proofs/lean/constant305989/SuperpermutationUpperBound305989/CorollariesB.lean`, described in
@@ -38,7 +38,7 @@ bash check.sh predict      # the length from the plan and the construction, no c
 bash check.sh core         # one pass of the check on the card: about 3.8 hours
 bash check.sh pass 0       # one of the eight passes of the older group check
 bash check.sh all          # all eight passes one after the other
-bash check.sh sha          # the plain SHA-256 of the letters: one thread, about 4.4 days, no card
+bash check.sh sha          # the plain SHA-256 of the letters: one thread, about 4.6 days, no card
 ```
 
 `core`, `pass` and `all` need an NVIDIA card with its driver (no CUDA toolkit: the `.ptx` files are built for sm_75, so
@@ -73,7 +73,8 @@ The `pass` and `all` modes build `../n16/genBp.c` with L = 5. I ran that code on
 plan of the construction (eight passes, 2.7 to 3.3 hours each), not on this word.
 
 Limits: I have checked this word with one program only (the group check on the card, in its core form, tested on
-smaller words). I have no second checker for it, and no plain SHA-256 yet.
+smaller words). I have no second checker for it. The plain SHA-256 comes from a separate run that spells the word
+on the CPU (`genBt.c`, 2026-10-27 to 11-01, Windows, one thread, 400,432 seconds); it gave the same length.
 
 The BLAKE3 of the n = 16 word of `recipes/n16/`, from this program with L = 4 and the n = 16 plan, is
 `e576707ec1f5bff740a3528dbc35160be1d41035e871f32c8d3d00f2f8c1d504`.

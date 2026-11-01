@@ -56,9 +56,9 @@ mine lifts the same plan with more choices for the openings. The word for n = 16
 below the value of my Lean theorem `hasWord_sixteen_B`, 22,320,830,091,240, by 34,178,619; for n = 16 there
 is no earlier word in the table to compare with.
 The word for n = 17 is a recipe as well, in [`recipes/n17/`](recipes/n17/README.md): 377,961,971,839,096 letters,
-520,219,328 below the value of `hasWord_seventeen_B`, checked on the card in one pass of 3.6 to 3.8 hours. Its plain SHA-256
-is still being computed; the recipe prints a tree hash of the word (the SHA-256 of the SHA-256 digests of its 64 KiB
-leaves) and the BLAKE3 of the letters, both computed on the card in the same pass. The plans of the recipes are made by the programs in [`tools/plans/`](tools/plans/README.md).
+520,219,328 below the value of `hasWord_seventeen_B`, checked on the card in one pass of 3.6 to 3.8 hours. The recipe
+prints a tree hash of the word (the SHA-256 of the SHA-256 digests of its 64 KiB leaves) and the BLAKE3 of the
+letters, both computed on the card in the same pass; its plain SHA-256 (below) took a separate CPU run of 4.6 days. The plans of the recipes are made by the programs in [`tools/plans/`](tools/plans/README.md).
 
 ```sh
 xz -dk words/superpermutation-13-6747801798.spra.xz
@@ -77,7 +77,7 @@ has the hashes of every archive, word and plan.
     n = 14   5eebd12aa5f4fcf1851bfbcfb0aa0ffeb860b68d265fb1be9c3321a121357a92
     n = 15   d91b875a151480dbac864005bf7bdcd1d9aaeab2d5f5a0bffabfdb1e18cbe21c
     n = 16   e16a7e7f92119f4713e0255cd2856a66dc63efd8e8f9c3c2b89dbd129cf4a61f
-    n = 17   (plain SHA-256 not done yet; tree hash a17d292c31673102f3c18fa152317e81119320fb89d11815f9be6a59bdf425b2)
+    n = 17   c10aee326806d932118a21d5819540101079d5acff9a5cab0e727ba29eb6ab2d
 
 BLAKE3 of the same letters (the value `b3sum` prints, no line feed), from the card check of
 [`recipes/n17/`](recipes/n17/README.md):
