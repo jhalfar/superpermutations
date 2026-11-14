@@ -16,7 +16,7 @@ for r in $(seq 1 $NR); do
   [ -f $D/STOP ] && break
   g=0
   TOOLS=$B nice -n 19 $G bash $H/../polish.sh $D/p$r $BASE $PLAN 4 6 "--or3 5 --or3-slack 1" > $D/p$r.out 2>&1
-  if [ -f $D/p$r/best.txt ]; then read b p w < $D/p$r/best.txt; take "round $r polish" "$b" "$p" "$w"; fi
+  if [ -f $D/p$r/best.txt ]; then read -r b p w < $D/p$r/best.txt; take "round $r polish" "$b" "$p" "$w"; fi
   for k in 2 3; do mkdir -p $D/i$r$k
     nice -n 19 $G $B/segins_ils $BASE $D/i$r$k/o.txt --plan-in $PLAN --time 0 --threads 2 --seed $((r * 100 + k * 7)) \
       --ils $SEC --ils-log 600 --ils-kmax $k --ils-slack 2 --ils-near -1 --ils-cuts 3 --or3-stop $D/STOP > $D/i$r$k/o.log 2>&1 &
