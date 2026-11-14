@@ -3,9 +3,13 @@
 [![check words](https://github.com/jhalfar/superpermutations/actions/workflows/check.yml/badge.svg)](https://github.com/jhalfar/superpermutations/actions/workflows/check.yml)
 
 A superpermutation on n symbols is a word that contains every permutation of the symbols as a substring. This
-repository holds such words for n = 10 to 17 that are shorter than any other I know of, a word of 46,174
-letters for n = 8 and the list of all 45,116 minimal superpermutations for n = 6 ([`words/n6/`](words/n6/README.md)).
-It also holds the inputs that rebuild them, the programs that made them, and Lean proofs of upper and lower bounds.
+repository holds superpermutations for n = 8 and 10 to 18, built with Jay Pantone's construction, and the list of
+all 45,116 minimal superpermutations for n = 6 ([`words/n6/`](words/n6/README.md)). On 14 November 2026 the words
+for n = 10 and 11 were still the shortest known. For n = 8, 12, 13 and 14 shorter words have been found since, some
+of them built on these, and the current records are on the
+[Superpermutation Almanac](https://superpermutations.com). The Almanac stops at n = 14; for n = 15 to 18 these
+were the shortest words I knew of on 14 November 2026. The repository also holds the inputs that rebuild the
+words, the programs that made them, and Lean proofs of upper and lower bounds.
 
 All of it is built with Jay Pantone's [43/80 construction](https://github.com/jaypantone/superperm-upper-43-80).
 Until October 5 I kept the closed trails of his words and changed where each one is cut and the order of the
@@ -14,32 +18,57 @@ pieces; the words here use other selections inside his construction, and so othe
 I work on this with Claude (Opus 5.5) in Claude Code. I chose the problem and direct the work; Claude designs and
 runs the searches and writes the code and this text.
 
+## Where things are now
+
+The records and bounds for n up to 14 are kept on Jay Pantone's
+[Superpermutation Almanac](https://superpermutations.com), which checks every word and Lean proof submitted to it.
+Its front page has the current records, and its [bounds page](https://superpermutations.com/bounds) every listed
+bound. My words there are listed in the table below with their Almanac numbers. This repository keeps what the
+Almanac does not hold: the words for n = 15 to 18 (as recipes), the list of all minimal words for n = 6, the older
+words and their plans, the programs that made them, the full Lean development, the written proofs of
+$`L(7) \ge 5{,}900`$ and $`5{,}901`$, and the account in [`NOTES.md`](NOTES.md).
+
+My Lean proofs on the Almanac are in
+[jhalfar/superpermutation-almanac-lean](https://github.com/jhalfar/superpermutation-almanac-lean), one commit per
+batch, each a cut-down copy of a part of [`proofs/lean/`](proofs/lean/README.md):
+
+| commit | statement | Almanac |
+|---|---|---|
+| `af99e83` | the coefficient of $`(n-3)!`$ tends to 0, and the coefficient of $`(n-4)!`$ is at most 8, kernel only | [b/35](https://superpermutations.com/b/35), [b/36](https://superpermutations.com/b/36) |
+| `7e6664d` | $`L(8) \ge 46{,}134`$, three searches by `native_decide` | [b/39](https://superpermutations.com/b/39) |
+| `7b7b96d` | $`L(6) \ge 872`$, kernel only | [b/37](https://superpermutations.com/b/37) |
+| `a09f9ef` | $`L(7) \ge 5{,}899`$, twelve searches by `native_decide` | [b/40](https://superpermutations.com/b/40) |
+| `5cc0ac3` | $`L(7) \ge 5{,}898`$, kernel only | [b/43](https://superpermutations.com/b/43) |
+| `7ed009a` | $`L(12) \ge 522{,}622{,}401`$ and $`L(13) \ge 6{,}746{,}627{,}048`$, kernel only (constants tuned as William Echols did for n = 11) | [b/46](https://superpermutations.com/b/46), [b/47](https://superpermutations.com/b/47) |
+
 ## The words
 
-| n | length now | length before | previous record by | change |
-|---|---:|---:|---|---:|
-| 8 | 46,174 | 46,178 | William Echols | -4 |
-| 10 | 4,034,855 | 4,034,873 | rumstd | -18 |
-| 11 | 43,930,534 | 43,930,548 | Jay Pantone | -14 |
-| 12 | 522,736,969 | 522,737,173 | Theo H. | -204 |
-| 13 | 6,747,801,798 | 6,747,918,066 | Jay Pantone | -116,268 |
-| 14 | 93,904,804,405 | 93,904,804,516 | William Echols | -111 |
-| 15 | 1,401,325,411,491 | 1,401,326,497,322 | Theo H. | -1,085,831 |
-| 16 | 22,320,795,912,621 | - | - | - |
-| 17 | 377,961,971,839,096 | - | - | - |
-| 18 | 6,779,644,944,870,572 | - | - | - |
+| n | my word here | on the Almanac | shortest known on 14 November 2026 |
+|---|---:|---|---|
+| 8 | 46,174 | [W-0077](https://superpermutations.com/w/W-0077) | 46,173, Theo H. ([W-0078](https://superpermutations.com/w/W-0078)), found with `tools/trailsearch.c` on the selection of this word; Jay Pantone found another word of that length ([W-0080](https://superpermutations.com/w/W-0080)) |
+| 9 | not here | [W-0103](https://superpermutations.com/w/W-0103), 408,717 | 408,717, mine ([W-0103](https://superpermutations.com/w/W-0103)), from Jay Pantone's construction of [W-0099](https://superpermutations.com/w/W-0099) |
+| 10 | 4,034,855 | [W-0062](https://superpermutations.com/w/W-0062) | the same; Jay Pantone's [W-0082](https://superpermutations.com/w/W-0082) has the same length |
+| 11 | 43,930,534 | [W-0086](https://superpermutations.com/w/W-0086) | the same |
+| 12 | 522,736,969 | [W-0074](https://superpermutations.com/w/W-0074) | 522,736,437, Derek Mahoney ([W-0102](https://superpermutations.com/w/W-0102)) |
+| 13 | 6,747,801,798 | [W-0084](https://superpermutations.com/w/W-0084) | 6,747,800,610, Jay Pantone ([W-0107](https://superpermutations.com/w/W-0107)) |
+| 14 | 93,904,804,405 | [W-0085](https://superpermutations.com/w/W-0085) | 93,904,780,410, Jay Pantone ([W-0108](https://superpermutations.com/w/W-0108)) |
+| 15 | 1,401,325,411,491 | the Almanac stops at n = 14 | this one, as far as I know |
+| 16 | 22,320,795,912,621 | | this one, as far as I know |
+| 17 | 377,961,971,839,096 | | this one, as far as I know |
+| 18 | 6,779,644,944,870,572 | | this one, as far as I know |
 
-"Before" is the best word of someone else when mine was published. For n = 8 the shortest word known is now
-Theo H.'s 46,173, which he found with `tools/trailsearch.c` of this repository on the same selection
-([`words/n8/`](words/n8/README.md)). Theo H.'s words for n = 11 and 12 were made from earlier words of mine. The
-word for n = 11 starts from Jay Pantone's 43,930,548, which he made from my selection X by changing the images of
-its blocks; I recovered his images, changed two of them and repaired the order with local kicks
-([`plan/images-11-43930534.txt`](plan/images-11-43930534.txt)). The word for n = 12 starts from William Echols's
-522,737,174, and it and the word for n = 13 use two moves from the group: his re-opening of a stretch of consecutive
-trails and Theo H.'s moving of a trail with a new phase. Against Pantone's own words of 4,034,889, 43,930,680,
-522,745,581 and 6,747,918,066 letters from the 43/80 release the words for n = 10 to 13 are 34, 146, 8,612 and
-116,268 letters shorter. My own best words on Pantone's closed trails, before the change
-of selection, had 43,930,614, 522,745,350 and 6,747,916,657 letters.
+The words for n = 14 to 18 are stored as recipes (below). My later words on the Almanac, 408,717 for n = 9
+([W-0103](https://superpermutations.com/w/W-0103)), 522,736,440 for n = 12
+([W-0098](https://superpermutations.com/w/W-0098)) and 6,747,800,688 for n = 13
+([W-0105](https://superpermutations.com/w/W-0105)), are not in this repository. Jay Pantone's n = 13 record
+starts from the last of them. The Almanac's front page is the current table; the lengths these words beat when
+they were published are in [`NOTES.md`](NOTES.md#the-words-and-the-records-they-beat).
+
+The word for n = 11 starts from Jay Pantone's 43,930,548 ([W-0079](https://superpermutations.com/w/W-0079)), which
+he made from my selection X by changing the images of its blocks; I recovered his images, changed two of them and
+repaired the order with local kicks ([`plan/images-11-43930534.txt`](plan/images-11-43930534.txt)). The word for
+n = 12 starts from William Echols's 522,737,174, and it and the word for n = 13 use two moves from the group: his
+re-opening of a stretch of consecutive trails and Theo H.'s moving of a trail with a new phase.
 
 The files are `words/superpermutation-N-LENGTH.txt.xz`: XZ archives with a delta filter of distance n that `xz -d`
 unpacks (2 KB for n = 8, then 65 KB, 1.1 MB, 4.1 MB and 45 MB for n = 10 to 13), on the first n letters of
@@ -51,7 +80,8 @@ repository (`g++ -std=c++20 -O2 tools/reduced_codec.cpp -o reduced-codec`), whic
 6,747,801,835 letters before it is stored the same way, and the earlier words for n = 13 stay as `.txt.xz`
 files. The word on 14 symbols would take 94 GB, so it is a recipe in
 [`recipes/n14/`](recipes/n14/README.md): a generator, a plan of 94 KB and a checker, as William Echols did with his
-words. The words for n = 15 and n = 16 are recipes too, in [`recipes/n15/`](recipes/n15/README.md) and
+words. The words of the table that are on the Almanac, the one for n = 14 included, can also be downloaded from
+their Almanac pages in its Detour format (for example `https://superpermutations.com/w/W-0085/download`). The words for n = 15 and n = 16 are recipes too, in [`recipes/n15/`](recipes/n15/README.md) and
 [`recipes/n16/`](recipes/n16/README.md). Theo H. published the first recipe for n = 15 by lifting my n = 14 plan;
 mine lifts the same plan with more choices for the openings. The word for n = 16 is the first word I know of that is
 below the value of my Lean theorem `hasWord_sixteen_B`, 22,320,830,091,240, by 34,178,619; for n = 16 there
@@ -101,19 +131,29 @@ How the words were found, step by step, is in [`NOTES.md`](NOTES.md).
 [`proofs/lean/`](proofs/lean/README.md) holds proofs in Lean 4, stated with the definitions of Pantone's
 `Challenge.lean`. With $`F_3(n) = n! + (n-1)! + (n-2)!`$ and $`L(n)`$ the length of the shortest superpermutation:
 
-| result | checked by | directory |
-|---|---|---|
-| $`L(n) \le F_3(n) + (c+o(1))\,(n-3)!`$ with $`c`$ from $`\tfrac{1771}{3456}`$ ($`n \ge 13`$) down to $`\tfrac{11117297}{27675648}`$ ($`n \ge 22`$); Pantone's $`c`$ is $`\tfrac{43}{80}`$ | kernel | [`constant/`](proofs/lean/constant/README.md), [`constant61937/`](proofs/lean/constant61937/README.md), [`constant305989/`](proofs/lean/constant305989/README.md), [`constant43586371/`](proofs/lean/constant43586371/README.md) |
-| the coefficient tends to 0; $`L(n) - F_3(n)`$ lies between $`2(n-4)! - 2(n-5)!`$ and $`\tfrac{41}{5}(n-4)!`$ for $`n \ge 2^{14}`$ | kernel | [`constant43586371/`](proofs/lean/constant43586371/README.md), [`asym/`](proofs/lean/asym/README.md) |
-| my words of 46,174 (and its seven ties), 4,034,855, 43,930,578 and 522,737,175 letters are superpermutations | kernel | [`words/`](proofs/lean/words/README.md), [`words12/`](proofs/lean/words12/README.md) |
-| $`L(n) \ge`$ 46,133, 408,469, 4,033,378, 43,917,903, 522,622,378, 6,746,626,957, 93,891,141,126 for $`n = 8`$ to $`14`$ (Theorem C) | kernel | [`lower/`](proofs/lean/lower/README.md) |
-| $`L(n)`$ exact for $`n \le 6`$: 1, 3, 9, 33, 153, 872; $`L(6) = 872`$ kernel-only, as far as I know the first such proof | kernel | [`small/`](proofs/lean/small/README.md) |
-| $`L(8) \ge 46{,}132`$ in William Echols's framework, without his `native_decide` | kernel | [`n8/`](proofs/lean/n8/README.md) |
-| $`L(8) \ge 46{,}134`$ (Theorem D) | kernel and 3 equations by `native_decide` | [`n8_46134/`](proofs/lean/n8_46134/README.md) |
-| $`L(7) \ge 5{,}899`$, one more than Justin Lebar's 5,898 | kernel and 22 equations by `native_decide` | [`n7/`](proofs/lean/n7/README.md) |
-| $`L(7) \ge 5{,}900`$ | kernel and 99 equations by `native_decide` | [`n7_5900/`](proofs/lean/n7_5900/README.md) |
-| $`L(7) \ge 5{,}901`$: the reduction to 30 search equations, 6 of them evaluated | kernel, and 6 equations by `native_decide` | [`n7_5901/`](proofs/lean/n7_5901/README.md) |
-| the 27-walk and the packing of four copies behind the 46,174 word | kernel | [`n8struct/`](proofs/lean/n8struct/README.md) |
+| result | checked by | directory | Almanac |
+|---|---|---|---|
+| $`L(n) \le F_3(n) + (c+o(1))\,(n-3)!`$ with $`c`$ from $`\tfrac{1771}{3456}`$ ($`n \ge 13`$) down to $`\tfrac{11117297}{27675648}`$ ($`n \ge 22`$); Pantone's $`c`$ is $`\tfrac{43}{80}`$ | kernel | [`constant/`](proofs/lean/constant/README.md), [`constant61937/`](proofs/lean/constant61937/README.md), [`constant305989/`](proofs/lean/constant305989/README.md), [`constant43586371/`](proofs/lean/constant43586371/README.md) | [b/28](https://superpermutations.com/b/28) for $`\tfrac{1771}{3456}`$ |
+| the coefficient tends to 0; $`L(n) - F_3(n)`$ lies between $`2(n-4)! - 2(n-5)!`$ and $`\tfrac{41}{5}(n-4)!`$ for $`n \ge 2^{14}`$ | kernel | [`constant43586371/`](proofs/lean/constant43586371/README.md), [`asym/`](proofs/lean/asym/README.md) | [b/35](https://superpermutations.com/b/35), [b/36](https://superpermutations.com/b/36) |
+| my words of 46,174 (and its seven ties), 4,034,855, 43,930,578 and 522,737,175 letters are superpermutations | kernel | [`words/`](proofs/lean/words/README.md), [`words12/`](proofs/lean/words12/README.md) | |
+| $`L(n) \ge`$ 46,133, 408,469, 4,033,378, 43,917,903, 522,622,378, 6,746,626,957, 93,891,141,126 for $`n = 8`$ to $`14`$ (Theorem C) | kernel | [`lower/`](proofs/lean/lower/README.md) | [b/14](https://superpermutations.com/b/14) to [b/20](https://superpermutations.com/b/20) (with 93,891,141,008 for n = 14), all superseded |
+| $`L(n)`$ exact for $`n \le 6`$: 1, 3, 9, 33, 153, 872; $`L(6) = 872`$ kernel-only, as far as I know the first such proof | kernel | [`small/`](proofs/lean/small/README.md) | [b/37](https://superpermutations.com/b/37) (a version cut into 319 pieces) |
+| $`L(8) \ge 46{,}132`$ in William Echols's framework, without his `native_decide` | kernel | [`n8/`](proofs/lean/n8/README.md) | |
+| $`L(8) \ge 46{,}134`$ (Theorem D) | kernel and 3 equations by `native_decide` | [`n8_46134/`](proofs/lean/n8_46134/README.md) | [b/39](https://superpermutations.com/b/39) |
+| $`L(7) \ge 5{,}899`$, one more than Justin Lebar's 5,898 | kernel and 22 equations by `native_decide` | [`n7/`](proofs/lean/n7/README.md) | [b/40](https://superpermutations.com/b/40) (a shorter proof with 12 equations); 5,898 kernel only: [b/43](https://superpermutations.com/b/43) |
+| $`L(7) \ge 5{,}900`$ | kernel and 99 equations by `native_decide` | [`n7_5900/`](proofs/lean/n7_5900/README.md) | |
+| $`L(7) \ge 5{,}901`$: the reduction to 30 search equations, 7 of them evaluated | kernel, and 7 equations by `native_decide` | [`n7_5901/`](proofs/lean/n7_5901/README.md) | |
+| the 27-walk and the packing of four copies behind the 46,174 word | kernel | [`n8struct/`](proofs/lean/n8struct/README.md) | |
+
+Jay Pantone has since shown that the coefficient of $`(n-4)!`$ is exactly 2 ([b/33](https://superpermutations.com/b/33),
+[b/41](https://superpermutations.com/b/41), [b/42](https://superpermutations.com/b/42) on the Almanac). The lower
+side $`2(n-4)! - 2(n-5)!`$ is the theorem `lower2_L` of [`asym/`](proofs/lean/asym/README.md).
+
+With tuned constants, William Echols's idea for n = 11, the same Theorem C gives 522,622,401 for n = 12 and
+6,746,627,048 for n = 13 ([b/46](https://superpermutations.com/b/46), [b/47](https://superpermutations.com/b/47);
+the Lean files are in superpermutation-almanac-lean, commit `7ed009a`). The best lower bounds for every n up to 14
+are on the Almanac's [bounds page](https://superpermutations.com/bounds); at n = 9 and 11 they are William
+Echols's, at n = 10 and 14 Jay Pantone's.
 
 "Kernel" means checked by the Lean kernel to the end with the axioms `propext`, `Classical.choice` and `Quot.sound`
 only. Where equations are evaluated by `native_decide`, the Lean compiler, the C compiler of the toolchain and the
@@ -181,9 +221,9 @@ python3 words/n8/tools/n8.py rebuild words/n8/selection-46174.txt -o w46174.txt 
 | [`selection/`](selection/README.md) | how the selections were found: block searches and their checkers |
 | [`arrange/`](arrange/README.md) | how closed trails become a first plan: chains, their order, the lift from 12 to 13, the n = 10 construction, bounds |
 | [`tools/`](tools/README.md) | the C programs that shorten a plan, one line per program, and their tests |
-| [`ties/`](ties/README.md) | the words of the shortest known length for n = 7, 9 and 10 and of the earlier record length 46,181 for n = 8: 85 new words of 5,905 letters, which published words are the same, 1,223 rotations at n = 8 |
+| [`ties/`](ties/README.md) | the words of the record length of 9 October 2026 for n = 7, 9 and 10 (for n = 9 there are shorter words since November) and of the earlier record length 46,181 for n = 8: 85 new words of 5,905 letters, which published words are the same, 1,223 rotations at n = 8 |
 | [`proofs/n7_5901/`](proofs/n7_5901/README.md) | $`L(7) \ge 5{,}901`$: the written proof, the search programs, Table C, the trust level of every search |
-| [`proofs/n9/`](proofs/n9/README.md) | 408,731 cannot be beaten at n = 9 with Pantone's closed trails, in three families of words |
+| [`proofs/n9/`](proofs/n9/README.md) | 408,731 cannot be beaten at n = 9 with Pantone's closed trails, in three families of words (shorter words on other closed trails exist since November: [W-0099](https://superpermutations.com/w/W-0099), [W-0103](https://superpermutations.com/w/W-0103)) |
 | [`proofs/lean/`](proofs/lean/README.md) | the Lean proofs, and one command that checks a word of your own |
 | [`catalogue/`](catalogue/CATALOGUE.md) | every result with its status, evidence and the command that reruns it ([`schema.md`](catalogue/schema.md)) |
 | [`NOTES.md`](NOTES.md) | the account of every step |

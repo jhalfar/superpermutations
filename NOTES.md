@@ -97,6 +97,31 @@ Part seven, n = 18 (October 28 to November 1):
 16. One more lift gives 6,779,644,944,870,572 letters for n = 18, 7,683,011,380 below `hasWord_eighteen_B`,
     checked on one card by hash sums whose keys came from a public random beacon after the plan was fixed.
 
+## The words and the records they beat
+
+The words of the README, with the best word of someone else when mine was published:
+
+| n | my word | length before | previous record by | change |
+|---|---:|---:|---|---:|
+| 8 | 46,174 | 46,178 | William Echols | -4 |
+| 10 | 4,034,855 | 4,034,873 | rumstd | -18 |
+| 11 | 43,930,534 | 43,930,548 | Jay Pantone | -14 |
+| 12 | 522,736,969 | 522,737,173 | Theo H. | -204 |
+| 13 | 6,747,801,798 | 6,747,918,066 | Jay Pantone | -116,268 |
+| 14 | 93,904,804,405 | 93,904,804,516 | William Echols | -111 |
+| 15 | 1,401,325,411,491 | 1,401,326,497,322 | Theo H. | -1,085,831 |
+| 16 | 22,320,795,912,621 | - | - | - |
+| 17 | 377,961,971,839,096 | - | - | - |
+| 18 | 6,779,644,944,870,572 | - | - | - |
+
+For n = 8 Theo H. found 46,173 on the same selection with `tools/trailsearch.c` (part four). Theo
+H.'s words for n = 11 and 12 were made from earlier words of mine. Against Pantone's own words of 4,034,889,
+43,930,680, 522,745,581 and 6,747,918,066 letters from the 43/80 release the words for n = 10 to 13 are 34, 146,
+8,612 and 116,268 letters shorter. My own best words on Pantone's closed trails, before the change of selection,
+had 43,930,614, 522,745,350 and 6,747,916,657 letters. Since then the records for n = 8, 12, 13 and 14 have gone
+to words of others; the README has the state of 14 November 2026 and the
+[Superpermutation Almanac](https://superpermutations.com) the current one.
+
 ## The model
 
 A word of Pantone's construction splits into pieces at the steps of weight 4 or more. Almost every piece is a
