@@ -1,0 +1,95 @@
+gcheck n9 408731	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":336 "foreign_bytes":0 "seconds":0.64 vfast_wall 0.5 s
+gcheck n9 pantone 408732 (final LF)	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":336 "foreign_bytes":0 "seconds":0.64 vfast_wall 0.5 s
+gcheck n9 pantone 408736	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":336 "foreign_bytes":0 "seconds":0.62 vfast_wall 0.4 s
+gcheck n10 superpermutation-10-4034855.txt	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":2349 "foreign_bytes":0 "seconds":0.49 vfast_wall 0.8 s
+gcheck n10 superpermutation-10-4034889.txt	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":2352 "foreign_bytes":0 "seconds":0.45 vfast_wall 0.5 s
+gcheck n10 superpermutation-10-4034894.txt	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":2351 "foreign_bytes":0 "seconds":0.45 vfast_wall 0.5 s
+gcheck n10 4034855 plain	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":2349 "foreign_bytes":0 "seconds":0.51 vfast_wall 0.7 s
+gcheck n10 4034855 1MB chunks buffered	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":2349 "foreign_bytes":0 "seconds":0.16 vfast_wall 0.5 s
+gcheck n11 43930534 plain	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":19771 "foreign_bytes":0 "seconds":0.52 vfast_wall 0.7 s
+gcheck n11 43930534 xz	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":19771 "foreign_bytes":0 "seconds":4.70 vfast_wall 1.5 s
+gcheck n11 43930534 1MB chunks 3 readers	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":19771 "foreign_bytes":0 "seconds":0.16 vfast_wall 1.2 s
+gcheck n11 superpermutation-11-43930578.txt.xz	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":19784 "foreign_bytes":0 "seconds":5.32 vfast_wall 1.3 s
+gcheck n11 superpermutation-11-43930680.txt.xz	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":18816 "foreign_bytes":0 "seconds":4.77 vfast_wall 1.2 s
+gcheck n11 superpermutation-11-43930689.txt.xz	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":18816 "foreign_bytes":0 "seconds":4.68 vfast_wall 1.3 s
+gcheck n12 522736969 plain	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":177443 "foreign_bytes":0 "seconds":1.29 vfast_wall 6.6 s
+gcheck n12 522736969 xz	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":177443 "foreign_bytes":0 "seconds":27.40 vfast_wall 8.5 s
+gcheck n12 522736969 stdin 3MB chunks	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":177443 "foreign_bytes":0 "seconds":0.31 vfast_wall 5.6 s
+gcheck n12 cutlns 522736434	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":177374 "foreign_bytes":0 "seconds":0.51 vfast_wall 6.0 s
+gcheck corrupt n10 sub_2017427	PASS	exit vfast=1 gcheck=1 "missing":9 "repeats":2349 "foreign_bytes":0 "seconds":0.12 vfast_wall 0.4 s
+gcheck corrupt n10 del_1344951	PASS	exit vfast=1 gcheck=1 "missing":9 "repeats":2349 "foreign_bytes":0 "seconds":0.13 vfast_wall 0.5 s
+gcheck corrupt n10 swap_2689903	PASS	exit vfast=1 gcheck=1 "missing":10 "repeats":2357 "foreign_bytes":0 "seconds":0.13 vfast_wall 0.5 s
+gcheck corrupt n10 first	PASS	exit vfast=1 gcheck=1 "missing":1 "repeats":2349 "foreign_bytes":0 "seconds":0.12 vfast_wall 0.4 s
+gcheck corrupt n10 last_--len	PASS	exit vfast=1 gcheck=1 "missing":1 "repeats":2349 "foreign_bytes":0 "seconds":0.13 vfast_wall 0.3 s
+gcheck corrupt n11 sub_21965267	PASS	exit vfast=1 gcheck=1 "missing":10 "repeats":19771 "foreign_bytes":0 "seconds":0.14 vfast_wall 0.7 s
+gcheck corrupt n11 del_14643511	PASS	exit vfast=1 gcheck=1 "missing":10 "repeats":19771 "foreign_bytes":0 "seconds":0.15 vfast_wall 0.6 s
+gcheck corrupt n11 swap_29287022	PASS	exit vfast=1 gcheck=1 "missing":11 "repeats":19782 "foreign_bytes":0 "seconds":0.13 vfast_wall 0.7 s
+gcheck corrupt n11 first	PASS	exit vfast=1 gcheck=1 "missing":1 "repeats":19771 "foreign_bytes":0 "seconds":0.16 vfast_wall 0.9 s
+gcheck corrupt n11 last_--len	PASS	exit vfast=1 gcheck=1 "missing":1 "repeats":19771 "foreign_bytes":0 "seconds":0.14 vfast_wall 0.7 s
+gcheck corrupt n12 sub_261368484	PASS	exit vfast=1 gcheck=1 "missing":11 "repeats":177443 "foreign_bytes":0 "seconds":0.33 vfast_wall 6.5 s
+gcheck corrupt n12 del_174245656	PASS	exit vfast=1 gcheck=1 "missing":10 "repeats":177443 "foreign_bytes":0 "seconds":0.36 vfast_wall 5.7 s
+gcheck corrupt n12 swap_348491312	PASS	exit vfast=1 gcheck=1 "missing":12 "repeats":177453 "foreign_bytes":0 "seconds":0.35 vfast_wall 5.0 s
+gcheck corrupt n12 first	PASS	exit vfast=1 gcheck=1 "missing":1 "repeats":177443 "foreign_bytes":0 "seconds":0.41 vfast_wall 5.4 s
+gcheck corrupt n12 last_--len	PASS	exit vfast=1 gcheck=1 "missing":1 "repeats":177443 "foreign_bytes":0 "seconds":0.41 vfast_wall 5.4 s
+gcheck n10 foreign byte inside	PASS	exit vfast=1 gcheck=1 "missing":0 "repeats":2349 "foreign_bytes":1 "seconds":0.38 vfast_wall 0.4 s
+gcheck n10 LF inside at a 1MB chunk end	PASS	exit vfast=1 gcheck=1 "missing":0 "repeats":2349 "foreign_bytes":1 "seconds":0.11 vfast_wall 0.2 s
+gcheck n10 CRLF lines of 1000	PASS	exit vfast=1 gcheck=1 "missing":0 "repeats":2349 "foreign_bytes":8068 "seconds":0.11 vfast_wall 0.3 s
+gcheck n10 CRLF lines + 2 LF at the end	PASS	exit vfast=1 gcheck=1 "missing":0 "repeats":2349 "foreign_bytes":8068 "seconds":0.37 vfast_wall 0.3 s
+gcheck n10 9 letters	PASS	exit vfast=1 gcheck=1 "missing":3628800 "repeats":0 "foreign_bytes":0 "seconds":0.38 vfast_wall 0.3 s
+gcheck n10 10 letters	PASS	exit vfast=1 gcheck=1 "missing":3628799 "repeats":0 "foreign_bytes":0 "seconds":0.36 vfast_wall 0.2 s
+gcheck n10 empty	PASS	exit vfast=1 gcheck=1 "missing":3628800 "repeats":0 "foreign_bytes":0 "seconds":0.35 vfast_wall 0.4 s
+gcheck n10 lowercase letters (auto alphabet)	PASS	exit 0 0 "alphabet":"abcdefghij"
+gdelcheck n9 408731	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.37,"pass2_seconds":0.30
+gdelcheck n9 pantone 408732 (final LF)	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.44,"pass2_seconds":0.35
+gdelcheck n10 superpermutation-10-4034855.txt	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.39,"pass2_seconds":0.38
+gdelcheck n10 superpermutation-10-4034889.txt	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.40,"pass2_seconds":0.32
+gdelcheck n10 superpermutation-10-4034894.txt	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.41,"pass2_seconds":0.37
+gdelcheck n10 4034855 1MB chunks	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.12,"pass2_seconds":0.01
+gdelcheck n11 43930534	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.3,"deletion_seconds":0.3 gd "pass1_seconds":0.39,"pass2_seconds":0.32
+gdelcheck n12 522736969	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":6.6,"deletion_seconds":5.8 gd "pass1_seconds":0.65,"pass2_seconds":0.47
+gdelcheck n12 cutlns 522736434	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":6.8,"deletion_seconds":6.2 gd "pass1_seconds":0.66,"pass2_seconds":0.39
+gdelcheck n10 letter 1999999 doubled	PASS	exit delcheck=3 gdelcheck=3 "missing_permutations":7 "coverage_preserving_deletions_count":2 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.36,"pass2_seconds":0.30
+gdelcheck n10 10 letters repeated	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":13 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.14,"pass2_seconds":0.01
+gdelcheck n10 first 30 letters inserted at a chunk end	PASS	exit delcheck=3 gdelcheck=3 "missing_permutations":8 "coverage_preserving_deletions_count":52 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.16,"pass2_seconds":0.03
+gdelcheck n10 last 10 letters repeated	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":21 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":1.07,"pass2_seconds":0.66
+gdelcheck n10 first 10 letters repeated	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":21 dc "scan_seconds":0.1,"deletion_seconds":0.0 gd "pass1_seconds":0.49,"pass2_seconds":0.31
+gdelcheck n10 word twice	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":8069710 dc "scan_seconds":0.1,"deletion_seconds":0.0 gd "pass1_seconds":0.11,"pass2_seconds":0.11
+gdelcheck corrupt n10 sub_2017427	PASS	exit delcheck=3 gdelcheck=3 "missing_permutations":9 "coverage_preserving_deletions_count":2 dc "scan_seconds":0.1,"deletion_seconds":0.0 gd "pass1_seconds":0.45,"pass2_seconds":0.36
+gdelcheck corrupt n10 del_1344951	PASS	exit delcheck=3 gdelcheck=3 "missing_permutations":9 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.53,"pass2_seconds":0.38
+gdelcheck corrupt n10 swap_2689903	PASS	exit delcheck=3 gdelcheck=3 "missing_permutations":10 "coverage_preserving_deletions_count":2 dc "scan_seconds":0.1,"deletion_seconds":0.0 gd "pass1_seconds":0.42,"pass2_seconds":0.26
+gdelcheck corrupt n10 first	PASS	exit delcheck=3 gdelcheck=3 "missing_permutations":1 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.1,"deletion_seconds":0.0 gd "pass1_seconds":0.46,"pass2_seconds":0.29
+gdelcheck corrupt n10 last_--len	PASS	exit delcheck=3 gdelcheck=3 "missing_permutations":1 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.42,"pass2_seconds":0.37
+gdelcheck n12 11 letters repeated	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":7.1,"deletion_seconds":6.3 gd "pass1_seconds":0.64,"pass2_seconds":0.38
+gdelcheck corrupt n12 del	PASS	exit delcheck=3 gdelcheck=3 "missing_permutations":11 "coverage_preserving_deletions_count":0 dc "scan_seconds":6.4,"deletion_seconds":5.8 gd "pass1_seconds":0.62,"pass2_seconds":0.41
+gcheck n13 6747802319 plain	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":1797743 "foreign_bytes":0 "seconds":2.13 vfast_wall 88.1 s
+gcheck n13 6747802319 xz	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":1797743 "foreign_bytes":0 "seconds":318.88 vfast_wall 91.0 s
+gcheck n13 cutlns 6747800516	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":1797391 "foreign_bytes":0 "seconds":1.42 vfast_wall 85.0 s
+gcheck n13 cutlns 6747800516 buffered	PASS	exit vfast=0 gcheck=0 "missing":0 "repeats":1797391 "foreign_bytes":0 "seconds":2.32 vfast_wall 89.4 s
+gcheck corrupt n13 sub_3373901159	PASS	exit vfast=1 gcheck=1 "missing":12 "repeats":1797743 "foreign_bytes":0 "seconds":1.82 vfast_wall 90.0 s
+gcheck corrupt n13 del_2249267439	PASS	exit vfast=1 gcheck=1 "missing":11 "repeats":1797743 "foreign_bytes":0 "seconds":2.10 vfast_wall 83.8 s
+gcheck corrupt n13 last_--len	PASS	exit vfast=1 gcheck=1 "missing":1 "repeats":1797743 "foreign_bytes":0 "seconds":2.02 vfast_wall 82.9 s
+gdelcheck n9 408731	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.45,"pass2_seconds":0.30
+gdelcheck n9 pantone 408732 (final LF)	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.40,"pass2_seconds":0.31
+gdelcheck n10 superpermutation-10-4034855.txt	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.43,"pass2_seconds":0.30
+gdelcheck n10 superpermutation-10-4034889.txt	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.1,"deletion_seconds":0.0 gd "pass1_seconds":0.39,"pass2_seconds":0.30
+gdelcheck n10 superpermutation-10-4034894.txt	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.37,"pass2_seconds":0.25
+gdelcheck n10 4034855 1MB chunks	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.12,"pass2_seconds":0.01
+gdelcheck n11 43930534	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.3,"deletion_seconds":0.3 gd "pass1_seconds":0.35,"pass2_seconds":0.25
+gdelcheck n12 522736969	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":5.5,"deletion_seconds":4.8 gd "pass1_seconds":0.46,"pass2_seconds":0.31
+gdelcheck n12 cutlns 522736434	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":7.0,"deletion_seconds":6.7 gd "pass1_seconds":0.50,"pass2_seconds":0.37
+gdelcheck n10 letter 1999999 doubled	PASS	exit delcheck=3 gdelcheck=3 "missing_permutations":7 "coverage_preserving_deletions_count":2 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.35,"pass2_seconds":0.26
+gdelcheck n10 10 letters repeated	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":13 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.11,"pass2_seconds":0.00
+gdelcheck n10 first 30 letters inserted at a chunk end	PASS	exit delcheck=3 gdelcheck=3 "missing_permutations":8 "coverage_preserving_deletions_count":52 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.12,"pass2_seconds":0.00
+gdelcheck n10 last 10 letters repeated	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":21 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.36,"pass2_seconds":0.26
+gdelcheck n10 first 10 letters repeated	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":21 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.39,"pass2_seconds":0.34
+gdelcheck n10 word twice	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":8069710 dc "scan_seconds":0.1,"deletion_seconds":0.0 gd "pass1_seconds":0.26,"pass2_seconds":0.24
+gdelcheck corrupt n10 sub_2017427	PASS	exit delcheck=3 gdelcheck=3 "missing_permutations":9 "coverage_preserving_deletions_count":2 dc "scan_seconds":0.2,"deletion_seconds":0.0 gd "pass1_seconds":0.43,"pass2_seconds":0.38
+gdelcheck corrupt n10 del_1344951	PASS	exit delcheck=3 gdelcheck=3 "missing_permutations":9 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.1,"deletion_seconds":0.0 gd "pass1_seconds":0.39,"pass2_seconds":0.34
+gdelcheck corrupt n10 swap_2689903	PASS	exit delcheck=3 gdelcheck=3 "missing_permutations":10 "coverage_preserving_deletions_count":2 dc "scan_seconds":0.1,"deletion_seconds":0.0 gd "pass1_seconds":0.41,"pass2_seconds":0.29
+gdelcheck corrupt n10 first	PASS	exit delcheck=3 gdelcheck=3 "missing_permutations":1 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.37,"pass2_seconds":0.25
+gdelcheck corrupt n10 last_--len	PASS	exit delcheck=3 gdelcheck=3 "missing_permutations":1 "coverage_preserving_deletions_count":0 dc "scan_seconds":0.0,"deletion_seconds":0.0 gd "pass1_seconds":0.36,"pass2_seconds":0.27
+gdelcheck n12 11 letters repeated	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":6.0,"deletion_seconds":5.2 gd "pass1_seconds":0.56,"pass2_seconds":0.31
+gdelcheck corrupt n12 del	PASS	exit delcheck=3 gdelcheck=3 "missing_permutations":11 "coverage_preserving_deletions_count":0 dc "scan_seconds":6.2,"deletion_seconds":5.5 gd "pass1_seconds":0.65,"pass2_seconds":0.35
+gdelcheck n13 6747802319	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":0 dc "scan_seconds":132.9,"deletion_seconds":114.6 gd "pass1_seconds":1.60,"pass2_seconds":1.04
+gdelcheck n13 cutlns 6747800516	PASS	exit delcheck=0 gdelcheck=0 "missing_permutations":0 "coverage_preserving_deletions_count":1 dc "scan_seconds":126.1,"deletion_seconds":106.6 gd "pass1_seconds":1.54,"pass2_seconds":0.80
+gdelcheck n13 11 letters repeated	PASS	exit delcheck=3 gdelcheck=3 "missing_permutations":1 "coverage_preserving_deletions_count":0 dc "scan_seconds":139.9,"deletion_seconds":160.3 gd "pass1_seconds":1.69,"pass2_seconds":0.92

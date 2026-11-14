@@ -1,0 +1,11 @@
+n10p_t0	SAME	plan 6ced8b2589feda32/6ced8b2589feda32 word 09e2c807aea5f089/09e2c807aea5f089 log 4e7d1f6ec0cb/4e7d1f6ec0cb exit 0/0	fast 2.4 s	gl 7.0 s	peak committed memory of the job 1.75 GB
+n10b_t0	SAME	plan 2a45262e92b9b80d/2a45262e92b9b80d word 0ccfcddc26ed6a32/0ccfcddc26ed6a32 log ed5e3875694d/ed5e3875694d exit 0/0	fast 0.7 s	gl 1.3 s	peak committed memory of the job 1.75 GB
+n10p_it	SAME	plan 6ced8b2589feda32/6ced8b2589feda32 word 09e2c807aea5f089/09e2c807aea5f089 log 600768114384/600768114384 exit 0/0	fast 12.4 s	gl 20.0 s	peak committed memory of the job 1.57 GB
+n10w_t0	SAME	plan b693014aa61ee370/b693014aa61ee370 word 09e2c807aea5f089/09e2c807aea5f089 log b891805aff4c/b891805aff4c exit 0/0	fast 0.7 s	gl 9.6 s	peak committed memory of the job 1.75 GB
+n11w_t0	SAME	plan 67e971b2e91100d4/67e971b2e91100d4 word fea642b8f56e7ab7/fea642b8f56e7ab7 log 091ca35e1436/091ca35e1436 exit 0/0	fast 4.0 s	gl 1.8 s	peak committed memory of the job 1.81 GB
+n11w_it	SAME	plan 67e971b2e91100d4/67e971b2e91100d4 word fea642b8f56e7ab7/fea642b8f56e7ab7 log 391f5a4283f7/391f5a4283f7 exit 0/0	fast 8.5 s	gl 10.1 s	peak committed memory of the job 1.63 GB
+n12w_t0	SAME	plan 8e7e382c926fd7d3/8e7e382c926fd7d3 word 48c00acf991d87a3/48c00acf991d87a3 log c6f2191a8564/c6f2191a8564 exit 0/0	fast 25.3 s	gl 5.8 s	peak committed memory of the job 2.64 GB
+n12w_it	SAME	plan 8e7e382c926fd7d3/8e7e382c926fd7d3 word 48c00acf991d87a3/48c00acf991d87a3 log d65e277991f6/d65e277991f6 exit 0/0	fast 50.7 s	gl 20.1 s	peak committed memory of the job 2.63 GB
+n12c_t0	SAME	plan 6ddadc8b646c3d6d/6ddadc8b646c3d6d word b2bee586797a3bad/b2bee586797a3bad log 70683a7f4730/70683a7f4730 exit 0/0	fast 39.6 s	gl 14.8 s	peak committed memory of the job 2.65 GB
+n13p_t0	SAME	plan a1b80e8dd5b30d13/a1b80e8dd5b30d13 word a1f13ae65c9524a4/a1f13ae65c9524a4 log d5487d6a8c2a/d5487d6a8c2a exit 0/0	fast 349.7 s	gl 127.1 s	peak committed memory of the job 11.45 GB
+n13w_t0	SAME	plan dc7657d6f858a8d7/dc7657d6f858a8d7 word 176c96d4677e0cb1/176c96d4677e0cb1 log e4b5d17d521f/e4b5d17d521f exit 0/0	fast 236.6 s	gl 80.5 s	peak committed memory of the job 14.68 GB
