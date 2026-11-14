@@ -2,6 +2,10 @@
 
 Start: William Echols's word W-0091 (522,736,503 letters). Every step below works on plans over the base word
 `base12_hybrid_e.txt` (n = 12; SHA-256 0d36cdd07fe7c90912fc0a295ca9b9895c9fba0ad0769196e2b37960b1657c68), in its letters.
+It is the base word of the n = 12 selection of `reproduce/`, 522,762,033 letters:
+
+    xz -dc reproduce/selections/n12-selection.txt.xz > n12-selection.txt
+    python reproduce/tools/geng.py n12-selection.txt base12_hybrid_e.txt --table base12_hybrid_e.tsv
 
 ## The start plan
 
