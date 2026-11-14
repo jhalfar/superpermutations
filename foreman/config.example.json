@@ -1,0 +1,12 @@
+{
+  "root": "",
+  "python": "",
+  "guard": "",
+  "bash": "bash",
+  "bin": "tools",
+  "work": "foreman/work",
+  "on_record": "",
+  "gpu_exe": ["tsw5g2", "segins_gpu", "trailsearch_gpu"],
+  "threads_cap": 12,
+  "reserve_gb": 8
+}
