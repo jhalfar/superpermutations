@@ -11,6 +11,18 @@ To rebuild or check a published word you need `trailsearch.c`, `delcheck.c` and 
 
 The plans of the recipes for n = 14 to 17 are made by other programs, in [`plans/`](plans/README.md).
 
+The tools behind my words of November 2026 are in five folders, each with its own README:
+
+* [`gpucuts/`](gpucuts/README.md): segment insertion with three to five cuts, the candidates judged on the card
+  (`tsw5g2.c`), and `orx.sh`, which runs one setting after another from the best plan.
+* [`reorder/`](reorder/README.md): my rebuild of Jay Pantone's cut-opening reorder of W-0107, an exact reordering
+  of the pieces with a few cuts opened near some joins in every round.
+* [`pipeline/`](pipeline/README.md): from a word of someone else to a hybrid base word and a plan, and the loops that
+  run the passes to a fixed point.
+* [`prepub/`](prepub/README.md): the check every word goes through before I publish it.
+* [`gpucheck/`](gpucheck/README.md): coverage and deletion checks on the card, the only deletion check I have at
+  n = 14, and the card load of `trailsearch`.
+
 ## How a word is described
 
 A word is a sequence of pieces. Each piece is one closed trail, cut open at one place, and consecutive pieces are

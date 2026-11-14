@@ -1,0 +1,3 @@
+h038_w038	SAME	plan 54851408fba586f9/54851408fba586f9 log 640165edc30a/640165edc30a exit 3/3	w2p13o 783 s	w2p13g 106 s	peak committed memory of the job 12.19 GB
+l516_h195_w516N	SAME	plan c6fe584563ed538a (w2p13g) = l516/w.plan.w2p (w2p13o in an earlier n = 13 loop, 6 threads) log same	w2p13o 3586 s (6 threads, from its log)	w2p13g 78 s	614 full lookups, 51 anomalies
+h195_w038	SAME	plan 31e5cf53aad74320/31e5cf53aad74320 log fe0e5e285182/fe0e5e285182 exit 3/3	w2p13o 617 s	w2p13g 94 s	peak committed memory of the job 12.19 GB

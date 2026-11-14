@@ -1,0 +1,1 @@
+{"n":10,"length":4034855,"permutation_occurrences":3631149,"distinct_permutations":3628800,"required_permutations":3628800,"missing_permutations":0,"extra_occurrences":2349,"permutations_occurring_once":3626451,"tested_deletions":4034855,"coverage_preserving_deletions_count":0,"coverage_preserving_deletions":[],"scan_seconds":0.0,"deletion_seconds":0.0,"threads":3}
