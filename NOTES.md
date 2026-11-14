@@ -9,9 +9,10 @@ n = 12 and 1,409 at n = 13 below his words. Part two changes the closed trails t
 inside his construction. In one day that gave 36 more letters at n = 11, 8,175 at n = 12 and 114,264 at n = 13,
 and at n = 10 a word of 4,034,855 letters, 18 below rumstd's. Part one is how I got to part two: every pass that
 polishes the new words was written for the old ones. Part three (October 17 to 20) takes two moves from William
-Echols and Theo H. and gives the words for n = 12, 13 and 14. Part four (October 20 and 21) is the word for n = 8. Part five (October 25 and 26) is the words for n = 15 and 16.
+Echols and Theo H. and gives the words for n = 12, 13 and 14. Part four (October 20 and 21) is the word for n = 8. Part five (October 25 and 26) is the words for n = 15 and 16,
+part six (October 26 and 27) n = 17, the n = 6 list and n = 11, and part seven (October 28 to November 1) n = 18.
 
-After the four parts come the things I tried that gave nothing, with the numbers, so that nobody has to try them
+After the seven parts come the things I tried that gave nothing, with the numbers, so that nobody has to try them
 again. Then come what is known about how much is left, the lower bounds, the words of record length and how the
 words were checked.
 
@@ -1092,7 +1093,10 @@ For n = 9 the answer is nothing, inside the families of words that these tools p
 optimal among all words made from the 52 closed trails of Pantone's n = 9 word with one cut per trail, with or
 without cuts inside a 1-cycle, and among all words with any number of cuts per trail and overlaps of at most $`n - 3`$
 letters. The proof is a counting argument whose finite facts are checked by exhaustive computation. The scripts are
-in [`proofs/n9/`](proofs/n9/README.md).
+in [`proofs/n9/`](proofs/n9/README.md). Other closed trails do better. In November Jay Pantone found 408,719 letters
+([W-0099](https://superpermutations.com/w/W-0099)) on new trails, from a symmetric selection on 8 symbols in which
+four square flips join walks, and from the same start selection with four other flips I got 408,717
+([W-0103](https://superpermutations.com/w/W-0103)).
 
 For n = 10 and n = 11 the same method, with a sharper programme for the blocks of trails, gives bounds that are not
 tight.
@@ -1174,7 +1178,9 @@ X, E and N have rows that do not transport. They say nothing about the constant.
 Since October 19 smaller coefficients are Lean theorems too, down to $`\tfrac{11117297}{27675648} = 0.4017`$ for $`n \ge 22`$,
 and the coefficient tends to 0 (`proofs/lean/constant61937/`, `constant305989/`, `constant43586371/`). The
 steps are choosing connector cycles again one level up and putting a block of closed trails above the loops
-without a row. The README has the table.
+without a row. The README has the table. At the next order my Lean bounds put the coefficient of $`(n-4)!`$
+between 2 and 41/5; Jay Pantone then proved that it is exactly 2 ([b/33](https://superpermutations.com/b/33),
+[b/41](https://superpermutations.com/b/41), [b/42](https://superpermutations.com/b/42) on the Almanac).
 
 # Lower bounds
 
@@ -1189,14 +1195,24 @@ The third starts from the second and replaces its fixed slope by one that a fini
 kernel evaluates the search. For n = 8 to 14 it gives 46,133, 408,469, 4,033,378, 43,917,903, 522,622,378,
 6,746,626,957 and 93,891,141,008. With a larger certificate, built as a recipe of its own on October 24 (61 hours
 of Lean time), it gives 93,891,141,126 for n = 14. For n = 8 a fourth bound, Theorem D, gives 46,134 with three
-equations evaluated by `native_decide` (`proofs/lean/n8_46134/`).
+equations evaluated by `native_decide` (`proofs/lean/n8_46134/`). With constants put just above the least value
+that reaches a bound, as William Echols did for n = 11 on 10 November, the same theorem gives 522,622,401 for
+n = 12 and 6,746,627,048 for n = 13, checked by the kernel ([b/46](https://superpermutations.com/b/46),
+[b/47](https://superpermutations.com/b/47); files in
+[superpermutation-almanac-lean](https://github.com/jhalfar/superpermutation-almanac-lean), commit `7ed009a`).
 
-Pantone's announced table has 46,130, 408,468, 4,033,374, 43,917,903, 522,622,378 and 6,746,626,519 for n = 8 to
-13. His proof is not public, and I made mine without it. The README of that directory says how the bound arises
-and which part is whose.
+Pantone announced a table on 29 September 2026: 46,130, 408,468, 4,033,374, 43,917,903, 522,622,378 and
+6,746,626,519 for n = 8 to 13. I made my proofs without his. He has since published his proofs
+(github.com/jaypantone/2026-10-superpermutation-lower-palomar, on the Almanac since 29 October), with 4,033,379 for
+n = 10 and 93,891,141,150 for n = 14, both above mine, and a general formula for $`n \ge 8`$
+([b/30](https://superpermutations.com/b/30), [b/32](https://superpermutations.com/b/32),
+[b/34](https://superpermutations.com/b/34)). William Echols has 408,470 for n = 9 and 43,917,904 for n = 11
+([b/45](https://superpermutations.com/b/45), [b/44](https://superpermutations.com/b/44)). The README of
+`proofs/lean/lower/` says how the bound arises and which part is whose.
 
 All these bounds exceed $`n! + (n - 1)! + (n - 2)!`$ by a term of order $`(n - 4)!`$, while the words exceed it by
-about half of $`(n - 3)!`$. For n = 13 the two sides are about 1.18 million letters apart.
+about half of $`(n - 3)!`$. For n = 13 the two sides are about 1.17 million letters apart (the Almanac's word and
+bound of 14 November 2026).
 
 ## L(7) >= 5,899 in Lean (7 October 2026)
 
@@ -1224,6 +1240,11 @@ two libraries and 25 minutes for `lower/build.sh`. The build was run on Windows 
 Not covered: the 22 evaluations are not checked by the kernel; the written proof that the Lean files follow is
 not in the package; the node counts of the three largest searches were counted by a C program only; at n = 6 the
 same tables alone do not reach 872, so the method has no end-to-end check there.
+
+On 9 November a shorter version went to the Almanac ([b/40](https://superpermutations.com/b/40)): the same model
+on the search engine of 5,901, with the reversal cut and Rule JS, both proved sound in Lean, needs 12 equations and
+about 2.9 billion kept prefixes, 13 minutes on one thread. A kernel-only proof of 5,898 is
+[b/43](https://superpermutations.com/b/43).
 
 ## L(7) >= 5,900 and 5,901 (October 8 to 24)
 
@@ -1256,7 +1277,10 @@ trust level of every search are in [`proofs/n7_5901/`](proofs/n7_5901/README.md)
 `ties/` collects the words of the shortest known length for n = 7, 8, 9 and 10 and sorts them into classes: two
 words are in one class if renaming the symbols, reversing the word or both turns one into the other. There are
 98 classes of 5,905 letters, 26 published classes of 46,181, one of 408,731 and two of 4,034,855. For n = 8
-this was the record length on October 9; the shorter words of part four are not in `ties/`.
+this was the record length on October 9; the shorter words of part four are not in `ties/`. Since then the record
+length has fallen at n = 8 (46,173) and n = 9 (408,717), and Jay Pantone has published more words of 408,731 and
+4,034,855 ([W-0081](https://superpermutations.com/w/W-0081), [W-0083](https://superpermutations.com/w/W-0083),
+[W-0082](https://superpermutations.com/w/W-0082)) that are not compared here.
 
 For n = 7, 12 classes are Andrei Teodorescu's (two words of 18 August 2026 and ten variants of 24 August), one
 is Theo H.'s and 85 are new here. They come from a search that replaces the first or the last chain of the
