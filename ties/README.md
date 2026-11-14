@@ -14,6 +14,12 @@ For n = 8 the table is about 46,181, the record length of early October. Shorter
 46,174 with seven ties ([`../words/n8/`](../words/n8/README.md)) and Theo H.'s 46,173. They are not in this
 directory.
 
+This table is the state of 9 October 2026. For n = 9 shorter words exist since November: Jay Pantone's 408,719
+([W-0099](https://superpermutations.com/w/W-0099)) and my 408,717 ([W-0103](https://superpermutations.com/w/W-0103)).
+Jay Pantone's later words of 408,731 ([W-0081](https://superpermutations.com/w/W-0081),
+[W-0083](https://superpermutations.com/w/W-0083)) and 4,034,855 ([W-0082](https://superpermutations.com/w/W-0082))
+are not compared here.
+
 Two words count as the same if one becomes the other after renaming the symbols, reversing the word or both. I
 call such a set of words a class.
 

@@ -16,7 +16,9 @@ rumstd's word is in all three families, so 408,731 is the optimum in each. The s
 This is a statement about one construction. The tools in this repository only cut and join Pantone's trails in
 these ways, so they cannot find a shorter n = 9 word. It is not a lower bound for superpermutations. The fourth
 family (several cuts per trail together with the long overlaps) is open, and so is every set of trails other than
-Pantone's.
+Pantone's. Other sets of trails do better: Jay Pantone's 408,719 ([W-0099](https://superpermutations.com/w/W-0099))
+comes from a symmetric selection on 8 symbols in which four square flips join walks, and my 408,717
+([W-0103](https://superpermutations.com/w/W-0103)) from the same start selection with four other flips.
 
 The result is checked by computation and by me. Nobody else has read the argument or written the search a second
 time, so please treat it as unrefereed.

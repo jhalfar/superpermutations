@@ -30,6 +30,11 @@ closed trails (Echols) and moving one closed trail and choosing the cut at which
 https://github.com/Tholsh/superpermutation_study, commit 2d1965f). I wrote the moves again; no code of either
 repository is used. The construction is Pantone's.
 
+The word on 11 symbols of 43,930,534 letters starts from Jay Pantone's word of 43,930,548 letters
+(https://github.com/jaypantone/2026-10-superpermutation-upper-palomar; on the Superpermutation Almanac,
+https://superpermutations.com, as W-0079), which he made from my selection X by changing the images of its blocks. I
+recovered his images, changed two of them and repaired the order; no code of his is used.
+
 recipes/n14 publishes the word on 14 symbols as a generator and a plan, the form in which William Echols published
 his words on 14 symbols. gen14.c can also write the order of his 2-lift (recipe "superperm-2lift/1", mode echols);
 it is written from my own definitions, and no code of his repository is used.
