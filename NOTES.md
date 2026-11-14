@@ -104,7 +104,7 @@ Part eight, words built on words of others (November 12 to 14):
 
 17. Jay Pantone's cut-opening reorder of W-0107, rebuilt in `tools/reorder/`, alternated with trailsearch, the card
     passes and loop moves on plans over hybrid base words. For n = 12, 522,736,431 from Derek Mahoney's W-0102
-    (522,736,437) and 522,736,428 from William Echols's W-0091 (522,736,503); for n = 13, 6,747,800,327 from my
+    (522,736,437) and 522,736,428 from William Echols's W-0091 (522,736,503); for n = 13, 6,747,800,268 from my
     6,747,800,734, which came from Jay Pantone's W-0100; for n = 14, 93,904,778,043 from his W-0108
     (93,904,780,410).
 
@@ -122,7 +122,7 @@ The words of the README, with the best word of someone else when mine was publis
 | 14 | 93,904,804,405 | 93,904,804,516 | William Echols | -111 |
 | 12 | 522,736,431 | 522,736,437 | Derek Mahoney | -6 |
 | 12 | 522,736,428 | 522,736,437 | Derek Mahoney | -9 |
-| 13 | 6,747,800,327 | 6,747,800,610 | Jay Pantone | -283 |
+| 13 | 6,747,800,268 | 6,747,800,610 | Jay Pantone | -342 |
 | 14 | 93,904,778,043 | 93,904,780,410 | Jay Pantone | -2,367 |
 | 15 | 1,401,325,411,491 | 1,401,326,497,322 | Theo H. | -1,085,831 |
 | 16 | 22,320,795,912,621 | - | - | - |
@@ -1024,7 +1024,8 @@ more: no gain from the six trailsearch settings, three to five cuts on the card 
 
 **n = 13.** My 6,747,800,734 came from Jay Pantone's W-0100. From it, the reorder alternated with segment
 insertion on the card (three cuts, slack 0 and 1), trailsearch and long runs of `loopscan` (up to 1,000 rounds,
-`tools/pipeline/longloop.sh`), each from the best word of the others, down to 6,747,800,327.
+`tools/pipeline/longloop.sh`), each from the best word of the others, down to 6,747,800,301. Then segment
+insertion with four and five cuts on the card, which this line had not used, gave 6,747,800,297 and 6,747,800,268.
 
 **n = 14.** Jay Pantone's W-0108 has 93,904,780,410 letters. The reorder on the contracted model gave
 93,904,778,044, and `gdelcheck` found one letter that could be deleted: 93,904,778,043. `vfast` and the card
@@ -1365,7 +1366,9 @@ minutes and about 13 GB. The earlier word for n = 14 was checked by two streamin
 Since October 21 every word goes through [`tools/prepub/`](tools/prepub/README.md) before it is published: the three
 checkers, then `tools/trailsearch.c` from the word's plan with six settings, and the fixed-order pass; from n = 11 on
 also segment insertion with three to five cuts on the card ([`tools/gpucuts/`](tools/gpucuts/README.md)). The word
-is published only if no tool shortens it. That rule came from Theo H.'s 46,173 (part four).
+is published only if no tool shortens it. That rule came from Theo H.'s 46,173 (part four). The word of November for
+n = 13 is an exception: it passed the checkers, but each round of this step still gave a shorter word (6,747,800,327,
+302, 301, then 268 from four and five cuts on the card), so I published 268 while the search goes on.
 
 The selections were checked before any word existed: every loop has at most one row, the selection is balanced,
 and the closed trails are found in two ways that must agree (at n = 13 in one way only, for memory). The program

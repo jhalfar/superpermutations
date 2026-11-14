@@ -50,7 +50,7 @@ batch, each a cut-down copy of a part of [`proofs/lean/`](proofs/lean/README.md)
 | 11 | 43,930,534 | [W-0086](https://superpermutations.com/w/W-0086) | the same |
 | 12 | 522,736,428 | submitted | this one, from William Echols's [W-0091](https://superpermutations.com/w/W-0091) |
 | 12 | 522,736,431 | submitted | 522,736,428 (row above); this one is from Derek Mahoney's [W-0102](https://superpermutations.com/w/W-0102) |
-| 13 | 6,747,800,327 | submitted | this one, from Jay Pantone's [W-0100](https://superpermutations.com/w/W-0100) with his reorder of [W-0107](https://superpermutations.com/w/W-0107) |
+| 13 | 6,747,800,268 | submitted | this one, from Jay Pantone's [W-0100](https://superpermutations.com/w/W-0100) with his reorder of [W-0107](https://superpermutations.com/w/W-0107) |
 | 14 | 93,904,778,043 | submitted | this one, from Jay Pantone's [W-0108](https://superpermutations.com/w/W-0108) |
 | 15 | 1,401,325,411,491 | the Almanac stops at n = 14 | this one, as far as I know |
 | 16 | 22,320,795,912,621 | | this one, as far as I know |
@@ -83,8 +83,9 @@ few joins at a time and solve the best order of the pieces exactly. My rebuild o
   scheduler in [`foreman/`](foreman/README.md) ran trailsearch, segment insertion on the card and local search on
   it in turns until 522,736,429 ([`foreman/recipe/RECIPE.md`](foreman/recipe/RECIPE.md) lists every step), and one
   more trailsearch in the check before publication gave 428.
-* 6,747,800,327 for n = 13 starts from my 6,747,800,734, which I made from Jay Pantone's W-0100. The reorder alternated with
-  segment insertion on the card (three cuts, slack 0 and 1), trailsearch and long runs of `tools/loopscan.c`.
+* 6,747,800,268 for n = 13 starts from my 6,747,800,734, which I made from Jay Pantone's W-0100. The reorder alternated with
+  segment insertion on the card (three cuts, slack 0 and 1), trailsearch and long runs of `tools/loopscan.c` down to
+  6,747,800,301; then four and five cuts on the card gave 297 and 268.
 * 93,904,778,043 for n = 14 starts from Jay Pantone's W-0108 (93,904,780,410). The reorder on a contracted model
   (`--chain 1`) gave 93,904,778,044, and `gdelcheck` ([`tools/gpucheck/`](tools/gpucheck/README.md)) found one
   letter that could be deleted.
@@ -96,7 +97,7 @@ The files are `words/superpermutation-N-LENGTH.txt.xz`: XZ archives with a delta
 unpacks (2 KB for n = 8, then 65 KB, 1.1 MB, 4.1 MB and 45 MB for n = 10 to 13), on the first n letters of
 `0123456789ABC`, one line plus a line feed, as in Pantone's repository. New words for n = 13 are stored in Theo
 H.'s [SPRA format](https://github.com/Tholsh/SPRA) (version 0.2, fields of 6 bits) and packed with `xz`:
-`words/superpermutation-13-6747800327.spra.xz`, about 1.3 MB. Its decoder is `tools/reduced_codec.cpp` of that
+`words/superpermutation-13-6747800268.spra.xz`, about 1.3 MB. Its decoder is `tools/reduced_codec.cpp` of that
 repository (`g++ -std=c++20 -O2 tools/reduced_codec.cpp -o reduced-codec`), which writes the letters `0`-`9`,
 `A`-`C` with no line feed; I checked the file with it and with an independent decoder of mine. The words of
 6,747,801,798 and 6,747,801,835 letters before it are stored the same way, and the earlier words for n = 13 stay
@@ -132,8 +133,8 @@ after the plan was fixed: one pass of 3.3 days on an RTX 5090, false pass probab
 probabilistic check, not an exact one. The plans of the recipes are made by the programs in [`tools/plans/`](tools/plans/README.md).
 
 ```sh
-xz -dk words/superpermutation-13-6747800327.spra.xz
-./reduced-codec decode words/superpermutation-13-6747800327.spra > superpermutation-13-6747800327.txt
+xz -dk words/superpermutation-13-6747800268.spra.xz
+./reduced-codec decode words/superpermutation-13-6747800268.spra > superpermutation-13-6747800268.txt
 gcc -O3 -o vfast recipes/n14/vfast.c -lpthread
 ./detour decode words/superpermutation-14-93904778043.detour | ./vfast 14 0123456789ABCD     # 10.9 GB of memory
 ```
@@ -148,7 +149,7 @@ archive, word and plan, the earlier words included.
     n = 11   fea642b8f56e7ab7259a0852fd6cb8ae6f76fffeb407b709ac330726b0a131f2
     n = 12   3c13d84304dd43c53859ed19ef995ae52cee69cb5faa361efa236dca94ef72a3   (522,736,428)
     n = 12   f8f240eb269def562bbb1e4bd3b90dc5f7aab0b3d3c9cea6def4b3e97b5af347   (522,736,431)
-    n = 13   86e01651b951b82527266cb1198d09e5e86ed6fdd539d022e558aa834f7f0a4b
+    n = 13   b45883c6050e59a5ab570d03ee0d97208ecde18044174cb09f58eb6597351e97
     n = 14   3b026b0adae45976a153f60461f06db5a82cd2189220b4970c2a3ffbd2c87568
     n = 15   d91b875a151480dbac864005bf7bdcd1d9aaeab2d5f5a0bffabfdb1e18cbe21c
     n = 16   e16a7e7f92119f4713e0255cd2856a66dc63efd8e8f9c3c2b89dbd129cf4a61f
@@ -216,7 +217,9 @@ with numpy) and Pantone's `literal_check --deletions` (about 13 GB at n = 13). A
 n = 8 and 10 to 13; for n = 13 `literal_check` ran under Linux in 15 minutes. Before I publish a word it goes
 through [`tools/prepub/`](tools/prepub/README.md): the three checkers, `tools/trailsearch.c` from the word's plan with
 six settings and the fixed-order pass; from n = 11 on also segment insertion with three to five cuts on the card
-([`tools/gpucuts/`](tools/gpucuts/README.md)). The word goes out only if none of them shortens it. At n = 14 the
+([`tools/gpucuts/`](tools/gpucuts/README.md)). The word goes out only if none of them shortens it, with one exception:
+the word of November for n = 13 passed the checkers, but each round of these steps still gave a shorter word (327,
+302, 301, then 268 from four and five cuts), so I published 268 while the search goes on. At n = 14 the
 coverage and deletion checks run on the card ([`tools/gpucheck/`](tools/gpucheck/README.md)); `gdelcheck` is the
 only deletion check I have there. The word for n = 14 is also checked by `vfast` on the processor, from the Detour
 file as above (about an hour on one thread, 11 GB); the earlier word for n = 14 is checked by
@@ -245,9 +248,9 @@ runs `hyb13 --no-rotate` on it and on the n = 13 base word of `reproduce/` (`wor
 stored word:
 
 ```sh
-MAP=7CA645918320B BASEN=work/n13-base.txt TOOLS=bin bash tools/pipeline/base.sh superpermutation-13-6747800327.txt hyb
-./trailsearch hyb/base.txt rebuilt.txt --plan-in plan/trailsearch-13-6747800327.plan --time 0
-tr -d '\n' < rebuilt.txt | tr 7CA645918320B 0123456789ABC | sha256sum    # 86e01651b951b82527266cb1198d09e5e86ed6fdd539d022e558aa834f7f0a4b
+MAP=A4596071382BC BASEN=work/n13-base.txt TOOLS=bin bash tools/pipeline/base.sh superpermutation-13-6747800268.txt hyb
+./trailsearch hyb/base.txt rebuilt.txt --plan-in plan/trailsearch-13-6747800268.plan --time 0
+tr -d '\n' < rebuilt.txt | tr A4596071382BC 0123456789ABC | sha256sum    # b45883c6050e59a5ab570d03ee0d97208ecde18044174cb09f58eb6597351e97
 ```
 
 The word for n = 14 of November has no plan here; the Detour file is the word. The word for n = 11 rebuilds from its own base, the 800
