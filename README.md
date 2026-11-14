@@ -1,4 +1,4 @@
-# Short superpermutations on 8 and 10 to 17 symbols
+# Short superpermutations on 8 and 10 to 18 symbols
 
 [![check words](https://github.com/jhalfar/superpermutations/actions/workflows/check.yml/badge.svg)](https://github.com/jhalfar/superpermutations/actions/workflows/check.yml)
 
