@@ -16,7 +16,7 @@ say "start $W"
 [ -f $D/wN.txt ] || tr -d '\r\n' < $W | tr '0123456789ABC' ${MAP:?set MAP} > $D/wN.txt
 say "relabelled: $(vf $D/wN.txt) first $(head -c 13 $D/wN.txt)"
 if [ ! -f $D/base.txt ]; then
-  OMP_NUM_THREADS=6 nice -n 19 $G $B/hyb13 $BN $D/wN.txt $D/base.txt > $D/hyb13.log 2>&1
+  OMP_NUM_THREADS=6 nice -n 19 $G $B/hyb13 $BN $D/wN.txt $D/base.txt --no-rotate > $D/hyb13.log 2>&1
   say "hyb13 exit $?: $(grep '^wrote' $D/hyb13.log)"
 fi
 OMP_NUM_THREADS=6 nice -n 19 $G $B/pieces $D/base.txt 13 $D/base_p.tsv > $D/base_p.log 2>&1

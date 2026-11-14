@@ -120,9 +120,13 @@ static double wall(void) { return (double)clock() / CLOCKS_PER_SEC - t00; }
 /* How a piece is written into NEWBASE: an open piece and a closed piece of a gap-3 opening (l = R + h) letter for
    letter; a closed piece of a gap-2 / gap-1 opening rotated to a gap-3 opening (a window whose previous window lies 3
    back), so that trailsearch numbers every closed trail in the order of the pieces (it numbers closes(k, 0) pieces
-   first) and w2p13 reads it as closed.  rot < 0: no gap-3 opening, written as it is. */
+   first) and w2p13 reads it as closed.  rot < 0: no gap-3 opening, written as it is.
+   --no-rotate writes every closed piece as it is (rot < 0), as the first build of this program did; the bases of the
+   published n = 13 words were made that way, so base.sh passes it (checked: same SHA-256 as those bases). */
+static int norot = 0;
 static i64 gap3_opening(const Packed *w, const Piece *p) {
     if (!p->R || p->l == p->R + h) return 0;
+    if (norot) return -1;
     for (i64 o = 0; o < p->R; o++)
         if (rank_at(w, p, o) >= 0 && rank_at(w, p, o + p->R - 3) >= 0) return o;
     return -1;
@@ -142,7 +146,8 @@ static void put(FILE *f, const Packed *w, const Piece *p, i64 rot) {
 }
 
 int main(int argc, char **argv) {
-    if (argc != 4) DIE("usage: hyb13 BASE_N.txt WORD.txt NEWBASE.txt");
+    if (argc == 5 && !strcmp(argv[4], "--no-rotate")) { norot = 1; argc = 4; }
+    if (argc != 4) DIE("usage: hyb13 BASE_N.txt WORD.txt NEWBASE.txt [--no-rotate]");
     fact[0] = 1; for (int i = 1; i < 17; i++) fact[i] = fact[i - 1] * i;
     u64 NF = fact[n];
     Packed Bn = load(argv[1]), Wd = load(argv[2]);

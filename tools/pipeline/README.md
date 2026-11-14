@@ -73,7 +73,11 @@ trail by its set of windows. A closed piece of the word with the window set of a
 closed pieces are new trails, and a trail of N that shares a window with a new trail is dropped. Open pieces of the
 word that hold windows covered by nothing else are kept as open paths, which the tools never move. The new base is
 the kept trails of N, the new trails and those open pieces, two separator letters between pieces, and the program
-checks that its windows cover all n!. It needs about 8.5 GB at n = 13.
+checks that its windows cover all n!. It needs about 8.5 GB at n = 13. By default a closed piece that does not start
+at a gap-3 opening is rotated so that it does; with `--no-rotate` every piece is written as it is. The bases of my
+n = 13 words were built without the rotation, so `base.sh` passes `--no-rotate`: on the 6,747,800,407 word this gives
+the same base, byte for byte, as the one the runs used (6,748,045,394 letters; with the rotation it is 2 letters
+shorter and the published plans do not fit it).
 
 `w2p13o` reads the word event by event: from an index of about one window in 64 of the trails it finds where each
 piece of the word starts in a trail and how far it matches. Anything that is not a cut of a trail is reported as an
