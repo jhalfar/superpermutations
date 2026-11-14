@@ -48,10 +48,10 @@ batch, each a cut-down copy of a part of [`proofs/lean/`](proofs/lean/README.md)
 | 9 | not here | [W-0103](https://superpermutations.com/w/W-0103), 408,717 | 408,717, mine ([W-0103](https://superpermutations.com/w/W-0103)), from Jay Pantone's construction of [W-0099](https://superpermutations.com/w/W-0099) |
 | 10 | 4,034,855 | [W-0062](https://superpermutations.com/w/W-0062) | the same; Jay Pantone's [W-0082](https://superpermutations.com/w/W-0082) has the same length |
 | 11 | 43,930,534 | [W-0086](https://superpermutations.com/w/W-0086) | the same |
-| 12 | 522,736,428 | [W12B](https://superpermutations.com/w/W12B) | this one, from William Echols's [W-0091](https://superpermutations.com/w/W-0091) |
-| 12 | 522,736,431 | [W12A](https://superpermutations.com/w/W12A) | 522,736,428 (row above); this one is from Derek Mahoney's [W-0102](https://superpermutations.com/w/W-0102) |
-| 13 | N13LEN | [N13WID](https://superpermutations.com/w/N13WID) | this one, from Jay Pantone's [W-0100](https://superpermutations.com/w/W-0100) with his reorder of [W-0107](https://superpermutations.com/w/W-0107) |
-| 14 | 93,904,778,043 | [W14](https://superpermutations.com/w/W14) | this one, from Jay Pantone's [W-0108](https://superpermutations.com/w/W-0108) |
+| 12 | 522,736,428 | submitted | this one, from William Echols's [W-0091](https://superpermutations.com/w/W-0091) |
+| 12 | 522,736,431 | submitted | 522,736,428 (row above); this one is from Derek Mahoney's [W-0102](https://superpermutations.com/w/W-0102) |
+| 13 | 6,747,800,327 | submitted | this one, from Jay Pantone's [W-0100](https://superpermutations.com/w/W-0100) with his reorder of [W-0107](https://superpermutations.com/w/W-0107) |
+| 14 | 93,904,778,043 | submitted | this one, from Jay Pantone's [W-0108](https://superpermutations.com/w/W-0108) |
 | 15 | 1,401,325,411,491 | the Almanac stops at n = 14 | this one, as far as I know |
 | 16 | 22,320,795,912,621 | | this one, as far as I know |
 | 17 | 377,961,971,839,096 | | this one, as far as I know |
@@ -83,7 +83,7 @@ few joins at a time and solve the best order of the pieces exactly. My rebuild o
   scheduler in [`foreman/`](foreman/README.md) ran trailsearch, segment insertion on the card and local search on
   it in turns until 522,736,429 ([`foreman/recipe/RECIPE.md`](foreman/recipe/RECIPE.md) lists every step), and one
   more trailsearch in the check before publication gave 428.
-* N13LEN for n = 13 starts from my 6,747,800,734, which I made from Jay Pantone's W-0100. The reorder alternated with
+* 6,747,800,327 for n = 13 starts from my 6,747,800,734, which I made from Jay Pantone's W-0100. The reorder alternated with
   segment insertion on the card (three cuts, slack 0 and 1), trailsearch and long runs of `tools/loopscan.c`.
 * 93,904,778,043 for n = 14 starts from Jay Pantone's W-0108 (93,904,780,410). The reorder on a contracted model
   (`--chain 1`) gave 93,904,778,044, and `gdelcheck` ([`tools/gpucheck/`](tools/gpucheck/README.md)) found one
@@ -96,7 +96,7 @@ The files are `words/superpermutation-N-LENGTH.txt.xz`: XZ archives with a delta
 unpacks (2 KB for n = 8, then 65 KB, 1.1 MB, 4.1 MB and 45 MB for n = 10 to 13), on the first n letters of
 `0123456789ABC`, one line plus a line feed, as in Pantone's repository. New words for n = 13 are stored in Theo
 H.'s [SPRA format](https://github.com/Tholsh/SPRA) (version 0.2, fields of 6 bits) and packed with `xz`:
-`words/superpermutation-13-N13RAW.spra.xz`, about 1.3 MB. Its decoder is `tools/reduced_codec.cpp` of that
+`words/superpermutation-13-6747800327.spra.xz`, about 1.3 MB. Its decoder is `tools/reduced_codec.cpp` of that
 repository (`g++ -std=c++20 -O2 tools/reduced_codec.cpp -o reduced-codec`), which writes the letters `0`-`9`,
 `A`-`C` with no line feed; I checked the file with it and with an independent decoder of mine. The words of
 6,747,801,798 and 6,747,801,835 letters before it are stored the same way, and the earlier words for n = 13 stay
@@ -132,8 +132,8 @@ after the plan was fixed: one pass of 3.3 days on an RTX 5090, false pass probab
 probabilistic check, not an exact one. The plans of the recipes are made by the programs in [`tools/plans/`](tools/plans/README.md).
 
 ```sh
-xz -dk words/superpermutation-13-N13RAW.spra.xz
-./reduced-codec decode words/superpermutation-13-N13RAW.spra > superpermutation-13-N13RAW.txt
+xz -dk words/superpermutation-13-6747800327.spra.xz
+./reduced-codec decode words/superpermutation-13-6747800327.spra > superpermutation-13-6747800327.txt
 gcc -O3 -o vfast recipes/n14/vfast.c -lpthread
 ./detour decode words/superpermutation-14-93904778043.detour | ./vfast 14 0123456789ABCD     # 10.9 GB of memory
 ```
@@ -148,7 +148,7 @@ archive, word and plan, the earlier words included.
     n = 11   fea642b8f56e7ab7259a0852fd6cb8ae6f76fffeb407b709ac330726b0a131f2
     n = 12   3c13d84304dd43c53859ed19ef995ae52cee69cb5faa361efa236dca94ef72a3   (522,736,428)
     n = 12   f8f240eb269def562bbb1e4bd3b90dc5f7aab0b3d3c9cea6def4b3e97b5af347   (522,736,431)
-    n = 13   N13SHA
+    n = 13   86e01651b951b82527266cb1198d09e5e86ed6fdd539d022e558aa834f7f0a4b
     n = 14   3b026b0adae45976a153f60461f06db5a82cd2189220b4970c2a3ffbd2c87568
     n = 15   d91b875a151480dbac864005bf7bdcd1d9aaeab2d5f5a0bffabfdb1e18cbe21c
     n = 16   e16a7e7f92119f4713e0255cd2856a66dc63efd8e8f9c3c2b89dbd129cf4a61f
@@ -245,9 +245,9 @@ runs `hyb13 --no-rotate` on it and on the n = 13 base word of `reproduce/` (`wor
 stored word:
 
 ```sh
-MAP=N13MAP BASEN=work/n13-base.txt TOOLS=bin bash tools/pipeline/base.sh superpermutation-13-N13RAW.txt hyb
-./trailsearch hyb/base.txt rebuilt.txt --plan-in plan/trailsearch-13-N13RAW.plan --time 0
-tr -d '\n' < rebuilt.txt | tr N13MAP 0123456789ABC | sha256sum    # N13SHA
+MAP=7CA645918320B BASEN=work/n13-base.txt TOOLS=bin bash tools/pipeline/base.sh superpermutation-13-6747800327.txt hyb
+./trailsearch hyb/base.txt rebuilt.txt --plan-in plan/trailsearch-13-6747800327.plan --time 0
+tr -d '\n' < rebuilt.txt | tr 7CA645918320B 0123456789ABC | sha256sum    # 86e01651b951b82527266cb1198d09e5e86ed6fdd539d022e558aa834f7f0a4b
 ```
 
 The word for n = 14 of November has no plan here; the Detour file is the word. The word for n = 11 rebuilds from its own base, the 800

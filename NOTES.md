@@ -104,7 +104,7 @@ Part eight, words built on words of others (November 12 to 14):
 
 17. Jay Pantone's cut-opening reorder of W-0107, rebuilt in `tools/reorder/`, alternated with trailsearch, the card
     passes and loop moves on plans over hybrid base words. For n = 12, 522,736,431 from Derek Mahoney's W-0102
-    (522,736,437) and 522,736,428 from William Echols's W-0091 (522,736,503); for n = 13, N13LEN from my
+    (522,736,437) and 522,736,428 from William Echols's W-0091 (522,736,503); for n = 13, 6,747,800,327 from my
     6,747,800,734, which came from Jay Pantone's W-0100; for n = 14, 93,904,778,043 from his W-0108
     (93,904,780,410).
 
@@ -122,7 +122,7 @@ The words of the README, with the best word of someone else when mine was publis
 | 14 | 93,904,804,405 | 93,904,804,516 | William Echols | -111 |
 | 12 | 522,736,431 | 522,736,437 | Derek Mahoney | -6 |
 | 12 | 522,736,428 | 522,736,437 | Derek Mahoney | -9 |
-| 13 | N13LEN | 6,747,800,610 | Jay Pantone | N13GAIN |
+| 13 | 6,747,800,327 | 6,747,800,610 | Jay Pantone | -283 |
 | 14 | 93,904,778,043 | 93,904,780,410 | Jay Pantone | -2,367 |
 | 15 | 1,401,325,411,491 | 1,401,326,497,322 | Theo H. | -1,085,831 |
 | 16 | 22,320,795,912,621 | - | - | - |
@@ -1024,7 +1024,7 @@ more: no gain from the six trailsearch settings, three to five cuts on the card 
 
 **n = 13.** My 6,747,800,734 came from Jay Pantone's W-0100. From it, the reorder alternated with segment
 insertion on the card (three cuts, slack 0 and 1), trailsearch and long runs of `loopscan` (up to 1,000 rounds,
-`tools/pipeline/longloop.sh`), each from the best word of the others, down to N13LEN.
+`tools/pipeline/longloop.sh`), each from the best word of the others, down to 6,747,800,327.
 
 **n = 14.** Jay Pantone's W-0108 has 93,904,780,410 letters. The reorder on the contracted model gave
 93,904,778,044, and `gdelcheck` found one letter that could be deleted: 93,904,778,043. `vfast` and the card
