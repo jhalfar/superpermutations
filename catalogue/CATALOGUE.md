@@ -65,7 +65,7 @@ Up to relabelling there are exactly 45,116 words of 872 letters over 6 symbols t
 
 * status: **computed-two-programs**; published: github.com/jhalfar/superpermutations words/n6
 * class: all words of length L(6) = 872 over 6 symbols; completeness rests on the entry/row form of MODEL Theorem N (the defect part is in Lean as exists_stdConfig_of_covers)
-* method: Reduction: a minimal word spells a Hamiltonian path of weight 866, which gives a standard configuration of defect <= 5 with the same entries and rows. Stage 1 enumerates the possible chain/loop sets (46,798 candidates), stage 2 searches all Hamiltonian paths of weight <= 866 for each. Program A (stage 1 and 2 in C) and program B (stage 1 in Python written from the model by another agent, stage 2 a separate C program) give the same 45,116 words; at n = 4 and 5 they give 1 and 8. The list contains all 44,120 words of Houston's four classes (Egan's files).
+* method: Reduction: a minimal word spells a Hamiltonian path of weight 866, which gives a standard configuration of defect <= 5 with the same entries and rows. Stage 1 enumerates the possible chain/loop sets (46,798 candidates), stage 2 searches all Hamiltonian paths of weight <= 866 for each. Program A (stage 1 and 2 in C) and program B (stage 1 in Python written independently from the model, stage 2 a separate C program) give the same 45,116 words; at n = 4 and 5 they give 1 and 8. The list contains all 44,120 words of Houston's four classes (Egan's files).
 * credit: Jakub Halfar (with Claude). Vlad Gheorghe's provisional census of 11 August 2026 has the same 45,116 words (compared word for word, 28.10); Robin Houston's classes and Greg Egan's files contain 44,120 of the words.; date 2026-10-27
 * reproduce: `python3 check_n6.py` in `words/n6`
 * evidence: `words/n6/README.md` (sha256 `d12ae087b10b...`); `words/n6/minimal-6-872.txt.xz` (sha256 `7314f08d865d...`)
@@ -464,7 +464,7 @@ The closed walk of 27 loops with row lengths 266646664666466466646664666 has Q =
 * status: **lean**; published: github.com/jhalfar/superpermutations proofs/lean/n8struct
 * class: closed walks of the Pantone completion at n = 8 (letters 6, 7 fixed, rows v = 1..6)
 * method: Lean, kernel only (decide +kernel, no native_decide): proofs/lean/n8struct/N8Struct/Walk27.lean (walk27_closed, walk27_Q = 16, walk27_portTrails = 1, walk27_single_trail: the 178 slices form one closed trail in the sense of Pantone's ClosedTrail); axioms at most propext, Classical.choice, Quot.sound. Rows, slices and ClosedTrail are Pantone's definitions; states, canon, gstep, walks, Q, ports and renaming are own definitions, each matched in a comment to a function of the n = 8 tool (words/n8/tools/n8lib/model.py).
-* credit: Jakub Halfar (with Claude); the walk was found by probsearch; Lean check of the 27-walk: Theo H. (his bundle is at external/repos2026/Tholsh_superpermutation_study/LEAN); date 2026-10-21
+* credit: Jakub Halfar (with Claude); the walk was found by probsearch; Lean check of the 27-walk: Theo H. (in his own Lean bundle); date 2026-10-21
 * reproduce: `./build.sh` in `proofs/lean/n8struct`
 * evidence: `proofs/lean/n8struct/README.md` (sha256 `0429c563919a...`); `proofs/lean/n8struct/N8Struct/Walk27.lean` (sha256 `19b0f7261c52...`)
 * source: `proofs/lean/n8struct/README.md:48`

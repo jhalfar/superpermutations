@@ -191,7 +191,7 @@ static const u64 *low_rows(int w, u64 *m, int *Kl, int *first, int *g) {        
     }
     DIE("lift17 needs GEN17_LAZY >= 1"); return NULL;
 }
-/* constB, mode liftB (L = 4, lower plan = C's n = 15 plan): the trails of d's small units are replaced by d's block
+/* Construction (B), mode liftB (L = 4, lower plan = C's n = 15 plan): the trails of d's small units are replaced by d's block
    segment, written where d's first small unit stands.  Segment = LIFTB_ORDER file (lines "D g1 g2 g3" / "W b", b = the
    b-th level-4 walk of the block: block walks k in order, their orbits a in order), the same for every d; without it
    the 14 walk units, then d's trails of the lower order whose loop is in R. */
