@@ -86,9 +86,8 @@ one with card code inside `trailsearch_gpu.c` and `recut_wide.c`. `loopscan.c` a
 copy of the loader. Together the eight files have about 1.5 MB of source, of which roughly half is distinct.
 
 To read one, look at its header, which says what its own part is; lines of equal signs mark where that part begins
-and ends, and the rest can be skipped. A change to the loader has to be made in up to ten files. I plan to merge
-them into one program with the passes behind options. Until then the copies are what produced the words, and I
-would rather publish what ran than a merge that has not.
+and ends, and the rest can be skipped. A change to the loader has to be made in up to ten files. The copies are
+what produced the words, and I would rather publish what ran than a merge that has not.
 
 ## Building
 
@@ -513,8 +512,8 @@ letter, taken back unless something better appears next to them) gave 522,745,35
 closed trails; on the new pieces moves of equal length do that work. The first CPU program with moves of equal
 length is replaced by `segins_gpu.c`, which takes the same moves.
 
-The eight copies of the search program are not merged yet. A trial merge of `trailsearch`, `recut`, `relocate` and
-`segins` into one file gave the same words on the tests above; the real merge will follow.
+The eight copies of the search program are not merged. A trial merge of `trailsearch`, `recut`, `relocate` and
+`segins` into one file gave the same words on the tests above.
 
 ## Licence
 
