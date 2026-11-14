@@ -94,7 +94,7 @@ from the group: his re-opening of a stretch of consecutive trails and Theo H.'s 
 
 The files are `words/superpermutation-N-LENGTH.txt.xz`: XZ archives with a delta filter of distance n that `xz -d`
 unpacks (2 KB for n = 8, then 65 KB, 1.1 MB, 4.1 MB and 45 MB for n = 10 to 13), on the first n letters of
-`0123456789ABC`, one line plus a line feed, as in Pantone's repository. New words for $`n \ge 13`$ are stored in Theo
+`0123456789ABC`, one line plus a line feed, as in Pantone's repository. New words for n = 13 are stored in Theo
 H.'s [SPRA format](https://github.com/Tholsh/SPRA) (version 0.2, fields of 6 bits) and packed with `xz`:
 `words/superpermutation-13-N13RAW.spra.xz`, about 1.3 MB. Its decoder is `tools/reduced_codec.cpp` of that
 repository (`g++ -std=c++20 -O2 tools/reduced_codec.cpp -o reduced-codec`), which writes the letters `0`-`9`,
