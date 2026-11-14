@@ -5,7 +5,7 @@ Start: William Echols's word W-0091 (522,736,503 letters). Every step below work
 
 ## The start plan
 
-`W-0091_on_base12_hybrid_e.plan` (SHA-256 4737a5c715a7d6e777e77bb4b25d3141d7c9ac7635eb157cef33f7c71e29c2cc) is
+`W-0091_on_base12_hybrid_e.plan` (SHA-256 bdd9ef759316d9975328edc55ee75cb12a90d21dd2475116f9b4b04712fdd009) is
 W-0091 written in the letters of the base and turned into a plan:
 
     tr -d '\r\n' < W-0091.txt | tr '71056389A4B2' '0123456789AB' > w503b.txt     # the letter map fits all trails
