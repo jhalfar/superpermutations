@@ -18,7 +18,7 @@ pieces; the words here use other selections inside his construction, and so othe
 I work on this with Claude (Opus 5.5) in Claude Code. I chose the problem and direct the work; Claude designs and
 runs the searches and writes the code and this text.
 
-## Where things are now
+## Records, bounds and proofs today
 
 The records and bounds for n up to 14 are kept on Jay Pantone's
 [Superpermutation Almanac](https://superpermutations.com), which checks every word and Lean proof submitted to it.
@@ -203,7 +203,7 @@ cc -O2 -mpopcnt -fopenmp -o trailsearch tools/trailsearch.c -lm
 python3 words/n8/tools/n8.py rebuild words/n8/selection-46174.txt -o w46174.txt    # n = 8, HiGHS, about 3 s
 ```
 
-## Where things are
+## Where the files are
 
 | path | content |
 |---|---|
