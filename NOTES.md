@@ -10,9 +10,10 @@ inside his construction. In one day that gave 36 more letters at n = 11, 8,175 a
 and at n = 10 a word of 4,034,855 letters, 18 below rumstd's. Part one is how I got to part two: every pass that
 polishes the new words was written for the old ones. Part three (October 17 to 20) takes two moves from William
 Echols and Theo H. and gives the words for n = 12, 13 and 14. Part four (October 20 and 21) is the word for n = 8. Part five (October 25 and 26) is the words for n = 15 and 16,
-part six (October 26 and 27) n = 17, the n = 6 list and n = 11, and part seven (October 28 to November 1) n = 18.
+part six (October 26 and 27) n = 17, the n = 6 list and n = 11, part seven (October 28 to November 1) n = 18, and
+part eight (November) the words built on words of others.
 
-After the seven parts come the things I tried that gave nothing, with the numbers, so that nobody has to try them
+After the eight parts come the things I tried that gave nothing, with the numbers, so that nobody has to try them
 again. Then come what is known about how much is left, the lower bounds, the words of record length and how the
 words were checked.
 
@@ -63,8 +64,9 @@ Part three, moves of William Echols and Theo H. (October 17 to 20):
     310, and rounds of `tools/trailsearch.c` (30 minutes on 6 threads each) alternated with segment insertion on
     the card: 200, 169, 941, 928, 837, 836 and, in the last check before publication, 6,747,801,835 on October
     24, 484 below 319. Three cuts on the card with the default lists then gave 6,747,801,799, and four cuts
-    6,747,801,798, 521 below 319. The programs for the moves of Echols and Theo H. and the card program with
-    bounded memory are not in the repository yet; the plans are, and they rebuild with `tools/trailsearch.c`.
+    6,747,801,798, 521 below 319. The card program with bounded memory is part of `tools/segins_gpu.c`, and the
+    card program of the passes of November is in `tools/gpucuts/`. The programs for the moves of Echols and Theo H.
+    are not in the repository yet; the plans are, and they rebuild with `tools/trailsearch.c`.
 12. For n = 14 the word is written by a generator from the selection and a plan of 72,000 units, one per closed
     trail on 13 symbols, in the order that my n = 12 and n = 13 plans give: 93,904,804,425 letters, 91 below
     Echols's 93,904,804,516. A relocation search on the units took 20 more letters on October 25:
@@ -98,6 +100,14 @@ Part seven, n = 18 (October 28 to November 1):
 16. One more lift gives 6,779,644,944,870,572 letters for n = 18, 7,683,011,380 below `hasWord_eighteen_B`,
     checked on one card by hash sums whose keys came from a public random beacon after the plan was fixed.
 
+Part eight, words built on words of others (November 12 to 14):
+
+17. Jay Pantone's cut-opening reorder of W-0107, rebuilt in `tools/reorder/`, alternated with trailsearch, the card
+    passes and loop moves on plans over hybrid base words. For n = 12, 522,736,431 from Derek Mahoney's W-0102
+    (522,736,437) and 522,736,428 from William Echols's W-0091 (522,736,503); for n = 13, N13LEN from my
+    6,747,800,734, which came from Jay Pantone's W-0100; for n = 14, 93,904,778,043 from his W-0108
+    (93,904,780,410).
+
 ## The words and the records they beat
 
 The words of the README, with the best word of someone else when mine was published:
@@ -110,6 +120,10 @@ The words of the README, with the best word of someone else when mine was publis
 | 12 | 522,736,969 | 522,737,173 | Theo H. | -204 |
 | 13 | 6,747,801,798 | 6,747,918,066 | Jay Pantone | -116,268 |
 | 14 | 93,904,804,405 | 93,904,804,516 | William Echols | -111 |
+| 12 | 522,736,431 | 522,736,437 | Derek Mahoney | -6 |
+| 12 | 522,736,428 | 522,736,437 | Derek Mahoney | -9 |
+| 13 | N13LEN | 6,747,800,610 | Jay Pantone | N13GAIN |
+| 14 | 93,904,778,043 | 93,904,780,410 | Jay Pantone | -2,367 |
 | 15 | 1,401,325,411,491 | 1,401,326,497,322 | Theo H. | -1,085,831 |
 | 16 | 22,320,795,912,621 | - | - | - |
 | 17 | 377,961,971,839,096 | - | - | - |
@@ -119,8 +133,9 @@ For n = 8 Theo H. found 46,173 on the same selection with `tools/trailsearch.c` 
 H.'s words for n = 11 and 12 were made from earlier words of mine. Against Pantone's own words of 4,034,889,
 43,930,680, 522,745,581 and 6,747,918,066 letters from the 43/80 release the words for n = 10 to 13 are 34, 146,
 8,612 and 116,268 letters shorter. My own best words on Pantone's closed trails, before the change of selection,
-had 43,930,614, 522,745,350 and 6,747,916,657 letters. Since then the records for n = 8, 12, 13 and 14 have gone
-to words of others; the README has the state of 14 November 2026 and the
+had 43,930,614, 522,745,350 and 6,747,916,657 letters. In early November the records for n = 8, 12, 13 and 14
+went to words of others, partly built on mine; the last four rows of the table are my words of 13 and 14 November,
+built on theirs (part eight). The README has the state of 14 November 2026 and the
 [Superpermutation Almanac](https://superpermutations.com) the current one.
 
 ## The model
@@ -974,6 +989,51 @@ on an RTX 5090 with 12 host threads: valid, 16! completions, every sum as expect
 BLAKE3 of the letters, 8a534409..., which is the name of the word; a plain SHA-256 would take about 80 days.
 This is one probabilistic run of one program, with no exact check and no second checker.
 
+# Part eight: words built on words of others (November 12 to 14)
+
+In early November the Superpermutation Almanac collected the words of several people, and the records for n = 12
+to 14 moved to words that others had built, some of them on mine. This part starts from those words. Their data are
+under CC BY 4.0, and [`NOTICE`](NOTICE) names the word each of mine comes from.
+
+**The reorder.** With W-0107 and W-0108 Jay Pantone described a move that shortened words the trail tools could
+no longer shorten: cut the word at its heavy steps, open the light cuts in the pieces around a few joins at a time,
+and find the best order of all pieces exactly. I rebuilt it from his description in
+[`tools/reorder/`](tools/reorder/README.md); the code may differ from his in the details. The order is a
+maximum-weight path cover solved by one LP that is kept across rounds. On W-0107 it gave 81 letters in 1,570 rounds
+of 1 to 3 seconds. At n = 14 the full model has an integrality gap of about 209 letters that the MIP did not close
+in 120 to 300 seconds, so I solved it on a contracted model in which only the pieces near the chosen joins are free
+(`--chain 1`). A reordered word can hold a letter that can be deleted, and two of mine did, so every word goes
+through `gdelcheck` or `delcheck`.
+
+**Plans on hybrid bases.** The reorder works on the word alone, but the card passes and trailsearch need a plan
+on a base word that holds every closed trail. Read as its own base, a reordered word gave the card pass no
+candidates. For n = 13, [`tools/pipeline/`](tools/pipeline/README.md) builds a hybrid base from the word: the
+trails of selection N, with the trails that the word changed replaced by its own. For n = 12 no new base was
+needed: up to a renaming of the letters, the words that came from W-0102 and W-0091 are still made of the closed
+trails of selection E, so their plans are on the n = 12 base word of `reproduce/`. The reorder, trailsearch, `loopscan` and the card pass
+then feed each other: each finds gains after the others have stopped.
+
+**n = 12.** Derek Mahoney's W-0102 has 522,736,437 letters. The reorder gave 434, trailsearch 433 and segment
+insertion with three cuts on the card 431. The check before publication found nothing more, and neither did four
+and five cuts on the card. A second line started from William Echols's W-0091 (522,736,503) and did not use the
+reorder. The scheduler in [`foreman/`](foreman/README.md) ran my n = 12 tools on it in turns: trailsearch, segment
+insertion on the card with three to five cuts, `segins_ils`, and rounds of `polish.sh` with two `segins_ils` lanes.
+After about 12 hours it had 522,736,429; [`foreman/recipe/RECIPE.md`](foreman/recipe/RECIPE.md) lists every step.
+One more trailsearch in the check before publication gave 522,736,428, and the check of that word found nothing
+more: no gain from the six trailsearch settings, three to five cuts on the card or 45 minutes of the reorder.
+
+**n = 13.** My 6,747,800,734 came from Jay Pantone's W-0100. From it, the reorder alternated with segment
+insertion on the card (three cuts, slack 0 and 1), trailsearch and long runs of `loopscan` (up to 1,000 rounds,
+`tools/pipeline/longloop.sh`), each from the best word of the others, down to N13LEN.
+
+**n = 14.** Jay Pantone's W-0108 has 93,904,780,410 letters. The reorder on the contracted model gave
+93,904,778,044, and `gdelcheck` found one letter that could be deleted: 93,904,778,043. `vfast` and the card
+checks of [`tools/gpucheck/`](tools/gpucheck/README.md) found every permutation, and `gdelcheck` no other letter
+that can be deleted. At 418 KB the word fits the repository as a Detour file, so it needs no recipe.
+
+**n = 9.** My 408,717 ([W-0103](https://superpermutations.com/w/W-0103)) comes from Jay Pantone's construction of
+W-0099. It is on the Almanac and not in this repository.
+
 # What gave nothing
 
 Each item says what was tried and the numbers that show the result.
@@ -1300,11 +1360,12 @@ Three programs that share no code:
 3. Pantone's `literal_check --deletions`: the same two statements.
 
 All three passed on each of the words for n = 8 and 10 to 13. For n = 13 `literal_check` ran under Linux: 22
-minutes and about 13 GB. The word for n = 14 was checked by two streaming checkers (part three).
+minutes and about 13 GB. The earlier word for n = 14 was checked by two streaming checkers (part three), the word of November by `vfast` and by the card checks of [`tools/gpucheck/`](tools/gpucheck/README.md) (part eight).
 
-Since October 21 every word goes through `prepub`, a script of my working directory, before it is published: the
-three checkers, then `tools/trailsearch.c` from the word's plan with six settings, and the fixed-order pass. The
-word is published only if no tool shortens it. That rule came from Theo H.'s 46,173 (part four).
+Since October 21 every word goes through [`tools/prepub/`](tools/prepub/README.md) before it is published: the three
+checkers, then `tools/trailsearch.c` from the word's plan with six settings, and the fixed-order pass; from n = 11 on
+also segment insertion with three to five cuts on the card ([`tools/gpucuts/`](tools/gpucuts/README.md)). The word
+is published only if no tool shortens it. That rule came from Theo H.'s 46,173 (part four).
 
 The selections were checked before any word existed: every loop has at most one row, the selection is balanced,
 and the closed trails are found in two ways that must agree (at n = 13 in one way only, for memory). The program

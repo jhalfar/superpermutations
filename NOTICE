@@ -35,6 +35,34 @@ The word on 11 symbols of 43,930,534 letters starts from Jay Pantone's word of 4
 https://superpermutations.com, as W-0079), which he made from my selection X by changing the images of its blocks. I
 recovered his images, changed two of them and repaired the order; no code of his is used.
 
+The words of November 2026 on 12, 13 and 14 symbols start from words of others on the Superpermutation Almanac
+(https://superpermutations.com), whose data are under the Creative Commons Attribution 4.0 licence (CC BY 4.0,
+https://creativecommons.org/licenses/by/4.0/). Each of them is a changed version of that word:
+
+words/superpermutation-12-522736431.txt.xz and plan/trailsearch-12-522736431.plan are derived from W-0102 by Derek
+Mahoney (https://superpermutations.com/w/W-0102, CC BY 4.0). I changed the order of its pieces and where they are
+cut: first with tools/reorder/, my implementation of Jay Pantone's cut-opening reorder, then with tools/trailsearch.c
+and the segment insertion of tools/gpucuts/.
+
+words/superpermutation-12-522736428.txt.xz and plan/trailsearch-12-522736428.plan are derived from W-0091 by William
+Echols (https://superpermutations.com/w/W-0091, CC BY 4.0), and so are foreman/recipe/W-0091_on_base12_hybrid_e.plan
+(his word with its letters renamed, as a plan) and foreman/recipe/522736429.plan. I changed the order of its pieces
+and where they are cut with the programs of tools/, run in turns by foreman/, and then with tools/trailsearch.c.
+
+words/superpermutation-13-N13RAW.spra.xz and plan/trailsearch-13-N13RAW.plan are derived from W-0100 by Jay
+Pantone (https://superpermutations.com/w/W-0100, CC BY 4.0). I changed the order of its pieces and where they are
+cut, with tools/reorder/ (his move of W-0107), the segment insertion of tools/gpucuts/, tools/trailsearch.c and
+tools/loopscan.c, and renamed the letters so that the word starts with 0123456789ABC.
+
+words/superpermutation-14-93904778043.detour is derived from W-0108 by Jay Pantone
+(https://superpermutations.com/w/W-0108, CC BY 4.0). I changed the order of its pieces and where they are cut with
+tools/reorder/ (his move of W-0107), removed one letter that could be deleted, and renamed the letters so that the
+word starts with 0123456789ABCD. The file is in the Almanac's Detour format and was written with its detour program
+(MIT licence, https://superpermutations.com/format.txt); no code of that program is included here.
+
+tools/reorder/ is my own implementation of the cut-opening reorder that Jay Pantone described with W-0107 and W-0108
+on the Almanac; no code of his is used.
+
 recipes/n14 publishes the word on 14 symbols as a generator and a plan, the form in which William Echols published
 his words on 14 symbols. gen14.c can also write the order of his 2-lift (recipe "superperm-2lift/1", mode echols);
 it is written from my own definitions, and no code of his repository is used.
@@ -93,9 +121,9 @@ with rows of every length read from his rules as in reproduce/REPRODUCE.md. It c
 word of 46,178 letters (https://github.com/WilliamEchols/superpermutations) when a user supplies it; the word is
 not included here.
 
-words/superpermutation-13-6747801798.spra.xz and words/superpermutation-13-6747801835.spra.xz are stored in
-Theo H.'s SPRA format, version 0.2
-(https://github.com/Tholsh/SPRA, tools/reduced_codec.cpp, which decodes it). The format is his; the file was
+words/superpermutation-13-N13RAW.spra.xz, words/superpermutation-13-6747801798.spra.xz and
+words/superpermutation-13-6747801835.spra.xz are stored in Theo H.'s SPRA format, version 0.2
+(https://github.com/Tholsh/SPRA, tools/reduced_codec.cpp, which decodes it). The format is his; the files were
 written with an encoder built from his source, and no code of his repository is included here.
 
 ties/ lists words of other people (Teodorescu, Pantone, rumstd, Theo H.) by their SHA-256 only; the 85 words of
