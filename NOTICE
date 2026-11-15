@@ -49,7 +49,7 @@ Echols (https://superpermutations.com/w/W-0091, CC BY 4.0), and so are foreman/r
 (his word with its letters renamed, as a plan) and foreman/recipe/522736429.plan. I changed the order of its pieces
 and where they are cut with the programs of tools/, run in turns by foreman/, and then with tools/trailsearch.c.
 
-words/superpermutation-13-6747800268.spra.xz and plan/trailsearch-13-6747800268.plan are derived from W-0100 by Jay
+words/superpermutation-13-6747800163.spra.xz and plan/trailsearch-13-6747800163.plan are derived from W-0100 by Jay
 Pantone (https://superpermutations.com/w/W-0100, CC BY 4.0). I changed the order of its pieces and where they are
 cut, with tools/reorder/ (his move of W-0107), the segment insertion of tools/gpucuts/, tools/trailsearch.c and
 tools/loopscan.c, and renamed the letters so that the word starts with 0123456789ABC.
@@ -121,7 +121,7 @@ with rows of every length read from his rules as in reproduce/REPRODUCE.md. It c
 word of 46,178 letters (https://github.com/WilliamEchols/superpermutations) when a user supplies it; the word is
 not included here.
 
-words/superpermutation-13-6747800268.spra.xz, words/superpermutation-13-6747801798.spra.xz and
+words/superpermutation-13-6747800163.spra.xz, words/superpermutation-13-6747801798.spra.xz and
 words/superpermutation-13-6747801835.spra.xz are stored in Theo H.'s SPRA format, version 0.2
 (https://github.com/Tholsh/SPRA, tools/reduced_codec.cpp, which decodes it). The format is his; the files were
 written with an encoder built from his source, and no code of his repository is included here.
