@@ -42,18 +42,18 @@ batch, each a cut-down copy of a part of [`proofs/lean/`](proofs/lean/README.md)
 
 ## The words
 
-| n | my word here | on the Almanac | shortest known on 14 November 2026 |
+| n | my word here | on the Almanac | shortest known on 18 November 2026 |
 |---|---:|---|---|
 | 8 | 46,174 | [W-0077](https://superpermutations.com/w/W-0077) | 46,173, Theo H. ([W-0078](https://superpermutations.com/w/W-0078)), found with `tools/trailsearch.c` on the selection of this word; Jay Pantone found another word of that length ([W-0080](https://superpermutations.com/w/W-0080)) |
 | 9 | not here | [W-0103](https://superpermutations.com/w/W-0103), 408,717 | 408,717, mine ([W-0103](https://superpermutations.com/w/W-0103)), from Jay Pantone's construction of [W-0099](https://superpermutations.com/w/W-0099) |
 | 10 | 4,034,855 | [W-0062](https://superpermutations.com/w/W-0062) | the same; Jay Pantone's [W-0082](https://superpermutations.com/w/W-0082) has the same length |
 | 11 | 43,930,534 | [W-0086](https://superpermutations.com/w/W-0086) | the same |
-| 12 | 522,736,428 | submitted | this one, from William Echols's [W-0091](https://superpermutations.com/w/W-0091) |
-| 12 | 522,736,431 | submitted | 522,736,428 (row above); this one is from Derek Mahoney's [W-0102](https://superpermutations.com/w/W-0102) |
-| 13 | 6,747,800,155 | submitted | this one, from Jay Pantone's [W-0100](https://superpermutations.com/w/W-0100) with his reorder of [W-0107](https://superpermutations.com/w/W-0107) |
-| 14 | 93,904,778,043 | submitted | this one, from Jay Pantone's [W-0108](https://superpermutations.com/w/W-0108) |
-| 15 | 1,401,325,411,491 | the Almanac stops at n = 14 | this one, as far as I know |
-| 16 | 22,320,795,912,621 | | this one, as far as I know |
+| 12 | 522,736,428 | [W-0113](https://superpermutations.com/w/W-0113) | this one, from William Echols's [W-0091](https://superpermutations.com/w/W-0091) |
+| 12 | 522,736,431 | [W-0112](https://superpermutations.com/w/W-0112) | 522,736,428 (row above); this one is from Derek Mahoney's [W-0102](https://superpermutations.com/w/W-0102) |
+| 13 | 6,747,800,155 | [W-0114](https://superpermutations.com/w/W-0114) | this one, from Jay Pantone's [W-0100](https://superpermutations.com/w/W-0100) with his reorder of [W-0107](https://superpermutations.com/w/W-0107) |
+| 14 | 93,904,778,043 | [W-0115](https://superpermutations.com/w/W-0115) | this one, from Jay Pantone's [W-0108](https://superpermutations.com/w/W-0108) |
+| 15 | 1,401,325,411,491 | the Almanac stops at n = 14 | 1,401,325,411,389, Derek Mahoney ([his repository](https://github.com/dmahoney1213/superperm-words)), from this word's plan with `uopt15` |
+| 16 | 22,320,795,912,621 | | 22,320,795,905,601, Derek Mahoney ([his repository](https://github.com/dmahoney1213/superperm-words)), the same construction run again from an n = 15 plan |
 | 17 | 377,961,971,839,096 | | this one, as far as I know |
 | 18 | 6,779,644,944,870,572 | | this one, as far as I know |
 
