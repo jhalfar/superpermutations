@@ -72,11 +72,11 @@ depends on the axioms `propext`, `Classical.choice` and `Quot.sound` only.
 * Jay Pantone announced on 29 September 2026 a Lean proof of the bound of Theorem B with $`n - 1`$ in place of
   $`n - 2`$ in the numerator, which gives the same integers for $`n \le 14`$, and a table that goes further: 46,130,
   408,468, 4,033,374, 43,917,903, 522,622,378 and 6,746,626,519 for n = 8 to 13. He announced his table
-  first. His proofs are public now (github.com/jaypantone/2026-10-superpermutation-lower-palomar, on the
-  Almanac since 29 October 2026 as [b/30](https://superpermutations.com/b/30),
-  [b/32](https://superpermutations.com/b/32) and [b/34](https://superpermutations.com/b/34)), with 4,033,379 for
-  n = 10 and 93,891,141,150 for n = 14, both above the values here. I made the proofs here before that, without
-  his.
+  first. His proofs are public now (github.com/jaypantone/2026-10-superpermutation-lower-palomar, on the Almanac
+  since 29 October 2026 as [b/30](https://superpermutations.com/b/30) to [b/32](https://superpermutations.com/b/32)
+  and [b/34](https://superpermutations.com/b/34)), with 4,033,379 for n = 10, 522,622,380 for n = 12 and
+  93,891,141,150 for n = 14, all above the values here. I made the proofs here before that, without his. William
+  Echols has 408,470 for n = 9 and 43,917,904 for n = 11 (b/45, b/44), also above them.
 * William Echols proved 46,130 for n = 8 in Lean by another method
   (github.com/williamechols/superperm8-ge-46130). His proof and the proofs here share nothing but Mathlib.
 

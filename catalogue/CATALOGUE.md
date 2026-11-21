@@ -100,7 +100,7 @@ Theorem A (Lean) gives, for 7 symbols, a lower bound of 5,893 letters for every 
 * method: Lean theorem A of proofs/lean/lower (LowerBounds/TheoremA.lean), formula hpv(k) + ceil(2((k-2)! - (k-2)) / (k(k-3))), kernel-checked, no native_decide
 * credit: Formula: Zach Hunter (21 Oct 2019); Lean proof: Jakub Halfar (with Claude); date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
+* evidence: `proofs/lean/lower/README.md` (sha256 `96e45911997c...`)
 * source: `proofs/lean/lower/README.md:27`
 * notes: Weaker than n7-lb-5899, which is the best Lean bound for n = 7.
 
@@ -113,7 +113,7 @@ Theorem B (Lean) gives, for 7 symbols, a lower bound of 5,895 letters for every 
 * method: Lean theorem B of proofs/lean/lower (TheoremBCore.lean, TheoremB.lean), formula hpv(k) + ceil(2((k-2)! - (k-2)) / (k^2 - 4k + 1)), k >= 7, kernel-checked
 * credit: Formula: Cole Fritsch (20 Jan 2020); Lean proof: Jakub Halfar (with Claude); date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
+* evidence: `proofs/lean/lower/README.md` (sha256 `96e45911997c...`)
 * source: `proofs/lean/lower/README.md:27`
 * notes: Theorem C has no value in the n = 7 row of the table (cell empty), so there is no Theorem C entry for n = 7. Weaker than n7-lb-5899.
 
@@ -380,7 +380,7 @@ Theorem A (Lean) gives, for 8 symbols, a lower bound of 46,121 letters for every
 * method: Lean theorem A of proofs/lean/lower (LowerBounds/TheoremA.lean), kernel-checked, no native_decide
 * credit: Formula: Zach Hunter (21 Oct 2019); Lean proof: Jakub Halfar (with Claude); date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
+* evidence: `proofs/lean/lower/README.md` (sha256 `96e45911997c...`)
 * source: `proofs/lean/lower/README.md:28`
 * notes: Weaker than n8-lb-46133, which is the best kernel-level Lean bound for n = 8.
 
@@ -393,7 +393,7 @@ Theorem B (Lean) gives, for 8 symbols, a lower bound of 46,129 letters for every
 * method: Lean theorem B of proofs/lean/lower (TheoremBCore.lean, TheoremB.lean), kernel-checked, no native_decide
 * credit: Formula: Cole Fritsch (20 Jan 2020); Lean proof: Jakub Halfar (with Claude); date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
+* evidence: `proofs/lean/lower/README.md` (sha256 `96e45911997c...`)
 * source: `proofs/lean/lower/README.md:28`
 * notes: Weaker than n8-lb-46133.
 
@@ -406,7 +406,7 @@ Theorem C (Lean, default build level, 22 of 27 searches) gives, for 8 symbols, a
 * method: Lean theorem C of proofs/lean/lower with the certificate c = 3/10, b = 64/10 (search of 2,915 states, evaluated by the kernel), no native_decide
 * credit: Jakub Halfar (with Claude), on Xiaolong Liu's preimage-chain library; date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
+* evidence: `proofs/lean/lower/README.md` (sha256 `96e45911997c...`)
 * source: `proofs/lean/lower/README.md:331`
 * superseded by: `n8-lb-46133`
 * notes: Replaced as the best value by the full build level (46,133).
@@ -420,7 +420,7 @@ Theorem C (Lean, full build level) gives, for 8 symbols, a lower bound of 46,133
 * method: Lean theorem C of proofs/lean/lower with the certificate c = 41/100, b = 1188/100 (search of 827,022 states in 192 generated files, kernel evaluation, about 2.9 h), no native_decide, axioms propext, Classical.choice, Quot.sound only
 * credit: Jakub Halfar (with Claude), on Xiaolong Liu's preimage-chain library; date 2026-10-07
 * reproduce: `./build.sh full` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
+* evidence: `proofs/lean/lower/README.md` (sha256 `96e45911997c...`)
 * source: `proofs/lean/lower/README.md:332`
 * supersedes: `n8-lb-46132-theoremC-default`
 * notes: Best bound for n = 8 without native_decide. With native_decide the best is n8-lb-46134-native.
@@ -534,7 +534,7 @@ Theorem C (Lean, default build level) gives, for 9 symbols, a lower bound of 408
 * method: Lean theorem C of proofs/lean/lower with the certificate c = 21/250, b = 630/250 (a search of 886 states evaluated by the kernel with decide +kernel), no native_decide; run ../words/build.sh first
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; Pantone announced a table of his own on 29 September 2026; his Lean proofs are public since October 2026 (github.com/jaypantone/2026-10-superpermutation-lower-palomar, on the Almanac since 29 October 2026); date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
+* evidence: `proofs/lean/lower/README.md` (sha256 `96e45911997c...`)
 * source: `proofs/lean/lower/README.md:333`
 * notes: A search of the same model gives 408,470 by computation only, with no Lean certificate here (proofs/lean/lower/README.md). William Echols proved 408,470 in Lean on 10 November 2026 (Almanac b/45, with native_decide).
 
@@ -552,7 +552,7 @@ Theorem C (Lean, default build level) gives, for 10 symbols, a lower bound of 4,
 * method: Lean theorem C of proofs/lean/lower with c = 6/25, b = 92/25 (a search of 10,774 states evaluated by the kernel with decide +kernel), no native_decide
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; Pantone announced 4,033,374 first; his Lean proof of 4,033,379, on the Almanac since 29 October 2026 (b/30, github.com/jaypantone/2026-10-superpermutation-lower-palomar), is higher; date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
+* evidence: `proofs/lean/lower/README.md` (sha256 `96e45911997c...`)
 * source: `proofs/lean/lower/README.md:334`
 
 
@@ -569,7 +569,7 @@ Theorem C (Lean, full build level) gives, for 11 symbols, a lower bound of 43,91
 * method: Lean theorem C of proofs/lean/lower with c = 91/1000, b = 4016/1000 (a search of 14,992 states evaluated by the kernel with decide +kernel, build level 'full'; the default level gives 43,917,901), no native_decide
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; Pantone announced 43,917,903 first; his Lean proofs are public since October 2026 (github.com/jaypantone/2026-10-superpermutation-lower-palomar, on the Almanac since 29 October 2026); date 2026-10-07
 * reproduce: `./build.sh full` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
+* evidence: `proofs/lean/lower/README.md` (sha256 `96e45911997c...`)
 * source: `proofs/lean/lower/README.md:336`
 * notes: William Echols's 43,917,904 (Almanac b/44, 10 November 2026) uses this Theorem C with a constant just above the least one that reaches the bound.
 
@@ -587,7 +587,7 @@ Theorem C (Lean, default build level) gives, for 12 symbols, a lower bound of 52
 * method: Lean theorem C of proofs/lean/lower with c = 51/1250, b = 2956/1250 (a search of 2,361 states evaluated by the kernel with decide +kernel), no native_decide
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; Pantone announced 522,622,378 first; his Lean proof of 522,622,380, on the Almanac since 29 October 2026 (b/31, github.com/jaypantone/2026-10-superpermutation-lower-palomar), is higher; date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
+* evidence: `proofs/lean/lower/README.md` (sha256 `96e45911997c...`)
 * source: `proofs/lean/lower/README.md:337`
 * notes: Superseded by 522,622,401 from the same theorem with tuned constants (Almanac b/46, Lean files in github.com/jhalfar/superpermutation-almanac-lean commit 7ed009a, not in this repository).
 
@@ -605,7 +605,7 @@ Theorem C (Lean, full build level) gives, for 13 symbols, a lower bound of 6,746
 * method: Lean theorem C of proofs/lean/lower with c = 4/25, b = 88/25 (a search of 26,721 states evaluated by the kernel with decide +kernel, build level 'full'; the default level gives 6,746,626,601), no native_decide
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; Pantone announced 6,746,626,519 first; his Lean proofs are public since October 2026 (github.com/jaypantone/2026-10-superpermutation-lower-palomar, on the Almanac since 29 October 2026); date 2026-10-07
 * reproduce: `./build.sh full` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
+* evidence: `proofs/lean/lower/README.md` (sha256 `96e45911997c...`)
 * source: `proofs/lean/lower/README.md:339`
 * notes: Superseded by 6,746,627,048 from the same theorem with tuned constants (Almanac b/47, Lean files in github.com/jhalfar/superpermutation-almanac-lean commit 7ed009a, not in this repository).
 
@@ -623,7 +623,7 @@ Theorem C (Lean, full build level) gives, for 14 symbols, a lower bound of 93,89
 * method: Lean theorem C of proofs/lean/lower with c = 21/400, b = 1550/400 (a search of 15,284 states evaluated by the kernel with decide +kernel, build level 'full'; the default level gives 93,891,140,217), no native_decide
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; date 2026-10-07
 * reproduce: `./build.sh full` in `proofs/lean/lower`
-* evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
+* evidence: `proofs/lean/lower/README.md` (sha256 `96e45911997c...`)
 * source: `proofs/lean/lower/README.md:341`
 
 #### `n14-lb-computed-93891141126`

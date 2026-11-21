@@ -977,7 +977,7 @@ them, by `python3` or by Lean, and needs mode 644 only.
   k`
 * `lower/LowerBounds/WindowSlackC.lean` (3.5 KB): Theorem C: the window bound in the form with the slack of intervals
   and runs
-* `lower/README.md` (30.1 KB): the three lower bounds, their values, whose the parts are, the steps of the proofs, how
+* `lower/README.md` (30.3 KB): the three lower bounds, their values, whose the parts are, the steps of the proofs, how
   to build
 * `lower/Superperm/TwoSidedA.lean` (2.9 KB): Theorem A and the literal words in one statement, n = 9, 10, 11
 * `lower/Superperm/TwoSidedB.lean` (2.9 KB): Theorem B and the literal words in one statement, n = 9, 10, 11
