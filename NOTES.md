@@ -138,7 +138,8 @@ closed trails, before the change of selection, had 43,930,614, 522,745,350 and 6
 record went to Theo H. on 20 October. In early November the records for n = 12, 13 and 14 went to words of others,
 partly built on mine; the rows of 522,736,431, 522,736,428, 6,747,800,155 and 93,904,778,043 are my words of 13 to
 15 November, built on theirs (part eight) and submitted to the Almanac on 18 November. Jay Pantone's words of 20
-November (W-0127 to W-0129) are shorter for n = 12, 13 and 14. The README table carries its own date, and the
+November (W-0127 to W-0129) are shorter for n = 12, 13 and 14, and Theo H.'s words of 21 November (W-0131,
+W-0132) for n = 11. The README table carries its own date, and the
 [Superpermutation Almanac](https://superpermutations.com) has the current state.
 
 ## The model

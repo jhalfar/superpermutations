@@ -4,13 +4,14 @@
 
 A superpermutation on n symbols is a word that contains every permutation of the symbols as a substring. This
 repository holds superpermutations for n = 8 and 10 to 18, built with Jay Pantone's construction, and the list of
-all 45,116 minimal superpermutations for n = 6 ([`words/n6/`](words/n6/README.md)). On 21 November 2026 the words
-here for n = 10 and 11 are the shortest known. For n = 8, 12, 13 and 14 there are shorter words now, by Theo H.
-(n = 8) and Jay Pantone (n = 12 to 14). All of them are built on the selections of this repository, most of them
-also with its tools; the table below names them. The current records are on the
-[Superpermutation Almanac](https://superpermutations.com). The Almanac stops at n = 14. For n = 17 and 18 these
-are the shortest words I know of, and for n = 15 and 16 Derek Mahoney reports shorter ones. The repository also
-holds the inputs that rebuild the words, the programs that made them, and Lean proofs of upper and lower bounds.
+all 45,116 minimal superpermutations for n = 6 ([`words/n6/`](words/n6/README.md)). On 21 November 2026 the word
+here for n = 10 is the shortest known. For n = 8, 11, 12, 13 and 14 there are shorter words now, by Theo H. (n = 8
+and 11) and Jay Pantone (n = 12 to 14). Most of them start from the selections of this repository (Theo H.'s
+43,930,529 for n = 11 from a block of one), and most were made with its tools; the table below names them. The
+current records are on the [Superpermutation Almanac](https://superpermutations.com). The Almanac stops at
+n = 14. For n = 17 and 18 these are the shortest words I know of, and for n = 15 and 16 Derek Mahoney reports
+shorter ones. The repository also holds the inputs that rebuild the words, the programs that made them, and Lean
+proofs of upper and lower bounds.
 
 All of it is built with Jay Pantone's [43/80 construction](https://github.com/jaypantone/superperm-upper-43-80).
 Until October 5 I kept the closed trails of his words and changed where each one is cut and the order of the
@@ -49,7 +50,7 @@ batch, each a cut-down copy of a part of [`proofs/lean/`](proofs/lean/README.md)
 | 8 | 46,174 | [W-0077](https://superpermutations.com/w/W-0077) | 46,173, Theo H. ([W-0078](https://superpermutations.com/w/W-0078)), found with `tools/trailsearch.c` on the selection of this word; Jay Pantone found another word of that length ([W-0080](https://superpermutations.com/w/W-0080)) |
 | 9 | not here | [W-0103](https://superpermutations.com/w/W-0103), 408,717 | 408,717: mine ([W-0103](https://superpermutations.com/w/W-0103)) and seven more by Derek Mahoney ([W-0119](https://superpermutations.com/w/W-0119) to [W-0125](https://superpermutations.com/w/W-0125)), all from Jay Pantone's construction of [W-0099](https://superpermutations.com/w/W-0099) |
 | 10 | 4,034,855 | [W-0062](https://superpermutations.com/w/W-0062) | the same; Jay Pantone's [W-0082](https://superpermutations.com/w/W-0082) has the same length |
-| 11 | 43,930,534 | [W-0086](https://superpermutations.com/w/W-0086) | the same |
+| 11 | 43,930,534 | [W-0086](https://superpermutations.com/w/W-0086) | 43,930,527, Theo H. ([W-0132](https://superpermutations.com/w/W-0132)); his [W-0131](https://superpermutations.com/w/W-0131) (43,930,529) starts from the (7,2) block of my n = 11 selection and builds new selections from it |
 | 12 | 522,736,428 | [W-0113](https://superpermutations.com/w/W-0113) | 522,736,409, Jay Pantone ([W-0128](https://superpermutations.com/w/W-0128)), on the selection of my [W-0074](https://superpermutations.com/w/W-0074) with the tools of this repository; this one is from William Echols's [W-0091](https://superpermutations.com/w/W-0091) |
 | 12 | 522,736,431 | [W-0112](https://superpermutations.com/w/W-0112) | row above; this one is from Derek Mahoney's [W-0102](https://superpermutations.com/w/W-0102) |
 | 13 | 6,747,800,155 | [W-0114](https://superpermutations.com/w/W-0114) | 6,747,791,494, Jay Pantone ([W-0129](https://superpermutations.com/w/W-0129)), from a new (7,4) block that he found with [`selection/gsegip.py`](selection/gsegip.py) on the selection of my [W-0084](https://superpermutations.com/w/W-0084); this one is from his [W-0100](https://superpermutations.com/w/W-0100) with his reorder of [W-0107](https://superpermutations.com/w/W-0107), and my 6,747,800,130 ([W-0116](https://superpermutations.com/w/W-0116)) from the same line is on the Almanac but not here |
