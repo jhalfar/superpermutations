@@ -777,7 +777,7 @@ Lean proves ConstAsym.shortest_superpermutation_coefficient: with L(n) the least
 * method: Lean theorem in proofs/lean/asym/ConstAsym/Main.lean (namespace ConstAsym), axioms propext, Classical.choice, Quot.sound, no sorry, no native_decide; clean independent compile verify.sh (111 modules)
 * credit: Jakub Halfar (with Claude); built on Hunter and Raudvere's library and Pantone's Challenge.lean; date 2026-10-19
 * reproduce: `./build.sh` in `proofs/lean/asym`
-* evidence: `proofs/lean/asym/README.md` (sha256 `6e0cc1fbd1fa...`)
+* evidence: `proofs/lean/asym/README.md` (sha256 `861722a6ea8a...`)
 * source: `proofs/lean/asym/README.md:7`
 * notes: The next order (n-4)! is the content of all-const-n4. Module directory proofs/lean/asym/ConstAsym.
 
@@ -790,6 +790,6 @@ Lean proves ConstAsym.remainder_limit8: for every eps > 0, eventually 2 - eps <=
 * method: Lean theorems proofs/lean/asym/ConstAsym/Remainder8.lean (remainder_limit8, remainder_order8, lower2_L), axioms propext, Classical.choice, Quot.sound, no sorry, no native_decide; verify8.sh compiled 199 modules from sources into an empty lib, all exit 0
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries and Pantone's Challenge.lean; date 2026-10-19
 * reproduce: `./build.sh` in `proofs/lean/asym`
-* evidence: `proofs/lean/asym/README.md` (sha256 `6e0cc1fbd1fa...`)
+* evidence: `proofs/lean/asym/README.md` (sha256 `861722a6ea8a...`)
 * source: `proofs/lean/asym/README.md:51`
 * notes: Module directories proofs/lean/asym/ConstAsym and proofs/lean/constant43586371. Jay Pantone's Almanac b/33 and b/41 show that the coefficient is exactly 2.

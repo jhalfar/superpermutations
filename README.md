@@ -190,7 +190,9 @@ How the words were found, step by step, is in [`NOTES.md`](NOTES.md).
 
 Jay Pantone has since shown that the coefficient of $`(n-4)!`$ is exactly 2 ([b/33](https://superpermutations.com/b/33),
 [b/41](https://superpermutations.com/b/41), [b/42](https://superpermutations.com/b/42) on the Almanac). The lower
-side $`2(n-4)! - 2(n-5)!`$ is the theorem `lower2_L` of [`asym/`](proofs/lean/asym/README.md).
+side $`2(n-4)! - 2(n-5)!`$ is the theorem `lower2_L` of [`asym/`](proofs/lean/asym/README.md). It follows from
+Theorem B of [`lower/`](proofs/lean/lower/README.md), which is Cole Fritsch's formula of 2020; my part is its Lean
+proof, on Xiaolong Liu's library.
 
 With tuned constants, William Echols's idea for n = 11, the same Theorem C gives 522,622,401 for n = 12 and
 6,746,627,048 for n = 13 ([b/46](https://superpermutations.com/b/46), [b/47](https://superpermutations.com/b/47);

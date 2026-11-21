@@ -44,8 +44,8 @@ theorems of this directory, not on the theorems of `Remainder.lean`.
 
 ### The constant lies in [2, 8]
 
-`ConstAsym/Remainder8.lean` takes the lower side from Theorem B of [`../lower/`](../lower/README.md) ($`n \ge 7`$) and
-the upper side from `UniR.rate_R8` of `../constant43586371/`, and proves
+`ConstAsym/Remainder8.lean` takes the lower side from Theorem B of [`../lower/`](../lower/README.md) (Cole Fritsch's
+formula, $`n \ge 7`$) and the upper side from `UniR.rate_R8` of `../constant43586371/`, and proves
 
 ```lean
 theorem remainder_limit8 (eps : Rat) (heps : 0 < eps) : exists N : Nat, forall n : Nat, N <= n ->
