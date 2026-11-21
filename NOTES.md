@@ -66,7 +66,7 @@ Part three, moves of William Echols and Theo H. (October 17 to 20):
     24, 484 below 319. Three cuts on the card with the default lists then gave 6,747,801,799, and four cuts
     6,747,801,798, 521 below 319. The card program with bounded memory is part of `tools/segins_gpu.c`, and the
     card program of the passes of November is in `tools/gpucuts/`. The programs for the moves of Echols and Theo H.
-    are not in the repository yet; the plans are, and they rebuild with `tools/trailsearch.c`.
+    are not in the repository; the plans are, and they rebuild with `tools/trailsearch.c`.
 12. For n = 14 the word is written by a generator from the selection and a plan of 72,000 units, one per closed
     trail on 13 symbols, in the order that my n = 12 and n = 13 plans give: 93,904,804,425 letters, 91 below
     Echols's 93,904,804,516. A relocation search on the units took 20 more letters on October 25:
