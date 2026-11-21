@@ -218,13 +218,15 @@ xz -dk words/superpermutation-11-43930578.txt.xz && ./delcheck words/superpermut
 about two minutes on 8 threads at n = 13). Two more programs that share no code with it check the same:
 [`reproduce/tools/check_min.py`](reproduce/tools/check_min.py) (every permutation occurs; about 60 lines of Python
 with numpy) and Pantone's `literal_check --deletions` (about 13 GB at n = 13). All three passed on each word for
-n = 8 and 10 to 13; for n = 13 `literal_check` ran under Linux in 15 minutes. Before I publish a word it goes
-through [`tools/prepub/`](tools/prepub/README.md): the three checkers, `tools/trailsearch.c` from the word's plan with
-six settings and the fixed-order pass; from n = 11 on also segment insertion with three to five cuts on the card
-([`tools/gpucuts/`](tools/gpucuts/README.md)). The word goes out only if none of them shortens it, with one exception:
-the word of November for n = 13 passed the checkers, but each round of these steps and the reorder still gave a
-shorter word (327, 302, 301, 268, 190, 163, 155), so I published 155 while the search goes on. At n = 14 the
-coverage and deletion checks run on the card ([`tools/gpucheck/`](tools/gpucheck/README.md)); `gdelcheck` is the
+n = 8 and 10 to 13; for n = 13 `literal_check` ran under Linux. Since 21 October 2026 a word for n up to 13 goes
+through [`tools/prepub/`](tools/prepub/README.md) before I publish it: the three checkers, `tools/trailsearch.c`
+from the word's plan with six settings and the fixed-order pass; from n = 11 on also segment insertion with three
+to five cuts on the card ([`tools/gpucuts/`](tools/gpucuts/README.md)). The word goes out only if none of them
+shortens it. The words here for n = 8 and 10 are older than this check. The word of November for n = 13 passed it,
+but the reorder, which is not part of it, still gave a shorter word in each round (6,747,800,327, then 302, 301,
+268, 190, 163 and 155; later 6,747,800,130, W-0116), so I published 155 while the search went on. The words for
+n = 14 have no plan, so the trail tools never ran on them, only the checkers. At n = 14 the coverage and deletion
+checks run on the card ([`tools/gpucheck/`](tools/gpucheck/README.md)); `gdelcheck` is the
 only deletion check I have there. The word for n = 14 is also checked by `vfast` on the processor, from the Detour
 file as above (about an hour on one thread, 11 GB); the earlier word for n = 14 is checked by
 `recipes/n14/decode.sh ... check` in the same way. Both found all 87,178,291,200 permutations. The word for n = 15 is checked by

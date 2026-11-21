@@ -1,9 +1,15 @@
 # The check before publication
 
-Every word I publish or announce goes through `prepub.sh` first. It checks the word with three independent
-checkers and then tries to shorten it with the trail tools. A word is published only if the report ends with
-`CLEAN`; if a tool finds a shorter word, the report ends with `SHORTER` and the new word goes through the check
-again.
+Since 21 October 2026 a word for n up to 13 goes through `prepub.sh` before I publish it. The script checks the
+word with three independent checkers and then tries to shorten it with the trail tools. A word is published only if
+the report ends with `CLEAN`; if a tool finds a shorter word, the report ends with `SHORTER` and the new word goes
+through the check again.
+
+Not every word in this repository went through it first. The words for n = 8 and 10 are older than the script; on
+the word for n = 8 (46,174) it finds Theo H.'s 46,173, and on the word for n = 10 it gave `CLEAN` later, on 13
+November. The word of November for n = 13 got `CLEAN`, but the reorder of [`reorder/`](../reorder/README.md), which
+is not part of this script, still found shorter words after it. The words for n = 14 have no plan for the trail
+tools, so only the checkers ran on them, and the recipes for n = 15 to 18 have checks of their own.
 
 | file | what it is |
 |---|---|

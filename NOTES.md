@@ -1366,12 +1366,14 @@ Three programs that share no code:
 All three passed on each of the words for n = 8 and 10 to 13. For n = 13 `literal_check` ran under Linux: 22
 minutes and about 13 GB. The earlier word for n = 14 was checked by two streaming checkers (part three), the word of November by `vfast` and by the card checks of [`tools/gpucheck/`](tools/gpucheck/README.md) (part eight).
 
-Since October 21 every word goes through [`tools/prepub/`](tools/prepub/README.md) before it is published: the three
-checkers, then `tools/trailsearch.c` from the word's plan with six settings, and the fixed-order pass; from n = 11 on
-also segment insertion with three to five cuts on the card ([`tools/gpucuts/`](tools/gpucuts/README.md)). The word
-is published only if no tool shortens it. That rule came from Theo H.'s 46,173 (part four). The word of November for
-n = 13 is an exception: it passed the checkers, but each round of this step and the reorder still gave a shorter word
-(6,747,800,327, 302, 301, 268, 190, 163, 155), so I published 155 while the search goes on.
+Since October 21 a word for n up to 13 goes through [`tools/prepub/`](tools/prepub/README.md) before it is
+published: the three checkers, then `tools/trailsearch.c` from the word's plan with six settings, and the fixed-order
+pass; from n = 11 on also segment insertion with three to five cuts on the card
+([`tools/gpucuts/`](tools/gpucuts/README.md)). The word is published only if no tool shortens it. That rule came
+from Theo H.'s 46,173 (part four), so the words for n = 8 and 10 are older than it. The word of November for n = 13
+passed the check, but the reorder, which is not part of it, still gave a shorter word in each round
+(6,747,800,327, then 302, 301, 268, 190, 163 and 155; later 6,747,800,130, W-0116), so I published 155 while the
+search went on. The words for n = 14 have no plan, so the trail tools never ran on them, only the checkers.
 
 The selections were checked before any word existed: every loop has at most one row, the selection is balanced,
 and the closed trails are found in two ways that must agree (at n = 13 in one way only, for memory). The program
