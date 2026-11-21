@@ -190,10 +190,11 @@ How the words were found, step by step, is in [`NOTES.md`](NOTES.md).
 | the 27-walk and the packing of four copies behind the 46,174 word | kernel | [`n8struct/`](proofs/lean/n8struct/README.md) | |
 
 Jay Pantone has since shown that the coefficient of $`(n-4)!`$ is exactly 2 ([b/33](https://superpermutations.com/b/33),
-[b/41](https://superpermutations.com/b/41), [b/42](https://superpermutations.com/b/42) on the Almanac). The lower
-side $`2(n-4)! - 2(n-5)!`$ is the theorem `lower2_L` of [`asym/`](proofs/lean/asym/README.md). It follows from
-Theorem B of [`lower/`](proofs/lean/lower/README.md), which is Cole Fritsch's formula of 2020; my part is its Lean
-proof, on Xiaolong Liu's library.
+[b/41](https://superpermutations.com/b/41), [b/42](https://superpermutations.com/b/42) on the Almanac). In this
+repository the lower side $`2(n-4)! - 2(n-5)!`$ is the theorem `lower2_L` of [`asym/`](proofs/lean/asym/README.md).
+It follows from Theorem B of [`lower/`](proofs/lean/lower/README.md): the formula is Cole Fritsch's (2020), and Jay
+Pantone announced a Lean proof of nearly the same bound on 29 September 2026, before mine. The Lean proof here is
+mine, on Xiaolong Liu's library and the deficit-one lemma of the note of GPT 5.6 Sol and Marin Kisic.
 
 With tuned constants, William Echols's idea for n = 11, the same Theorem C gives 522,622,401 for n = 12 and
 6,746,627,048 for n = 13 ([b/46](https://superpermutations.com/b/46), [b/47](https://superpermutations.com/b/47);
