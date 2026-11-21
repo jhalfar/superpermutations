@@ -104,7 +104,11 @@ Lean time); the build levels of `lower/` stop at 93,891,141,008. The upper bound
 words; those for n = 13 and 14 are values of the construction of `constant/`.
 
 Jay Pantone announced a table of lower bounds on 29 September 2026: 46,130, 408,468, 4,033,374, 43,917,903,
-522,622,378 and 6,746,626,519 for n = 8 to 13. His proof is not public. I made the proofs here without it.
+522,622,378 and 6,746,626,519 for n = 8 to 13. His proofs are public now
+(github.com/jaypantone/2026-10-superpermutation-lower-palomar, on the Almanac since 29 October 2026 as
+[b/30](https://superpermutations.com/b/30), [b/32](https://superpermutations.com/b/32) and
+[b/34](https://superpermutations.com/b/34)), with 4,033,379 for n = 10 and 93,891,141,150 for n = 14, both above
+the values here. I made the proofs here before that, without his.
 
 The parts state their results with the definitions of Pantone's `Challenge.lean`
 (github.com/jaypantone/superperm-upper-43-80): `Covers w` says that every list of K different letters occurs
@@ -533,7 +537,7 @@ The README of each part has the times per group of modules, and the costs of `as
 * Nothing here says that any of the words of `words/` and `words12/` is shortest. Shortest words are proven
   for $`n \le 6`$ only (`small/`).
 * The lower bounds: Theorem B is not proven for k = 5 and 6, and Theorem C has certificates for k = 8 to 14
-  only. Pantone's proofs are not here; they are not public.
+  only. Pantone's proofs are not here; they are in his repository (see above).
 * n = 8 in Echols's framework beyond 46,132.
 * n = 7: the kernel does not check the 22 evaluations of `n7/`, and I ran the build of `n7/` on Windows
   only.

@@ -72,8 +72,11 @@ depends on the axioms `propext`, `Classical.choice` and `Quot.sound` only.
 * Jay Pantone announced on 29 September 2026 a Lean proof of the bound of Theorem B with $`n - 1`$ in place of
   $`n - 2`$ in the numerator, which gives the same integers for $`n \le 14`$, and a table that goes further: 46,130,
   408,468, 4,033,374, 43,917,903, 522,622,378 and 6,746,626,519 for n = 8 to 13. He announced his table
-  first. His proof is not public, and the proofs here were made without it. He announced no value for
-  n = 14.
+  first. His proofs are public now (github.com/jaypantone/2026-10-superpermutation-lower-palomar, on the
+  Almanac since 29 October 2026 as [b/30](https://superpermutations.com/b/30),
+  [b/32](https://superpermutations.com/b/32) and [b/34](https://superpermutations.com/b/34)), with 4,033,379 for
+  n = 10 and 93,891,141,150 for n = 14, both above the values here. I made the proofs here before that, without
+  his.
 * William Echols proved 46,130 for n = 8 in Lean by another method
   (github.com/williamechols/superperm8-ge-46130). His proof and the proofs here share nothing but Mathlib.
 
@@ -423,7 +426,7 @@ copy of the search and the list of hashes are not trusted: Lean checks the files
 
 ## What is not here
 
-* Pantone's proofs. They are not public.
+* Pantone's proofs. They are in his repository (see above).
 * Theorem B for k = 5 and 6, and certificates of Theorem C for k = 5, 6, 7 and k = 15. Theorem A covers
   k = 5 and 6; the soundness theorem of the search holds for $`5 \le k \le 15`$.
 * Later certificates. Certificates for 522,622,398 (k = 12) and 6,746,627,046 (k = 13) have been built since
