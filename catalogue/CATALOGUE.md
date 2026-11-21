@@ -407,7 +407,7 @@ Theorem C (Lean, default build level, 22 of 27 searches) gives, for 8 symbols, a
 * credit: Jakub Halfar (with Claude), on Xiaolong Liu's preimage-chain library; date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
 * evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
-* source: `proofs/lean/lower/README.md:328`
+* source: `proofs/lean/lower/README.md:331`
 * superseded by: `n8-lb-46133`
 * notes: Replaced as the best value by the full build level (46,133).
 
@@ -421,7 +421,7 @@ Theorem C (Lean, full build level) gives, for 8 symbols, a lower bound of 46,133
 * credit: Jakub Halfar (with Claude), on Xiaolong Liu's preimage-chain library; date 2026-10-07
 * reproduce: `./build.sh full` in `proofs/lean/lower`
 * evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
-* source: `proofs/lean/lower/README.md:329`
+* source: `proofs/lean/lower/README.md:332`
 * supersedes: `n8-lb-46132-theoremC-default`
 * notes: Best bound for n = 8 without native_decide. With native_decide the best is n8-lb-46134-native.
 
@@ -535,7 +535,7 @@ Theorem C (Lean, default build level) gives, for 9 symbols, a lower bound of 408
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; Pantone announced a table of his own on 29 September 2026; his Lean proofs are public since October 2026 (github.com/jaypantone/2026-10-superpermutation-lower-palomar, on the Almanac since 29 October 2026); date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
 * evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
-* source: `proofs/lean/lower/README.md:330`
+* source: `proofs/lean/lower/README.md:333`
 * notes: A search of the same model gives 408,470 by computation only, with no Lean certificate here (proofs/lean/lower/README.md). William Echols proved 408,470 in Lean on 10 November 2026 (Almanac b/45, with native_decide).
 
 
@@ -553,7 +553,7 @@ Theorem C (Lean, default build level) gives, for 10 symbols, a lower bound of 4,
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; Pantone announced 4,033,374 first; his Lean proof of 4,033,379, on the Almanac since 29 October 2026 (b/30, github.com/jaypantone/2026-10-superpermutation-lower-palomar), is higher; date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
 * evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
-* source: `proofs/lean/lower/README.md:331`
+* source: `proofs/lean/lower/README.md:334`
 
 
 ## n = 11
@@ -570,7 +570,7 @@ Theorem C (Lean, full build level) gives, for 11 symbols, a lower bound of 43,91
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; Pantone announced 43,917,903 first; his Lean proofs are public since October 2026 (github.com/jaypantone/2026-10-superpermutation-lower-palomar, on the Almanac since 29 October 2026); date 2026-10-07
 * reproduce: `./build.sh full` in `proofs/lean/lower`
 * evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
-* source: `proofs/lean/lower/README.md:333`
+* source: `proofs/lean/lower/README.md:336`
 * notes: William Echols's 43,917,904 (Almanac b/44, 10 November 2026) uses this Theorem C with a constant just above the least one that reaches the bound.
 
 
@@ -588,7 +588,7 @@ Theorem C (Lean, default build level) gives, for 12 symbols, a lower bound of 52
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; Pantone announced 522,622,378 first; his Lean proof of 522,622,380, on the Almanac since 29 October 2026 (b/31, github.com/jaypantone/2026-10-superpermutation-lower-palomar), is higher; date 2026-10-07
 * reproduce: `./build.sh` in `proofs/lean/lower`
 * evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
-* source: `proofs/lean/lower/README.md:334`
+* source: `proofs/lean/lower/README.md:337`
 * notes: Superseded by 522,622,401 from the same theorem with tuned constants (Almanac b/46, Lean files in github.com/jhalfar/superpermutation-almanac-lean commit 7ed009a, not in this repository).
 
 
@@ -606,7 +606,7 @@ Theorem C (Lean, full build level) gives, for 13 symbols, a lower bound of 6,746
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; Pantone announced 6,746,626,519 first; his Lean proofs are public since October 2026 (github.com/jaypantone/2026-10-superpermutation-lower-palomar, on the Almanac since 29 October 2026); date 2026-10-07
 * reproduce: `./build.sh full` in `proofs/lean/lower`
 * evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
-* source: `proofs/lean/lower/README.md:336`
+* source: `proofs/lean/lower/README.md:339`
 * notes: Superseded by 6,746,627,048 from the same theorem with tuned constants (Almanac b/47, Lean files in github.com/jhalfar/superpermutation-almanac-lean commit 7ed009a, not in this repository).
 
 
@@ -624,7 +624,7 @@ Theorem C (Lean, full build level) gives, for 14 symbols, a lower bound of 93,89
 * credit: Jakub Halfar (with Claude); built on the Hunter-Raudvere and Liu libraries; date 2026-10-07
 * reproduce: `./build.sh full` in `proofs/lean/lower`
 * evidence: `proofs/lean/lower/README.md` (sha256 `d82dc7f45868...`)
-* source: `proofs/lean/lower/README.md:338`
+* source: `proofs/lean/lower/README.md:341`
 
 #### `n14-lb-computed-93891141126`
 
