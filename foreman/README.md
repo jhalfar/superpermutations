@@ -64,13 +64,14 @@ Benchmarks that re-found words already known (foreman started from a word with a
 | n | start word | known later word | foreman's best | hours / thread-hours |
 |---|---|---|---|---|
 | 8 | 46,174 (W-0077) | 46,173 (Theo H., W-0078) | 46,173 | 0.1 / 0.1 |
-| 8 | 46,173 (W-0078) | none known | 46,173, no shorter word | 4.0 thread-hours |
+| 8 | 46,173 (W-0078) | none known | 46,173 | 4.0 thread-hours |
 | 9 | 408,719 (Jay Pantone, W-0099) | 408,718 | 408,718 | 3.3 / 7.9 |
 | 9 | 408,718 (the word above) | 408,717 (on another selection) | 408,717, on W-0099's own selection | 3.9 / 10.2 |
 
 For the 46,173 of W-0078 an exact dynamic programme of mine, which is not in this repository, gives 46,173 as the
 shortest word that writes each of the 16 closed trails of its selection once, in any order, opened at a step of
-weight 1, 2 or 3, with neighbouring pieces joined by their largest overlap. Nobody else has checked that.
+weight 1, 2 or 3 (not by skipping a repeated permutation), with neighbouring pieces joined by their largest
+overlap of at most n - 3 = 5 letters. Nobody else has checked that.
 
 Benchmarks that went below their start but not as far as a later word:
 
