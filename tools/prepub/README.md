@@ -1,16 +1,16 @@
 # The check before publication
 
 Since 21 October 2026 a word for n up to 13 goes through `prepub.sh` before I publish it. The script checks the
-word with three independent checkers and then tries to shorten it with the trail tools. A word is published only if
-the report ends with `CLEAN`; if a tool finds a shorter word, the report ends with `SHORTER` and the new word goes
-through the check again.
+word with three independent checkers (two at n = 13, where I run `literal_check` by hand under Linux) and then
+tries to shorten it with the trail tools. A word is published only if the report ends with `CLEAN`; if a tool
+finds a shorter word, the report ends with `SHORTER` and the new word goes through the check again.
 
 Not every word in this repository went through it first. The words for n = 8 and 10 are older than the script; on
-the word for n = 8 (46,174) it finds a word of 46,173 letters, as Theo H. did, and on the word for n = 10 it gave
-`CLEAN` later, on 13 November. The word of November for n = 13 got `CLEAN`, but the reorder of
-[`reorder/`](../reorder/README.md), which is not part of this script, still found shorter words after it. The words
-for n = 14 have no plan for the trail tools, so only the checkers ran on them, and the recipes for n = 15 to 18 have
-checks of their own.
+the word for n = 8 (46,174) it finds a word of 46,173 letters, as Theo H. did. On the words for n = 10 and 11 it
+gave `CLEAN` later, on 13 November; the word for n = 11 is of 27 October. The words of November for n = 13 got
+`CLEAN` one after another, but each time the reorder of [`reorder/`](../reorder/README.md), which is not part of
+this script, followed by the card passes, found a shorter word. The words for n = 14 have no plan for the trail
+tools, so only the checkers ran on them, and the recipes for n = 15 to 18 have checks of their own.
 
 | file | what it is |
 |---|---|

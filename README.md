@@ -223,15 +223,18 @@ about two minutes on 8 threads at n = 13). Two more programs that share no code 
 [`reproduce/tools/check_min.py`](reproduce/tools/check_min.py) (every permutation occurs; about 60 lines of Python
 with numpy) and Pantone's `literal_check --deletions` (about 13 GB at n = 13). All three passed on each word for
 n = 8 and 10 to 13; for n = 13 `literal_check` ran under Linux. Since 21 October 2026 a word for n up to 13 goes
-through [`tools/prepub/`](tools/prepub/README.md) before I publish it: the three checkers, `tools/trailsearch.c`
-from the word's plan with six settings and the fixed-order pass; from n = 11 on also segment insertion with three
-to five cuts on the card ([`tools/gpucuts/`](tools/gpucuts/README.md)). The word goes out only if none of them
-shortens it. The words here for n = 8 and 10 are older than this check. The word of November for n = 13 passed it,
-but the reorder, which is not part of it, still gave a shorter word in each round (6,747,800,327, then 302, 301,
-268, 190, 163 and 155; later 6,747,800,130, W-0116), so I published 155 while the search went on. The words for
-n = 14 and the recipes for n = 15 to 18 never went through this check: the words for n = 14 have no plan for
-`tools/trailsearch.c`, so only the checkers ran on them. At n = 14 the coverage and deletion checks run on the
-card ([`tools/gpucheck/`](tools/gpucheck/README.md)); `gdelcheck` is the only deletion check I have there. The word for n = 14 is also checked by `vfast` on the processor, from the Detour
+through [`tools/prepub/`](tools/prepub/README.md) before I publish it: the three checkers (two at n = 13, where I
+run `literal_check` by hand), `tools/trailsearch.c` from the word's plan with six settings and the fixed-order
+pass; from n = 11 on also segment insertion with three to five cuts on the card
+([`tools/gpucuts/`](tools/gpucuts/README.md)). The word goes out only if none of them shortens it. The words here
+for n = 8 and 10 are older than this check, and the word for n = 11 (27 October) got its `CLEAN` only on 13
+November. The words of November for n = 13 passed it one after another (6,747,800,327, 301, 190, 163 and 155;
+once the check itself turned 302 into 301), but each time another round of the reorder, which is not part of it,
+followed by the card passes, gave a shorter word. I published 155 while the search went on; it later gave
+6,747,800,130 (W-0116). The words for n = 14 and the recipes for n = 15 to 18 never went through this check: the
+words for n = 14 have no plan for `tools/trailsearch.c`, so only the checkers ran on them. At n = 14 the coverage
+and deletion checks run on the card ([`tools/gpucheck/`](tools/gpucheck/README.md)); `gdelcheck` is the only
+deletion check I have there. The word for n = 14 is also checked by `vfast` on the processor, from the Detour
 file as above (about an hour on one thread, 11 GB); the earlier word for n = 14 is checked by
 `recipes/n14/decode.sh ... check` in the same way. Both found all 87,178,291,200 permutations. The word for n = 15 is checked by
 `recipes/n15/check.sh` (a group check, 15 to 22 minutes on 4 threads) and the word for n = 16 by
