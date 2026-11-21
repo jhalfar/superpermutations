@@ -55,7 +55,7 @@ early and end, `RELOAD` to load edited arms without stopping. Its state is one S
 Lengths are word lengths in letters. Hours are wall-clock hours from the start of a case to its best word, and
 thread-hours (threads x hours) of foreman's runs; foreman ran with at most 12 threads, often 6-8 because other jobs
 shared the machine. Every best word passed delcheck. The benchmark runs used a larger set of arms than this copy,
-some of them calling programs that are not in this repository (an exact solver for the n = 8 proof, another
+some of them calling programs that are not in this repository (an exact solver for n = 8, another
 reordering, other search variants, neutral moves); the case bench12z, which found the 429, used only the arm
 `expert12`, which is included.
 
@@ -64,9 +64,13 @@ Benchmarks that re-found words already known (foreman started from a word with a
 | n | start word | known later word | foreman's best | hours / thread-hours |
 |---|---|---|---|---|
 | 8 | 46,174 (W-0077) | 46,173 (Theo H., W-0078) | 46,173 | 0.1 / 0.1 |
-| 8 | 46,173 (W-0078) | none shorter in its family | 46,173; proved optimal in the family of its selection | 4.0 thread-hours |
+| 8 | 46,173 (W-0078) | none known | 46,173, no shorter word | 4.0 thread-hours |
 | 9 | 408,719 (Jay Pantone, W-0099) | 408,718 | 408,718 | 3.3 / 7.9 |
 | 9 | 408,718 (the word above) | 408,717 (on another selection) | 408,717, on W-0099's own selection | 3.9 / 10.2 |
+
+For the 46,173 of W-0078 an exact dynamic programme of mine, which is not in this repository, gives 46,173 as the
+shortest word that writes each of the 16 closed trails of its selection once, in any order, opened at a step of
+weight 1, 2 or 3, with neighbouring pieces joined by their largest overlap. Nobody else has checked that.
 
 Benchmarks that went below their start but not as far as a later word:
 
@@ -89,7 +93,7 @@ Benchmarks that went below their start but not as far as a later word:
 The n = 12 word of 522,736,428 letters that is submitted is not foreman's 428 but one more trailsearch of the 429
 outside foreman (the prepublication check of the 429 gave it); the two 428 words differ. The n = 9 408,717 foreman
 found is a different word from W-0103 (408,717 on another selection: W-0099's with four square flips): no letter map
-or reversal turns one into the other. Where a chain run by hand did
+or reversal turns one into the other. I have not published it. Where a chain run by hand did
 most of the work (the n = 13 start 177 above, made by one reordering by hand from 195), foreman's part is only what
 it added afterwards.
 

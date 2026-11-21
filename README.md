@@ -54,8 +54,8 @@ batch, each a cut-down copy of a part of [`proofs/lean/`](proofs/lean/README.md)
 | 12 | 522,736,431 | [W-0112](https://superpermutations.com/w/W-0112) | row above; this one is from Derek Mahoney's [W-0102](https://superpermutations.com/w/W-0102) |
 | 13 | 6,747,800,155 | [W-0114](https://superpermutations.com/w/W-0114) | 6,747,791,494, Jay Pantone ([W-0129](https://superpermutations.com/w/W-0129)), from a new (7,4) block that he found with [`selection/gsegip.py`](selection/gsegip.py) on the selection of my [W-0084](https://superpermutations.com/w/W-0084); this one is from his [W-0100](https://superpermutations.com/w/W-0100) with his reorder of [W-0107](https://superpermutations.com/w/W-0107), and my 6,747,800,130 ([W-0116](https://superpermutations.com/w/W-0116)) from the same line is on the Almanac but not here |
 | 14 | 93,904,778,043 | [W-0115](https://superpermutations.com/w/W-0115) | 93,904,742,542, Jay Pantone ([W-0127](https://superpermutations.com/w/W-0127)), from a new (7,5) block on the selection of my [W-0085](https://superpermutations.com/w/W-0085); this one is from his [W-0108](https://superpermutations.com/w/W-0108) |
-| 15 | 1,401,325,411,491 | the Almanac stops at n = 14 | 1,401,325,411,389, Derek Mahoney ([his repository](https://github.com/dmahoney1213/superperm-words)), from this word's plan with `uopt15` |
-| 16 | 22,320,795,912,621 | | 22,320,795,905,601, Derek Mahoney ([his repository](https://github.com/dmahoney1213/superperm-words)), the same construction run again from an n = 15 plan |
+| 15 | 1,401,325,411,491 | the Almanac stops at n = 14 | 1,401,325,411,389, reported by Derek Mahoney ([his repository](https://github.com/dmahoney1213/superperm-words), marked tentative there; I have not checked it), from this word's plan with `uopt15` |
+| 16 | 22,320,795,912,621 | | 22,320,795,905,601, reported by Derek Mahoney ([his repository](https://github.com/dmahoney1213/superperm-words), marked tentative there; I have not checked it), the same construction run again from an n = 15 plan |
 | 17 | 377,961,971,839,096 | | this one, as far as I know |
 | 18 | 6,779,644,944,870,572 | | this one, as far as I know |
 
