@@ -1,4 +1,4 @@
-// ringx.c: rings on 7 symbols by EXACT number of holes (agent n7-ring16, 2026-10-12).
+// ringx.c: rings on 7 symbols by EXACT number of holes (2026-10-12).
 // Written from the definitions of the proof of 5,900 (proofs/lean/n7_5900/PROOF_5900.md) section 1 and the rule of
 // the written proof of 5,899 (not public; [P] in PROOF_5901.md) section 8.2. Shares no code with j2.cpp / jt.c / jr.c / ref.c.
 //

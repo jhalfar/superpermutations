@@ -4,7 +4,7 @@ import LowerBounds.J16Tables
 /-!
 # T9' and T8 of Table C of 5,901: the Lean search equations, evaluated as compiled code
 
-Agent pub5901, 2026-10-20.  Not part of the build of the level-1 sources; compiled in this folder (`lean/`) with
+Written 2026-10-20.  Not part of the build of the level-1 sources; compiled in this folder (`lean/`) with
 `--load-dynlib` of `build/A16C.dll` (`build.sh`: the C code of `LowerBounds/J16Search.lean`, of
 `J15Search`, `KSearch`, `PSearch`, `PCount` from the native build of the level-1 sources, and of `Audit5901/J16Count.lean`;
 hashes in `build/SHA256.txt`).

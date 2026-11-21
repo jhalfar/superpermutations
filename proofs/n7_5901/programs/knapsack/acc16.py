@@ -1,4 +1,4 @@
-"""acc16.py TIER [nopairs] (agent n7-d16map) - the accounting of defect 16 on 7 symbols, all excess cases.
+"""acc16.py TIER [nopairs] - the accounting of defect 16 on 7 symbols, all excess cases.
 
 Own program (shares only the table reader tabs15.py, a copy of the map of 15).  Notation of STATE.md section 2.
   need: sum v >= 40 within sum w <= 96  (ACC16).  eps <= 2 (Lemma EPS16).

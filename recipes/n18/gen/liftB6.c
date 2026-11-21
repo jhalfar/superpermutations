@@ -1,4 +1,4 @@
-/* liftB6.c (agent n18, 2026-10-28) - opt/constB/liftB.c for L <= 6 (on genB6.c), with the DP in chunks, in RAM, on
+/* liftB6.c (2026-10-28) - liftB.c for L <= 6 (on genB6.c), with the DP in chunks, in RAM, on
    T threads instead of one DP over all units with a back file.
    The units (the trails of the lower plan, in its order) are cut into chunks of C consecutive units.  Each chunk gets
    the exact DP of lift17 (openings chosen to minimise the sum of h - overlap over the joins inside the chunk), with a

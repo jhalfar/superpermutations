@@ -109,7 +109,7 @@ if __name__ == "__main__":
     ledger(["s103_old2_0@16", "s133_0", "s163_old2_0"])
 
 
-# ---------------------------------------------------------------- no seed (opt/const_limit), the Lean Stage arithmetic
+# ---------------------------------------------------------------- no seed, the Lean Stage arithmetic
 # block: (nrows, nq, ncirc, nd, m) with ncirc = cycles per block in the stage's count (h * cycles at the block's own
 # level, or cycles one level up), m = old letters (the block's h at its level is m + 2)
 NSB = {"D73@13": (315, 126, 3, 189, 7), "B73@13": (147, 42, 6, 357, 7),

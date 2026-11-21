@@ -1,4 +1,4 @@
-/* gcheckc.cu - opt/n17/gcheck17.cu with a two-level completed set (agent coretab).
+/* gcheckc.cu - gcheck17.cu with a two-level completed set.
    Core of a group: the group is the cyclic order of the n-1 letters other than the satellite S, read from M; its
    rank g is the Lehmer rank of the n-2 letters after M (classify).  Delete the top letter T (the largest letter
    other than S and M) from that sequence: the rest, n-3 letters, ranked by Lehmer, is the core (one of (n-3)!), and
@@ -14,7 +14,7 @@
    the (n-3)!-bit core table and is dropped; the others go to a list, the table is cleared, and creins puts them back.
    So a core bit is set only after all its n-2 child groups were complete, each only after all its n(n-1) members
    were seen.  A full core table or list raises overflow flag 8 / 16 and the run is not valid. */
-/* gcheck17.cu - opt/fastcheck/gcheck.cu for n <= 17 with group shards (agent n17):
+/* gcheck17.cu - gcheck.cu for n <= 17 with group shards:
      - member masks of n(n-1) <= 272 bits: 9 words (table entries, survivors, residues);
      - group shard gI/gK: only groups g with g mod gK = gI go into the table; their bit is g / gK in a table of
        ceil((n-2)!/gK) bits (gK = 1: every group, bit g, as before).  The scan itself is unchanged: every window is
@@ -136,7 +136,7 @@ extern "C" __global__ void scan(const u8 *__restrict__ d, u64 nwin, int CH, u64 
     if (cg != EMPTYK && cin && !tab_or(keys, masks, touched, tmask, cg, cm)) atomicOr(overflow, 1u);
     atomicAdd(&stats[0], pw); atomicAdd(&stats[1], runs);
 }
-/* scan2 - the same scan with the block's letters staged in shared memory (agent n17).  In scan, the 32 threads of a
+/* scan2 - the same scan with the block's letters staged in shared memory.  In scan, the 32 threads of a
    warp read bytes 256 apart, so every load touches 32 cache lines; here a block of 128 threads first copies its
    32768 + n - 1 letters with consecutive (coalesced) loads into shared memory, with 4 bytes of padding after every
    256 (thread t's letters then start in bank t mod 32), and every thread runs exactly the code of scan on them:
@@ -386,7 +386,7 @@ extern "C" __global__ void rankmark(const u8 *__restrict__ w, u64 nwin, u64 lo, 
     if (marked) atomicAdd(&stats[3], (u64)marked);
 }
 
-/* ------------------------------------------------------------------ BLAKE3 (agent blake3; see opt/blake3/NOTES.txt)
+/* ------------------------------------------------------------------ BLAKE3
    The standard BLAKE3 hash (default mode, no key, 32 bytes) of the letters spelled 0-9A-G, the same bytes as the
    tree hash.  A 64 KiB leaf of the tree hash is 64 BLAKE3 chunks, an aligned subtree of the BLAKE3 tree.
    b3leaf:  one thread per chunk (16 compressions, chunk counter = global chunk index, 64 bits), then the 64 chunk

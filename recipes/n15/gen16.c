@@ -1,7 +1,7 @@
-/* gen16.c - gen15h.c (opt/n15/gen15.c plus the fastcheck output hook) extended to L = 4 (n = 16): the last lift is made per walk when a unit needs it (see load_walk); for L <= 3 it is gen15. */
+/* gen16.c - gen15h.c (gen15.c plus the fastcheck output hook) extended to L = 4 (n = 16): the last lift is made per walk when a unit needs it (see load_walk); for L <= 3 it is gen15. */
 /* gen15.c - streaming generator for superpermutations on n = 12 + L symbols built from a selection on 11 symbols
    (K0 = 10 letters, rows F / S / D) by L transports (L = 0..3) and the completion.  The construction (slices,
-   transport, completion, closed trails) is Jay Pantone's.  This is opt/n14/gen14.c (L = 2 only) made general in L;
+   transport, completion, closed trails) is Jay Pantone's.  This is gen14.c (L = 2 only) made general in L;
    for L = 2 it writes the same words as gen14 for the same unit plans.  Nothing of the word is stored: it is spelled
    trail by trail into a 64 MiB buffer and written out, with SHA-256 and length computed on the way.
 

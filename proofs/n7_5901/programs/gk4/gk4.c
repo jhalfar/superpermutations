@@ -1,4 +1,4 @@
-/* gk4.c (agent n7-gpu, 2026-10-11): host of gk4.cu (generated from gk.c by mk2.py, mk3.py and mk4.py), the kernel-alone search of kfast.c of defect 15 (a file of mine, not in this repository) on the card.
+/* gk4.c (2026-10-11): host of gk4.cu (generated from gk.c by mk2.py, mk3.py and mk4.py), the kernel-alone search of kfast.c of defect 15 (a file of mine, not in this repository) on the card.
  * gk_tables.h = lines 23..156 of kfast.c verbatim (geometry, caps file, tables keepN/keepS/revA1/revA2).
  * The host walks the tree down to the gate (prefixes of DEPTH rows, index modulo NPARTS, as kfast.c) and hands the
  * gate prefixes of this part to the card; the card does the rest (gk.cu).

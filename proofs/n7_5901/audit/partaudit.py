@@ -1,6 +1,6 @@
 """Audit of all part files of the counted computations of L(7) >= 5,901 (PROOF_5901.md 0.3, 6.3, 7.4).
 
-Agent pub5901, 2026-10-20.  Run from anywhere:
+Written 2026-10-20.  Run from anywhere:
     python -I audit/partaudit.py > audit/partaudit.txt   (in my research tree; it reads the part files there)
 
 For every counted tag of Table C (and, marked "not counted", the ORDS runs) it checks:

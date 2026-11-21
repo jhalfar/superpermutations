@@ -1,4 +1,4 @@
-/* gj.cu (agent n7-gpuj, 2026-10-11): the JOINT search of programs/jr/jr.c (= jt.c of defect 15, not in this repository, with the cut on one
+/* gj.cu (2026-10-11): the JOINT search of programs/jr/jr.c (= jt.c of defect 15, not in this repository, with the cut on one
  * piece, PREV, and the order rule, ORD) on the card.  Design of gk4.cu (the first layout of programs/gk4/gk5.cu): one thread = one depth-first walk,
  * one uniform step, class state in shared memory, a split kernel between the rounds.
  * Frames: a NODE (prefix of a piece; lo = mask of the untried successors) or a START frame (lo = counter over the start

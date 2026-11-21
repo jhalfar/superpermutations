@@ -1,4 +1,4 @@
-# Referee n7-ref16: own knapsack of defect 16 at the level of PIECES (Lemma PIECE16), from capD.txt alone.
+# A second knapsack of defect 16 at the level of PIECES (Lemma PIECE16), from capD.txt alone.
 # A profile = kernel piece (sequence, u0 links, weight w0) + extra pieces, each with a shift (dv, dw), a flag "borrows"
 # and an excess g; total g <= 2; every extra has table value - dv >= 1; sum (t - dv) + t0 >= 40; sum (w + dw) + w0 <= 96.
 # Removed (Lemma SUB) by a statement J(kinds; V, W; B) on a sub-multiset A: kinds fit, sum_A w <= W, borrowers(A) <= B,

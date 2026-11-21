@@ -1,4 +1,4 @@
-/* jt.c (agent n7-j15, 2026-10-09) - joint statements about several pieces for defect 15 on 7 symbols.
+/* jt.c (2026-10-09) - joint statements about several pieces for defect 15 on 7 symbols.
  *
  * Geometry as in pproto.c (a file of mine, not in this repository) (written from the definitions): symbols 0..K-1, sigma, tau2, ew,
  * blocks, rows (entry, length), links of weight 3 and 4 between rows of different classes.
@@ -25,7 +25,7 @@
  * Output of "run": FOUND objects (counterexamples, printed) and the counts.  "est": Chen's stratified sampling of
  * the same tree (ESTIMATE of kept prefixes and of rows tried; proves nothing).
  *
- * ADDED in jr.c (agent n7-jrev, PROOF.md): env RMODE=1 potential along the whole concatenation (Lemma JREV),
+ * ADDED in jr.c (PROOF.md): env RMODE=1 potential along the whole concatenation (Lemma JREV),
  *   RMODE=2 potential of piece 1 alone (Lemma PREV); REV=1 the cut is applied (REV=0: objects are only classified by
  *   the sign of delta = dip + peak - final); PA PB PH the potential; ORD=1 the order rule for neighbouring pieces of
  *   the same kind (value not increasing; two pieces: the first has at least half of V); JCAP=file joint tables

@@ -1,4 +1,4 @@
-/* emu.cpp (agent n7-gkjs): the two kernels of gkjs.cu compiled for the processor.  One call = one launch: the threads of
+/* emu.cpp: the two kernels of gkjs.cu compiled for the processor.  One call = one launch: the threads of
  * the grid run one after the other.  For tests of the logic without the card (host built with -DEMU). */
 #include <cstddef>
 #include <cstdlib>

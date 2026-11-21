@@ -1,4 +1,4 @@
-/* ringchk.c (referee n7-ref16b): third program for the exact ring row RX of PROOF_5901.md section 1.3, on 7 symbols.
+/* ringchk.c: third program for the exact ring row RX of PROOF_5901.md section 1.3, on 7 symbols.
  * Claim checked: for HLO <= H <= HHI a ring with exactly H holes has at most RX(H) rows (RX = line "R:" of the caps
  * file), given the chain row (line "0:": a chain with exactly x holes has at most P0(x) rows).
  * Search (cycle lemma, PROOF_5900 5.4 step 5 read for a ring ABOVE the row): a ring with T > RX(H) rows and H holes has

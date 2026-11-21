@@ -1,5 +1,5 @@
 #!/bin/bash
-# kparts.sh TAG S LO NPARTS DEPTH A B H CAPS [GTOP]   (agent n7-gkjs; kparts.sh of gpu2/k for run/gkjs.exe + run/gkjs.ptx)
+# kparts.sh TAG S LO NPARTS DEPTH A B H CAPS [GTOP]   (kparts.sh of gpu2/k for run/gkjs.exe + run/gkjs.ptx)
 # The kernel-alone statement F_S on the levels LO < x <= GTOP - 6 S (GTOP default 96) on the card, CUT=12, potential A,B,H,
 # Rule JS by the environment (JS=1 on, JS=0 off = the production program; must be given), in NPARTS parts (prefixes of DEPTH
 # rows by index modulo NPARTS; the numbering depends on JS and on the potential).  One file per finished part:

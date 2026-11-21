@@ -1,6 +1,6 @@
-/* gcardc.h - opt/n17/gcard17.h with the two-level completed set of coretab: modes group / core / both (see gcheckc.cu).
+/* gcardc.h - gcard17.h with the two-level completed set: modes group / core / both (see gcheckc.cu).
    In core mode the card keeps (n-3)! core bits instead of (n-2)! group bits. */
-/* gcard17.h - opt/fastcheck/gcard.h for n <= 17 with group shards (agent n17): 9 mask words (n(n-1) <= 272 bits),
+/* gcard17.h - gcard.h for n <= 17 with group shards: 9 mask words (n(n-1) <= 272 bits),
    group shard gI/gK (only groups g = gI mod gK are recorded; bit table of ceil((n-2)!/gK) bits, bit g / gK), the
    kernels in gcheckc.ptx.  "missing_permutations" counts the permutations of the shard's groups only.
    Original description: */

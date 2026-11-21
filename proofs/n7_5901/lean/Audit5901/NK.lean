@@ -4,7 +4,7 @@ import LowerBounds.K16Tables
 /-!
 # K10, K9, K8 of Table C of 5,901: the Lean search equations, evaluated as compiled code
 
-Agent pub5901, 2026-10-20.  Not part of the build of the level-1 sources; compiled in this folder (`lean/`) with
+Written 2026-10-20.  Not part of the build of the level-1 sources; compiled in this folder (`lean/`) with
 `--load-dynlib` of `build/native/K16Search.dll` of the level-1 build (`K16Search.c` + `KSearch.c` + `PSearch.c`, made by
 `k16_native_build.sh` from the sources whose SHA-256 is in `build/native/SHA256_K16Search.txt`).
 

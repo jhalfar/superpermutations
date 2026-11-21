@@ -4,7 +4,7 @@ import LowerBounds.K16Final
 import LowerBounds.J16Bridge
 
 /-!
-# Five fields of `K16.Evals` and `J16.Evals` from the compiled evaluations (agent pub5901, 2026-10-20)
+# Five fields of `K16.Evals` and `J16.Evals` from the compiled evaluations (2026-10-20)
 
 `k10`, `k9`, `k8` of `K16.Evals` and `t9`, `t8` of `J16.Evals`, stated with the definitions of
 `LowerBounds/K16Final.lean` and `LowerBounds/J16Bridge.lean` (`K16.Ev`, `J16.Ev`, `J16.rT9`, `J16.rT8`), from the

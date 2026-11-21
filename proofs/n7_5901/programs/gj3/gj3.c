@@ -1,4 +1,4 @@
-/* gj.c (agent n7-gpuj, 2026-10-11): host of gj.cu, the joint search of programs/jr/jr.c on the card.
+/* gj.c (2026-10-11): host of gj.cu, the joint search of programs/jr/jr.c on the card.
  * jr_core.h = lines 38..363 of jr.c (geometry, caps, tables Best / G / reversal tables / ring keep, the search) with
  * two hooks (mkcore.py): the host walks piece 1 down to the gate with the code of jr.c and hands over
  *   - every node at the gate (DEPTH rows of piece 1, index modulo NPARTS = PART, as jr.c) as a task "parent frame with

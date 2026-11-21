@@ -1,4 +1,4 @@
-"""tabs15.py (agent n7-15map) - the capacity tables for defect 15 on 7 symbols, in three tiers.  Nothing is searched here.
+"""tabs15.py - the capacity tables for defect 15 on 7 symbols, in three tiers.  Nothing is searched here.
 
 All tables are indexed by the exact number of holes x.
   P[s][x]  rows of a sequence with exactly s links of weight 4 (others weight 3) and x holes; P[0] = M (chains)
@@ -8,7 +8,7 @@ Tiers
   LEAN  the tables of the Lean proof of 5,899 (tab5899.txt, "set B"; a file of mine, not in this repository): proved upper bounds.
         M to 84, P_s to 84 - 6 s (s = 1..5), PR to 77.
   CAP   the best upper bounds computed by programs so far:
-        M   caps.txt of the ring ladder (a file of mine, not in this repository; n7-cover, C and Rust; exact to 58, 61 by the referee; x + 44 at 73..75)
+        M   caps.txt of the ring ladder (a file of mine, not in this repository; C and Rust; exact to 58, 61 by the referee; x + 44 at 73..75)
             lowered to the referee's exact values at 59..61
         P_s set B (the caps of lbsmall with its ladders at the top), s = 1..5
         PR  exact to 69 (lbsmall ring/pr_table72.txt = referee PR7.txt), then min(set B, M)

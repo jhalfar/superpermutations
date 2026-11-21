@@ -1,8 +1,8 @@
-/* genBt.c - opt/n17/gen17t.c with construction (B) of opt/const15 (agent constB, 2026-10-26; design: DESIGN.md).
+/* genBt.c - gen17t.c with construction (B) (2026-10-26; design: DESIGN.md).
    --block FILE (or env GENB_BLOCK): the (10,3) block relabelled onto every loop without a row of SEL becomes stored
    walks of level 3 (L = 4, 5); small units only for the block's loops without a row (dunit_ok); Q from the stored
    rows (Qall); mode rowcheck.  Everything else is gen17t. */
-/* gen17t.c - opt/fastcheck/gen16t.c generalised to n = 12 + L, L = 1..5 (n = 13..17), for agent n17.  Changes:
+/* gen17t.c - gen16t.c generalised to n = 12 + L, L = 1..5 (n = 13..17).  Changes:
    - L = 5: the stored level is the 3-lift (13 letters a row, 471 M rows, 3.8 GB, as gen16); the 4-lift and the
      5-lift are both made per walk when a unit needs it (load_walk: two transports of packed rows).  The number of
      walks of each lazy level comes from the orbit structure of the transport (see build_walks); load_walk dies if a
@@ -17,10 +17,10 @@
      --predict uses the first h letters of each unit against them (the length of a plan without spelling it).
    - "lazycheck L SEL": the counted walks of the lazy levels against real transports of every walk. */
 /* gen16t.c - written by tlsify.py from gen16d.c (per-thread state for gen16p); gen16d.c is gen16.c with the descriptor mode of fastcheck v2 (DESC = 1: slices are handed on as spans, not spelled). */
-/* gen16.c - gen15h.c (opt/n15/gen15.c plus the fastcheck output hook) extended to L = 4 (n = 16): the last lift is made per walk when a unit needs it (see load_walk); for L <= 3 it is gen15. */
+/* gen16.c - gen15h.c (gen15.c plus the fastcheck output hook) extended to L = 4 (n = 16): the last lift is made per walk when a unit needs it (see load_walk); for L <= 3 it is gen15. */
 /* gen15.c - streaming generator for superpermutations on n = 12 + L symbols built from a selection on 11 symbols
    (K0 = 10 letters, rows F / S / D) by L transports (L = 0..3) and the completion.  The construction (slices,
-   transport, completion, closed trails) is Jay Pantone's.  This is opt/n14/gen14.c (L = 2 only) made general in L;
+   transport, completion, closed trails) is Jay Pantone's.  This is gen14.c (L = 2 only) made general in L;
    for L = 2 it writes the same words as gen14 for the same unit plans.  Nothing of the word is stored: it is spelled
    trail by trail into a 64 MiB buffer and written out, with SHA-256 and length computed on the way.
 
@@ -261,7 +261,7 @@ static void read_sel(const char *path) {
 }
 
 /* ------------------------------------------------------------------ constB: construction (B)
-   The (10,3) block of opt/const15 (BLOCK: 1,320 lines "x T", x = 13 letters 0-9 A B C, T = F / S / D) above every loop
+   The (10,3) block (BLOCK: 1,320 lines "x T", x = 13 letters 0-9 A B C, T = F / S / D) above every loop
    without a row d of SEL: block letter i < 10 -> x_d[i] (x_d as written in SEL), tokens A, B, C -> 10, 11, 12.  Its
    walks become stored walks of level 3 (after C's 3-lift: stored walk bst0 + d * nbw + k); its loops without a row
    are the triples R (g1, g2, g3) of y(d; g) = x_d with 10, 11, 12 inserted at g1, g2, g3, the same for every d.  Small

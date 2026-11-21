@@ -1,4 +1,4 @@
-/* gcheck17.cu - opt/fastcheck/gcheck.cu for n <= 17 with group shards (agent n17):
+/* gcheck17.cu - gcheck.cu for n <= 17 with group shards:
      - member masks of n(n-1) <= 272 bits: 9 words (table entries, survivors, residues);
      - group shard gI/gK: only groups g with g mod gK = gI go into the table; their bit is g / gK in a table of
        ceil((n-2)!/gK) bits (gK = 1: every group, bit g, as before).  The scan itself is unchanged: every window is
@@ -106,7 +106,7 @@ extern "C" __global__ void scan(const u8 *__restrict__ d, u64 nwin, int CH, u64 
     if (cg != EMPTYK && cin && !tab_or(keys, masks, touched, tmask, cg, cm)) atomicOr(overflow, 1u);
     atomicAdd(&stats[0], pw); atomicAdd(&stats[1], runs);
 }
-/* scan2 - the same scan with the block's letters staged in shared memory (agent n17).  In scan, the 32 threads of a
+/* scan2 - the same scan with the block's letters staged in shared memory.  In scan, the 32 threads of a
    warp read bytes 256 apart, so every load touches 32 cache lines; here a block of 128 threads first copies its
    32768 + n - 1 letters with consecutive (coalesced) loads into shared memory, with 4 bytes of padding after every
    256 (thread t's letters then start in bank t mod 32), and every thread runs exactly the code of scan on them:

@@ -1,4 +1,4 @@
-"""mkgj3.py (agent n7-tune16): gj3 = the card program gpu2/gj2 (host gj2.c, core jr_core.h, kernel gj2.cu) + env RVMIN.
+"""mkgj3.py: gj3 = the card program gpu2/gj2 (host gj2.c, core jr_core.h, kernel gj2.cu) + env RVMIN.
 RVMIN=a restricts the statement to ring pieces with rows - holes >= a, exactly as ringcap/mkjr6.py does it in jr.c:
 (1) a target (T, H) of the ring rule must have T - H >= a (host keep table and getkeep of the core);
 (2) a completed ring is taken only if rows - holes >= a (core above the gate, kernel below it, and the look-ahead table).

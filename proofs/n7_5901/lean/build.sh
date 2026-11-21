@@ -1,5 +1,5 @@
 #!/bin/bash
-# Builds the DLL for the compiled evaluations of the 5,901 engines (agent pub5901). Writes only below this
+# Builds the DLL for the compiled evaluations of the 5,901 engines. Writes only below this
 # directory: build/J16Search.c (C of LowerBounds/J16Search.lean of the level-1 sources, no .olean written there),
 # build/lib/Audit5901/J16Count.olean, build/J16Count.c, build/A16C.dll.
 HERE="$(cd "$(dirname "$0")" && pwd)"; cd "$HERE" || exit 1

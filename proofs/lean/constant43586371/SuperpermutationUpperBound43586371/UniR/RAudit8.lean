@@ -1,6 +1,6 @@
 import SuperpermutationUpperBound43586371.UniR.RRate8
 
-/-! Axiom audit of RRate8 (agent const-n4). -/
+/-! Axiom audit of RRate8. -/
 
 open SuperpermutationUpperBound43586371.UniR
 

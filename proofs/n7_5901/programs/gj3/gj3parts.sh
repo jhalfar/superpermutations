@@ -1,5 +1,5 @@
 #!/bin/bash
-# gj3parts.sh TAG NPARTS DEPTH NPARTS2 CAPS V W B piece...   (n7-tune16; gj2parts.sh of n7-gpu2 for gj3.exe = gj2 + RVMIN; CAPS relative to this directory)
+# gj3parts.sh TAG NPARTS DEPTH NPARTS2 CAPS V W B piece...   (gj2parts.sh for gj3.exe = gj2 + RVMIN; CAPS relative to this directory)
 # J(pieces; V, W; B) on the card in NPARTS x NPARTS2 parts, one after the other: part (i, j) = nodes at DEPTH rows of
 # piece 1 with index i mod NPARTS and start vertices v of piece 2 with v mod NPARTS2 = j.  DEPTH = 0: no first gate.
 # Environment passed on: RLO RHI RVMIN ORD ORDS REV RMODE RP PA PB PH JCAP, card: GN GK MAXSEC (default here 1500 s).

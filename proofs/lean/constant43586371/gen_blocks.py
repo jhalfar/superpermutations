@@ -45,7 +45,7 @@ CONF = {
     # the same for W103 and X103, cycles chosen on 16 symbols by blockcyc.py (leanC/cyc16, 20 each, optimal)
     'W103U': dict(F1, file='w103_0.6245_1.txt', cyc1='cyc_t_w103_0.6245_1_n16.txt'),
     'X103U': dict(F1, file='w103_0.4795_0.txt', cyc1='cyc_t_w103_0.4795_0_n16.txt'),
-    # no seed (opt/const_limit): (7,3) blocks above the loops of [1..7] (tokens 0, 8, 11, next letter 12, so that
+    # no seed: (7,3) blocks above the loops of [1..7] (tokens 0, 8, 11, next letter 12, so that
     # the letters one level up are alph10), with their cycles on 13 symbols
     'D73': dict(F0, file='block_7_3_enum14_0.txt', cyc1='cyc_t_block_7_3_enum14_0_n13.txt'),
     'B73': dict(F0, file='b73_dw_0.txt', cyc1='cyc_t_b73_dw_0_n13.txt'),

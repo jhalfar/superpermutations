@@ -30,7 +30,7 @@ CONF = {
     'G': dict(S=6, nested='Nested3b', ledger='word_ledgerG', q=Fr(22921, 46200), c=Fr(56491, 8648640),
               bname='_21736511', heartbeats=20000000,
               words=[(20, 10, 1177586065108048296960, 'twentytwo'), (21, 10, 27028337991051598387200, 'twentythree')]),
-    # no seed (opt/const_limit)
+    # no seed
     'H': dict(S=6, nested='NestedN1', ledger='word_ledgerH', q=Fr(2239, 6930), c=Fr(32759, 288288),
               bname='_629507', heartbeats=20000000,
               words=[(20, 9, 1177582944431453414400, 'twentytwo'), (21, 9, 27028271385160615987200, 'twentythree')]),

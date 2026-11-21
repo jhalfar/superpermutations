@@ -1,4 +1,4 @@
-"""mkjr6.py: jr6.c = ../jrev/jr.c (the source of jr3.exe) + env RVMIN (agent n7-ring16).
+"""mkjr6.py: jr6.c = ../jrev/jr.c (the source of jr3.exe) + env RVMIN.
 RVMIN=a restricts the statement to ring pieces of value rows - holes >= a, exactly as RLO / RHI restrict it to
 rings with RLO..RHI holes: (1) a completed ring piece is taken only if its value is >= a; (2) a target (T, H) of
 the ring rule (PROOF_5900 5.4 step 5) must have T - H >= a. Nothing else changes. Default: no restriction."""

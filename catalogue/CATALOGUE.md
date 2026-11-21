@@ -362,7 +362,7 @@ Part-file audit of the 5,901 runs: for every tag of Table C all part files are p
 * method: proofs/n7_5901/audit/partaudit.py reads every part of every tag
 * credit: Jakub Halfar (with Claude); date 2026-10-20
 * reproduce: `python3 partaudit.py` in `proofs/n7_5901/audit`
-* evidence: `proofs/n7_5901/audit/partaudit.txt` (sha256 `35e94019be65...`); `proofs/n7_5901/audit/partaudit.py` (sha256 `2b458827ceb5...`)
+* evidence: `proofs/n7_5901/audit/partaudit.txt` (sha256 `35e94019be65...`); `proofs/n7_5901/audit/partaudit.py` (sha256 `492e2cb3cefb...`)
 * source: `proofs/n7_5901/README.md:112`
 * notes: Command not given in the lines read; section 6.3 of PROOF_5901.md has it.
 

@@ -1,4 +1,4 @@
-# mkcore.py (agent n7-gpuj): jr_core.h = lines 38..363 of programs/jr/jr.c (geometry, tables, the search above the
+# mkcore.py: jr_core.h = lines 38..363 of programs/jr/jr.c (geometry, tables, the search above the
 # gate) with two hooks: a node at the gate becomes a task of the card (rows), a completed piece above the gate becomes
 # a task (jump).  Every anchor must occur exactly once.
 import io, os, sys

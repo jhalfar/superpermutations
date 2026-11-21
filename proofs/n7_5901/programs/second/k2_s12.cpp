@@ -1,5 +1,5 @@
 // k2.cpp -- second, independent program for the kernel-alone statements on 7 symbols.
-// Written from the texts only (PROOF_5899.md 8.1, PROOF_CUTS.md, MODEL.md); agent n7-second, 2026-10-09.
+// Written from the texts only (PROOF_5899.md 8.1, PROOF_CUTS.md, MODEL.md), 2026-10-09.
 // Geometry is built from the definitions at every start (no table of another program is read).
 //
 // usage: k2 TABFILE S LO G CUT a b h DEPTH NPARTS PART [OUTFILE]

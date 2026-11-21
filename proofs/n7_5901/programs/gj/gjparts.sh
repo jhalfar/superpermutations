@@ -1,5 +1,5 @@
 #!/bin/bash
-# gjparts.sh TAG NPARTS DEPTH NPARTS2 CAPS V W B piece...   (agent n7-gpuj)
+# gjparts.sh TAG NPARTS DEPTH NPARTS2 CAPS V W B piece...
 # The statement J(pieces; V, W; B) on the card (gj.exe + gj7.ptx) in NPARTS x NPARTS2 parts, one after the other:
 # part (i, j) = nodes at DEPTH rows of piece 1 with index i mod NPARTS (the gate of jt.c / jr.c: PART, NPARTS, DEPTH)
 # and start vertices v of piece 2 with v mod NPARTS2 = j (PART2, NPARTS2); NPARTS2 = 1: no second gate.

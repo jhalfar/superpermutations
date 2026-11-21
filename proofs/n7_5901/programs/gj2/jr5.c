@@ -1,4 +1,4 @@
-/* jt.c (agent n7-j15, 2026-10-09) - joint statements about several pieces for defect 15 on 7 symbols.
+/* jt.c (2026-10-09) - joint statements about several pieces for defect 15 on 7 symbols.
  *
  * Geometry as in pproto.c (a file of mine, not in this repository) (written from the definitions): symbols 0..K-1, sigma, tau2, ew,
  * blocks, rows (entry, length), links of weight 3 and 4 between rows of different classes.
@@ -25,7 +25,7 @@
  * Output of "run": FOUND objects (counterexamples, printed) and the counts.  "est": Chen's stratified sampling of
  * the same tree (ESTIMATE of kept prefixes and of rows tried; proves nothing).
  *
- * ADDED in jr.c (agent n7-jrev, PROOF.md): env RMODE=1 potential along the whole concatenation (Lemma JREV),
+ * ADDED in jr.c (PROOF.md): env RMODE=1 potential along the whole concatenation (Lemma JREV),
  *   RMODE=2 potential of piece 1 alone (Lemma PREV); REV=1 the cut is applied (REV=0: objects are only classified by
  *   the sign of delta = dip + peak - final); PA PB PH the potential; ORD=1 the order rule for neighbouring pieces of
  *   the same kind (value not increasing; two pieces: the first has at least half of V); JCAP=file joint tables
@@ -105,7 +105,7 @@ static int V, W, B, npc, ptype[MAXPC], pS[MAXPC], NOCUT = 0;
 static int RLO = 0, RHI = WM;      /* env RLO, RHI: only rings with RLO <= holes <= RHI (the statement restricted to such rings) */
 static int REV = 0, RMODE = 1, PA = 10, PB = 15, PH = 30, XL, ORD = 0, STOP1 = 0, HALFV = -INF, RP = 0;
 static int samekind[MAXPC], pval[MAXPC], basef[MAXPC + 1], d1;
-static int ORDS = 0, pstart[MAXPC], vord[MAXP];   /* rule ORDS (n7-gpu2): a ring behind a ring (not piece 1) starts at or after the start vertex of the ring before it, in the order vord */
+static int ORDS = 0, pstart[MAXPC], vord[MAXP];   /* rule ORDS: a ring behind a ring (not piece 1) starts at or after the start vertex of the ring before it, in the order vord */
 static long long npos, nzero, nneg;
 static int SEGt[SM][WM + 1], G1[SM][WM + 1], PKt[MAXPC][SM][WM + 1], Dt[MAXPC + 1][WM + 1];
 #define NOFF 160

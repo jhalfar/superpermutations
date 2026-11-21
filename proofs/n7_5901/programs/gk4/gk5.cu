@@ -1,4 +1,4 @@
-/* gk4.cu (agent n7-gpu, 2026-10-11): the kernel-alone search of kfast.c of defect 15 (a file of mine, not in this repository) on the card, fourth layout
+/* gk4.cu (2026-10-11): the kernel-alone search of kfast.c of defect 15 (a file of mine, not in this repository) on the card, fourth layout
  * (same tree and same counts as gk.cu, gk2.cu, gk3.cu; fewer loads from device memory per kept prefix).
  * One thread = one depth-first walk.  A frame is a KEPT prefix; a step of a thread = (pop if the frame is
  * exhausted) + (take the next successor row if the current one has no length left) + (judge one row length) +
