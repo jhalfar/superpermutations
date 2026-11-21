@@ -1,4 +1,4 @@
-/* gcheck17.cu - gcheck.cu for n <= 17 with group shards:
+/* gcheck17.cu - gcheck.cu (not in this repository) for n <= 17 with group shards:
      - member masks of n(n-1) <= 272 bits: 9 words (table entries, survivors, residues);
      - group shard gI/gK: only groups g with g mod gK = gI go into the table; their bit is g / gK in a table of
        ceil((n-2)!/gK) bits (gK = 1: every group, bit g, as before).  The scan itself is unchanged: every window is

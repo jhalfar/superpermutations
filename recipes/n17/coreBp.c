@@ -5,11 +5,11 @@
    --blake3: also the standard BLAKE3 hash (default mode, 32 bytes, as b3sum prints it) of the letters as written, on the
    card next to the tree hash ("blake3" in the JSON).  The check itself is unchanged.
    build: gcc -O3 -march=native -pthread -o coreBp.exe coreBp.c ; kernels: build_ptxc.bat -> gcheckc.ptx */
-/* genBp.c - gen17p.c on top of genBt.c (construction (B)): the same host threads, card check and
+/* genBp.c - gen17p.c (not in this repository) on top of genBt.c (construction (B)): the same host threads, card check and
    --predict; the plan's units are checked against the construction (check_units; GENB_NOUNITCHECK=1 skips it, for
    negative tests), --predict uses Q of the stored rows.  Block: env GENB_BLOCK=FILE.  Kernels: gcheck17.ptx next to
    the exe (a copy of gcheck17.ptx). */
-/* gen17p.c - gen16p.c for n = 13..17 (L = 1..5) with group shards.
+/* gen17p.c - gen16p.c (not in this repository) for n = 13..17 (L = 1..5) with group shards.
    T host threads turn jobs (consecutive units of the plan) into spans (gen17t.c: descriptor mode, per-thread state),
    one thread feeds the card in job order (gcard17.h): the card spells the letters, checks the groups of the shard and
    hashes the leaves of the tree hash.

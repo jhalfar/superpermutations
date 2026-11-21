@@ -6,7 +6,7 @@
 #                                               JS and a checksum of the table in the statement line, EMU build (no card)
 #   gkjs.cu     = ../gpu2/k/gk5.cu (kernel)   + Rule JS below the gate (one bit per frame, one bit per row-table entry),
 #                                               row length LL as a compile-time parameter (default 6)
-#   kref.c      = ../krows/kfast_js.c (CPU reference) + number of symbols as a compile-time parameter only
+#   kref.c      = ../krows/kfast_js.c (CPU reference, not in this repository) + number of symbols as a compile-time parameter only
 # With JS=0 no junction bit is set and no row is limited: the tree and the counts are those of gk4.exe + gk4.ptx.
 import sys
 def load(fn): return open(fn).read()

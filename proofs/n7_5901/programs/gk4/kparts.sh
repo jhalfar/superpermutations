@@ -1,5 +1,5 @@
 #!/bin/bash
-# kparts.sh TAG S LO NPARTS DEPTH A B H CAPS [GTOP]   (gparts.sh with a tag and the kernel file of gpu2/k/run)
+# kparts.sh TAG S LO NPARTS DEPTH A B H CAPS [GTOP]   (gparts.sh, not in this repository, with a tag and the kernel file of gpu2/k/run)
 # The kernel-alone statement F_S on the levels LO < x <= GTOP - 6 S (GTOP default 96) on the card, CUT=12, potential
 # A,B,H, in NPARTS parts (prefixes of DEPTH rows by index modulo NPARTS, as kfast2.exe).  One file per finished part:
 # parts/TAG/p<i>.txt; the same line again does the missing parts only.  FIRST, LAST (environment): only these parts.

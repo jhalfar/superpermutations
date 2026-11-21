@@ -1,5 +1,5 @@
 /* gen16c.c - generator and check in one process: the n = 12 + L word (L <= 4) of a unit plan (gen15, Jay Pantone's
-   construction; gen16.c = gen15.c with one hook in its output and L = 4) is handed block by block, as letter values,
+   construction; gen16.c = gen15.c, which is not in this repository, with one hook in its output and L = 4) is handed block by block, as letter values,
    to the group check of gcore.h, without a pipe and without storing the word.  The generator thread spells the
    word; a second thread computes its SHA-256 (in the generator thread when --to is given); T worker threads and a
    coordinator check it.

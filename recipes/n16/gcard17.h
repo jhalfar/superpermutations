@@ -1,4 +1,4 @@
-/* gcard17.h - gcard.h for n <= 17 with group shards: 9 mask words (n(n-1) <= 272 bits),
+/* gcard17.h - gcard.h (not in this repository) for n <= 17 with group shards: 9 mask words (n(n-1) <= 272 bits),
    group shard gI/gK (only groups g = gI mod gK are recorded; bit table of ceil((n-2)!/gK) bits, bit g / gK), the
    kernels in gcheck17.ptx.  "missing_permutations" counts the permutations of the shard's groups only.
    Original description: */
