@@ -1376,7 +1376,8 @@ pass; from n = 11 on also segment insertion with three to five cuts on the card
 from Theo H.'s 46,173 (part four), so the words for n = 8 and 10 are older than it. The word of November for n = 13
 passed the check, but the reorder, which is not part of it, still gave a shorter word in each round
 (6,747,800,327, then 302, 301, 268, 190, 163 and 155; later 6,747,800,130, W-0116), so I published 155 while the
-search went on. The words for n = 14 have no plan, so the trail tools never ran on them, only the checkers.
+search went on. The words for n = 14 never went through this check: they have no plan for `tools/trailsearch.c`,
+so only the checkers ran on them.
 
 The selections were checked before any word existed: every loop has at most one row, the selection is balanced,
 and the closed trails are found in two ways that must agree (at n = 13 in one way only, for memory). The program
