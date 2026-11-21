@@ -4,11 +4,13 @@
 
 A superpermutation on n symbols is a word that contains every permutation of the symbols as a substring. This
 repository holds superpermutations for n = 8 and 10 to 18, built with Jay Pantone's construction, and the list of
-all 45,116 minimal superpermutations for n = 6 ([`words/n6/`](words/n6/README.md)). On 14 November 2026 the words
-for n = 10 to 14 were the shortest known, and for n = 8 a shorter word has been found since, on the selection of
-the word here. The current records are on the [Superpermutation Almanac](https://superpermutations.com). The
-Almanac stops at n = 14; for n = 15 to 18 these were the shortest words I knew of on 14 November 2026. The repository also holds the inputs that rebuild the
-words, the programs that made them, and Lean proofs of upper and lower bounds.
+all 45,116 minimal superpermutations for n = 6 ([`words/n6/`](words/n6/README.md)). On 21 November 2026 the words
+here for n = 10 and 11 are the shortest known. For n = 8, 12, 13 and 14 there are shorter words now, by Theo H.
+(n = 8) and Jay Pantone (n = 12 to 14). All of them are built on the selections of this repository, most of them
+also with its tools; the table below names them. The current records are on the
+[Superpermutation Almanac](https://superpermutations.com). The Almanac stops at n = 14. For n = 17 and 18 these
+are the shortest words I know of, and for n = 15 and 16 Derek Mahoney reports shorter ones. The repository also
+holds the inputs that rebuild the words, the programs that made them, and Lean proofs of upper and lower bounds.
 
 All of it is built with Jay Pantone's [43/80 construction](https://github.com/jaypantone/superperm-upper-43-80).
 Until October 5 I kept the closed trails of his words and changed where each one is cut and the order of the
@@ -42,16 +44,16 @@ batch, each a cut-down copy of a part of [`proofs/lean/`](proofs/lean/README.md)
 
 ## The words
 
-| n | my word here | on the Almanac | shortest known on 18 November 2026 |
+| n | my word here | on the Almanac | shortest known on 21 November 2026 |
 |---|---:|---|---|
 | 8 | 46,174 | [W-0077](https://superpermutations.com/w/W-0077) | 46,173, Theo H. ([W-0078](https://superpermutations.com/w/W-0078)), found with `tools/trailsearch.c` on the selection of this word; Jay Pantone found another word of that length ([W-0080](https://superpermutations.com/w/W-0080)) |
-| 9 | not here | [W-0103](https://superpermutations.com/w/W-0103), 408,717 | 408,717, mine ([W-0103](https://superpermutations.com/w/W-0103)), from Jay Pantone's construction of [W-0099](https://superpermutations.com/w/W-0099) |
+| 9 | not here | [W-0103](https://superpermutations.com/w/W-0103), 408,717 | 408,717: mine ([W-0103](https://superpermutations.com/w/W-0103)) and seven more by Derek Mahoney ([W-0119](https://superpermutations.com/w/W-0119) to [W-0125](https://superpermutations.com/w/W-0125)), all from Jay Pantone's construction of [W-0099](https://superpermutations.com/w/W-0099) |
 | 10 | 4,034,855 | [W-0062](https://superpermutations.com/w/W-0062) | the same; Jay Pantone's [W-0082](https://superpermutations.com/w/W-0082) has the same length |
 | 11 | 43,930,534 | [W-0086](https://superpermutations.com/w/W-0086) | the same |
-| 12 | 522,736,428 | [W-0113](https://superpermutations.com/w/W-0113) | this one, from William Echols's [W-0091](https://superpermutations.com/w/W-0091) |
-| 12 | 522,736,431 | [W-0112](https://superpermutations.com/w/W-0112) | 522,736,428 (row above); this one is from Derek Mahoney's [W-0102](https://superpermutations.com/w/W-0102) |
-| 13 | 6,747,800,155 | [W-0114](https://superpermutations.com/w/W-0114) | this one, from Jay Pantone's [W-0100](https://superpermutations.com/w/W-0100) with his reorder of [W-0107](https://superpermutations.com/w/W-0107) |
-| 14 | 93,904,778,043 | [W-0115](https://superpermutations.com/w/W-0115) | this one, from Jay Pantone's [W-0108](https://superpermutations.com/w/W-0108) |
+| 12 | 522,736,428 | [W-0113](https://superpermutations.com/w/W-0113) | 522,736,409, Jay Pantone ([W-0128](https://superpermutations.com/w/W-0128)), on the selection of my [W-0074](https://superpermutations.com/w/W-0074) with the tools of this repository; this one is from William Echols's [W-0091](https://superpermutations.com/w/W-0091) |
+| 12 | 522,736,431 | [W-0112](https://superpermutations.com/w/W-0112) | row above; this one is from Derek Mahoney's [W-0102](https://superpermutations.com/w/W-0102) |
+| 13 | 6,747,800,155 | [W-0114](https://superpermutations.com/w/W-0114) | 6,747,791,494, Jay Pantone ([W-0129](https://superpermutations.com/w/W-0129)), from a new (7,4) block that he found with [`selection/gsegip.py`](selection/gsegip.py) on the selection of my [W-0084](https://superpermutations.com/w/W-0084); this one is from his [W-0100](https://superpermutations.com/w/W-0100) with his reorder of [W-0107](https://superpermutations.com/w/W-0107), and my 6,747,800,130 ([W-0116](https://superpermutations.com/w/W-0116)) from the same line is on the Almanac but not here |
+| 14 | 93,904,778,043 | [W-0115](https://superpermutations.com/w/W-0115) | 93,904,742,542, Jay Pantone ([W-0127](https://superpermutations.com/w/W-0127)), from a new (7,5) block on the selection of my [W-0085](https://superpermutations.com/w/W-0085); this one is from his [W-0108](https://superpermutations.com/w/W-0108) |
 | 15 | 1,401,325,411,491 | the Almanac stops at n = 14 | 1,401,325,411,389, Derek Mahoney ([his repository](https://github.com/dmahoney1213/superperm-words)), from this word's plan with `uopt15` |
 | 16 | 22,320,795,912,621 | | 22,320,795,905,601, Derek Mahoney ([his repository](https://github.com/dmahoney1213/superperm-words)), the same construction run again from an n = 15 plan |
 | 17 | 377,961,971,839,096 | | this one, as far as I know |
@@ -61,10 +63,11 @@ The word for n = 14 is stored in the Almanac's Detour format and the words for n
 My earlier words for n = 12 to 14 stay in the repository: 522,736,969
 ([W-0074](https://superpermutations.com/w/W-0074)), 6,747,801,798 ([W-0084](https://superpermutations.com/w/W-0084))
 and 93,904,804,405 ([W-0085](https://superpermutations.com/w/W-0085), the recipe in
-[`recipes/n14/`](recipes/n14/README.md)). Three of my words on the Almanac are not in this repository: 408,717 for
+[`recipes/n14/`](recipes/n14/README.md)). Four of my words on the Almanac are not in this repository: 408,717 for
 n = 9 ([W-0103](https://superpermutations.com/w/W-0103)), 522,736,440 for n = 12
-([W-0098](https://superpermutations.com/w/W-0098)) and 6,747,800,688 for n = 13
-([W-0105](https://superpermutations.com/w/W-0105)); for n = 12 and 13 the words here are shorter. The Almanac's
+([W-0098](https://superpermutations.com/w/W-0098)), and 6,747,800,688 ([W-0105](https://superpermutations.com/w/W-0105))
+and 6,747,800,130 ([W-0116](https://superpermutations.com/w/W-0116)) for n = 13. The words here for n = 12 are
+shorter than W-0098; the word here for n = 13 is shorter than W-0105 and 25 letters longer than W-0116. The Almanac's
 front page is the current table; the lengths these words beat when they were published are in
 [`NOTES.md`](NOTES.md#the-words-and-the-records-they-beat).
 
@@ -303,7 +306,7 @@ uses integer programmes; `selection/` and `arrange/` say which need a solver. Th
 
 The construction is Jay Pantone's, and so are the terms closed trail, slice, selection, completion and transport.
 Cutting a closed trail between two 2-cycles and the structure of the n = 10 word come from rumstd's n = 10 word.
-Cutting inside a 1-cycle is Theo H.'s idea, and so are the shortest word for n = 8 and the SPRA format. The moves
+Cutting inside a 1-cycle is Theo H.'s idea, and so are the first word of 46,173 letters for n = 8 and the SPRA format. The moves
 behind the words for n = 12 and 13 are William Echols's and Theo H.'s, and the recipe form for n = 14 is Echols's.
 The cut-opening reorder behind my November words for n = 12, 13 and 14 is Jay Pantone's (W-0107). The words for
 n = 12 start from Derek Mahoney's W-0102 and William Echols's W-0091, the word for n = 13 from Jay Pantone's W-0100
