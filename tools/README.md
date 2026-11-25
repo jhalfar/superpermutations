@@ -23,6 +23,8 @@ The tools behind my words of November 2026 are in five folders, each with its ow
 * [`gpucheck/`](gpucheck/README.md): coverage and deletion checks on the card, the only deletion check I have at
   n = 14, and the card load of `trailsearch`.
 
+[`derepeat/`](derepeat/README.md) removes repeated permutation windows at the same length when its local move applies.
+
 ## How a word is described
 
 A word is a sequence of pieces. Each piece is one closed trail, cut open at one place, and consecutive pieces are
