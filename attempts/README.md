@@ -22,7 +22,7 @@ I did not rerun the n = 7 negatives with 4x larger settings. Where a row has a q
 
 ## The columns of `attempts.tsv`
 
-Tab-separated, with the header in the first line.
+Tab-separated, with the header in the first line. No straight double quotes inside a field (GitHub then reads the field as CSV quoting and stops rendering the table); use “ ” or single quotes.
 
 | column | meaning |
 |---|---|
