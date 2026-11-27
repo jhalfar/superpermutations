@@ -30,6 +30,9 @@ Almanac does not hold: the words for n = 15 to 18 (as recipes), the list of all 
 words and their plans, the programs that made them, the full Lean development, the written proofs of
 $`L(7) \ge 5{,}900`$ and $`5{,}901`$, and the account in [`NOTES.md`](NOTES.md).
 
+What did not work is collected in [`attempts/`](attempts/README.md), starting with [n = 7](attempts/n7.md); more
+rows are welcome by pull request.
+
 My Lean proofs on the Almanac are in
 [jhalfar/superpermutation-almanac-lean](https://github.com/jhalfar/superpermutation-almanac-lean), one commit per
 batch, each a cut-down copy of a part of [`proofs/lean/`](proofs/lean/README.md):
